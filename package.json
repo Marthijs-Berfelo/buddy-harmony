@@ -11,8 +11,11 @@
     "format": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "dependencies": {
+    "@material-tailwind/react": "^1.0.3",
+    "guitar-scales": "^1.0.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-fretboard-diagram": "^0.3.1",
     "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -26,12 +29,15 @@
     "@types/react-dom": "^18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
+    "autoprefixer": "^10.4.7",
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest-junit": "^13.2.0",
     "msw": "^0.42.1",
+    "postcss": "^8.4.14",
     "prettier": "^2.6.2",
+    "tailwindcss": "^3.0.24",
     "typescript": "^4.7.3"
   },
   "lint-staged": {

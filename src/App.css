@@ -25,7 +25,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  @apply font-bold text-amber-800;
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +35,47 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.fretboard {}
+
+.fretboard-group {}
+
+.fretboard-dot {
+  fill: #fff;
+  stroke: #000;
+  stroke-width: 4;
+}
+
+.fretboard-dot-number {
+
+  font-family: sans-serif;
+  text-anchor: middle;
+
+  fill: #fff;
+  stroke: #000;
+  stroke-width: 1;
+  font-size: 30px;
+}
+
+.fretboard-string {
+  stroke: #2e2e2e;
+  stroke-width: 12px;
+}
+
+.fretboard-fret {
+  stroke: #5b5959;
+  stroke-width: 12px;
+}
+
+.fretboard-fret-number-group {}
+
+.fretboard-fret-number {
+  text-anchor: middle;
+  font-family: sans-serif;
+
+  fill: #fff;
+  stroke: #000;
+  stroke-width: 1;
+  font-size: 24px;
 }
