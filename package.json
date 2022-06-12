@@ -12,11 +12,15 @@
   },
   "dependencies": {
     "@material-tailwind/react": "^1.0.3",
+    "assert-ts": "^0.3.4",
+    "fretboard-api": "^0.7.1",
     "guitar-scales": "^1.0.4",
+    "immer": "^9.0.14",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-fretboard-diagram": "^0.3.1",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
+    "tonal": "^2.2.2",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
