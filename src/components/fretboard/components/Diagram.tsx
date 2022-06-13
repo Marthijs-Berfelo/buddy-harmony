@@ -181,12 +181,10 @@ const useDiagram = ({
   };
 
   const getShapes = (scale: ScaleModel): ScaleFret[][] => {
-    console.log('Get shapes from', scale);
     const models = Array.from(scale.info.values());
     if (leftHanded || orientation === Orientation.HORIZONTAL) {
       models.reverse();
     }
-    console.log('Extracted shape', models);
     return models.filter((string) => !!string);
   };
 

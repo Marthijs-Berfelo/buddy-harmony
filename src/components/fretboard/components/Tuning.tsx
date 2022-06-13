@@ -61,8 +61,8 @@ const useTuning = ({ tuning, orientation, diagramStyle }: TuningProps): TuningHo
         y={
           diagramStyle.paddingTop +
           diagramStyle.stringWidth +
-          index * diagramStyle.stringInterval -
-          diagramStyle.tuningFontSize / 2
+          index * diagramStyle.stringInterval +
+          diagramStyle.tuningFontSize / 4
         }
         x={x}
         fontSize={diagramStyle.tuningFontSize}

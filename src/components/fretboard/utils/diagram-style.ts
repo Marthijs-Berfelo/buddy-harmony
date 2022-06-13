@@ -47,10 +47,10 @@ interface ClickPosition {
 }
 
 export function diagramStyle(
-  paddingTop = 120, // make room for fret numbers
-  paddingRight = 120,
-  paddingBottom = 120,
-  paddingLeft = 120,
+  paddingTop = 150, // make room for fret numbers
+  paddingRight = 150,
+  paddingBottom = 150,
+  paddingLeft = 150,
   stringInterval = 60,
   stringWidth = 4,
   fretInterval = 100,
@@ -60,10 +60,10 @@ export function diagramStyle(
   dotRadius = 20,
   dotStroke = 1,
   fontSize = 12,
-  fretNumberDistance = 30,
+  fretNumberDistance = 45,
   fretNumberFontSize = 24,
   fretNumberColor = '#999',
-  tuningDistance = 60,
+  tuningDistance = 90,
   tuningFontSize = 24,
   tuningColor = '#999'
 ): DiagramStyle {

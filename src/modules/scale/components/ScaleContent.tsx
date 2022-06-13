@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { GuitarScaleHook } from '../../../hooks';
+import { GuitarScaleHook, useSettings } from '../../../hooks';
 import {
   DEFAULT_STYLE,
   Diagram,
   DotText,
   FretNumberPosition,
   FretNumberType,
-  Orientation,
   ScaleModel,
 } from '../../../components/fretboard';
-import { Tuning } from 'fretboard-api';
 
 const ScaleContent = ({ note, scale, scaleModel }: GuitarScaleHook): JSX.Element => {
   const [shape, setShape] = useState<ScaleModel>();
+  const { tuningType, orientation, leftHanded } = useSettings();
+
+  useEffect(() => {
+    console.log('TUNING:', tuningType);
+  }, [tuningType]);
+
   useEffect(() => {
     console.log('N', note, 'S', scale, 'M', scaleModel());
     setShape(scaleModel());
@@ -23,14 +27,14 @@ const ScaleContent = ({ note, scale, scaleModel }: GuitarScaleHook): JSX.Element
       <Diagram
         className={'max-w-screen-2xl max-h-screen'}
         diagramStyle={DEFAULT_STYLE}
-        orientation={Orientation.VERTICAL}
+        orientation={orientation}
         text={DotText.NOTE}
-        leftHanded={false}
+        leftHanded={leftHanded}
         scale={shape}
         frets={12}
         fretNumbers={FretNumberType.LATIN}
         fretNumbersPosition={FretNumberPosition.LEFT}
-        tuning={Tuning.guitar.standard}
+        tuning={tuningType.tuning}
         debug={false}
       />
     </div>

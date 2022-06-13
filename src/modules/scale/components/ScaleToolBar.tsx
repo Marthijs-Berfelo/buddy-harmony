@@ -1,7 +1,7 @@
 import { GuitarScaleHook } from '../../../hooks';
 import { Toolbar } from '../../../components';
 import { Option, Select } from '@material-tailwind/react';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 const ScaleToolBar = ({
   notes,
@@ -19,7 +19,6 @@ const ScaleToolBar = ({
           key={'scale-note'}
           label="Note"
           className="flex items-center bg-white z-40"
-          onChange={(value: ReactNode) => console.log('on change note', value)}
           selected={(value) => {
             if (value?.key && value?.key !== note) {
               setNote(value?.key?.toString());

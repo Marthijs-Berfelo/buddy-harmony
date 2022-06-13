@@ -47,19 +47,22 @@ const useFretboard = ({
   orientation,
   diagramStyle,
 }: FretboardProps): FretboardHook => {
+  const isFirstFret = (frets: boolean, index: number): boolean => frets && index === 0;
+
   const verticalLines = (
     length: number,
     lines: number,
     interval: number,
-    width: number
+    width: number,
+    frets: boolean
   ): string => {
     const paths = new Array(lines);
     for (let index = 0; index < lines; index++) {
       paths[index] = svg.verticalLine(
-        diagramStyle.paddingLeft + index * interval,
+        diagramStyle.paddingLeft + index * interval - (isFirstFret(frets, index) ? width : 0),
         diagramStyle.paddingTop,
         length,
-        width
+        isFirstFret(frets, width) ? width * 2.5 : width
       );
     }
     return paths.join(' ');
@@ -69,15 +72,16 @@ const useFretboard = ({
     length: number,
     lines: number,
     interval: number,
-    width: number
+    width: number,
+    frets: boolean
   ): string => {
     const paths = new Array(lines);
     for (let index = 0; index < lines; index++) {
       paths[index] = svg.horizontalLine(
         diagramStyle.paddingLeft,
-        diagramStyle.paddingTop + index * interval,
+        diagramStyle.paddingTop + index * interval - (isFirstFret(frets, index) ? width : 0),
         length,
-        width
+        isFirstFret(frets, index) ? width * 2 : width
       );
     }
     return paths.join(' ');
@@ -91,7 +95,8 @@ const useFretboard = ({
           length,
           strings,
           diagramStyle.stringInterval,
-          diagramStyle.stringWidth
+          diagramStyle.stringWidth,
+          false
         );
       case Orientation.HORIZONTAL:
       default:
@@ -99,7 +104,8 @@ const useFretboard = ({
           length,
           strings,
           diagramStyle.stringInterval,
-          diagramStyle.stringWidth
+          diagramStyle.stringWidth,
+          false
         );
     }
   };
@@ -112,11 +118,18 @@ const useFretboard = ({
           length,
           frets + 1,
           diagramStyle.fretInterval,
-          diagramStyle.fretWidth
+          diagramStyle.fretWidth,
+          true
         );
       case Orientation.HORIZONTAL:
       default:
-        return verticalLines(length, frets, diagramStyle.fretInterval, diagramStyle.fretWidth);
+        return verticalLines(
+          length,
+          frets + 1,
+          diagramStyle.fretInterval,
+          diagramStyle.fretWidth,
+          true
+        );
     }
   };
 
