@@ -1,6 +1,6 @@
 export interface ScaleModel {
   fretzNumber: number;
-  info: Map<number, Map<number, ScaleFret>>;
+  info: ScaleFret[][];
   tuning: string[];
 }
 

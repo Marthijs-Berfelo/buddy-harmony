@@ -5,7 +5,7 @@ import { ScalePage } from '../../modules/scale';
 
 const Content = (): JSX.Element => {
   return (
-    <div className="container pt-24 flex justify-center max-w-full">
+    <div className="flex justify-center pt-24" id="content" style={{ width: '100vw' }}>
       <Suspense fallback={'Loading..'}>
         <Routes>
           <Route path={Pages.SCALE} element={<ScalePage />} />

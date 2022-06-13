@@ -7,6 +7,7 @@ const STANDARD_NUMBERS = [3, 5, 7, 9, 12, 15, 17, 19, 21, 24];
 type FretNumbersProps = {
   frets: number;
   fretNumbers: FretNumberType;
+  leftHanded: boolean;
   startAt: number;
   orientation: Orientation;
   diagramStyle: DiagramStyle;
@@ -29,6 +30,7 @@ const useFretNumbers = ({
   startAt,
   orientation,
   diagramStyle,
+  leftHanded,
 }: FretNumbersProps): FretNumbersHook => {
   const fretNumbers = (): JSX.Element[] => {
     switch (orientation) {
@@ -43,27 +45,30 @@ const useFretNumbers = ({
   const horizontalFretNumbers = (): JSX.Element[] => {
     const y = diagramStyle.paddingTop - diagramStyle.fretNumberDistance;
     const total = Math.trunc(frets);
-    return Array.from(Array(total).keys())
+    const numbers = Array.from(Array(total).keys())
       .map((index) => index + startAt)
-      .filter((fret) => STANDARD_NUMBERS.includes(fret))
-      .map((fret) => (
-        <text
-          key={'fn-' + fret}
-          y={y}
-          x={
-            diagramStyle.paddingLeft +
-            (fret - 1) * diagramStyle.fretInterval +
-            diagramStyle.fretInterval -
-            diagramStyle.dotIn +
-            diagramStyle.fretWidth / 2
-          }
-          fontSize={diagramStyle.fretNumberFontSize}
-          stroke={diagramStyle.fretNumberColor}
-          className={'fretboard-fret-number'}
-        >
-          {fret}
-        </text>
-      ));
+      .filter((fret) => STANDARD_NUMBERS.includes(fret));
+    if (leftHanded) {
+      numbers.reverse();
+    }
+    return numbers.map((fret) => (
+      <text
+        key={'fn-' + fret}
+        y={y}
+        x={
+          diagramStyle.paddingLeft +
+          (fret - 1) * diagramStyle.fretInterval +
+          diagramStyle.fretInterval -
+          diagramStyle.dotIn +
+          diagramStyle.fretWidth
+        }
+        fontSize={diagramStyle.fretNumberFontSize}
+        stroke={diagramStyle.fretNumberColor}
+        className={'fretboard-fret-number'}
+      >
+        {fret}
+      </text>
+    ));
   };
 
   const verticalFretNumbers = (): JSX.Element[] => {
@@ -80,7 +85,7 @@ const useFretNumbers = ({
             (fret - 1) * diagramStyle.fretInterval +
             diagramStyle.fretInterval -
             diagramStyle.dotIn +
-            diagramStyle.fretWidth / 2
+            diagramStyle.fretWidth
           }
           x={x}
           fontSize={diagramStyle.fretNumberFontSize}

@@ -4,7 +4,7 @@ import { Pages } from '../routing/pages';
 import { NavLink } from 'react-router-dom';
 
 const Header = (): JSX.Element => (
-  <Navbar fullWidth className="fixed bg-green-100 border-green-100">
+  <Navbar fullWidth className="flex flex-row bg-green-100 border-green-100 z-50 fixed">
     <div className="container flex justify-between items-center text-green-900">
       <Typography
         className="py-1.5 mr-4 font-sans font-bold text-green-800 text-2xl"

@@ -18,7 +18,7 @@ const ScaleToolBar = ({
         <Select
           key={'scale-note'}
           label="Note"
-          className="flex items-center bg-white"
+          className="flex items-center bg-white z-40"
           onChange={(value: ReactNode) => console.log('on change note', value)}
           selected={(value) => {
             if (value?.key && value?.key !== note) {

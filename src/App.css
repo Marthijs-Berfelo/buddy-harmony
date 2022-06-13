@@ -18,12 +18,10 @@
 
 .fretboard-string {
   stroke: #2e2e2e;
-  stroke-width: 12px;
 }
 
 .fretboard-fret {
   stroke: #5b5959;
-  stroke-width: 12px;
 }
 
 .fretboard-fret-number-group {}

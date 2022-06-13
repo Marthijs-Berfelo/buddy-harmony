@@ -21,13 +21,13 @@ const Fretboard = (
   const { stringsPath, stringWidth, fretsPath, fretWidth } = useFretboard(props);
   return (
     <Fragment>
+      <path fill={'none'} strokeWidth={fretWidth} className={'fretboard-fret'} d={fretsPath()} />
       <path
         fill={'none'}
         strokeWidth={stringWidth}
         className={'fretboard-string'}
         d={stringsPath()}
       />
-      <path fill={'none'} strokeWidth={fretWidth} className={'fretboard-fret'} d={fretsPath()} />
     </Fragment>
   );
 };
@@ -108,7 +108,12 @@ const useFretboard = ({
     const length = diagramStyle.fretLength(strings);
     switch (orientation) {
       case Orientation.VERTICAL:
-        return horizontalLines(length, frets, diagramStyle.fretInterval, diagramStyle.fretWidth);
+        return horizontalLines(
+          length,
+          frets + 1,
+          diagramStyle.fretInterval,
+          diagramStyle.fretWidth
+        );
       case Orientation.HORIZONTAL:
       default:
         return verticalLines(length, frets, diagramStyle.fretInterval, diagramStyle.fretWidth);
