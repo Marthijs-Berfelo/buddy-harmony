@@ -86,7 +86,12 @@ const Diagram = (
             diagramStyle={diagramStyle}
           />
         )}
-        <Tuning tuning={tuning} diagramStyle={diagramStyle} orientation={orientation} />
+        <Tuning
+          tuning={tuning}
+          leftHanded={leftHanded}
+          orientation={orientation}
+          diagramStyle={diagramStyle}
+        />
       </g>
     </svg>
   );
@@ -116,7 +121,7 @@ const useDiagram = ({
   clickHandler,
   moveHandler,
 }: DiagramProps): DiagramHook => {
-  const guitarTuning = !!scale ? scale.tuning : tuning;
+  const guitarTuning = tuning;
   const strings = guitarTuning.length;
   const fretCount = !!scale ? scale.fretzNumber + 1 : frets;
 
@@ -181,9 +186,9 @@ const useDiagram = ({
   };
 
   const getShapes = (scale: ScaleModel): ScaleFret[][] => {
-    const models = Array.from(scale.info.values());
+    let models = Array.from(scale.info.values());
     if (leftHanded || orientation === Orientation.HORIZONTAL) {
-      models.reverse();
+      models = [...models.reverse()];
     }
     return models.filter((string) => !!string);
   };

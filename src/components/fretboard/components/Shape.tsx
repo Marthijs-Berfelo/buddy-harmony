@@ -21,13 +21,12 @@ interface ShapeProps {
 const Shape = (props: ShapeProps): JSX.Element => {
   const { shape, strings, dot, dotText } = useShape(props);
 
-  const dots = shape.flatMap(
-    (string, stringIndex) =>
-      string
-        .filter((fret) => fret.isPartOfScale)
-        .map((fret) => {
-          return dot(strings - 1 - stringIndex, fret.freet, dotText(fret), fret.scalePosition);
-        }) || []
+  const dots = shape.flatMap((string, stringIndex) =>
+    string
+      .filter((fret) => fret.isPartOfScale)
+      .map((fret) => {
+        return dot(strings - 1 - stringIndex, fret.freet, dotText(fret), fret.scalePosition);
+      })
   );
   return <g>{dots}</g>;
 };

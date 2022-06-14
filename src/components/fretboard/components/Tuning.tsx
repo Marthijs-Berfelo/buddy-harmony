@@ -5,6 +5,7 @@ import React from 'react';
 type TuningProps = {
   tuning: string[];
   orientation: Orientation;
+  leftHanded: boolean;
   diagramStyle: DiagramStyle;
 };
 
@@ -20,7 +21,7 @@ type TuningHook = {
   tunings: () => JSX.Element[];
 };
 
-const useTuning = ({ tuning, orientation, diagramStyle }: TuningProps): TuningHook => {
+const useTuning = ({ tuning, orientation, leftHanded, diagramStyle }: TuningProps): TuningHook => {
   const tunings = (): JSX.Element[] => {
     switch (orientation) {
       case Orientation.VERTICAL:
@@ -33,7 +34,11 @@ const useTuning = ({ tuning, orientation, diagramStyle }: TuningProps): TuningHo
 
   const horizontalTunings = (): JSX.Element[] => {
     const y = diagramStyle.paddingTop - diagramStyle.tuningDistance;
-    return tuning.map((string, index) => (
+    let tunings = tuning;
+    if (leftHanded) {
+      tunings = [...tuning.reverse()];
+    }
+    return tunings.map((string, index) => (
       <text
         key={'tuning-' + index}
         y={y}
@@ -54,8 +59,9 @@ const useTuning = ({ tuning, orientation, diagramStyle }: TuningProps): TuningHo
 
   const verticalTunings = (): JSX.Element[] => {
     const x = diagramStyle.paddingLeft - diagramStyle.tuningDistance;
-    tuning.reverse();
-    return tuning.map((string, index) => (
+    const tunings = [...tuning];
+    const reverse = [...tunings.reverse()];
+    return reverse.map((string, index) => (
       <text
         key={'tuning-' + index}
         y={
