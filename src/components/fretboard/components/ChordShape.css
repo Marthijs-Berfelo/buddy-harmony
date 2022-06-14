@@ -1,0 +1,55 @@
+.chord-dot-mute {
+    font-family: sans-serif;
+    text-anchor: middle;
+    stroke-width: 1;
+    font-size: 24px;
+}
+
+.chord-barre {
+    fill: white;
+    stroke-width: 16px;
+}
+
+.chord-dot-0 {
+    stroke: theme('colors.blue.500');
+    fill: theme('colors.blue.500');
+}
+.chord-dot-1 {
+    stroke: theme('colors.red.500');
+    fill: theme('colors.red.500');
+}
+
+.chord-dot-2 {
+    stroke: theme('colors.orange.500');
+    fill: theme('colors.orange.500');
+}
+
+.chord-dot-3 {
+    stroke: theme('colors.teal.500');
+    fill: theme('colors.teal.500');
+}
+
+.chord-dot-4 {
+    stroke: theme('colors.green.500');
+    fill: theme('colors.green.500');
+}
+
+.chord-dot-5 {
+    stroke: theme('colors.pink.500');
+    fill: theme('colors.pink.500');
+}
+
+.chord-dot-6 {
+    stroke: theme('colors.lime.500');
+    fill: theme('colors.lime.500');
+}
+
+.chord-dot-7 {
+    stroke: theme('colors.purple.500');
+    fill: theme('colors.purple.500');
+}
+
+.chord-dot-8 {
+    stroke: theme('colors.indigo.500');
+    fill: theme('colors.indigo.500');
+}

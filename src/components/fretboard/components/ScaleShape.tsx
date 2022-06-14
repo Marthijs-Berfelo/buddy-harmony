@@ -1,98 +1,40 @@
-import { DiagramStyle } from '../utils/diagram-style';
-import { DotText, Orientation } from '../options';
+import { DotText } from '../options';
 import React, { Fragment } from 'react';
 import { ScaleFret } from '../utils/scale';
 import './ScaleShape.css';
+import { ShapeProps, useShape } from '../utils/shape';
 
 const fill = 'white';
 const dotStrokeColor = 'grey';
 const textColor = 'black';
 
-interface ShapeProps {
-  className: string;
-  shape: ScaleFret[][];
-  strings: number;
-  leftHanded: boolean;
-  orientation: Orientation;
-  diagramStyle: DiagramStyle;
+interface ScaleShapeProps extends ShapeProps {
+  scale: ScaleFret[][];
   text: DotText;
 }
 
-const ScaleShape = (props: ShapeProps): JSX.Element => {
-  const { shape, strings, dot, dotText } = useShape(props);
+const ScaleShape = (props: ScaleShapeProps): JSX.Element => {
+  const { scaleShape } = useScaleShape(props);
 
-  const dots = shape.flatMap((string, stringIndex) =>
-    string
-      .filter((fret) => fret.isPartOfScale)
-      .map((fret) => {
-        return dot(strings - 1 - stringIndex, fret.freet, dotText(fret), fret.scalePosition);
-      })
-  );
-  return <g>{dots}</g>;
+  return <g>{scaleShape}</g>;
 };
 
 export default ScaleShape;
 
-type ShapeHook = {
-  shape: ScaleFret[][];
-  strings: number;
-  cross: (string: number) => JSX.Element;
-  dot: (string: number, fret: number, text?: string, scalePosition?: number) => JSX.Element;
-  dotText: (fret: ScaleFret) => string | undefined;
+type ScaleShapeHook = {
+  scaleShape: JSX.Element[];
 };
 
-const useShape = ({
+const useScaleShape = ({
   className,
-  shape,
+  scale,
   strings,
   orientation,
   leftHanded,
   diagramStyle,
   text,
-}: ShapeProps): ShapeHook => {
-  const fretPosition = (offset: number, fret: number): number =>
-    fret === 0
-      ? offset - diagramStyle.dotOut + diagramStyle.fretWidth / 2
-      : offset +
-        (fret - 1) * diagramStyle.fretInterval +
-        diagramStyle.fretInterval -
-        diagramStyle.dotIn +
-        diagramStyle.fretWidth / 2;
-
-  const leftHandedFretPosition = (fret: number): number => {
-    const offset = diagramStyle.paddingRight;
-    return fret === 0
-      ? offset + diagramStyle.dotOut - diagramStyle.fretWidth / 2
-      : offset -
-          (fret - 1) * diagramStyle.fretInterval -
-          diagramStyle.fretInterval +
-          diagramStyle.dotIn -
-          diagramStyle.fretWidth / 2;
-  };
-
-  const stringPosition = (offset: number, string: number): number =>
-    offset + string * diagramStyle.stringInterval + diagramStyle.stringWidth / 2;
-
-  const x = (string: number, fret: number): number => {
-    const offset = diagramStyle.paddingTop;
-    if (orientation === Orientation.HORIZONTAL) {
-      if (leftHanded) {
-        return leftHandedFretPosition(fret);
-      }
-      return fretPosition(offset, fret);
-    } else {
-      return stringPosition(offset, string);
-    }
-  };
-
-  const y = (string: number, fret: number): number => {
-    const offset = diagramStyle.paddingLeft;
-    if (orientation === Orientation.HORIZONTAL) {
-      return stringPosition(offset, string);
-    } else {
-      return fretPosition(offset, fret);
-    }
-  };
+}: ScaleShapeProps): ScaleShapeHook => {
+  const { x, y } = useShape({ className, strings, leftHanded, orientation, diagramStyle });
 
   const getNote = (fret: ScaleFret): string => {
     if (fret.note === fret.noteEnharmonic) {
@@ -113,21 +55,6 @@ const useShape = ({
     }
   };
 
-  const cross = (string: number): JSX.Element => (
-    <Fragment key={`${string}.X`}>
-      <text
-        x={x(string, 0)}
-        y={y(string, 0)}
-        alignmentBaseline={'central'}
-        className={'scale-dot-text'}
-        fontSize={diagramStyle.fontSize * 1.5}
-        fill={textColor}
-      >
-        &#x2715;
-      </text>
-    </Fragment>
-  );
-
   const dot = (
     string: number,
     fret: number,
@@ -136,8 +63,8 @@ const useShape = ({
   ): JSX.Element => (
     <Fragment key={`${string}.${fret}`}>
       <circle
-        cx={x(string, fret)}
-        cy={y(string, fret)}
+        cx={x(diagramStyle.padding, string, fret, 0)}
+        cy={y(diagramStyle.padding, string, fret, 0)}
         r={diagramStyle.dotRadius}
         className={`${className} scale-dot scale-dot${scalePositionClass(scalePosition)}`}
         strokeWidth={diagramStyle.dotStroke}
@@ -145,8 +72,8 @@ const useShape = ({
         fill={fill}
       />
       <text
-        x={x(string, fret)}
-        y={y(string, fret)}
+        x={x(diagramStyle.padding, string, fret, 0)}
+        y={y(diagramStyle.padding, string, fret, 0)}
         alignmentBaseline={'central'}
         className={`${className} scale-dot-text scale-dot-text${scalePositionClass(scalePosition)}`}
         fontSize={diagramStyle.fontSize * 1.5}
@@ -160,11 +87,14 @@ const useShape = ({
   const scalePositionClass = (scalePosition?: number): string =>
     scalePosition !== undefined ? `-${scalePosition}` : '';
 
+  const scaleShape = scale.flatMap((string, stringIndex) =>
+    string
+      .filter((fret) => fret.isPartOfScale)
+      .map((fret) => {
+        return dot(strings - 1 - stringIndex, fret.freet, dotText(fret), fret.scalePosition);
+      })
+  );
   return {
-    shape,
-    strings,
-    dot,
-    cross,
-    dotText,
+    scaleShape,
   };
 };

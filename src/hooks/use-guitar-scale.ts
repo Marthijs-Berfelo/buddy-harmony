@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ScaleModel } from '../components/fretboard';
 import * as gs from 'guitar-scales';
 import { useSettings } from './settings';
@@ -8,7 +8,7 @@ export interface GuitarScaleHook extends KeysHook {
   scales: string[];
   scale?: string;
   setScale: Dispatch<SetStateAction<string | undefined>>;
-  scaleModel: () => ScaleModel | undefined;
+  scaleModel: ScaleModel | undefined;
 }
 
 export const useGuitarScale = (): GuitarScaleHook => {
@@ -16,6 +16,7 @@ export const useGuitarScale = (): GuitarScaleHook => {
   const { keys, selectedKey, setSelectedKey } = useKeys();
   const { tuningType } = useSettings();
   const [scale, setScale] = useState<string>();
+  const [scaleModel, setScaleModel] = useState<ScaleModel>();
 
   useEffect(() => {
     //TODO library error when setting tuning
@@ -23,12 +24,13 @@ export const useGuitarScale = (): GuitarScaleHook => {
     //guitarScale.setTuning(tuningType.tuning);
   }, [tuningType]);
 
-  const scaleModel = useCallback((): ScaleModel | undefined => {
+  useEffect(() => {
     if (!!selectedKey && !!scale) {
       const model = guitarScale.get(selectedKey, scale);
-      return model as ScaleModel;
+      console.log('K', selectedKey, 'S', scale, 'M', model);
+      setScaleModel(model as ScaleModel);
     } else {
-      return;
+      setScaleModel(undefined);
     }
   }, [selectedKey, scale]);
 

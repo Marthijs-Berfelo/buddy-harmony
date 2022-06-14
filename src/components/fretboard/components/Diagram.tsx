@@ -7,6 +7,8 @@ import FretNumbers from './FretNumbers';
 import ScaleShape from './ScaleShape';
 import { ScaleFret, ScaleModel } from '../utils/scale';
 import Tuning from './Tuning';
+import { ChordPosition } from '../../../hooks';
+import ChordShape from './ChordShape';
 
 export interface DiagramProps {
   className: string;
@@ -19,6 +21,8 @@ export interface DiagramProps {
   fretNumbersPosition: FretNumberPosition;
   tuning: string[];
   scale?: ScaleModel;
+  chords?: ChordPosition[];
+  chord?: ChordPosition;
   debug: boolean;
   clickHandler?: (
     event: MouseEvent<SVGSVGElement>,
@@ -46,8 +50,19 @@ const Diagram = (
 ): JSX.Element => {
   const { onMouseClick, onMouseMove, strings, frets, tuning, viewBox, getShapes } =
     useDiagram(props);
-  const { className, leftHanded, diagramStyle, orientation, scale, fretNumbers, text } = props;
+  const {
+    className,
+    leftHanded,
+    diagramStyle,
+    orientation,
+    scale,
+    chord,
+    chords,
+    fretNumbers,
+    text,
+  } = props;
   const startAt = 1;
+
   return (
     <svg
       viewBox={viewBox()}
@@ -69,12 +84,32 @@ const Diagram = (
         {scale && (
           <ScaleShape
             className={className}
-            shape={getShapes(scale)}
+            scale={getShapes(scale)}
             strings={strings}
             orientation={orientation}
             leftHanded={leftHanded}
             diagramStyle={diagramStyle}
             text={text}
+          />
+        )}
+        {chord && (
+          <ChordShape
+            className={className}
+            strings={strings}
+            chord={chord}
+            leftHanded={leftHanded}
+            orientation={orientation}
+            diagramStyle={diagramStyle}
+          />
+        )}
+        {chords && (
+          <ChordShape
+            className={className}
+            strings={strings}
+            chords={chords}
+            leftHanded={leftHanded}
+            orientation={orientation}
+            diagramStyle={diagramStyle}
           />
         )}
         {fretNumbers !== FretNumberType.NONE && (

@@ -9,10 +9,7 @@ export const COLORS_DEFAULT = {
 export const STYLES: { [key: string]: DiagramStyle } = {
   // @ts-ignore
   def: {
-    paddingTop: 40,
-    paddingRight: 15,
-    paddingBottom: 30,
-    paddingLeft: 70,
+    padding: 40,
     stringInterval: 60,
     stringWidth: 4,
     fretInterval: 100,
@@ -25,10 +22,7 @@ export const STYLES: { [key: string]: DiagramStyle } = {
   },
   // @ts-ignore
   test1: {
-    paddingLeft: 2,
-    paddingRight: 1,
-    paddingTop: 2,
-    paddingBottom: 1,
+    padding: 2,
     stringInterval: 2,
     stringWidth: 1,
     fretInterval: 2,
@@ -40,10 +34,7 @@ export const STYLES: { [key: string]: DiagramStyle } = {
   },
   // @ts-ignore
   test2: {
-    paddingLeft: 4,
-    paddingRight: 2,
-    paddingTop: 3,
-    paddingBottom: 2,
+    padding: 4,
     stringInterval: 4,
     stringWidth: 1,
     fretInterval: 4,
@@ -55,10 +46,7 @@ export const STYLES: { [key: string]: DiagramStyle } = {
   },
   // @ts-ignore
   test3: {
-    paddingLeft: 4,
-    paddingRight: 2,
-    paddingTop: 3,
-    paddingBottom: 2,
+    padding: 4,
     stringInterval: 4,
     stringWidth: 3,
     fretInterval: 4,
@@ -70,10 +58,7 @@ export const STYLES: { [key: string]: DiagramStyle } = {
   },
   // @ts-ignore
   test4: {
-    paddingLeft: 4,
-    paddingRight: 2,
-    paddingTop: 3,
-    paddingBottom: 2,
+    padding: 4,
     stringInterval: 6,
     stringWidth: 3,
     fretInterval: 6,
@@ -85,10 +70,7 @@ export const STYLES: { [key: string]: DiagramStyle } = {
   },
   // @ts-ignore
   test5: {
-    paddingLeft: 4,
-    paddingRight: 2,
-    paddingTop: 3,
-    paddingBottom: 2,
+    padding: 4,
     stringInterval: 6,
     stringWidth: 2,
     fretInterval: 6,
@@ -100,10 +82,7 @@ export const STYLES: { [key: string]: DiagramStyle } = {
   },
   // @ts-ignore
   test6: {
-    paddingLeft: 4,
-    paddingRight: 2,
-    paddingTop: 3,
-    paddingBottom: 2,
+    padding: 4,
     stringInterval: 6,
     stringWidth: 2,
     fretInterval: 6,
@@ -115,10 +94,7 @@ export const STYLES: { [key: string]: DiagramStyle } = {
   },
   // @ts-ignore
   test7: {
-    paddingLeft: 4,
-    paddingRight: 2,
-    paddingTop: 3,
-    paddingBottom: 2,
+    padding: 4,
     stringInterval: 6,
     stringWidth: 4,
     fretInterval: 6,
@@ -130,10 +106,7 @@ export const STYLES: { [key: string]: DiagramStyle } = {
   },
   // @ts-ignore
   test8: {
-    paddingLeft: 10,
-    paddingRight: 5,
-    paddingTop: 5,
-    paddingBottom: 5,
+    padding: 10,
     stringInterval: 7,
     stringWidth: 2,
     fretInterval: 7,

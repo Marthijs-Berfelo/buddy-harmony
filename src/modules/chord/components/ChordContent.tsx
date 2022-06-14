@@ -1,5 +1,4 @@
-import React from 'react';
-import { GuitarScaleHook, useSettings } from '../../../hooks';
+import { useSettings, GuitarChordHook } from '../../../hooks';
 import {
   DEFAULT_STYLE,
   Diagram,
@@ -7,20 +6,25 @@ import {
   FretNumberPosition,
   FretNumberType,
 } from '../../../components/fretboard';
+import React, { useEffect } from 'react';
 
-const ScaleContent = ({ scaleModel }: GuitarScaleHook): JSX.Element => {
+const ChordContent = ({ chordModel }: GuitarChordHook): JSX.Element => {
   const { tuningType, orientation, leftHanded } = useSettings();
 
+  useEffect(() => {
+    console.log('CHORD', chordModel);
+  }, [chordModel]);
+
   return (
-    <div className="flex justify-center" id="scale-content">
+    <div className="flex justify-center" id="chord-content">
       <Diagram
         className={'max-w-screen-2xl max-h-screen'}
         diagramStyle={DEFAULT_STYLE}
         orientation={orientation}
         text={DotText.NOTE}
         leftHanded={leftHanded}
-        scale={scaleModel}
         frets={12}
+        chords={chordModel?.positions}
         fretNumbers={FretNumberType.LATIN}
         fretNumbersPosition={FretNumberPosition.LEFT}
         tuning={tuningType.tuning}
@@ -30,4 +34,4 @@ const ScaleContent = ({ scaleModel }: GuitarScaleHook): JSX.Element => {
   );
 };
 
-export default ScaleContent;
+export default ChordContent;

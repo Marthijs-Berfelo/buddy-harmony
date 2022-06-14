@@ -64,5 +64,5 @@ export const chordTuning = (instrument: string): Tunings => getInstrument(instru
 
 export const chordNames = (instrument: string): string[] => getInstrument(instrument).suffixes;
 
-export const chords = (instrument: string, key: string, name: string): ChordDetail[] =>
+export const chordModels = (instrument: string, key: string, name: string): ChordDetail[] =>
   getChords(instrument).filter((chord) => chord.key === key && chord.suffix === name);

@@ -3,10 +3,7 @@ import assert from 'assert-ts';
 import { Orientation } from '../options';
 
 export interface DiagramStyle {
-  paddingTop: number;
-  paddingRight: number;
-  paddingBottom: number;
-  paddingLeft: number;
+  padding: number;
   stringInterval: number;
   stringWidth: number;
   fretInterval: number;
@@ -47,10 +44,7 @@ interface ClickPosition {
 }
 
 export function diagramStyle(
-  paddingTop = 150, // make room for fret numbers
-  paddingRight = 150,
-  paddingBottom = 150,
-  paddingLeft = 150,
+  padding = 150, // make room for fret numbers
   stringInterval = 60,
   stringWidth = 4,
   fretInterval = 100,
@@ -72,10 +66,10 @@ export function diagramStyle(
     const length = stringLength(frets) + fretWidth;
     switch (orientation) {
       case Orientation.VERTICAL:
-        return length + paddingTop + paddingBottom;
+        return length + padding * 2;
       case Orientation.HORIZONTAL:
       default:
-        return length + paddingLeft + paddingRight;
+        return length + padding * 2;
     }
   };
   const fretBoundary = (strings: number, orientation: Orientation): number => {
@@ -83,10 +77,10 @@ export function diagramStyle(
     const length = fretLength(strings) + stringWidth;
     switch (orientation) {
       case Orientation.VERTICAL:
-        return length + paddingLeft + paddingRight;
+        return length + padding * 2;
       case Orientation.HORIZONTAL:
       default:
-        return length + paddingTop + paddingBottom;
+        return length + padding * 2;
     }
   };
   const stringLength = (frets: number): number => {
@@ -129,14 +123,14 @@ export function diagramStyle(
     const scale = clickPosition.width / width;
     const deltaY = clickPosition.y / scale;
 
-    if (deltaY < paddingTop - stringInterval / 2) {
+    if (deltaY < padding - stringInterval / 2) {
       return undefined;
     }
 
-    if (deltaY > clickPosition.height / scale - paddingBottom + stringInterval / 2) {
+    if (deltaY > clickPosition.height / scale - padding + stringInterval / 2) {
       return undefined;
     }
-    let string = Math.floor((deltaY - paddingTop - stringWidth / 2) / stringInterval + 0.5);
+    let string = Math.floor((deltaY - padding - stringWidth / 2) / stringInterval + 0.5);
 
     if (string < 0) {
       string = 0;
@@ -147,14 +141,14 @@ export function diagramStyle(
     }
 
     const deltaX = clickPosition.x / scale;
-    if (deltaX < paddingLeft - fretInterval + fretWidth / 2) {
+    if (deltaX < padding - fretInterval + fretWidth / 2) {
       return undefined;
     }
 
-    if (deltaX > clickPosition.width / scale - paddingRight) {
+    if (deltaX > clickPosition.width / scale - padding) {
       return undefined;
     }
-    let fret = Math.floor((deltaX - paddingLeft - fretWidth) / fretInterval + 1);
+    let fret = Math.floor((deltaX - padding - fretWidth) / fretInterval + 1);
     if (fret < 0) {
       fret = 0;
     }
@@ -168,10 +162,7 @@ export function diagramStyle(
   };
 
   return {
-    paddingTop,
-    paddingRight,
-    paddingBottom,
-    paddingLeft,
+    padding,
     stringInterval,
     stringWidth,
     fretInterval,

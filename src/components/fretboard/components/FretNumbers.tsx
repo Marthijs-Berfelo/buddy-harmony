@@ -43,7 +43,7 @@ const useFretNumbers = ({
   };
 
   const horizontalFretNumbers = (): JSX.Element[] => {
-    const y = diagramStyle.paddingTop - diagramStyle.fretNumberDistance;
+    const y = diagramStyle.padding - diagramStyle.fretNumberDistance;
     const total = Math.trunc(frets);
     const numbers = Array.from(Array(total).keys())
       .map((index) => index + startAt)
@@ -56,7 +56,7 @@ const useFretNumbers = ({
         key={'fn-' + fret}
         y={y}
         x={
-          diagramStyle.paddingLeft +
+          diagramStyle.padding +
           (fret - 1) * diagramStyle.fretInterval +
           diagramStyle.fretInterval -
           diagramStyle.dotIn +
@@ -72,7 +72,7 @@ const useFretNumbers = ({
   };
 
   const verticalFretNumbers = (): JSX.Element[] => {
-    const x = diagramStyle.paddingLeft - diagramStyle.fretNumberDistance;
+    const x = diagramStyle.padding - diagramStyle.fretNumberDistance;
     const total = Math.trunc(frets);
     return Array.from(Array(total).keys())
       .map((index) => index + startAt)
@@ -81,7 +81,7 @@ const useFretNumbers = ({
         <text
           key={'fn-' + fret}
           y={
-            diagramStyle.paddingTop +
+            diagramStyle.padding +
             (fret - 1) * diagramStyle.fretInterval +
             diagramStyle.fretInterval -
             diagramStyle.dotIn +

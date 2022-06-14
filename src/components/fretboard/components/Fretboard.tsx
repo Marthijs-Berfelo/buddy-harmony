@@ -78,11 +78,11 @@ const useFretboard = ({
     const paths = new Array(nut ? 1 : lines);
     for (let index = nut || !frets ? 0 : 1; index < lines; index++) {
       paths[index] = svg.verticalLine(
-        diagramStyle.paddingLeft +
+        diagramStyle.padding +
           (includeNut ? 0 : interval / 2) +
           (includeNut || nut ? index : index - 1) * interval -
           (isFirstFret(frets, index) ? width : 0),
-        diagramStyle.paddingTop,
+        diagramStyle.padding,
         length,
         isFirstFret(frets, index) ? width * 2 : width
       );
@@ -101,8 +101,8 @@ const useFretboard = ({
     const paths = new Array(nut ? 1 : lines);
     for (let index = nut || !frets ? 0 : 1; index < lines; index++) {
       paths[index] = svg.horizontalLine(
-        diagramStyle.paddingLeft,
-        diagramStyle.paddingTop +
+        diagramStyle.padding,
+        diagramStyle.padding +
           (includeNut ? 0 : interval / 2) +
           (includeNut || nut ? index : index - 1) * interval -
           (isFirstFret(frets, index) ? width : 0),

@@ -33,7 +33,7 @@ const useTuning = ({ tuning, orientation, leftHanded, diagramStyle }: TuningProp
   };
 
   const horizontalTunings = (): JSX.Element[] => {
-    const y = diagramStyle.paddingTop - diagramStyle.tuningDistance;
+    const y = diagramStyle.padding - diagramStyle.tuningDistance;
     let tunings = tuning;
     if (leftHanded) {
       tunings = [...tuning.reverse()];
@@ -43,7 +43,7 @@ const useTuning = ({ tuning, orientation, leftHanded, diagramStyle }: TuningProp
         key={'tuning-' + index}
         y={y}
         x={
-          diagramStyle.paddingLeft +
+          diagramStyle.padding +
           diagramStyle.stringWidth +
           index * diagramStyle.stringInterval -
           diagramStyle.tuningFontSize / 2
@@ -58,14 +58,14 @@ const useTuning = ({ tuning, orientation, leftHanded, diagramStyle }: TuningProp
   };
 
   const verticalTunings = (): JSX.Element[] => {
-    const x = diagramStyle.paddingLeft - diagramStyle.tuningDistance;
+    const x = diagramStyle.padding - diagramStyle.tuningDistance;
     const tunings = [...tuning];
     const reverse = [...tunings.reverse()];
     return reverse.map((string, index) => (
       <text
         key={'tuning-' + index}
         y={
-          diagramStyle.paddingTop +
+          diagramStyle.padding +
           diagramStyle.stringWidth +
           index * diagramStyle.stringInterval +
           diagramStyle.tuningFontSize / 4
