@@ -6,6 +6,7 @@ import React, { Fragment } from 'react';
 type FretboardProps = {
   strings: number;
   frets: number;
+  startAt: number;
   orientation: Orientation;
   diagramStyle: DiagramStyle;
 };
@@ -14,6 +15,7 @@ const Fretboard = (
   props: FretboardProps = {
     strings: 6,
     frets: 5,
+    startAt: 1,
     orientation: Orientation.HORIZONTAL,
     diagramStyle: DEFAULT_STYLE,
   }

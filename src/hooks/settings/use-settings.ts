@@ -1,21 +1,14 @@
 import { BaseContext } from '../base-context';
 import { createContext, Dispatch, SetStateAction, useContext } from 'react';
-import { Tuning, TuningType } from 'fretboard-api';
 import { Orientation } from '../../components/fretboard';
-
-export type GuitarType = {
-  name: string;
-  type: TuningType;
-};
-
-export type StringTuningType = {
-  name: string;
-  tuning: string[];
-};
+import { defaultGuitar, GuitarType, StringTuningType } from '../constants';
 
 export interface Settings extends BaseContext {
   guitarTypes: GuitarType[];
   guitarType: GuitarType;
+  onlySupportedGuitars: (
+    supportedGuitarTypes?: GuitarType[]
+  ) => (guitarType: GuitarType) => boolean;
   setGuitarType: Dispatch<SetStateAction<GuitarType>>;
   tuningTypes: StringTuningType[];
   tuningType: StringTuningType;
@@ -29,7 +22,8 @@ export interface Settings extends BaseContext {
 
 export const SettingsContext = createContext<Settings>({
   guitarTypes: [],
-  guitarType: { name: 'guitar', type: Tuning.guitar },
+  guitarType: defaultGuitar,
+  onlySupportedGuitars: () => () => false,
   setGuitarType: () => null,
   tuningTypes: [],
   tuningType: { name: 'none', tuning: [] },

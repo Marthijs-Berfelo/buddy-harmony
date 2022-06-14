@@ -62,6 +62,7 @@ const Diagram = (
         <Fretboard
           strings={strings}
           frets={frets}
+          startAt={1}
           orientation={orientation}
           diagramStyle={diagramStyle}
         />
@@ -123,7 +124,7 @@ const useDiagram = ({
 }: DiagramProps): DiagramHook => {
   const guitarTuning = tuning;
   const strings = guitarTuning.length;
-  const fretCount = !!scale ? scale.fretzNumber + 1 : frets;
+  const fretCount = !!scale ? scale.fretzNumber : frets;
 
   const onMouseClick = (event: MouseEvent<SVGSVGElement>): void => {
     if (!clickHandler) {

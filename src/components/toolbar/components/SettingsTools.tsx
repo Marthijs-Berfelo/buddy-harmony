@@ -9,11 +9,17 @@ import {
   Option,
   Select,
 } from '@material-tailwind/react';
+import { GuitarType } from '../../../hooks/constants';
 
-const SettingsTools = (): JSX.Element => {
+export interface SettingsToolsProps {
+  supportedGuitars?: GuitarType[];
+}
+
+const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element => {
   const {
     guitarTypes,
     guitarType,
+    onlySupportedGuitars,
     setGuitarType,
     tuningTypes,
     tuningType,
@@ -31,19 +37,21 @@ const SettingsTools = (): JSX.Element => {
           <Button variant="gradient">{`Type: ${guitarType.name}`}</Button>
         </MenuHandler>
         <MenuList className="flex flex-col flex-grow">
-          {Array.from(guitarTypes).map((type) => (
-            <MenuItem
-              key={type.name}
-              disabled={type.name === guitarType.name}
-              className={
-                'justify-items-stretch' +
-                `${type.name === guitarType.name ? ' font-extrabold bg-blue-800 text-white' : ''}`
-              }
-              onClick={() => setGuitarType(type)}
-            >
-              {type.name}
-            </MenuItem>
-          ))}
+          {Array.from(guitarTypes)
+            .filter(onlySupportedGuitars(supportedGuitars))
+            .map((type) => (
+              <MenuItem
+                key={type.name}
+                disabled={type.name === guitarType.name}
+                className={
+                  'justify-items-stretch' +
+                  `${type.name === guitarType.name ? ' font-extrabold bg-blue-800 text-white' : ''}`
+                }
+                onClick={() => setGuitarType(type)}
+              >
+                {type.name}
+              </MenuItem>
+            ))}
         </MenuList>
       </Menu>
       <li key={'tool-tuning'}>

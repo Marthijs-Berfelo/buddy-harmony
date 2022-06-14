@@ -1,19 +1,19 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { Tuning } from 'fretboard-api';
-import { GuitarType, SettingsContext, StringTuningType } from './use-settings';
+import { SettingsContext } from './use-settings';
 import { Orientation } from '../../components/fretboard';
-
-const standardTuning: StringTuningType = {
-  name: 'STANDARD',
-  tuning: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
-};
-
-const guitarTypes = Object.entries(Tuning).map((value) => ({ name: value[0], type: value[1] }));
+import {
+  guitarTypes,
+  defaultGuitar,
+  extractTuning,
+  standardTuning,
+  GuitarType,
+  StringTuningType,
+} from '../constants';
 
 const SettingsContextProvider = ({ children }: PropsWithChildren): JSX.Element => {
-  const [guitarType, setGuitarType] = useState<GuitarType>({ name: 'guitar', type: Tuning.guitar });
+  const [guitarType, setGuitarType] = useState<GuitarType>(defaultGuitar);
   const [tuningTypes, setTuningTypes] = useState<StringTuningType[]>([]);
-  const [tuningType, setTuningType] = useState<StringTuningType>(standardTuning);
+  const [tuningType, setTuningType] = useState<StringTuningType>(standardTuning());
   const [leftHanded, setLeftHanded] = useState<boolean>(false);
   const [orientation, setOrientation] = useState<Orientation>(Orientation.VERTICAL);
   const [orientationLabel, setOrientationLabel] = useState<string>(
@@ -21,12 +21,19 @@ const SettingsContextProvider = ({ children }: PropsWithChildren): JSX.Element =
   );
 
   useEffect(() => {
-    const tunings = Object.entries(guitarType.type).map((value) => ({
-      name: value[0],
-      tuning: value[1],
-    }));
+    const tunings = extractTuning(guitarType);
     setTuningTypes(tunings);
   }, [guitarType]);
+
+  const onlySupportedGuitars =
+    (supportedGuitarTypes?: GuitarType[]): ((type: GuitarType) => boolean) =>
+    (type) => {
+      if (supportedGuitarTypes !== undefined) {
+        return supportedGuitarTypes.findIndex((supported) => supported.name === type.name) > -1;
+      } else {
+        return true;
+      }
+    };
 
   const toggleOrientation = (): void => {
     setOrientationLabel(orientation.toString());
@@ -43,6 +50,7 @@ const SettingsContextProvider = ({ children }: PropsWithChildren): JSX.Element =
   const context = {
     guitarTypes,
     guitarType,
+    onlySupportedGuitars,
     setGuitarType,
     tuningTypes,
     tuningType,

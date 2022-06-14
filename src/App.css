@@ -3,33 +3,23 @@
 
 .fretboard-group {}
 
-.fretboard-dot {
-  fill: #fff;
-}
-
-.fretboard-dot-number {
-
-  font-family: sans-serif;
-  text-anchor: middle;
-
-  stroke-width: 1;
-  font-size: 24px;
-}
-
 .fretboard-string {
   stroke: #2e2e2e;
 }
 
 .fretboard-fret {
-  stroke: #5b5959;
+  stroke: #706e6e;
 }
 
-.fretboard-fret-number-group {}
+.fretboard-nut {
+  stroke: #2e2e2e;
+}
+
+.fretboard-fret-numbers {}
 
 .fretboard-fret-number {
-  text-anchor: middle;
   font-family: sans-serif;
-
+  text-anchor: middle;
   stroke-width: 1;
   font-size: 24px;
 }

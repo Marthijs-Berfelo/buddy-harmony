@@ -2,6 +2,7 @@ import { GuitarScaleHook } from '../../../hooks';
 import { Toolbar } from '../../../components';
 import { Option, Select } from '@material-tailwind/react';
 import React from 'react';
+import { scaleGuitarTypes } from '../../../hooks/constants';
 
 const ScaleToolBar = ({
   keys,
@@ -14,10 +15,11 @@ const ScaleToolBar = ({
   return (
     <Toolbar
       title={'Scale'}
+      supportedGuitars={scaleGuitarTypes}
       tools={[
         <Select
           key={'scale-note'}
-          label="Note"
+          label="Key"
           className="flex items-center bg-white z-40"
           selected={(value) => {
             if (value?.key && value?.key !== selectedKey) {
