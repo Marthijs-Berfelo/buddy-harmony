@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@material-tailwind/react": "^1.0.3",
+    "@tombatossals/chords-db": "^0.5.1",
     "assert-ts": "^0.3.4",
     "fretboard-api": "^0.7.1",
     "guitar-scales": "^1.0.4",
@@ -20,7 +21,6 @@
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
-    "tonal": "^2.2.2",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
