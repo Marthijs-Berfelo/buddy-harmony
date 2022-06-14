@@ -1,3 +1,3 @@
 import ScalePage from './ScalePage';
 
-export { ScalePage };
+export { ScalePage as default };

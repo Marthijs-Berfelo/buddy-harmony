@@ -9,18 +9,14 @@ import {
   ScaleModel,
 } from '../../../components/fretboard';
 
-const ScaleContent = ({ note, scale, scaleModel }: GuitarScaleHook): JSX.Element => {
+const ScaleContent = ({ selectedKey, scale, scaleModel }: GuitarScaleHook): JSX.Element => {
   const [shape, setShape] = useState<ScaleModel>();
   const { tuningType, orientation, leftHanded } = useSettings();
 
   useEffect(() => {
-    console.log('TUNING:', tuningType);
-  }, [tuningType]);
-
-  useEffect(() => {
-    console.log('N', note, 'S', scale, 'M', scaleModel());
+    console.log('K', selectedKey, 'S', scale, 'M', scaleModel());
     setShape(scaleModel());
-  }, [note, scale]);
+  }, [selectedKey, scale]);
 
   return (
     <div className="flex justify-center" id="scale-content">

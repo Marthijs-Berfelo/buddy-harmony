@@ -1,8 +1,9 @@
-import React, { Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Pages } from '../routing/pages';
-import { ScalePage } from '../../modules/scale';
+import ScalePage from '../../modules/scale';
 import { SettingsContextProvider } from '../../hooks';
+const ChordPage = lazy(() => import('../../modules/chord'));
 
 const Content = (): JSX.Element => {
   return (
@@ -11,6 +12,7 @@ const Content = (): JSX.Element => {
         <Suspense fallback={'Loading..'}>
           <Routes>
             <Route path={Pages.SCALE} element={<ScalePage />} />
+            <Route path={Pages.CHORD} element={<ChordPage />} />
             <Route path={'*'} element={<Navigate to={Pages.SCALE} replace />} />
           </Routes>
         </Suspense>

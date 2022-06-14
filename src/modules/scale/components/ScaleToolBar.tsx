@@ -4,9 +4,9 @@ import { Option, Select } from '@material-tailwind/react';
 import React from 'react';
 
 const ScaleToolBar = ({
-  notes,
-  note,
-  setNote,
+  keys,
+  selectedKey,
+  setSelectedKey,
   scales,
   scale,
   setScale,
@@ -20,13 +20,13 @@ const ScaleToolBar = ({
           label="Note"
           className="flex items-center bg-white z-40"
           selected={(value) => {
-            if (value?.key && value?.key !== note) {
-              setNote(value?.key?.toString());
+            if (value?.key && value?.key !== selectedKey) {
+              setSelectedKey(value?.key?.toString());
             }
             return value;
           }}
         >
-          {notes.map((noteOption) => (
+          {keys.map((noteOption) => (
             <Option key={noteOption}>{noteOption}</Option>
           ))}
         </Select>,

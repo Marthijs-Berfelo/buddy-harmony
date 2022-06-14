@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { NoteHook, useNote } from './use-notes';
 import { ScaleModel } from '../components/fretboard';
 import * as gs from 'guitar-scales';
 import { useSettings } from './settings';
+import { KeysHook, useKeys } from './use-keys';
 
-export interface GuitarScaleHook extends NoteHook {
+export interface GuitarScaleHook extends KeysHook {
   scales: string[];
   scale?: string;
   setScale: Dispatch<SetStateAction<string | undefined>>;
@@ -13,7 +13,7 @@ export interface GuitarScaleHook extends NoteHook {
 
 export const useGuitarScale = (): GuitarScaleHook => {
   const guitarScale = gs.GuitarScale;
-  const { notes, note, setNote } = useNote();
+  const { keys, selectedKey, setSelectedKey } = useKeys();
   const { tuningType } = useSettings();
   const [scale, setScale] = useState<string>();
 
@@ -24,18 +24,18 @@ export const useGuitarScale = (): GuitarScaleHook => {
   }, [tuningType]);
 
   const scaleModel = useCallback((): ScaleModel | undefined => {
-    if (!!note && !!scale) {
-      const model = guitarScale.get(note, scale);
+    if (!!selectedKey && !!scale) {
+      const model = guitarScale.get(selectedKey, scale);
       return model as ScaleModel;
     } else {
       return;
     }
-  }, [note, scale]);
+  }, [selectedKey, scale]);
 
   return {
-    notes,
-    note,
-    setNote,
+    keys,
+    selectedKey,
+    setSelectedKey,
     scales: guitarScale.getNames(),
     scale,
     setScale,
