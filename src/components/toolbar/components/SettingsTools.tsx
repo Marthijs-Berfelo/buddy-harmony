@@ -31,7 +31,7 @@ const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element =>
   } = useSettings();
 
   return (
-    <ul className="flex justify-center gap-6">
+    <ul className="flex justify-center gap-6 mx-12">
       <Menu key={'tool-guitar'}>
         <MenuHandler>
           <Button variant="gradient">{`Type: ${guitarType.name}`}</Button>

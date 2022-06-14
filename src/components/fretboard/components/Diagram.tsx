@@ -4,7 +4,7 @@ import { DEFAULT_STYLE, DiagramStyle, StringAndFret } from '../utils/diagram-sty
 import { DotText, FretNumberPosition, FretNumberType, Orientation } from '../options';
 import Fretboard from './Fretboard';
 import FretNumbers from './FretNumbers';
-import Shape from './Shape';
+import ScaleShape from './ScaleShape';
 import { ScaleFret, ScaleModel } from '../utils/scale';
 import Tuning from './Tuning';
 
@@ -47,7 +47,7 @@ const Diagram = (
   const { onMouseClick, onMouseMove, strings, frets, tuning, viewBox, getShapes } =
     useDiagram(props);
   const { className, leftHanded, diagramStyle, orientation, scale, fretNumbers, text } = props;
-
+  const startAt = 1;
   return (
     <svg
       viewBox={viewBox()}
@@ -62,12 +62,12 @@ const Diagram = (
         <Fretboard
           strings={strings}
           frets={frets}
-          startAt={1}
+          startAt={startAt}
           orientation={orientation}
           diagramStyle={diagramStyle}
         />
         {scale && (
-          <Shape
+          <ScaleShape
             className={className}
             shape={getShapes(scale)}
             strings={strings}
@@ -81,7 +81,7 @@ const Diagram = (
           <FretNumbers
             frets={frets}
             fretNumbers={fretNumbers}
-            startAt={1}
+            startAt={startAt}
             orientation={orientation}
             leftHanded={leftHanded}
             diagramStyle={diagramStyle}

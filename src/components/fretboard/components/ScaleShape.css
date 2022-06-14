@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.shape-dot {
+.scale-dot {
     fill: #fff;
 }
 
-.shape-dot-text {
+.scale-dot-text {
     font-family: sans-serif;
     text-anchor: middle;
     stroke-width: 1;
@@ -14,65 +14,65 @@
 }
 
 
-.shape-dot-scale-0 {
+.scale-dot-0 {
     stroke: theme('colors.blue.500');
 }
-.shape-dot-text-scale-0 {
+.scale-dot-text-0 {
     fill: theme('colors.blue.500');
 }
 
-.shape-dot-scale-1 {
+.scale-dot-1 {
     stroke: theme('colors.red.500');
 }
-.shape-dot-text-scale-1 {
+.scale-dot-text-1 {
     fill: theme('colors.red.500');
 }
 
-.shape-dot-scale-2 {
+.scale-dot-2 {
     stroke: theme('colors.orange.500');
 }
-.shape-dot-text-scale-2 {
+.scale-dot-text-2 {
     fill: theme('colors.orange.500');
 }
 
-.shape-dot-scale-3 {
+.scale-dot-3 {
     stroke: theme('colors.teal.500');
 }
-.shape-dot-text-scale-3 {
+.scale-dot-text-3 {
     fill: theme('colors.teal.500');
 }
 
-.shape-dot-scale-4 {
+.scale-dot-4 {
     stroke: theme('colors.green.500');
 }
-.shape-dot-text-scale-4 {
+.scale-dot-text-4 {
     fill: theme('colors.green.500');
 }
 
-.shape-dot-scale-5 {
+.scale-dot-5 {
     stroke: theme('colors.pink.500');
 }
-.shape-dot-text-scale-5 {
+.scale-dot-text-5 {
     fill: theme('colors.pink.500');
 }
 
-.shape-dot-scale-6 {
+.scale-dot-6 {
     stroke: theme('colors.lime.500');
 }
-.shape-dot-text-scale-6 {
+.scale-dot-text-6 {
     fill: theme('colors.lime.500');
 }
 
-.shape-dot-scale-7 {
+.scale-dot-7 {
     stroke: theme('colors.purple.500');
 }
-.shape-dot-text-scale-7 {
+.scale-dot-text-7 {
     fill: theme('colors.purple.500');
 }
 
-.shape-dot-scale-8 {
+.scale-dot-8 {
     stroke: theme('colors.indigo.500');
 }
-.shape-dot-text-scale-8 {
+.scale-dot-text-8 {
     fill: theme('colors.indigo.500');
 }

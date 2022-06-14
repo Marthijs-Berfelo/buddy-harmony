@@ -2,7 +2,7 @@ import { DiagramStyle } from '../utils/diagram-style';
 import { DotText, Orientation } from '../options';
 import React, { Fragment } from 'react';
 import { ScaleFret } from '../utils/scale';
-import './Shape.css';
+import './ScaleShape.css';
 
 const fill = 'white';
 const dotStrokeColor = 'grey';
@@ -18,7 +18,7 @@ interface ShapeProps {
   text: DotText;
 }
 
-const Shape = (props: ShapeProps): JSX.Element => {
+const ScaleShape = (props: ShapeProps): JSX.Element => {
   const { shape, strings, dot, dotText } = useShape(props);
 
   const dots = shape.flatMap((string, stringIndex) =>
@@ -31,7 +31,7 @@ const Shape = (props: ShapeProps): JSX.Element => {
   return <g>{dots}</g>;
 };
 
-export default Shape;
+export default ScaleShape;
 
 type ShapeHook = {
   shape: ScaleFret[][];
@@ -119,7 +119,7 @@ const useShape = ({
         x={x(string, 0)}
         y={y(string, 0)}
         alignmentBaseline={'central'}
-        className={'shape-dot-text'}
+        className={'scale-dot-text'}
         fontSize={diagramStyle.fontSize * 1.5}
         fill={textColor}
       >
@@ -139,7 +139,7 @@ const useShape = ({
         cx={x(string, fret)}
         cy={y(string, fret)}
         r={diagramStyle.dotRadius}
-        className={`${className} shape-dot shape-dot${scalePositionClass(scalePosition)}`}
+        className={`${className} scale-dot scale-dot${scalePositionClass(scalePosition)}`}
         strokeWidth={diagramStyle.dotStroke}
         stroke={dotStrokeColor}
         fill={fill}
@@ -148,7 +148,7 @@ const useShape = ({
         x={x(string, fret)}
         y={y(string, fret)}
         alignmentBaseline={'central'}
-        className={`${className} shape-dot-text shape-dot-text${scalePositionClass(scalePosition)}`}
+        className={`${className} scale-dot-text scale-dot-text${scalePositionClass(scalePosition)}`}
         fontSize={diagramStyle.fontSize * 1.5}
         fill={textColor}
       >
@@ -158,7 +158,7 @@ const useShape = ({
   );
 
   const scalePositionClass = (scalePosition?: number): string =>
-    scalePosition !== undefined ? `-scale-${scalePosition}` : '';
+    scalePosition !== undefined ? `-${scalePosition}` : '';
 
   return {
     shape,
