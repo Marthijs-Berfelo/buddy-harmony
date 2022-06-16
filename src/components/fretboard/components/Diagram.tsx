@@ -73,7 +73,7 @@ const Diagram = (
       onClick={onMouseClick}
       onMouseMove={onMouseMove}
     >
-      <g className={'fretboard-group'}>
+      <g className={'fretboard'}>
         <Fretboard
           strings={strings}
           frets={frets}

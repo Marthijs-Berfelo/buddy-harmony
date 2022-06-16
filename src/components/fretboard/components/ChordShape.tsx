@@ -3,7 +3,6 @@ import { ChordPosition } from '../../../hooks';
 import { ShapeProps, useShape } from '../utils/shape';
 import { Orientation } from '../options';
 import * as svg from '../utils/svg';
-import './ChordShape.css';
 
 interface ChordShapeProps extends ShapeProps {
   chords?: ChordPosition[];
@@ -39,7 +38,7 @@ const useChordShape = ({
         x={x(diagramStyle.padding, string, 0, 0)}
         y={y(diagramStyle.padding, string, 0, 0)}
         alignmentBaseline={'central'}
-        className={'font-sans stroke-1 fill-black chord-dot-text'}
+        className={'font-sans stroke-1 text-4xl fill-black chord-dot-text'}
       >
         &#x2715;
       </text>
@@ -52,7 +51,7 @@ const useChordShape = ({
         x={x(diagramStyle.padding, string, 0, 0)}
         y={y(diagramStyle.padding, string, 0, 0)}
         alignmentBaseline={'central'}
-        className={'font-sans stroke-1 fill-black chord-dot-text'}
+        className={'font-sans stroke-1 text-4xl fill-black chord-dot-text'}
       >
         O
       </text>
@@ -72,7 +71,7 @@ const useChordShape = ({
           x={x(diagramStyle.padding, string, 0, 0)}
           y={y(diagramStyle.padding, string, 0, 0)}
           alignmentBaseline={'central'}
-          className={'font-sans stroke-1 fill-black chord-dot-text'}
+          className={'font-sans stroke-1 text-4xl fill-black chord-dot-text'}
         >
           {finger}
         </text>

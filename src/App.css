@@ -1,7 +1,7 @@
 
-.fretboard {}
-
-.fretboard-group {}
+.fretboard {
+  text-anchor: middle;
+}
 
 .fretboard-string {
   stroke: #2e2e2e;
@@ -19,7 +19,6 @@
 
 .fretboard-fret-number {
   font-family: sans-serif;
-  text-anchor: middle;
   stroke-width: 1;
   font-size: 24px;
 }

@@ -42,12 +42,7 @@ const useTuning = ({ tuning, orientation, leftHanded, diagramStyle }: TuningProp
       <text
         key={'tuning-' + index}
         y={y}
-        x={
-          diagramStyle.padding +
-          diagramStyle.stringWidth +
-          index * diagramStyle.stringInterval -
-          diagramStyle.tuningFontSize / 2
-        }
+        x={diagramStyle.padding + diagramStyle.stringWidth + index * diagramStyle.stringInterval}
         fontSize={diagramStyle.tuningFontSize}
         stroke={diagramStyle.tuningColor}
         className={'fretboard-tuning'}
