@@ -7,14 +7,10 @@ import {
   FretNumberType,
   Orientation,
 } from '../../../components/fretboard';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const ChordContent = ({ chordModel }: GuitarChordHook): JSX.Element => {
   const { tuningType, orientation, leftHanded } = useSettings();
-
-  useEffect(() => {
-    console.log('CHORD', chordModel);
-  }, [chordModel]);
 
   return (
     <div className="flex justify-center" id="chord-content">

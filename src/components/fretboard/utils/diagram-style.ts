@@ -55,10 +55,10 @@ export function diagramStyle(
   dotStroke = 1,
   fontSize = 12,
   fretNumberDistance = 45,
-  fretNumberFontSize = 24,
+  fretNumberFontSize = 30,
   fretNumberColor = '#999',
   tuningDistance = 90,
-  tuningFontSize = 24,
+  tuningFontSize = 30,
   tuningColor = '#999'
 ): DiagramStyle {
   const stringBoundary = (frets: number, orientation: Orientation): number => {

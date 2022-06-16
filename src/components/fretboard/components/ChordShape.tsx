@@ -78,7 +78,7 @@ const useChordShape = ({
       </Fragment>
     );
 
-  const barre = (barreFret: number, baseFret: number, strings: number[]): JSX.Element => {
+  const barre = (barreFret: number, startAt: number, strings: number[]): JSX.Element => {
     const barreStrings: number[] = [];
     strings.forEach((fret, string) => {
       if (fret === barreFret) {
@@ -94,7 +94,12 @@ const useChordShape = ({
       case Orientation.VERTICAL:
         barreLine = svg.horizontalLine(
           x(diagramStyle.padding, barreStart, barreFret, 0) - diagramStyle.stringInterval / 4,
-          y(diagramStyle.padding, barreStart, barreFret + baseFret, 0),
+          y(
+            diagramStyle.padding,
+            barreStart,
+            barreFret,
+            startAt > 1 ? diagramStyle.stringInterval / 2 : 0
+          ),
           barreLength,
           diagramStyle.dotRadius
         );
@@ -102,7 +107,12 @@ const useChordShape = ({
       case Orientation.HORIZONTAL:
       default:
         barreLine = svg.verticalLine(
-          x(diagramStyle.padding, barreStart, barreFret + baseFret, 0),
+          x(
+            diagramStyle.padding,
+            barreStart,
+            barreFret,
+            startAt > 1 ? diagramStyle.stringInterval / 2 : 0
+          ),
           y(diagramStyle.padding, barreStart, barreFret, 0) - diagramStyle.stringInterval / 4,
           barreLength,
           diagramStyle.dotRadius
@@ -112,16 +122,40 @@ const useChordShape = ({
     return <path fill={'none'} className="stroke-[12px] stroke-black fill-black" d={barreLine} />;
   };
 
-  const dot = (string: number, fret: number, chordPosition: number): JSX.Element => (
+  const dot = (
+    string: number,
+    fret: number,
+    startAt: number,
+    chordPosition: number
+  ): JSX.Element => (
     <Fragment key={`${chordPosition}.${string}.${fret}`}>
       <circle
-        cx={x(diagramStyle.padding, string, fret, 0)}
-        cy={y(diagramStyle.padding, string, fret, 0)}
+        cx={x(diagramStyle.padding, string, fret, xOffset(startAt === 0))}
+        cy={y(diagramStyle.padding, string, fret, yOffset(startAt === 0))}
         r={diagramStyle.dotRadius}
         className={`${className} stroke-black fill-black`}
       />
     </Fragment>
   );
+
+  const xOffset = (withNut: boolean): number => {
+    switch (orientation) {
+      case Orientation.VERTICAL:
+        return 0;
+      case Orientation.HORIZONTAL:
+      default:
+        return withNut ? 0 : diagramStyle.stringInterval * 0.75;
+    }
+  };
+  const yOffset = (withNut: boolean): number => {
+    switch (orientation) {
+      case Orientation.VERTICAL:
+        return withNut ? 0 : diagramStyle.stringInterval * 0.75;
+      case Orientation.HORIZONTAL:
+      default:
+        return 0;
+    }
+  };
 
   const renderChord = (
     chord: ChordPosition,
@@ -132,19 +166,17 @@ const useChordShape = ({
     const fingers = includeFingers
       ? chord.fingers.map((fingerNumber, string) => finger(string, fingerNumber, chordPosition))
       : [];
-    const dots = chord.frets
-      .map((fret) => (fret > 0 ? fret + baseFret : fret))
-      .map((fret, string) => {
-        if (fret < 0) {
-          return cross(string, chordPosition);
-        } else if (fret === 0) {
-          return open(string, chordPosition);
-        } else if (chord.barres?.includes(fret - baseFret)) {
-          return blank(string, chordPosition);
-        } else {
-          return dot(string, fret, chordPosition);
-        }
-      });
+    const dots = chord.frets.map((fret, string) => {
+      if (fret < 0) {
+        return cross(string, chordPosition);
+      } else if (fret === 0) {
+        return open(string, chordPosition);
+      } else if (chord.barres?.includes(fret)) {
+        return blank(string, chordPosition);
+      } else {
+        return dot(string, fret, baseFret, chordPosition);
+      }
+    });
     const barres =
       (chord.barres || []).map((barreFret) => barre(barreFret, baseFret, chord.frets)) || [];
 

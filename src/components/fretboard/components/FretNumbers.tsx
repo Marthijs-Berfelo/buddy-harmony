@@ -42,12 +42,14 @@ const useFretNumbers = ({
     }
   };
 
+  const numberFrets = (): number[] =>
+    Array.from(Array(Math.trunc(frets) - (startAt === 1 ? 0 : 1)).keys())
+      .map((fret) => fret + startAt)
+      .filter((fret) => STANDARD_NUMBERS.includes(fret));
+
   const horizontalFretNumbers = (): JSX.Element[] => {
     const y = diagramStyle.padding - diagramStyle.fretNumberDistance;
-    const total = Math.trunc(frets);
-    const numbers = Array.from(Array(total).keys())
-      .map((index) => index + startAt)
-      .filter((fret) => STANDARD_NUMBERS.includes(fret));
+    const numbers = numberFrets();
     if (leftHanded) {
       numbers.reverse();
     }
@@ -57,14 +59,14 @@ const useFretNumbers = ({
         y={y}
         x={
           diagramStyle.padding +
+          (startAt > 1 ? diagramStyle.fretInterval * 1.5 : 0) +
           (fret - 1) * diagramStyle.fretInterval +
           diagramStyle.fretInterval -
           diagramStyle.dotIn +
           diagramStyle.fretWidth
         }
         fontSize={diagramStyle.fretNumberFontSize}
-        stroke={diagramStyle.fretNumberColor}
-        className={'fretboard-fret-number'}
+        className="font-sans stroke-0 fill-black"
       >
         {fret}
       </text>
@@ -73,28 +75,24 @@ const useFretNumbers = ({
 
   const verticalFretNumbers = (): JSX.Element[] => {
     const x = diagramStyle.padding - diagramStyle.fretNumberDistance;
-    const total = Math.trunc(frets);
-    return Array.from(Array(total).keys())
-      .map((index) => index + startAt)
-      .filter((fret) => STANDARD_NUMBERS.includes(fret))
-      .map((fret) => (
-        <text
-          key={'fn-' + fret}
-          y={
-            diagramStyle.padding +
-            (fret - 1) * diagramStyle.fretInterval +
-            diagramStyle.fretInterval -
-            diagramStyle.dotIn +
-            diagramStyle.fretWidth
-          }
-          x={x}
-          fontSize={diagramStyle.fretNumberFontSize}
-          stroke={diagramStyle.fretNumberColor}
-          className={'fretboard-fret-number'}
-        >
-          {fret}
-        </text>
-      ));
+    return numberFrets().map((fret) => (
+      <text
+        key={'fn-' + fret}
+        y={
+          diagramStyle.padding +
+          (startAt > 1 ? diagramStyle.fretInterval * 1.5 : 0) +
+          (fret - 1 - startAt) * diagramStyle.fretInterval +
+          diagramStyle.fretInterval -
+          diagramStyle.dotIn +
+          diagramStyle.fretWidth
+        }
+        x={x}
+        fontSize={diagramStyle.fretNumberFontSize}
+        className="font-sans stroke-0 fill-grey-800 stroke-grey-800"
+      >
+        {fret}
+      </text>
+    ));
   };
 
   return { fretNumbers };

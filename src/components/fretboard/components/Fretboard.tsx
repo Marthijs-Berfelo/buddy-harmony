@@ -24,25 +24,10 @@ const Fretboard = (
   return (
     <Fragment>
       {includeNut && (
-        <path
-          fill={'none'}
-          strokeWidth={fretWidth}
-          className={'fretboard-nut'}
-          d={fretsPath(true)}
-        />
+        <path strokeWidth={fretWidth} className="fill-none stroke-black" d={fretsPath(true)} />
       )}
-      <path
-        fill={'none'}
-        strokeWidth={fretWidth}
-        className={'fretboard-fret'}
-        d={fretsPath(false)}
-      />
-      <path
-        fill={'none'}
-        strokeWidth={stringWidth}
-        className={'fretboard-string'}
-        d={stringsPath()}
-      />
+      <path strokeWidth={fretWidth} className="fill-none stroke-grey-600" d={fretsPath(false)} />
+      <path strokeWidth={stringWidth} className="fill-none stroke-black" d={stringsPath()} />
     </Fragment>
   );
 };
@@ -79,6 +64,7 @@ const useFretboard = ({
     for (let index = nut || !frets ? 0 : 1; index < lines; index++) {
       paths[index] = svg.verticalLine(
         diagramStyle.padding +
+          (!frets && !includeNut ? interval / 2 : 0) +
           (includeNut ? 0 : interval / 2) +
           (includeNut || nut ? index : index - 1) * interval -
           (isFirstFret(frets, index) ? width : 0),
@@ -103,6 +89,7 @@ const useFretboard = ({
       paths[index] = svg.horizontalLine(
         diagramStyle.padding,
         diagramStyle.padding +
+          (!frets && !includeNut ? interval / 2 : 0) +
           (includeNut ? 0 : interval / 2) +
           (includeNut || nut ? index : index - 1) * interval -
           (isFirstFret(frets, index) ? width : 0),
@@ -144,7 +131,7 @@ const useFretboard = ({
       case Orientation.VERTICAL:
         return horizontalLines(
           length,
-          frets + 1,
+          includeNut ? frets : frets + 1,
           diagramStyle.fretInterval,
           diagramStyle.fretWidth,
           true,
@@ -154,7 +141,7 @@ const useFretboard = ({
       default:
         return verticalLines(
           length,
-          frets + 1,
+          includeNut ? frets : frets + 1,
           diagramStyle.fretInterval,
           diagramStyle.fretWidth,
           true,

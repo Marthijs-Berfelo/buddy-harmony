@@ -17,6 +17,7 @@ export interface DiagramProps {
   text: DotText;
   leftHanded: boolean;
   frets: number;
+  startAt?: number;
   fretNumbers: FretNumberType;
   fretNumbersPosition: FretNumberPosition;
   tuning: string[];
@@ -48,7 +49,7 @@ const Diagram = (
     debug: false,
   }
 ): JSX.Element => {
-  const { onMouseClick, onMouseMove, strings, frets, tuning, viewBox, getShapes } =
+  const { onMouseClick, onMouseMove, strings, frets, startAt, tuning, viewBox, getShapes } =
     useDiagram(props);
   const {
     className,
@@ -61,7 +62,6 @@ const Diagram = (
     fretNumbers,
     text,
   } = props;
-  const startAt = 1;
 
   return (
     <svg
@@ -140,6 +140,7 @@ type DiagramHook = {
   onMouseMove: (event: MouseEvent<SVGSVGElement>) => void;
   strings: number;
   frets: number;
+  startAt: number;
   viewBox: () => string;
   tuning: string[];
   getShapes: (scale: ScaleModel) => ScaleFret[][];
@@ -152,6 +153,7 @@ const useDiagram = ({
   tuning,
   frets,
   scale,
+  chord,
   leftHanded,
   orientation,
   clickHandler,
@@ -159,7 +161,7 @@ const useDiagram = ({
 }: DiagramProps): DiagramHook => {
   const guitarTuning = tuning;
   const strings = guitarTuning.length;
-  const fretCount = !!scale ? scale.fretzNumber : frets;
+  const fretCount = !!scale ? scale.fretzNumber : !!chord ? 5 : frets;
 
   const onMouseClick = (event: MouseEvent<SVGSVGElement>): void => {
     if (!clickHandler) {
@@ -204,13 +206,13 @@ const useDiagram = ({
         return diagramStyle.fretBoundary(strings, orientation);
       case Orientation.HORIZONTAL:
       default:
-        return diagramStyle.stringBoundary(frets, orientation);
+        return diagramStyle.stringBoundary(fretCount, orientation);
     }
   };
   const getHeight = (): number => {
     switch (orientation) {
       case Orientation.VERTICAL:
-        return diagramStyle.stringBoundary(frets, orientation);
+        return diagramStyle.stringBoundary(fretCount, orientation);
       case Orientation.HORIZONTAL:
       default:
         return diagramStyle.fretBoundary(strings, orientation);
@@ -229,11 +231,20 @@ const useDiagram = ({
     return models.filter((string) => !!string);
   };
 
+  const getStartAt = (): number => {
+    if (!!chord) {
+      console.log('CHORD START', chord.baseFret, 'CHRD', chord);
+      return chord.baseFret;
+    }
+    return 1;
+  };
+
   return {
     onMouseClick,
     onMouseMove,
     strings,
     frets: fretCount,
+    startAt: getStartAt(),
     tuning: guitarTuning,
     viewBox,
     getShapes,

@@ -1,12 +1,7 @@
 import { DotText } from '../options';
 import React, { Fragment } from 'react';
 import { ScaleFret } from '../utils/scale';
-import './ScaleShape.css';
 import { ShapeProps, useShape } from '../utils/shape';
-
-const fill = 'white';
-const dotStrokeColor = 'grey';
-const textColor = 'black';
 
 interface ScaleShapeProps extends ShapeProps {
   scale: ScaleFret[][];
@@ -66,26 +61,48 @@ const useScaleShape = ({
         cx={x(diagramStyle.padding, string, fret, 0)}
         cy={y(diagramStyle.padding, string, fret, 0)}
         r={diagramStyle.dotRadius}
-        className={`${className} scale-dot scale-dot${scalePositionClass(scalePosition)}`}
+        className={`${className} fill-white ${scalePositionClass(false, scalePosition)}`}
         strokeWidth={diagramStyle.dotStroke}
-        stroke={dotStrokeColor}
-        fill={fill}
       />
       <text
         x={x(diagramStyle.padding, string, fret, 0)}
         y={y(diagramStyle.padding, string, fret, 0)}
         alignmentBaseline={'central'}
-        className={`${className} scale-dot-text scale-dot-text${scalePositionClass(scalePosition)}`}
-        fontSize={diagramStyle.fontSize * 1.5}
-        fill={textColor}
+        className={`${className} text-lg font-sans stroke-1 ${scalePositionClass(
+          true,
+          scalePosition
+        )}`}
       >
         {text}
       </text>
     </Fragment>
   );
 
-  const scalePositionClass = (scalePosition?: number): string =>
-    scalePosition !== undefined ? `-${scalePosition}` : '';
+  const scalePositionClass = (isText: boolean, scalePosition?: number): string => {
+    switch (scalePosition) {
+      case 0:
+        return isText ? 'fill-blue-500' : 'stroke-blue-500';
+      case 1:
+        return isText ? 'fill-red-500' : 'stroke-red-500';
+      case 2:
+        return isText ? 'fill-orange-500' : 'stroke-orange-500';
+      case 3:
+        return isText ? 'fill-teal-500' : 'stroke-teal-500';
+      case 4:
+        return isText ? 'fill-green-500' : 'stroke-green-500';
+      case 5:
+        return isText ? 'fill-pink-500' : 'stroke-pink-500';
+      case 6:
+        return isText ? 'fill-lime-500' : 'stroke-lime-500';
+      case 7:
+        return isText ? 'fill-purple-500' : 'stroke-purple-500';
+      case 8:
+        return isText ? 'fill-indigo-500' : 'stroke-indigo-500';
+      case undefined:
+      default:
+        return isText ? 'fill-black' : 'stroke-black';
+    }
+  };
 
   const scaleShape = scale.flatMap((string, stringIndex) =>
     string
