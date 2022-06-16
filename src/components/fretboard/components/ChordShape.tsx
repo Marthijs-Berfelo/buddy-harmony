@@ -113,7 +113,8 @@ const useChordShape = ({
             barreFret,
             startAt > 1 ? diagramStyle.stringInterval / 2 : 0
           ),
-          y(diagramStyle.padding, barreStart, barreFret, 0) - diagramStyle.stringInterval / 4,
+          y(diagramStyle.padding, strings.length - barreEnd - 1, barreFret, 0) -
+            diagramStyle.stringInterval / 4,
           barreLength,
           diagramStyle.dotRadius
         );
@@ -163,10 +164,20 @@ const useChordShape = ({
     includeFingers: boolean
   ): JSX.Element[] => {
     const baseFret = chord.baseFret - 1;
+    const fingerNumbersOriginal = [...chord.fingers];
+    const fingerNumbers =
+      orientation === Orientation.HORIZONTAL || leftHanded
+        ? [...fingerNumbersOriginal.reverse()]
+        : [...chord.fingers];
     const fingers = includeFingers
-      ? chord.fingers.map((fingerNumber, string) => finger(string, fingerNumber, chordPosition))
+      ? fingerNumbers.map((fingerNumber, string) => finger(string, fingerNumber, chordPosition))
       : [];
-    const dots = chord.frets.map((fret, string) => {
+    const originalFrets = [...chord.frets];
+    const frets =
+      orientation === Orientation.HORIZONTAL || leftHanded
+        ? [...originalFrets.reverse()]
+        : [...chord.frets];
+    const dots = frets.map((fret, string) => {
       if (fret < 0) {
         return cross(string, chordPosition);
       } else if (fret === 0) {

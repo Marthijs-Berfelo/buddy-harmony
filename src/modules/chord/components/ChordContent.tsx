@@ -49,9 +49,9 @@ const ChordDiagram = ({
   tuningType,
   chordPosition,
 }: ChordDiagramProps): JSX.Element => {
-  console.log('CHORD', chordPosition, chord);
   return (
     <Diagram
+      key={`chord-diagram.${chordPosition || 0}`}
       className={'max-w-screen-2xl max-h-screen'}
       diagramStyle={DEFAULT_STYLE}
       orientation={orientation}
