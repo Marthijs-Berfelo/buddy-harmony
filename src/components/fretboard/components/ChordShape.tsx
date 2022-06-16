@@ -5,8 +5,6 @@ import { Orientation } from '../options';
 import * as svg from '../utils/svg';
 import './ChordShape.css';
 
-const textColor = 'black';
-
 interface ChordShapeProps extends ShapeProps {
   chords?: ChordPosition[];
   chord?: ChordPosition;
@@ -35,15 +33,13 @@ const useChordShape = ({
 }: ChordShapeProps): ChordShapeHook => {
   const { x, y } = useShape({ className, strings, leftHanded, orientation, diagramStyle });
 
-  const cross = (string: number): JSX.Element => (
-    <Fragment key={`${string}.X`}>
+  const cross = (string: number, position: number): JSX.Element => (
+    <Fragment key={`${position}.${string}.X`}>
       <text
         x={x(diagramStyle.padding, string, 0, 0)}
         y={y(diagramStyle.padding, string, 0, 0)}
         alignmentBaseline={'central'}
-        className={'font-sans stroke-1 chord-dot-text'}
-        fontSize={diagramStyle.fontSize * 1.5}
-        fill={textColor}
+        className={'font-sans stroke-1 fill-black chord-dot-text'}
       >
         &#x2715;
       </text>
@@ -51,14 +47,12 @@ const useChordShape = ({
   );
 
   const open = (string: number, position: number): JSX.Element => (
-    <Fragment key={`${position}.${string}.X`}>
+    <Fragment key={`${position}.${string}.O`}>
       <text
         x={x(diagramStyle.padding, string, 0, 0)}
         y={y(diagramStyle.padding, string, 0, 0)}
         alignmentBaseline={'central'}
-        className={'font-sans stroke-0 chord-dot-text'}
-        fontSize={diagramStyle.fontSize * 1.5}
-        fill={textColor}
+        className={'font-sans stroke-1 fill-black chord-dot-text'}
       >
         O
       </text>
@@ -78,21 +72,14 @@ const useChordShape = ({
           x={x(diagramStyle.padding, string, 0, 0)}
           y={y(diagramStyle.padding, string, 0, 0)}
           alignmentBaseline={'central'}
-          className={'font-sans stroke-1 chord-dot-text'}
-          fontSize={diagramStyle.fontSize * 2}
-          fill={textColor}
+          className={'font-sans stroke-1 fill-black chord-dot-text'}
         >
           {finger}
         </text>
       </Fragment>
     );
 
-  const barre = (
-    barreFret: number,
-    baseFret: number,
-    strings: number[],
-    chordPosition?: number
-  ): JSX.Element => {
+  const barre = (barreFret: number, baseFret: number, strings: number[]): JSX.Element => {
     const barreStrings: number[] = [];
     strings.forEach((fret, string) => {
       if (fret === barreFret) {
@@ -123,13 +110,7 @@ const useChordShape = ({
         );
     }
 
-    return (
-      <path
-        fill={'none'}
-        className={`stroke-[12px] ${chordPositionClass(chordPosition)}`}
-        d={barreLine}
-      />
-    );
+    return <path fill={'none'} className="stroke-[12px] stroke-black fill-black" d={barreLine} />;
   };
 
   const dot = (string: number, fret: number, chordPosition: number): JSX.Element => (
@@ -138,39 +119,10 @@ const useChordShape = ({
         cx={x(diagramStyle.padding, string, fret, 0)}
         cy={y(diagramStyle.padding, string, fret, 0)}
         r={diagramStyle.dotRadius}
-        className={`${className} ${chordPositionClass(chordPosition)}`}
-        strokeWidth={diagramStyle.dotStroke}
-        stroke={textColor}
-        fill={textColor}
+        className={`${className} stroke-black fill-black`}
       />
     </Fragment>
   );
-
-  const chordPositionClass = (chordPosition?: number): string => {
-    switch (chordPosition) {
-      case undefined:
-        return '';
-      case 1:
-        return 'stroke-blue-500 fill-blue-500';
-      case 2:
-        return 'stroke-orange-500 fill-orange-500';
-      case 3:
-        return 'stroke-red-500 fill-red-500';
-      case 4:
-        return 'stroke-teal-500 fill-teal-500';
-      case 5:
-        return 'stroke-green-500 fill-green-500';
-      case 6:
-        return 'stroke-pink-500 fill-pink-500';
-      case 7:
-        return 'stroke-lime-500 fill-lime-500';
-      case 8:
-        return 'stroke-purple-500 fill-purple-500';
-      case 0:
-      default:
-        return 'stroke-black fill-black';
-    }
-  };
 
   const renderChord = (
     chord: ChordPosition,
@@ -185,7 +137,7 @@ const useChordShape = ({
       .map((fret) => (fret > 0 ? fret + baseFret : fret))
       .map((fret, string) => {
         if (fret < 0) {
-          return cross(string);
+          return cross(string, chordPosition);
         } else if (fret === 0) {
           return open(string, chordPosition);
         } else if (chord.barres?.includes(fret - baseFret)) {
@@ -195,9 +147,7 @@ const useChordShape = ({
         }
       });
     const barres =
-      (chord.barres || [])
-        // .map((fret) => (fret > -1 ? fret + baseFret : fret))
-        .map((barreFret) => barre(barreFret, baseFret, chord.frets, chordPosition)) || [];
+      (chord.barres || []).map((barreFret) => barre(barreFret, baseFret, chord.frets)) || [];
 
     return [...fingers, ...dots, ...barres];
   };
