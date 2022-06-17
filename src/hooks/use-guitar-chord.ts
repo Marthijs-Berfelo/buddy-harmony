@@ -44,7 +44,7 @@ export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook =>
   const printStyle = (orientation: Orientation): string =>
     `@page: { size: A4 ${
       orientation === Orientation.HORIZONTAL ? 'landscape' : 'portrait'
-    }, margin: 10mm 10mm 10mm 10mm }`;
+    }, margin: 30mm 30mm 30mm 30mm }`;
 
   return {
     keys,

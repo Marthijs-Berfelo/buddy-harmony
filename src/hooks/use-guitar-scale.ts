@@ -33,10 +33,9 @@ export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook =>
     }
   }, [selectedKey, scale]);
 
-  const printStyle = (orientation: Orientation): string =>
-    `@page: { size: A4 ${
-      orientation === Orientation.HORIZONTAL ? 'landscape' : 'portrait'
-    }, margin: 10mm 10mm 10mm 10mm }`;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const printStyle = (_: Orientation): string =>
+    `@page: { size: A4 portrait, margin: 30mm 30mm 30mm 30mm }`;
 
   return {
     keys,

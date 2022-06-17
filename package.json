@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@material-tailwind/react": "^1.0.3",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@tombatossals/chords-db": "^0.5.1",
     "assert-ts": "^0.3.4",
     "fretboard-api": "^0.7.1",
@@ -32,6 +35,7 @@
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
+    "@types/react-fontawesome": "^1.6.5",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
     "autoprefixer": "^10.4.7",

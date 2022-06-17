@@ -10,10 +10,12 @@ const ChordToolBar = ({
   chords,
   chord,
   setChord,
+  printRef,
 }: GuitarChordHook): JSX.Element => (
   <Toolbar
     title={'Chord'}
     supportedGuitars={chordGuitarTypes}
+    printRef={printRef}
     tools={[
       <Select
         key={'chord-note'}

@@ -11,11 +11,13 @@ const ScaleToolBar = ({
   scales,
   scale,
   setScale,
+  printRef,
 }: GuitarScaleHook): JSX.Element => {
   return (
     <Toolbar
       title={'Scale'}
       supportedGuitars={scaleGuitarTypes}
+      printRef={printRef}
       tools={[
         <Select
           key={'scale-note'}

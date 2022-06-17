@@ -1,5 +1,5 @@
 import React, { MouseEvent } from 'react';
-import { DEFAULT_STYLE, DiagramStyle, StringAndFret, ScaleFret, ScaleModel } from '../utils';
+import { DEFAULT_STYLE, DiagramStyle, ScaleFret, ScaleModel, StringAndFret } from '../utils';
 import { DotText, FretNumberPosition, FretNumberType, Orientation } from '../options';
 import Fretboard from './Fretboard';
 import FretNumbers from './FretNumbers';
@@ -52,6 +52,8 @@ const Diagram = (props: DiagramProps): JSX.Element => {
   return (
     <svg
       viewBox={viewBox()}
+      width={'auto'}
+      height={'auto'}
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMinYMin meet"
       className={`${className} bg-white`}
@@ -190,19 +192,27 @@ const useDiagram = ({
   const getWidth = (): number => {
     switch (orientation) {
       case Orientation.VERTICAL:
-        return style.fretBoundary(strings, orientation);
+        const vw = style.fretBoundary(strings, orientation);
+        console.log('V WIDTH', vw);
+        return vw;
       case Orientation.HORIZONTAL:
       default:
-        return style.stringBoundary(fretCount, orientation);
+        const hw = style.stringBoundary(fretCount, orientation);
+        console.log('H WIDTH', hw);
+        return hw;
     }
   };
   const getHeight = (): number => {
     switch (orientation) {
       case Orientation.VERTICAL:
-        return style.stringBoundary(fretCount, orientation);
+        const vh = style.stringBoundary(fretCount, orientation);
+        console.log('V HEIGHT', vh);
+        return vh;
       case Orientation.HORIZONTAL:
       default:
-        return style.fretBoundary(strings, orientation);
+        const hh = style.fretBoundary(strings, orientation);
+        console.log('H HEIGHT', hh);
+        return hh;
     }
   };
 
