@@ -192,27 +192,19 @@ const useDiagram = ({
   const getWidth = (): number => {
     switch (orientation) {
       case Orientation.VERTICAL:
-        const vw = style.fretBoundary(strings, orientation);
-        console.log('V WIDTH', vw);
-        return vw;
+        return style.fretBoundary(strings, orientation);
       case Orientation.HORIZONTAL:
       default:
-        const hw = style.stringBoundary(fretCount, orientation);
-        console.log('H WIDTH', hw);
-        return hw;
+        return style.stringBoundary(fretCount, orientation);
     }
   };
   const getHeight = (): number => {
     switch (orientation) {
       case Orientation.VERTICAL:
-        const vh = style.stringBoundary(fretCount, orientation);
-        console.log('V HEIGHT', vh);
-        return vh;
+        return style.stringBoundary(fretCount, orientation);
       case Orientation.HORIZONTAL:
       default:
-        const hh = style.fretBoundary(strings, orientation);
-        console.log('H HEIGHT', hh);
-        return hh;
+        return style.fretBoundary(strings, orientation);
     }
   };
 
