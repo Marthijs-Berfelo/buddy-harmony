@@ -1,8 +1,7 @@
 import React from 'react';
-import './App.css';
-import Header from './components/layout/Header';
 import { BrowserRouter } from 'react-router-dom';
-import Content from './components/layout/Content';
+import { Header, Content } from './common/layout';
+import './App.css';
 
 function App() {
   return (

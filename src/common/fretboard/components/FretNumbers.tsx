@@ -1,5 +1,5 @@
 import { FretNumberType, Orientation } from '../options';
-import { DiagramStyle } from '../utils/diagram-style';
+import { DiagramStyle } from '../utils';
 import React from 'react';
 
 const STANDARD_NUMBERS = [3, 5, 7, 9, 12, 15, 17, 19, 21, 24];

@@ -1,5 +1,5 @@
 import { Orientation } from '../options';
-import { DiagramStyle } from '../utils/diagram-style';
+import { DiagramStyle } from '../utils';
 import React from 'react';
 
 type TuningProps = {

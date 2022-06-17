@@ -1,6 +1,6 @@
 import { BaseContext } from '../base-context';
 import { createContext, Dispatch, SetStateAction, useContext } from 'react';
-import { Orientation } from '../../components/fretboard';
+import { Orientation } from '../../common/fretboard';
 import { defaultGuitar, GuitarType, StringTuningType } from '../constants';
 
 export interface Settings extends BaseContext {

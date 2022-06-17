@@ -1,4 +1,4 @@
-import { DEFAULT_STYLE } from './utils/diagram-style';
+import { DEFAULT_STYLE } from './utils';
 import DebugGrid from './components/DebugGrid';
 import Diagram from './components/Diagram';
 

@@ -1,7 +1,6 @@
 import { DotText } from '../options';
 import React, { Fragment } from 'react';
-import { ScaleFret } from '../utils/scale';
-import { ShapeProps, useShape } from '../utils/shape';
+import { ShapeProps, useShape, ScaleFret } from '../utils';
 
 interface ScaleShapeProps extends ShapeProps {
   scale: ScaleFret[][];

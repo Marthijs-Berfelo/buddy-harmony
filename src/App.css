@@ -3,16 +3,4 @@
   text-anchor: middle;
 }
 
-.fretboard-string {
-  stroke: #2e2e2e;
-}
-
-.fretboard-fret {
-  stroke: #706e6e;
-}
-
-.fretboard-nut {
-  stroke: #2e2e2e;
-}
-
 .fretboard-fret-numbers {}

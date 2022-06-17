@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { SettingsContext } from './use-settings';
-import { Orientation } from '../../components/fretboard';
+import { Orientation } from '../../common/fretboard';
 import {
   guitarTypes,
   defaultGuitar,

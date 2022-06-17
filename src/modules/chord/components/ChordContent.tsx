@@ -1,12 +1,11 @@
 import { useSettings, GuitarChordHook, ChordPosition, StringTuningType } from '../../../hooks';
 import {
-  DEFAULT_STYLE,
   Diagram,
   DotText,
   FretNumberPosition,
   FretNumberType,
   Orientation,
-} from '../../../components/fretboard';
+} from '../../../common/fretboard';
 import React from 'react';
 
 const ChordContent = ({ chordModel }: GuitarChordHook): JSX.Element => {
@@ -53,16 +52,13 @@ const ChordDiagram = ({
     <Diagram
       key={`chord-diagram.${chordPosition || 0}`}
       className={'max-w-screen-2xl max-h-screen'}
-      diagramStyle={DEFAULT_STYLE}
       orientation={orientation}
       text={DotText.NOTE}
       leftHanded={leftHanded}
-      frets={12}
       chord={chord}
       fretNumbers={FretNumberType.LATIN}
       fretNumbersPosition={FretNumberPosition.LEFT}
       tuning={tuningType.tuning}
-      debug={false}
     />
   );
 };

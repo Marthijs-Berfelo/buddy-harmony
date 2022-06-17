@@ -1,8 +1,8 @@
 import { GuitarScaleHook } from '../../../hooks';
-import { Toolbar } from '../../../components';
+import { Toolbar } from '../../../common';
 import { Option, Select } from '@material-tailwind/react';
 import React from 'react';
-import { scaleGuitarTypes } from '../../../hooks/constants';
+import { scaleGuitarTypes } from '../../../hooks';
 
 const ScaleToolBar = ({
   keys,

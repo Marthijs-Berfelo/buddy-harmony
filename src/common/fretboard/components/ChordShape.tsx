@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
 import { ChordPosition } from '../../../hooks';
-import { ShapeProps, useShape } from '../utils/shape';
+import { ShapeProps, useShape, svg } from '../utils';
 import { Orientation } from '../options';
-import * as svg from '../utils/svg';
 
 interface ChordShapeProps extends ShapeProps {
   chords?: ChordPosition[];

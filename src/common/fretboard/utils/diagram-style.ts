@@ -15,10 +15,8 @@ export interface DiagramStyle {
   fontSize: number;
   fretNumberDistance: number;
   fretNumberFontSize: number;
-  fretNumberColor: string;
   tuningDistance: number;
   tuningFontSize: number;
-  tuningColor: string;
   stringBoundary: (frets: number, orientation: Orientation) => number;
   fretBoundary: (strings: number, orientation: Orientation) => number;
   stringLength: (frets: number) => number;
@@ -56,10 +54,8 @@ export function diagramStyle(
   fontSize = 12,
   fretNumberDistance = 45,
   fretNumberFontSize = 30,
-  fretNumberColor = '#999',
   tuningDistance = 90,
-  tuningFontSize = 30,
-  tuningColor = '#999'
+  tuningFontSize = 30
 ): DiagramStyle {
   const stringBoundary = (frets: number, orientation: Orientation): number => {
     assert(frets > 0, 'Number of frets must be an integer greater than 0');
@@ -174,10 +170,8 @@ export function diagramStyle(
     fontSize,
     fretNumberDistance,
     fretNumberFontSize,
-    fretNumberColor,
     tuningDistance,
     tuningFontSize,
-    tuningColor,
     stringBoundary,
     fretBoundary,
     stringLength,

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ScaleModel } from '../components/fretboard';
+import { ScaleModel } from '../common/fretboard';
 import * as gs from 'guitar-scales';
 import { useSettings } from './settings';
 import { KeysHook, useKeys } from './use-keys';

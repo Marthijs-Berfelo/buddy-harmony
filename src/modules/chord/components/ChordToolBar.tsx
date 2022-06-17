@@ -1,5 +1,5 @@
 import { GuitarChordHook, chordGuitarTypes } from '../../../hooks';
-import { Toolbar } from '../../../components';
+import { Toolbar } from '../../../common';
 import { Option, Select } from '@material-tailwind/react';
 import React from 'react';
 
