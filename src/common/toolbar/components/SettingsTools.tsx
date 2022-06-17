@@ -9,7 +9,7 @@ import {
   Option,
   Select,
 } from '@material-tailwind/react';
-import { GuitarType } from '../../../hooks/constants';
+import { GuitarType } from '../../../hooks';
 
 export interface SettingsToolsProps {
   supportedGuitars?: GuitarType[];
