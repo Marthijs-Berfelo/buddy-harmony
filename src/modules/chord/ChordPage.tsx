@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useGuitarChord } from '../../hooks';
 import ChordToolBar from './components/ChordToolBar';
 import ChordContent from './components/ChordContent';
 import '../../common/Page.css';
 
 const ChordPage = (): JSX.Element => {
-  const hook = useGuitarChord();
+  const printRef = useRef<HTMLDivElement>(null);
+  const hook = useGuitarChord({ printRef });
 
   return (
     <div className="page" id="chord-page">

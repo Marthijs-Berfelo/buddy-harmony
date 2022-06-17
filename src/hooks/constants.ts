@@ -1,7 +1,17 @@
 import { Tuning, TuningType } from 'fretboard-api';
 import { chordTuning, guitar, instruments } from './chord-db';
+import { RefObject } from 'react';
+import { Orientation } from '../common/fretboard';
 
 const DEFAULT_TYPE = 'guitar';
+
+export interface PrintableProps {
+  printRef: RefObject<HTMLDivElement>;
+}
+
+export interface Printable extends PrintableProps {
+  printStyle: (orientation: Orientation) => string;
+}
 
 export type GuitarType = {
   name: string;

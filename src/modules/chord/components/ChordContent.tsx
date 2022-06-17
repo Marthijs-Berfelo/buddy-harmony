@@ -7,12 +7,19 @@ import {
   Orientation,
 } from '../../../common/fretboard';
 import React from 'react';
+import { Typography } from '@material-tailwind/react';
 
-const ChordContent = ({ chordModel }: GuitarChordHook): JSX.Element => {
+const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JSX.Element => {
   const { tuningType, orientation, leftHanded } = useSettings();
 
   return (
-    <div className="flex justify-center" id="chord-content">
+    <div className="flex justify-center" id="chord-content" ref={printRef}>
+      <style type="text/css" media="print">
+        {printStyle(orientation)}
+      </style>
+      {chordModel && (
+        <Typography className="text-xl overflow-hidden h-0">{`${chordModel.key} ${chordModel.suffix}`}</Typography>
+      )}
       {chordModel && chordModel.positions ? (
         chordModel.positions.map((chord, chordPosition) => (
           <ChordDiagram

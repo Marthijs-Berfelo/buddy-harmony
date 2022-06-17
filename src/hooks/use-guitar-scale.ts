@@ -1,38 +1,42 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ScaleModel } from '../common/fretboard';
+import { Orientation, ScaleModel } from '../common/fretboard';
 import * as gs from 'guitar-scales';
-import { useSettings } from './settings';
 import { KeysHook, useKeys } from './use-keys';
+import { Printable, PrintableProps } from './constants';
 
-export interface GuitarScaleHook extends KeysHook {
+export interface GuitarScaleHook extends KeysHook, Printable {
   scales: string[];
   scale?: string;
   setScale: Dispatch<SetStateAction<string | undefined>>;
   scaleModel: ScaleModel | undefined;
 }
 
-export const useGuitarScale = (): GuitarScaleHook => {
+export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook => {
   const guitarScale = gs.GuitarScale;
   const { keys, selectedKey, setSelectedKey } = useKeys();
-  const { tuningType } = useSettings();
+  // const { tuningType } = useSettings();
   const [scale, setScale] = useState<string>();
   const [scaleModel, setScaleModel] = useState<ScaleModel>();
 
-  useEffect(() => {
-    //TODO library error when setting tuning
-    console.log('TUNING', tuningType);
-    //guitarScale.setTuning(tuningType.tuning);
-  }, [tuningType]);
+  // useEffect(() => {
+  // //TODO library error when setting tuning
+  //   console.log('TUNING', tuningType);
+  //   //guitarScale.setTuning(tuningType.tuning);
+  // }, [tuningType]);
 
   useEffect(() => {
     if (!!selectedKey && !!scale) {
       const model = guitarScale.get(selectedKey, scale);
-      console.log('K', selectedKey, 'S', scale, 'M', model);
       setScaleModel(model as ScaleModel);
     } else {
       setScaleModel(undefined);
     }
   }, [selectedKey, scale]);
+
+  const printStyle = (orientation: Orientation): string =>
+    `@page: { size: A4 ${
+      orientation === Orientation.HORIZONTAL ? 'landscape' : 'portrait'
+    }, margin: 10mm 10mm 10mm 10mm }`;
 
   return {
     keys,
@@ -42,5 +46,7 @@ export const useGuitarScale = (): GuitarScaleHook => {
     scale,
     setScale,
     scaleModel,
+    printRef,
+    printStyle,
   };
 };
