@@ -1,6 +1,6 @@
 import { BaseContext } from '../base-context';
 import { createContext, Dispatch, SetStateAction, useContext } from 'react';
-import { Orientation } from '../../common/fretboard';
+import { FretNumberType, Orientation } from '../../common/fretboard';
 import { defaultGuitar, GuitarType, StringTuningType } from '../constants';
 
 export interface Settings extends BaseContext {
@@ -16,8 +16,10 @@ export interface Settings extends BaseContext {
   leftHanded: boolean;
   setLeftHanded: Dispatch<SetStateAction<boolean>>;
   orientation: Orientation;
-  orientationLabel: string;
+  orientationLabel: Orientation;
   toggleOrientation: () => void;
+  fretNumbers: FretNumberType;
+  onSelectFretNumber: (fretNumber: string) => void;
 }
 
 export const SettingsContext = createContext<Settings>({
@@ -31,8 +33,10 @@ export const SettingsContext = createContext<Settings>({
   leftHanded: false,
   setLeftHanded: () => null,
   orientation: Orientation.VERTICAL,
-  orientationLabel: '',
+  orientationLabel: Orientation.HORIZONTAL,
   toggleOrientation: () => null,
+  fretNumbers: FretNumberType.ROMAN,
+  onSelectFretNumber: () => null,
   check: () => {
     throw new Error('`useSettings` must be used with `SettingsContextProvider`');
   },

@@ -1,12 +1,12 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { SettingsContext } from './use-settings';
-import { Orientation } from '../../common/fretboard';
+import { FretNumberType, Orientation } from '../../common/fretboard';
 import {
-  guitarTypes,
   defaultGuitar,
   extractTuning,
-  standardTuning,
   GuitarType,
+  guitarTypes,
+  standardTuning,
   StringTuningType,
 } from '../constants';
 
@@ -16,9 +16,8 @@ const SettingsContextProvider = ({ children }: PropsWithChildren): JSX.Element =
   const [tuningType, setTuningType] = useState<StringTuningType>(standardTuning());
   const [leftHanded, setLeftHanded] = useState<boolean>(false);
   const [orientation, setOrientation] = useState<Orientation>(Orientation.VERTICAL);
-  const [orientationLabel, setOrientationLabel] = useState<string>(
-    Orientation.HORIZONTAL.toString()
-  );
+  const [orientationLabel, setOrientationLabel] = useState<Orientation>(Orientation.HORIZONTAL);
+  const [fretNumbers, setFretNumbers] = useState<FretNumberType>(FretNumberType.ROMAN);
 
   useEffect(() => {
     const tunings = extractTuning(guitarType);
@@ -36,7 +35,7 @@ const SettingsContextProvider = ({ children }: PropsWithChildren): JSX.Element =
     };
 
   const toggleOrientation = (): void => {
-    setOrientationLabel(orientation.toString());
+    setOrientationLabel(orientation);
     switch (orientation) {
       case Orientation.VERTICAL:
         setOrientation(Orientation.HORIZONTAL);
@@ -46,6 +45,9 @@ const SettingsContextProvider = ({ children }: PropsWithChildren): JSX.Element =
         break;
     }
   };
+
+  const onSelectFretNumber = (fretNumber: string): void =>
+    setFretNumbers(FretNumberType[fretNumber as keyof typeof FretNumberType]);
 
   const context = {
     guitarTypes,
@@ -60,6 +62,8 @@ const SettingsContextProvider = ({ children }: PropsWithChildren): JSX.Element =
     orientation: orientation,
     toggleOrientation,
     orientationLabel,
+    fretNumbers,
+    onSelectFretNumber,
     check: () => null,
   };
 

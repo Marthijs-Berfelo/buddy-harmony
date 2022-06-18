@@ -1,0 +1,17 @@
+{
+  "title": "Buddy Harmony",
+  "routing": {
+    "page": "",
+    "page_CHORD": "Accoorden",
+    "page_SCALE": "Toonladders",
+    "page_HARMONY": "Harmonie",
+    "page_HELP": "Help"
+  },
+  "key": "Toonsoort",
+  "page": {
+    "title": "Instellingen",
+    "title_/chord": "Accoord",
+    "title_/scale": "Toonladder",
+    "title_/harmony": "Harmonie"
+  }
+}

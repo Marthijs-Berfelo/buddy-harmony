@@ -205,7 +205,7 @@ const useDiagram = ({
   };
 
   const getWidth = (): number => {
-    return width() / diagramCount / 1.5;
+    return width() / (diagramCount > 1 ? diagramCount / 2 : 1.5);
   };
 
   const height = (): number => {

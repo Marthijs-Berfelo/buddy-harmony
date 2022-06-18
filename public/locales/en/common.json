@@ -1,0 +1,17 @@
+{
+  "title": "Buddy Harmony",
+  "routing": {
+    "page": "",
+    "page_CHORD": "Chords",
+    "page_SCALE": "Scales",
+    "page_HARMONY": "Harmony",
+    "page_HELP": "Help"
+  },
+  "key": "Key",
+  "page": {
+    "title": "Settings",
+    "title_/chord": "Chord",
+    "title_/scale": "Scale",
+    "title_/harmony": "Harmony"
+  }
+}

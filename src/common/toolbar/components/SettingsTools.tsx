@@ -10,12 +10,15 @@ import {
   Select,
 } from '@material-tailwind/react';
 import { GuitarType } from '../../../hooks';
+import { useTranslation } from 'react-i18next';
+import { FretNumberType } from '../../fretboard';
 
 export interface SettingsToolsProps {
   supportedGuitars?: GuitarType[];
 }
 
 const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element => {
+  const { t } = useTranslation('settings');
   const {
     guitarTypes,
     guitarType,
@@ -28,13 +31,17 @@ const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element =>
     orientationLabel,
     leftHanded,
     setLeftHanded,
+    fretNumbers,
+    onSelectFretNumber,
   } = useSettings();
 
   return (
-    <ul className="flex justify-center gap-6 mx-12">
+    <ul className="flex justify-center gap-4 mx-12">
       <Menu key={'tool-guitar'}>
         <MenuHandler>
-          <Button variant="gradient">{`Type: ${guitarType.name}`}</Button>
+          <Button variant="gradient" className="capitalize">
+            {t('settings:guitar.label', { type: guitarType.name }).toLowerCase()}
+          </Button>
         </MenuHandler>
         <MenuList className="flex flex-col flex-grow">
           {Array.from(guitarTypes)
@@ -49,21 +56,21 @@ const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element =>
                 }
                 onClick={() => setGuitarType(type)}
               >
-                {type.name}
+                {t('settings:guitar.type', { context: type.name })}
               </MenuItem>
             ))}
         </MenuList>
       </Menu>
       <li key={'tool-tuning'}>
         <Select
-          label="Tuning"
+          label={t('settings:tuning')}
           className="flex items-center bg-white z-40"
-          value={tuningType.name}
+          value={t('settings:tuning', { context: tuningType.name })}
           disabled
         >
           {tuningTypes.map((tuning) => (
             <Option key={tuning.name} value={tuning.name}>
-              {tuning.name}
+              {t('settings:tuning', { context: tuning.name })}
             </Option>
           ))}
         </Select>
@@ -71,15 +78,35 @@ const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element =>
       <li key={'tool-orientation'}>
         <Menu>
           <MenuHandler>
-            <Button variant="gradient">{`${orientation.toString()} / ${
-              leftHanded ? 'LH' : 'RH'
-            }`}</Button>
+            <Button variant="gradient">
+              {t('settings:layout.label', {
+                orientation,
+                handed: leftHanded ? 'left' : 'right',
+                fretNumbers,
+              })}
+            </Button>
           </MenuHandler>
           <MenuList>
-            <MenuItem onClick={() => toggleOrientation()}>{orientationLabel}</MenuItem>
-            <MenuItem onClick={() => setLeftHanded((value) => !value)}>
-              {leftHanded ? 'Right handed' : 'Left handed'}
+            <MenuItem onClick={() => toggleOrientation()}>
+              {t('settings:layout.orientation', { context: orientationLabel })}
             </MenuItem>
+            <MenuItem onClick={() => setLeftHanded((value) => !value)}>
+              {t('settings:layout.handed.label', { context: leftHanded ? 'right' : 'left' })}
+            </MenuItem>
+            <Menu placement="right-start" offset={15}>
+              <MenuHandler>
+                <MenuItem>{t('settings:layout.fret-numbers', { context: fretNumbers })}</MenuItem>
+              </MenuHandler>
+              <MenuList>
+                {Object.keys(FretNumberType)
+                  .filter((fretNumber) => fretNumber !== fretNumbers.valueOf())
+                  .map((fretNumber) => (
+                    <MenuItem key={fretNumber} onClick={() => onSelectFretNumber(fretNumber)}>
+                      {t('settings:layout.fret-numbers', { context: fretNumber })}
+                    </MenuItem>
+                  ))}
+              </MenuList>
+            </Menu>
           </MenuList>
         </Menu>
       </li>

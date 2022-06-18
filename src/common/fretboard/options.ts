@@ -6,14 +6,14 @@ export enum DotText {
 }
 
 export enum Orientation {
-  VERTICAL = 'vertical',
-  HORIZONTAL = 'horizontal',
+  VERTICAL = 'V',
+  HORIZONTAL = 'H',
 }
 
 export enum FretNumberType {
-  NONE = 'none',
-  LATIN = 'latin',
-  ROMAN = 'roman',
+  NONE = 'NONE',
+  LATIN = 'LATIN',
+  ROMAN = 'ROMAN',
 }
 
 export enum FretNumberPosition {

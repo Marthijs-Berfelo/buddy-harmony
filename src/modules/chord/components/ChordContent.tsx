@@ -10,7 +10,7 @@ import React from 'react';
 import { Typography } from '@material-tailwind/react';
 
 const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JSX.Element => {
-  const { tuningType, orientation, leftHanded } = useSettings();
+  const { tuningType, orientation, leftHanded, fretNumbers } = useSettings();
 
   return (
     <div className="flex flex-col items-center" id="chord-content" ref={printRef}>
@@ -32,6 +32,7 @@ const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JS
               tuningType={tuningType}
               chord={chord}
               chordPosition={chordPosition}
+              fretNumbers={fretNumbers}
               diagramCount={chordModel?.positions?.length || 1}
             />
           ))
@@ -40,6 +41,7 @@ const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JS
             orientation={orientation}
             leftHanded={leftHanded}
             tuningType={tuningType}
+            fretNumbers={fretNumbers}
             diagramCount={1}
           />
         )}
@@ -55,6 +57,7 @@ type ChordDiagramProps = {
   orientation: Orientation;
   leftHanded: boolean;
   tuningType: StringTuningType;
+  fretNumbers: FretNumberType;
   chordPosition?: number;
   diagramCount: number;
 };
@@ -65,6 +68,7 @@ const ChordDiagram = ({
   leftHanded,
   tuningType,
   chordPosition,
+  fretNumbers,
   diagramCount,
 }: ChordDiagramProps): JSX.Element => {
   return (
@@ -76,7 +80,7 @@ const ChordDiagram = ({
       text={DotText.NOTE}
       leftHanded={leftHanded}
       chord={chord}
-      fretNumbers={FretNumberType.ROMAN}
+      fretNumbers={fretNumbers}
       fretNumbersPosition={FretNumberPosition.LEFT}
       tuning={tuningType.tuning}
     />

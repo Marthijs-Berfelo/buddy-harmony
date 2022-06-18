@@ -1,12 +1,6 @@
 import React from 'react';
 import { GuitarScaleHook, useSettings } from '../../../hooks';
-import {
-  Diagram,
-  DotText,
-  FretNumberPosition,
-  FretNumberType,
-  Orientation,
-} from '../../../common/fretboard';
+import { Diagram, DotText, FretNumberPosition, Orientation } from '../../../common/fretboard';
 import { Typography } from '@material-tailwind/react';
 
 const ScaleContent = ({
@@ -16,7 +10,7 @@ const ScaleContent = ({
   selectedKey,
   scale,
 }: GuitarScaleHook): JSX.Element => {
-  const { tuningType, orientation, leftHanded } = useSettings();
+  const { tuningType, orientation, leftHanded, fretNumbers } = useSettings();
 
   return (
     <div className="flex flex-col items-center" id="scale-content" ref={printRef}>
@@ -40,7 +34,7 @@ const ScaleContent = ({
           text={DotText.NOTE}
           leftHanded={leftHanded}
           scale={scaleModel}
-          fretNumbers={FretNumberType.LATIN}
+          fretNumbers={fretNumbers}
           fretNumbersPosition={FretNumberPosition.LEFT}
           tuning={tuningType.tuning}
         />
