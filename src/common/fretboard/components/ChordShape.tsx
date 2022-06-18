@@ -77,7 +77,12 @@ const useChordShape = ({
       </Fragment>
     );
 
-  const barre = (barreFret: number, startAt: number, strings: number[]): JSX.Element => {
+  const barre = (
+    barreFret: number,
+    startAt: number,
+    strings: number[],
+    chordPosition: number
+  ): JSX.Element => {
     const barreStrings: number[] = [];
     strings.forEach((fret, string) => {
       if (fret === barreFret) {
@@ -119,7 +124,14 @@ const useChordShape = ({
         );
     }
 
-    return <path fill={'none'} className="stroke-[12px] stroke-black fill-black" d={barreLine} />;
+    return (
+      <path
+        key={`${chordPosition}.barre`}
+        fill={'none'}
+        className="stroke-[12px] stroke-black fill-black"
+        d={barreLine}
+      />
+    );
   };
 
   const dot = (
@@ -188,7 +200,9 @@ const useChordShape = ({
       }
     });
     const barres =
-      (chord.barres || []).map((barreFret) => barre(barreFret, baseFret, chord.frets)) || [];
+      (chord.barres || []).map((barreFret) =>
+        barre(barreFret, baseFret, chord.frets, chordPosition)
+      ) || [];
 
     return [...fingers, ...dots, ...barres];
   };

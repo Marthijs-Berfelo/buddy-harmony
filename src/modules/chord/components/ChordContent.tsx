@@ -75,7 +75,7 @@ const ChordDiagram = ({
       text={DotText.NOTE}
       leftHanded={leftHanded}
       chord={chord}
-      fretNumbers={FretNumberType.LATIN}
+      fretNumbers={FretNumberType.ROMAN}
       fretNumbersPosition={FretNumberPosition.LEFT}
       tuning={tuningType.tuning}
     />
