@@ -14,6 +14,7 @@ const DEFAULT_FRETS = 12;
 export interface DiagramProps {
   className: string;
   diagramStyle?: DiagramStyle;
+  diagramCount: number;
   orientation: Orientation;
   text: DotText;
   leftHanded: boolean;
@@ -45,6 +46,8 @@ const Diagram = (props: DiagramProps): JSX.Element => {
     startAt,
     tuning,
     viewBox,
+    getHeight,
+    getWidth,
     getShapes,
   } = useDiagram(props);
   const { className, leftHanded, orientation, scale, chord, chords, fretNumbers, text } = props;
@@ -52,8 +55,8 @@ const Diagram = (props: DiagramProps): JSX.Element => {
   return (
     <svg
       viewBox={viewBox()}
-      width={'auto'}
-      height={'auto'}
+      width={getWidth()}
+      height={getHeight()}
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMinYMin meet"
       className={`${className} bg-white`}
@@ -139,9 +142,11 @@ type DiagramHook = {
 
 const useDiagram = ({
   diagramStyle,
+  diagramCount,
   tuning,
   scale,
   chord,
+  chords,
   leftHanded,
   orientation,
   clickHandler,
@@ -189,7 +194,7 @@ const useDiagram = ({
     moveHandler(event, stringAndFret);
   };
 
-  const getWidth = (): number => {
+  const width = (): number => {
     switch (orientation) {
       case Orientation.VERTICAL:
         return style.fretBoundary(strings, orientation);
@@ -198,7 +203,12 @@ const useDiagram = ({
         return style.stringBoundary(fretCount, orientation);
     }
   };
-  const getHeight = (): number => {
+
+  const getWidth = (): number => {
+    return width() / diagramCount / 1.5;
+  };
+
+  const height = (): number => {
     switch (orientation) {
       case Orientation.VERTICAL:
         return style.stringBoundary(fretCount, orientation);
@@ -208,8 +218,13 @@ const useDiagram = ({
     }
   };
 
+  const getHeight = (): number => {
+    const factor = !!chord || !!chords ? 2 : 1;
+    return height() / factor;
+  };
+
   const viewBox = (): string => {
-    return `0 0 ${getWidth()} ${getHeight()}`;
+    return `0 0 ${width()} ${height()}`;
   };
 
   const getShapes = (scale: ScaleModel): ScaleFret[][] => {

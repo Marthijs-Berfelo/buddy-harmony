@@ -25,7 +25,7 @@ const ScaleContent = ({
       </style>
       {scale && selectedKey && (
         <div className="flex flex-row items-center">
-          <Typography className="text-xl">{`${selectedKey} ${scale}`}</Typography>
+          <Typography className="text-3xl pt-2">{`${selectedKey} ${scale}`}</Typography>
         </div>
       )}
       <div
@@ -36,6 +36,7 @@ const ScaleContent = ({
         <Diagram
           className={'flex'}
           orientation={orientation}
+          diagramCount={1}
           text={DotText.NOTE}
           leftHanded={leftHanded}
           scale={scaleModel}

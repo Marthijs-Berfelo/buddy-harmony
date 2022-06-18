@@ -19,7 +19,7 @@ const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JS
       </style>
       {chordModel && (
         <div className="flex flex-row items-center">
-          <Typography className="text-xl">{`${chordModel.key} ${chordModel.suffix}`}</Typography>
+          <Typography className="text-3xl pt-2">{`${chordModel.key} ${chordModel.suffix}`}</Typography>
         </div>
       )}
       <div className="flex-row flex items-center">
@@ -32,7 +32,7 @@ const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JS
               tuningType={tuningType}
               chord={chord}
               chordPosition={chordPosition}
-              totalSiblings={chordModel?.positions?.length || 1}
+              diagramCount={chordModel?.positions?.length || 1}
             />
           ))
         ) : (
@@ -40,7 +40,7 @@ const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JS
             orientation={orientation}
             leftHanded={leftHanded}
             tuningType={tuningType}
-            totalSiblings={1}
+            diagramCount={1}
           />
         )}
       </div>
@@ -56,7 +56,7 @@ type ChordDiagramProps = {
   leftHanded: boolean;
   tuningType: StringTuningType;
   chordPosition?: number;
-  totalSiblings: number;
+  diagramCount: number;
 };
 
 const ChordDiagram = ({
@@ -65,13 +65,14 @@ const ChordDiagram = ({
   leftHanded,
   tuningType,
   chordPosition,
-  totalSiblings,
+  diagramCount,
 }: ChordDiagramProps): JSX.Element => {
   return (
     <Diagram
       key={`chord-diagram.${chordPosition || 0}`}
-      className={totalSiblings === 1 ? 'flex flex-auto' : `flex basis-1/${totalSiblings}`}
+      className=""
       orientation={orientation}
+      diagramCount={diagramCount}
       text={DotText.NOTE}
       leftHanded={leftHanded}
       chord={chord}

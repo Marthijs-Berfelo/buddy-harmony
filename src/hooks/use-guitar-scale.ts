@@ -35,7 +35,7 @@ export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook =>
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const printStyle = (_: Orientation): string =>
-    `@page: { size: A4 portrait, margin: 30mm 30mm 30mm 30mm }`;
+    `@page: { size: A4 portrait, margin: 0mm 30mm 30mm 30mm }`;
 
   return {
     keys,
