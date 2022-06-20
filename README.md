@@ -5,7 +5,7 @@ aims to help you to playing guitar. By displaying guitar chords in multiple vari
 ## Features
 
 - [ ] Chords (Displaying various chords of specific type and key)
-  - [x] Change direction (horizontal / vertical)
+  - :heavy_check_mark: Change direction (horizontal / vertical)
   - [x] Display for left-handed vertical
   - [ ] Display for left-handed horizontal
   - [x] Show fingering
