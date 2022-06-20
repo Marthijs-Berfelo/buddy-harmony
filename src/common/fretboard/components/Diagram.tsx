@@ -219,7 +219,7 @@ const useDiagram = ({
   };
 
   const getHeight = (): number => {
-    const factor = !!chord || !!chords ? 2 : 1;
+    const factor = !!chord || !!chords ? 2 : 1.5;
     return height() / factor;
   };
 

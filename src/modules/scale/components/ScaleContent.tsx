@@ -1,6 +1,6 @@
 import React from 'react';
 import { GuitarScaleHook, useSettings } from '../../../hooks';
-import { Diagram, DotText, FretNumberPosition, Orientation } from '../../../common/fretboard';
+import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard';
 import { Typography } from '@material-tailwind/react';
 
 const ScaleContent = ({
@@ -22,11 +22,7 @@ const ScaleContent = ({
           <Typography className="text-3xl pt-2">{`${selectedKey} ${scale}`}</Typography>
         </div>
       )}
-      <div
-        className={`flex flex-row ${
-          orientation === Orientation.HORIZONTAL ? 'w-full' : 'h-full'
-        } items-center`}
-      >
+      <div className={`flex flex-row items-center`}>
         <Diagram
           className={'flex'}
           orientation={orientation}
