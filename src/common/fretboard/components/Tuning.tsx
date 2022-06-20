@@ -1,16 +1,9 @@
 import { Orientation } from '../options';
-import { DiagramStyle } from '../utils';
 import React from 'react';
+import { useSettings } from '../../../hooks';
 
-type TuningProps = {
-  tuning: string[];
-  orientation: Orientation;
-  leftHanded: boolean;
-  diagramStyle: DiagramStyle;
-};
-
-const Tuning = (props: TuningProps): JSX.Element => {
-  const { tunings } = useTuning(props);
+const Tuning = (): JSX.Element => {
+  const { tunings } = useTuning();
 
   return <g className={'fretboard-tunings'}>{tunings()}</g>;
 };
@@ -21,7 +14,9 @@ type TuningHook = {
   tunings: () => JSX.Element[];
 };
 
-const useTuning = ({ tuning, orientation, leftHanded, diagramStyle }: TuningProps): TuningHook => {
+const useTuning = (): TuningHook => {
+  const { tuningType, orientation, leftHanded, diagramStyle } = useSettings();
+
   const tunings = (): JSX.Element[] => {
     switch (orientation) {
       case Orientation.VERTICAL:
@@ -34,9 +29,9 @@ const useTuning = ({ tuning, orientation, leftHanded, diagramStyle }: TuningProp
 
   const horizontalTunings = (): JSX.Element[] => {
     const y = diagramStyle.padding - diagramStyle.tuningDistance;
-    let tunings = tuning;
+    let tunings = [...tuningType.tuning];
     if (leftHanded) {
-      tunings = [...tuning.reverse()];
+      tunings = [...tunings.reverse()];
     }
     return tunings.map((string, index) => (
       <text
@@ -53,7 +48,7 @@ const useTuning = ({ tuning, orientation, leftHanded, diagramStyle }: TuningProp
 
   const verticalTunings = (): JSX.Element[] => {
     const x = diagramStyle.padding - diagramStyle.tuningDistance;
-    const tunings = [...tuning];
+    const tunings = [...tuningType.tuning];
     const reverse = [...tunings.reverse()];
     return reverse.map((string, index) => (
       <text

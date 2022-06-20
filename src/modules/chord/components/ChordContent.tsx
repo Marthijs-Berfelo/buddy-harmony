@@ -1,16 +1,10 @@
-import { useSettings, GuitarChordHook, ChordPosition, StringTuningType } from '../../../hooks';
-import {
-  Diagram,
-  DotText,
-  FretNumberPosition,
-  FretNumberType,
-  Orientation,
-} from '../../../common/fretboard';
+import { useSettings, GuitarChordHook, ChordPosition } from '../../../hooks';
+import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard';
 import React from 'react';
 import { Typography } from '@material-tailwind/react';
 
 const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JSX.Element => {
-  const { tuningType, orientation, leftHanded, fretNumbers } = useSettings();
+  const { orientation } = useSettings();
 
   return (
     <div className="flex flex-col items-center" id="chord-content" ref={printRef}>
@@ -22,28 +16,18 @@ const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JS
           <Typography className="text-3xl pt-2">{`${chordModel.key} ${chordModel.suffix}`}</Typography>
         </div>
       )}
-      <div className="flex-row flex items-center">
+      <div className="flex flex-row items-center">
         {chordModel && chordModel.positions ? (
           chordModel.positions.map((chord, chordPosition) => (
             <ChordDiagram
               key={`chord-${chordPosition}`}
-              orientation={orientation}
-              leftHanded={leftHanded}
-              tuningType={tuningType}
               chord={chord}
               chordPosition={chordPosition}
-              fretNumbers={fretNumbers}
-              diagramCount={chordModel?.positions?.length || 1}
+              diagramCount={chordModel?.positions?.length}
             />
           ))
         ) : (
-          <ChordDiagram
-            orientation={orientation}
-            leftHanded={leftHanded}
-            tuningType={tuningType}
-            fretNumbers={fretNumbers}
-            diagramCount={1}
-          />
+          <ChordDiagram />
         )}
       </div>
     </div>
@@ -54,35 +38,19 @@ export default ChordContent;
 
 type ChordDiagramProps = {
   chord?: ChordPosition;
-  orientation: Orientation;
-  leftHanded: boolean;
-  tuningType: StringTuningType;
-  fretNumbers: FretNumberType;
   chordPosition?: number;
-  diagramCount: number;
+  diagramCount?: number;
 };
 
-const ChordDiagram = ({
-  chord,
-  orientation,
-  leftHanded,
-  tuningType,
-  chordPosition,
-  fretNumbers,
-  diagramCount,
-}: ChordDiagramProps): JSX.Element => {
+const ChordDiagram = ({ chord, chordPosition, diagramCount }: ChordDiagramProps): JSX.Element => {
   return (
     <Diagram
       key={`chord-diagram.${chordPosition || 0}`}
       className=""
-      orientation={orientation}
       diagramCount={diagramCount}
       text={DotText.NOTE}
-      leftHanded={leftHanded}
       chord={chord}
-      fretNumbers={fretNumbers}
       fretNumbersPosition={FretNumberPosition.LEFT}
-      tuning={tuningType.tuning}
     />
   );
 };

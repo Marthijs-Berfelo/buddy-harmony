@@ -1,6 +1,7 @@
 import { DotText } from '../options';
 import React, { Fragment } from 'react';
 import { ShapeProps, useShape, ScaleFret } from '../utils';
+import { useSettings } from '../../../hooks';
 
 interface ScaleShapeProps extends ShapeProps {
   scale: ScaleFret[][];
@@ -19,16 +20,9 @@ type ScaleShapeHook = {
   scaleShape: JSX.Element[];
 };
 
-const useScaleShape = ({
-  className,
-  scale,
-  strings,
-  orientation,
-  leftHanded,
-  diagramStyle,
-  text,
-}: ScaleShapeProps): ScaleShapeHook => {
-  const { x, y } = useShape({ className, strings, leftHanded, orientation, diagramStyle });
+const useScaleShape = ({ className, scale, text }: ScaleShapeProps): ScaleShapeHook => {
+  const { diagramStyle, stringCount } = useSettings();
+  const { x, y } = useShape();
 
   const getNote = (fret: ScaleFret): string => {
     if (fret.note === fret.noteEnharmonic) {
@@ -107,7 +101,7 @@ const useScaleShape = ({
     string
       .filter((fret) => fret.isPartOfScale)
       .map((fret) => {
-        return dot(strings - 1 - stringIndex, fret.freet, dotText(fret), fret.scalePosition);
+        return dot(stringCount - 1 - stringIndex, fret.freet, dotText(fret), fret.scalePosition);
       })
   );
   return {

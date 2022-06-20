@@ -1,9 +1,14 @@
 import { BaseContext } from '../base-context';
 import { createContext, Dispatch, SetStateAction, useContext } from 'react';
-import { FretNumberType, Orientation } from '../../common/fretboard';
+import { DEFAULT_STYLE, FretNumberType, Orientation, ScaleModel } from '../../common/fretboard';
 import { defaultGuitar, GuitarType, StringTuningType } from '../constants';
+import { DiagramStyle } from '../../common/fretboard/utils';
+import { ChordPosition } from '../chord-db';
 
 export interface Settings extends BaseContext {
+  diagramStyle: DiagramStyle;
+  fretCount: (scale?: ScaleModel, chord?: ChordPosition) => number;
+  stringCount: number;
   guitarTypes: GuitarType[];
   guitarType: GuitarType;
   onlySupportedGuitars: (
@@ -23,6 +28,9 @@ export interface Settings extends BaseContext {
 }
 
 export const SettingsContext = createContext<Settings>({
+  diagramStyle: DEFAULT_STYLE,
+  fretCount: () => 0,
+  stringCount: 0,
   guitarTypes: [],
   guitarType: defaultGuitar,
   onlySupportedGuitars: () => () => false,

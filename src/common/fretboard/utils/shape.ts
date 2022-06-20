@@ -1,12 +1,8 @@
 import { Orientation } from '../options';
-import { DiagramStyle } from './diagram-style';
+import { useSettings } from '../../../hooks';
 
 export interface ShapeProps {
   className: string;
-  strings: number;
-  leftHanded: boolean;
-  orientation: Orientation;
-  diagramStyle: DiagramStyle;
 }
 
 type ShapeHook = {
@@ -14,7 +10,8 @@ type ShapeHook = {
   y: (padding: number, string: number, fret: number, offset: number) => number;
 };
 
-export const useShape = ({ leftHanded, orientation, diagramStyle }: ShapeProps): ShapeHook => {
+export const useShape = (): ShapeHook => {
+  const { leftHanded, orientation, diagramStyle } = useSettings();
   const fretPosition = (padding: number, offset: number, fret: number): number =>
     fret === 0
       ? padding - diagramStyle.dotOut + diagramStyle.fretWidth / 2

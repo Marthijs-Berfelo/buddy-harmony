@@ -1,27 +1,20 @@
 import React, { MouseEvent } from 'react';
-import { DEFAULT_STYLE, DiagramStyle, ScaleFret, ScaleModel, StringAndFret } from '../utils';
+import { ScaleFret, ScaleModel, StringAndFret } from '../utils';
 import { DotText, FretNumberPosition, FretNumberType, Orientation } from '../options';
 import Fretboard from './Fretboard';
 import FretNumbers from './FretNumbers';
 import ScaleShape from './ScaleShape';
 import Tuning from './Tuning';
-import { ChordPosition } from '../../../hooks';
+import { ChordPosition, useSettings } from '../../../hooks';
 import ChordShape from './ChordShape';
-
-const CHORD_FRETS = 5;
-const DEFAULT_FRETS = 12;
+import { useDirectional } from '../utils/directional';
 
 export interface DiagramProps {
   className: string;
-  diagramStyle?: DiagramStyle;
-  diagramCount: number;
-  orientation: Orientation;
+  diagramCount?: number;
   text: DotText;
-  leftHanded: boolean;
   startAt?: number;
-  fretNumbers: FretNumberType;
   fretNumbersPosition: FretNumberPosition;
-  tuning: string[];
   scale?: ScaleModel;
   chords?: ChordPosition[];
   chord?: ChordPosition;
@@ -37,20 +30,10 @@ export interface DiagramProps {
 }
 
 const Diagram = (props: DiagramProps): JSX.Element => {
-  const {
-    onMouseClick,
-    onMouseMove,
-    diagramStyle,
-    strings,
-    frets,
-    startAt,
-    tuning,
-    viewBox,
-    getHeight,
-    getWidth,
-    getShapes,
-  } = useDiagram(props);
-  const { className, leftHanded, orientation, scale, chord, chords, fretNumbers, text } = props;
+  const { onMouseClick, onMouseMove, frets, startAt, viewBox, getHeight, getWidth, getShapes } =
+    useDiagram(props);
+  const { fretNumbers } = useSettings();
+  const { className, scale, chord, chords, text } = props;
 
   return (
     <svg
@@ -64,61 +47,12 @@ const Diagram = (props: DiagramProps): JSX.Element => {
       onMouseMove={onMouseMove}
     >
       <g className={'fretboard'}>
-        <Fretboard
-          strings={strings}
-          frets={frets}
-          chord={!!chord}
-          startAt={startAt}
-          orientation={orientation}
-          diagramStyle={diagramStyle}
-        />
-        {scale && (
-          <ScaleShape
-            className={className}
-            scale={getShapes(scale)}
-            strings={strings}
-            orientation={orientation}
-            leftHanded={leftHanded}
-            diagramStyle={diagramStyle}
-            text={text}
-          />
-        )}
-        {chord && (
-          <ChordShape
-            className={className}
-            strings={strings}
-            chord={chord}
-            leftHanded={leftHanded}
-            orientation={orientation}
-            diagramStyle={diagramStyle}
-          />
-        )}
-        {chords && (
-          <ChordShape
-            className={className}
-            strings={strings}
-            chords={chords}
-            leftHanded={leftHanded}
-            orientation={orientation}
-            diagramStyle={diagramStyle}
-          />
-        )}
-        {fretNumbers !== FretNumberType.NONE && (
-          <FretNumbers
-            frets={frets}
-            fretNumbers={fretNumbers}
-            startAt={startAt}
-            orientation={orientation}
-            leftHanded={leftHanded}
-            diagramStyle={diagramStyle}
-          />
-        )}
-        <Tuning
-          tuning={tuning}
-          leftHanded={leftHanded}
-          orientation={orientation}
-          diagramStyle={diagramStyle}
-        />
+        <Fretboard frets={frets} chord={!!chord} startAt={startAt} />
+        {scale && <ScaleShape className={className} scale={getShapes(scale)} text={text} />}
+        {chord && <ChordShape className={className} chord={chord} />}
+        {chords && <ChordShape className={className} chords={chords} />}
+        {fretNumbers !== FretNumberType.NONE && <FretNumbers frets={frets} startAt={startAt} />}
+        <Tuning />
       </g>
     </svg>
   );
@@ -129,43 +63,35 @@ export default Diagram;
 type DiagramHook = {
   onMouseClick: (event: MouseEvent<SVGSVGElement>) => void;
   onMouseMove: (event: MouseEvent<SVGSVGElement>) => void;
-  diagramStyle: DiagramStyle;
-  strings: number;
   frets: number;
   startAt: number;
   viewBox: () => string;
-  tuning: string[];
   getShapes: (scale: ScaleModel) => ScaleFret[][];
   getWidth: () => number;
   getHeight: () => number;
 };
 
 const useDiagram = ({
-  diagramStyle,
   diagramCount,
-  tuning,
   scale,
   chord,
   chords,
-  leftHanded,
-  orientation,
   clickHandler,
   moveHandler,
 }: DiagramProps): DiagramHook => {
-  const guitarTuning = tuning;
-  const strings = guitarTuning.length;
-  const fretCount = !!scale ? scale.fretzNumber : !!chord ? CHORD_FRETS : DEFAULT_FRETS;
-  const style = diagramStyle || DEFAULT_STYLE;
+  const { orientation, leftHanded, diagramStyle, stringCount, fretCount } = useSettings();
+  const { onStrings } = useDirectional<ScaleFret[], unknown>({ orientation, leftHanded });
+  const frets = fretCount(scale, chord);
 
   const onMouseClick = (event: MouseEvent<SVGSVGElement>): void => {
     if (!clickHandler) {
       return;
     }
 
-    const stringFrets = style.getStringAndFretFromMouseEvent(
+    const stringFrets = diagramStyle.getStringAndFretFromMouseEvent(
       event,
-      strings,
-      fretCount,
+      stringCount,
+      frets,
       orientation
     );
 
@@ -180,10 +106,10 @@ const useDiagram = ({
       return;
     }
 
-    const stringAndFret = style.getStringAndFretFromMouseEvent(
+    const stringAndFret = diagramStyle.getStringAndFretFromMouseEvent(
       event,
-      strings,
-      fretCount,
+      stringCount,
+      frets,
       orientation
     );
 
@@ -197,24 +123,24 @@ const useDiagram = ({
   const width = (): number => {
     switch (orientation) {
       case Orientation.VERTICAL:
-        return style.fretBoundary(strings, orientation);
+        return diagramStyle.fretBoundary(stringCount, orientation);
       case Orientation.HORIZONTAL:
       default:
-        return style.stringBoundary(fretCount, orientation);
+        return diagramStyle.stringBoundary(frets, orientation);
     }
   };
 
   const getWidth = (): number => {
-    return width() / (diagramCount > 1 ? diagramCount / 2 : 1.5);
+    return width() / ((diagramCount || 1) > 1 ? (diagramCount || 1) / 2 : 1.5);
   };
 
   const height = (): number => {
     switch (orientation) {
       case Orientation.VERTICAL:
-        return style.stringBoundary(fretCount, orientation);
+        return diagramStyle.stringBoundary(frets, orientation);
       case Orientation.HORIZONTAL:
       default:
-        return style.fretBoundary(strings, orientation);
+        return diagramStyle.fretBoundary(stringCount, orientation);
     }
   };
 
@@ -227,24 +153,16 @@ const useDiagram = ({
     return `0 0 ${width()} ${height()}`;
   };
 
-  const getShapes = (scale: ScaleModel): ScaleFret[][] => {
-    let models = Array.from(scale.info.values());
-    if (leftHanded || orientation === Orientation.HORIZONTAL) {
-      models = [...models.reverse()];
-    }
-    return models.filter((string) => !!string);
-  };
+  const getShapes = (scale: ScaleModel): ScaleFret[][] =>
+    onStrings(Array.from(scale.info.values())).filter((string) => !!string);
 
   const getStartAt = (): number => chord?.baseFret || 1;
 
   return {
     onMouseClick,
     onMouseMove,
-    diagramStyle: style,
-    strings,
-    frets: fretCount,
+    frets: frets,
     startAt: getStartAt(),
-    tuning: guitarTuning,
     viewBox,
     getShapes,
     getWidth,

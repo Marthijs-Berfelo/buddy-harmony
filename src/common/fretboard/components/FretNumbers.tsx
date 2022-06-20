@@ -1,6 +1,7 @@
 import { FretNumberType, Orientation } from '../options';
-import { DiagramStyle } from '../utils';
 import React from 'react';
+import { useSettings } from '../../../hooks';
+import { useDirectional } from '../utils/directional';
 
 const NUMBERS = new Map([
   [3, 'III'],
@@ -17,11 +18,7 @@ const NUMBERS = new Map([
 
 type FretNumbersProps = {
   frets: number;
-  fretNumbers: FretNumberType;
-  leftHanded: boolean;
   startAt: number;
-  orientation: Orientation;
-  diagramStyle: DiagramStyle;
 };
 
 const FretNumbers = (props: FretNumbersProps): JSX.Element => {
@@ -36,14 +33,9 @@ type FretNumbersHook = {
   fretNumberElements: () => JSX.Element[];
 };
 
-const useFretNumbers = ({
-  frets,
-  fretNumbers,
-  startAt,
-  orientation,
-  diagramStyle,
-  leftHanded,
-}: FretNumbersProps): FretNumbersHook => {
+const useFretNumbers = ({ frets, startAt }: FretNumbersProps): FretNumbersHook => {
+  const { leftHanded, orientation, fretNumbers, diagramStyle } = useSettings();
+  const { onFrets } = useDirectional<unknown, number>({ orientation, leftHanded });
   const fretNumberElements = (): JSX.Element[] => {
     switch (orientation) {
       case Orientation.VERTICAL:
@@ -55,9 +47,11 @@ const useFretNumbers = ({
   };
 
   const numberFrets = (): number[] =>
-    Array.from(Array(Math.trunc(frets) - (startAt === 1 ? 0 : 1)).keys())
-      .map((fret) => fret + startAt)
-      .filter((fret) => NUMBERS.has(fret));
+    onFrets(
+      Array.from(Array(Math.trunc(frets) - (startAt === 1 ? 0 : 1)).keys())
+        .map((fret) => fret + startAt)
+        .filter((fret) => NUMBERS.has(fret))
+    );
 
   const numberText = (fret: number): string => {
     if (fretNumbers == FretNumberType.ROMAN) {
@@ -70,9 +64,6 @@ const useFretNumbers = ({
   const horizontalFretNumbers = (): JSX.Element[] => {
     const y = diagramStyle.padding - diagramStyle.fretNumberDistance;
     const numbers = numberFrets();
-    if (leftHanded) {
-      numbers.reverse();
-    }
     return numbers.map((fret) => (
       <text
         key={'fn-' + fret}

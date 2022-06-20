@@ -10,7 +10,7 @@ const ScaleContent = ({
   selectedKey,
   scale,
 }: GuitarScaleHook): JSX.Element => {
-  const { tuningType, orientation, leftHanded, fretNumbers } = useSettings();
+  const { orientation } = useSettings();
 
   return (
     <div className="flex flex-col items-center" id="scale-content" ref={printRef}>
@@ -22,17 +22,12 @@ const ScaleContent = ({
           <Typography className="text-3xl pt-2">{`${selectedKey} ${scale}`}</Typography>
         </div>
       )}
-      <div className={`flex flex-row items-center`}>
+      <div className="flex flex-row items-center">
         <Diagram
-          className={'flex'}
-          orientation={orientation}
-          diagramCount={1}
+          className="flex"
           text={DotText.NOTE}
-          leftHanded={leftHanded}
           scale={scaleModel}
-          fretNumbers={fretNumbers}
           fretNumbersPosition={FretNumberPosition.LEFT}
-          tuning={tuningType.tuning}
         />
       </div>
     </div>

@@ -1,14 +1,12 @@
 import { Orientation } from '../options';
-import { svg, DiagramStyle } from '../utils';
+import { svg } from '../utils';
 import React, { Fragment } from 'react';
+import { useSettings } from '../../../hooks';
 
 type FretboardProps = {
-  strings: number;
   frets: number;
   chord: boolean;
   startAt: number;
-  orientation: Orientation;
-  diagramStyle: DiagramStyle;
 };
 
 const Fretboard = (props: FretboardProps): JSX.Element => {
@@ -34,14 +32,8 @@ type FretboardHook = {
   includeNut: boolean;
 };
 
-const useFretboard = ({
-  strings,
-  frets,
-  chord,
-  startAt,
-  orientation,
-  diagramStyle,
-}: FretboardProps): FretboardHook => {
+const useFretboard = ({ frets, chord, startAt }: FretboardProps): FretboardHook => {
+  const { stringCount, orientation, diagramStyle } = useSettings();
   const includeNut = startAt === 1;
   const isFirstFret = (frets: boolean, index: number): boolean => frets && index === 0;
 
@@ -99,7 +91,7 @@ const useFretboard = ({
       case Orientation.VERTICAL:
         return verticalLines(
           length,
-          strings,
+          stringCount,
           diagramStyle.stringInterval,
           diagramStyle.stringWidth,
           false,
@@ -109,7 +101,7 @@ const useFretboard = ({
       default:
         return horizontalLines(
           length,
-          strings,
+          stringCount,
           diagramStyle.stringInterval,
           diagramStyle.stringWidth,
           false,
@@ -119,7 +111,7 @@ const useFretboard = ({
   };
 
   const fretsPath = (nut: boolean): string => {
-    const length = diagramStyle.fretLength(strings);
+    const length = diagramStyle.fretLength(stringCount);
     switch (orientation) {
       case Orientation.VERTICAL:
         return horizontalLines(
