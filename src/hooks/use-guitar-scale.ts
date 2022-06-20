@@ -19,9 +19,11 @@ export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook =>
   const [scaleModel, setScaleModel] = useState<ScaleModel>();
 
   // useEffect(() => {
-  // //TODO library error when setting tuning
-  //   console.log('TUNING', tuningType);
-  //   //guitarScale.setTuning(tuningType.tuning);
+  //   TODO library error when setting tuning
+  // console.log('TUNING', tuningType);
+  // const newTuning = { ...guitarScale.tuning };
+  // newTuning.setTuning(tuningType.tuning);
+  // guitarScale.setTuning(newTuning);
   // }, [tuningType]);
 
   useEffect(() => {
