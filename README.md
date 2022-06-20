@@ -5,27 +5,27 @@ aims to help you to playing guitar. By displaying guitar chords in multiple vari
 
 ## Features
 
-- ⬜ Chords (Displaying various chords of specific type and key)
-    - ✅ Change direction (horizontal / vertical)
-    - ✅ Display for left-handed vertical
-    - ⬜ Display for left-handed horizontal
-    - ✅ Display for right-handed vertical
-    - ✅ Display for right-handed horizontal
-    - ✅ Show fingering
-    - ✅ Show fret numbers (Latin and Roman numerals)
-    - ⬜ Change Tuning
-- ⬜ Scales (Displaying a specific scale type in a specific key)
-    - ✅ Change direction (horizontal / vertical)
-    - ✅ Display for left-handed vertical
-    - ⬜ Display for left-handed horizontal
-    - ✅ Display for right-handed vertical
-    - ✅ Display for right-handed horizontal
-    - ✅ Show notes
-    - ✅ Show distinction of the scale position of a note (prime, second, etc.)
-    - ⬜ Show legend for scale positions
-    - ✅ Show fret numbers (Latin and Roman numerals)
-    - ⬜ Change Tuning
-- ⬜ Harmony (Displaying Chords and matching scales for a 'song')
+- :white_large_square Chords (Displaying various chords of specific type and key)
+    - :white_check_mark Change direction (horizontal / vertical)
+    - :white_check_mark Display for left-handed vertical
+    - :white_large_square Display for left-handed horizontal
+    - :white_check_mark Display for right-handed vertical
+    - :white_check_mark Display for right-handed horizontal
+    - :white_check_mark Show fingering
+    - :white_check_mark Show fret numbers (Latin and Roman numerals)
+    - :white_large_square Change Tuning
+- :white_large_square Scales (Displaying a specific scale type in a specific key)
+    - :white_check_mark Change direction (horizontal / vertical)
+    - :white_check_mark Display for left-handed vertical
+    - :white_large_square Display for left-handed horizontal
+    - :white_check_mark Display for right-handed vertical
+    - :white_check_mark Display for right-handed horizontal
+    - :white_check_mark Show notes
+    - :white_check_mark Show distinction of the scale position of a note (prime, second, etc.)
+    - :white_large_square Show legend for scale positions
+    - :white_check_mark Show fret numbers (Latin and Roman numerals)
+    - :white_large_square Change Tuning
+- :white_large_square Harmony (Displaying Chords and matching scales for a 'song')
 
 ## Live demo
 
