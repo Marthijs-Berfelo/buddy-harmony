@@ -41,6 +41,6 @@ jobs:
       - name: Install
         run: npm ci
       - name: Release
-        run: echo "RELEASE | $GITHUB_TOKEN"
+        run: npm run release:ci
         env:
           GITHUB_TOKEN: ${{ github.token }}

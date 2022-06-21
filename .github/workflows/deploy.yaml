@@ -31,6 +31,4 @@ jobs:
       - name: Setup Git
         run: git remote add origin https://github.com/Marthijs-Berfelo/buddy-harmony.git
       - name: Deploy
-        run: echo "GH DEPLOY $GITHUB_TOKEN"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run deploy
