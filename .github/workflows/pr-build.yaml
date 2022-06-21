@@ -17,11 +17,11 @@ concurrency:
 
 jobs:
   test:
-    uses: ./.github/workflows/jobs/test.yaml
+    uses: ./.github/workflows/job.test.yaml
   coverage:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: ArtiomTr/jest-coverage-report-action@v2
   build:
-    uses: ./.github/workflows/jobs/build.yaml
+    uses: ./.github/workflows/job.build.yaml
