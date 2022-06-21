@@ -19,8 +19,13 @@ jobs:
   test:
     uses: ./.github/workflows/job.test.yaml
   build:
+    needs:
+      - test
     uses: ./.github/workflows/job.build.yaml
   release:
+    needs:
+      - test
+      - build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
