@@ -1,4 +1,4 @@
-name: Build
+name: Test
 on:
   workflow_call:
 jobs:
@@ -15,5 +15,7 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       - name: Install
         run: npm ci
-      - name: Build
-        run: npm run build
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test -- --reporters=jest-junit --reporters=default

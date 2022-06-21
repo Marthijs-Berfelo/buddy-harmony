@@ -7,7 +7,7 @@ import { TranslationsProvider } from './translations';
 function App() {
   return (
     <div id="app" className="flex-col justify-center align-top">
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <TranslationsProvider>
           <Header />
           <Content />

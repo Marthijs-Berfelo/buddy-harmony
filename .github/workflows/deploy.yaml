@@ -1,0 +1,36 @@
+name: Deploy
+on:
+  push:
+    tags:
+      - 'v*'
+    branches-ignore:
+      - '**'
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.15.x
+          cache: npm
+          cache-dependency-path: '**/package-lock.json'
+      - name: Install
+        run: npm ci
+      - name: Setup Git
+        run: git remote add origin https://github.com/Marthijs-Berfelo/buddy-harmony.git
+      - name: Deploy
+        run: echo "GH DEPLOY $GITHUB_TOKEN"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

@@ -9,6 +9,9 @@ i18n
   .use(I18nextBrowserLanguageDetector)
   .use(initReactI18next)
   .init({
+    backend: {
+      loadPath: `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
+    },
     fallbackLng: 'en',
     defaultNS: 'common',
     interpolation: {
