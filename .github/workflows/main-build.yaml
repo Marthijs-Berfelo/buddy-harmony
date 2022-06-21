@@ -19,7 +19,7 @@ jobs:
   test:
     uses: ./.github/workflows/job.test.yaml
   build:
-    uses: ../.github/workflows/job.build.yaml
+    uses: ./.github/workflows/job.build.yaml
   release:
     runs-on: ubuntu-latest
     steps:
