@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    "baseUrl": "src",
+    "paths": {
+      "test-utils": [
+        "test-utils/*"
+      ]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -22,6 +28,8 @@
   },
   "include": [
     "src",
-    "declarations"
+    "declarations",
+    "test-utils",
+    "jest.config.ts"
   ]
 }

@@ -1,5 +1,7 @@
 # Buddy Harmony
 
+[![Build](https://github.com/Marthijs-Berfelo/buddy-harmony/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/Marthijs-Berfelo/buddy-harmony/actions/workflows/build.yaml)
+
 With a wink to [Buddy Holly](https://en.wikipedia.org/wiki/Buddy_Holly), a guitar hero that passed too soon. This buddy
 aims to help you to playing guitar. By displaying guitar chords in multiple varieties and various scales.
 
