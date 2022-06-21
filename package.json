@@ -99,8 +99,10 @@
   },
   "release-it": {
     "git": {
-      "requireBranch": "main",
-      "commitMessage": "Release: v${version} [skip ci]"
+      "requireBranch": "release/*",
+      "commitMessage": "Release: v${version} [skip ci]",
+      "requireUpstream": false,
+      "requireCleanWorkingDir": false
     },
     "github": {
       "release": true

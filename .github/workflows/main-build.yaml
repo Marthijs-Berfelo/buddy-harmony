@@ -40,11 +40,36 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       - name: Install
         run: npm ci
+      - name: Set next version
+        run: echo "release_version=$(release-it --ci --minor --release-version)" >> $GITHUB_ENV
       - name: Configure git user
         run: |
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
+          git checkout -b release/v${{ env.release_version }}
       - name: Release
         run: npm run release:ci
         env:
           GITHUB_TOKEN: ${{ github.token }}
+      - name: Create Release PR
+        id: release-pr
+        uses: peter-evans/create-pull-request@v4.0.4
+        with:
+          commit-message: PR Release ${{ env.release_version }} [skip ci]
+          title: Release ${{ env.release_version }}
+          body: Auto-created Pull Request
+          branch: release/v${{ env.release_version }}
+          base: main
+      - name: Merge Release PR
+        uses: actions/github-script@v6.1.0
+        with:
+          script: |
+            const repository = context.repo
+            
+            await github.rest.pulls.merge({
+              merge_method: "merge",
+              owner: repository.owner,
+              pull_number: ${{ steps.cpr.outputs.pull-request-number }},
+              repo: repository.repo,
+            })
+
