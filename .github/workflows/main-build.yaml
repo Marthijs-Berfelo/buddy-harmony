@@ -17,9 +17,9 @@ concurrency:
 
 jobs:
   test:
-    uses: ./test.yaml@main
+    uses: ./.github/workflows/jobs/test.yaml@main
   build:
-    uses: ./build.yaml@main
+    uses: ../.github/workflows/jobs/build.yaml@main
   release:
     runs-on: ubuntu-latest
     steps:
