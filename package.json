@@ -1,6 +1,6 @@
 {
   "name": "buddy-harmony",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://Marthijs-Berfelo.github.io/buddy-harmony",
   "private": true,
   "scripts": {
@@ -99,8 +99,10 @@
   },
   "release-it": {
     "git": {
-      "requireBranch": "main",
-      "commitMessage": "Release: v${version} [skip ci]"
+      "requireBranch": "ci-release",
+      "commitMessage": "Release: v${version} [skip ci]",
+      "requireUpstream": false,
+      "requireCleanWorkingDir": false
     },
     "github": {
       "release": true
