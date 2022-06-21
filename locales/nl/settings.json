@@ -1,0 +1,37 @@
+{
+  "print": {
+    "tool-tip": "Afdrukken",
+    "tool-tip_/chord": "Accoord(en) afdrukken",
+    "tool-tip_/scale": "Toonladder afdrukken",
+    "tool-tip_/harmony": "Harmonie afdrukken"
+  },
+  "guitar": {
+    "type": "Onbekend",
+    "type_guitar": "Gitaar",
+    "type_guitar6": "Gitaar (6)",
+    "type_bass": "Basgitaar",
+    "type_bass4": "Basgitaar (4)",
+    "type_ukulele": "Ukelele",
+    "label": "Type: $t(settings:guitar.type, { \"context\": \"{{type}}\" })"
+  },
+  "tuning": "Stemming",
+  "tuning_standard": "Standaard",
+  "layout": {
+    "label": "$t(settings:layout.orientation, { \"context\": \"{{orientation}}\"}) / $t(settings:layout.handed.short, { \"context\": \"{{handed}}\" }) / $t(settings:layout.fret-numbers, { \"context\": \"{{fretNumbers}}\" })",
+    "orientation": "",
+    "orientation_V": "Verticaal",
+    "orientation_H": "Horizontaal",
+    "handed": {
+      "label": "Handed",
+      "label_left": "Linkshandig",
+      "handed_right": "Rechtshandig",
+      "short": "",
+      "short_left": "LH",
+      "short_right": "RH"
+    },
+    "fret-numbers": "Fret nummers",
+    "fret-numbers_NONE": "Geen",
+    "fret-numbers_ROMAN": "Romeins",
+    "fret-numbers_LATIN": "Normaal"
+  }
+}
