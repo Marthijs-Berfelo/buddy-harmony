@@ -7,6 +7,10 @@ jobs:
     name: Create
     runs-on: ubuntu-latest
     steps:
+      - name: check token
+        run: echo "TOKEN [ $TOKEN ]"
+        env:
+          TOKEN: ${{ secrets.RELEASE_APP_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v3
         with:
