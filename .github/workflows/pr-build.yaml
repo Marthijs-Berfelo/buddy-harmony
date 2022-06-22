@@ -37,7 +37,7 @@ jobs:
     uses: ./.github/workflows/job.build.yaml
   release:
     name: Release
-    if: startsWith(github.head_ref, 'Release')
+#    if: startsWith(github.head_ref, 'Release')
     needs:
       - build
     uses: ./.github/workflows/job.release-complete.yaml

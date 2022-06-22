@@ -13,6 +13,7 @@ jobs:
           PR_NUMBER: ${{ github.ref }}
           RELEASE: ${{ github.head_ref }}
       - name: Merge Release PR
+        if: startsWith(github.head_ref, 'Release')
         uses: actions/github-script@v6.1.0
         env:
           PR_NUMBER: ${{ github.ref }}
