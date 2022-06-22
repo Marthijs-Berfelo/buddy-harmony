@@ -4,7 +4,6 @@ on:
 
 jobs:
   release:
-    environment: release
     env:
       RELEASE_TOKEN: ${{ secrets.RELEASE_APP_TOKEN }}
     name: Create
