@@ -1,27 +1,20 @@
-name: Deploy
+name: Deploy to Github Pages
 on:
-  push:
-    tags:
-      - 'v*'
-    branches:
-      - main
-      - '!release/**'
+  workflow_call:
 
 permissions:
   contents: write
   pages: write
 
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
-
 jobs:
   deploy:
-    name: Deploy
+    name: Github Pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: main
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -30,7 +23,5 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       - name: Install
         run: npm ci
-      - name: Setup Git
-        run: git remote add origin https://github.com/Marthijs-Berfelo/buddy-harmony.git
       - name: Deploy
         run: npm run deploy
