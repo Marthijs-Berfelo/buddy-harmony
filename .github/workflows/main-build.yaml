@@ -23,36 +23,8 @@ jobs:
     needs:
       - test
     uses: ./.github/workflows/job.build.yaml
-  prepare-release:
+  release:
     needs:
       - test
       - build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-          cache-dependency-path: '**/package-lock.json'
-      - name: Install
-        run: npm ci
-      - name: Set next version
-        run: |
-          npm run release:ci-prepare
-          echo "Next version: $(cat next-version.txt)"
-          echo "release_version=$(cat next-version.txt)" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - name: Configure git user
-        run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
-      - name: Create release branch
-        run: |
-          git checkout -b release/v${{ env.release_version }}
-          git push -u origin release/v${{ env.release_version }}
+    uses: ./.github/workflows/job.release.yaml
