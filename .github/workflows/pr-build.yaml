@@ -32,3 +32,14 @@ jobs:
       - test
       - coverage
     uses: ./.github/workflows/job.build.yaml
+  release:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    name: Release
+    steps:
+      - name: Check PR Source
+        run: |
+          echo "PR SOURCE: $PR_SOURCE"
+        env:
+          PR_SOURCE: ${{ github.head_ref }}

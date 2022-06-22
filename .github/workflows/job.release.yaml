@@ -43,20 +43,20 @@ jobs:
         id: release-pr
         uses: thomaseizinger/create-pull-request@1.2.2
         with:
-          title: Release v${{ env.release_version }}
-          pr_body: Auto-created Pull Request
+          title: Release v${{ env.release_version }} [skip ci]
+          body: PR Release ${{ env.release_version }}
           head: release/v${{ env.release_version }}
           base: main
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Merge Release PR
-        uses: actions/github-script@v6.1.0
-        with:
-          script: |
-            const repository = context.repo
-            
-            await github.rest.pulls.merge({
-              merge_method: "merge",
-              owner: repository.owner,
-              pull_number: ${{ steps.release-pr.outputs.number }},
-              repo: repository.repo,
-            })
+#      - name: Merge Release PR
+#        uses: actions/github-script@v6.1.0
+#        with:
+#          script: |
+#            const repository = context.repo
+#
+#            await github.rest.pulls.merge({
+#              merge_method: "merge",
+#              owner: repository.owner,
+#              pull_number: ${{ steps.release-pr.outputs.number }},
+#              repo: repository.repo,
+#            })
