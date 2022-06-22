@@ -23,10 +23,12 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       - name: Install
         run: npm ci
-      - name: Configure git user
-        run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
-          git config credential.https://github.com.username github-actions
+      - name: Build
+        run: npm run build  -- PUBLIC_URL=https://Marthijs-Berfelo.github.io/buddy-harmony
       - name: Deploy
-        run: npm run deploy
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          branch: gh-pages
+          folder: build
+          git-config-name: github-actions
+          git-config-email: github-actions@github.com
