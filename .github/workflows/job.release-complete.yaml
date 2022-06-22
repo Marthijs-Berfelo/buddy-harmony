@@ -7,22 +7,13 @@ jobs:
     name: Merge PR
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR context
-        uses: actions/github-script@v6.1.0
-        with:
-          script: |
-            const prs = context.payload.pull_request
-            console.log('PR', prs.number, prs.head.ref)
       - name: Merge Release PR
-        if: startsWith(github.head_ref, 'Release')
         uses: actions/github-script@v6.1.0
         with:
           script: |
             const repository = context.repo
             const pullRequest = context.payload.pull_request
             const release = pullRequest.head.ref
-            
-            console.log('MERGE PR', pullRequest, RELEASE)
             
             await github.rest.pulls.createReview({
               event: "APPROVE",
