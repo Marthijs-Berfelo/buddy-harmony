@@ -12,7 +12,9 @@
     "format": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "release": "release-it",
     "release:ci": "npm run release --minor --ci",
-    "release:ci-prepare": "echo $(release-it --ci --minor --release-version) > next-version.txt"
+    "release:ci-prepare": "echo $(release-it --ci --minor --release-version) > next-version.txt",
+    "predeploy": "npm run build -- PUBLIC_URL=https://Marthijs-Berfelo.github.io/buddy-harmony",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -60,7 +62,7 @@
     "postcss": "^8.4.14",
     "prettier": "^2.6.2",
     "release-it": "^15.0.0",
-    "tailwindcss": "^3.1.2",
+    "tailwindcss": "^3.1.4",
     "typescript": "^4.7.4"
   },
   "lint-staged": {
