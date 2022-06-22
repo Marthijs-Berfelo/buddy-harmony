@@ -22,7 +22,11 @@ lib-cov
 coverage
 *.lcov
 
+# Test output directory
 test-results
+
+# Release version file
+next-version.txt
 
 # nyc test coverage
 .nyc_output

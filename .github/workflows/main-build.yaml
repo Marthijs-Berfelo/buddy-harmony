@@ -44,12 +44,15 @@ jobs:
       - name: Set next version
         run: |
           npm run release:ci-prepare
-          echo "Next version:"
-          cat next-version.txt
+          echo "Next version: $(cat next-version.txt)"
           echo "release_version=$(cat next-version.txt)" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Configure git user
         run: |
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
+      - name: Create release branch
+        run: |
           git checkout -b release/v${{ env.release_version }}
           git push -u origin release/v${{ env.release_version }}
