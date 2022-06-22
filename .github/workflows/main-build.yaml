@@ -42,7 +42,11 @@ jobs:
       - name: Install
         run: npm ci
       - name: Set next version
-        run: echo "release_version=$(release-it --ci --minor --release-version)" >> $GITHUB_ENV
+        run: |
+          npm run release:ci-prepare
+          echo "Next version:"
+          cat next-version.txt
+          echo "release_version=$(cat next-version.txt)" >> $GITHUB_ENV
       - name: Configure git user
         run: |
           git config --global user.name github-actions
