@@ -13,5 +13,14 @@
     "title_/chord": "Chord",
     "title_/scale": "Scale",
     "title_/harmony": "Harmony"
+  },
+  "app-version": "Version: {{version}}",
+  "app-source": "Source code",
+  "app-issues": "Issues",
+  "app-creator": "Created by: {{name}}",
+  "author": {
+    "github-profile": "Find me on Github",
+    "twitter": "Twitter: {{handle}}",
+    "send-email": "Send me a message"
   }
 }
