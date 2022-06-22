@@ -101,7 +101,7 @@
   "release-it": {
     "git": {
       "requiresBranch": "release/**",
-      "commitMessage": "Release: v${version} [skip ci]",
+      "commitMessage": "Release: v${version}",
       "requireUpstream": false
     },
     "github": {
