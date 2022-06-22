@@ -7,29 +7,27 @@ jobs:
     name: Merge PR
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR number
+      - name: Get PR context
         uses: actions/github-script@v6.1.0
         with:
           script: |
-            const prs = context.payload
-            console.log('PRS', prs)
+            const prs = context.payload.pull_request
+            console.log('PR', prs.number, prs.head.ref)
       - name: Merge Release PR
         if: startsWith(github.head_ref, 'Release')
         uses: actions/github-script@v6.1.0
-        env:
-          RELEASE: ${{ github.head_ref }}
         with:
           script: |
             const repository = context.repo
-            const pullRequest = context.payload.workflow_run.pull_requests[0]
-            const { RELEASE } = process.env
+            const pullRequest = context.payload.pull_request
+            const release = pullRequest.head.ref
             
             console.log('MERGE PR', pullRequest, RELEASE)
             
             await github.rest.pulls.createReview({
               event: "APPROVE",
               owner: repository.owner,
-              pull_number: $PR_NUMBER,
+              pull_number: pullRequest.number,
               repo: repository.repo,
             })
 
@@ -38,5 +36,5 @@ jobs:
               owner: repository.owner,
               pull_number: pullRequest.number,
               repo: repository.repo,
-              commit_title: "Complete $RELEASE [skip ci]"
+              commit_title: "Complete $release [skip ci]"
             })
