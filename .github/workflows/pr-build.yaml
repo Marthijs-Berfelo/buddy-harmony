@@ -38,13 +38,13 @@ jobs:
     name: Build
     needs:
       - test
-      - coverage
     uses: ./.github/workflows/job.build.yaml
   release:
     name: Release
     if: startsWith(github.head_ref, 'Release')
     needs:
       - build
+      - coverage
     uses: ./.github/workflows/job.release-complete.yaml
   deploy:
     name: Deploy
