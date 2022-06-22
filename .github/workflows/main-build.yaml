@@ -22,12 +22,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Obtain GitHub App Installation Access Token
-        id: githubAppAuth
+        id: get_token
         run: |
           echo "TKN [${{ secrets.RELEASE_APP_TOKEN }}]"
           TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.RELEASE_APP_TOKEN }})"
           echo "::add-mask::$TOKEN"
-          echo "release_token=$TOKEN >> $GITHUB_ENV"
+          echo "::set-output name=token::$TOKEN"
   test:
     name: QA
     uses: ./.github/workflows/job.test.yaml
@@ -43,4 +43,4 @@ jobs:
       - build
     uses: ./.github/workflows/job.release.yaml
     secrets:
-      RELEASE_TOKEN: ${{ env.release_token }}
+      RELEASE_TOKEN: ${{ steps.get_token.outputs.token }}
