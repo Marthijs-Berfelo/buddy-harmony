@@ -13,5 +13,14 @@
     "title_/chord": "Accoord",
     "title_/scale": "Toonladder",
     "title_/harmony": "Harmonie"
+  },
+  "app-version": "Versie: {{version}}",
+  "app-source": "Bron code",
+  "app-issues": "Issues",
+  "app-creator": "Gemaakt door: {{name}}",
+  "author": {
+    "github-profile": "Vind me op Github",
+    "twitter": "Twitter: {{handle}}",
+    "send-email": "Stuur me een e-mail"
   }
 }
