@@ -1,0 +1,63 @@
+name: Release
+on:
+  push:
+    branches:
+      - 'release/*'
+    tags-ignore:
+      - '**'
+    paths-ignore:
+      - '**/*.md'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+          cache-dependency-path: '**/package-lock.json'
+      - name: Install
+        run: npm ci
+      - name: Configure git user
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+      - name: Release
+        run: npm run release:ci
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Create Release PR
+        id: release-pr
+        uses: peter-evans/create-pull-request@v4.0.4
+        with:
+          commit-message: PR Release ${{ github.ref }} [skip ci]
+          title: Release ${{ github.ref }}
+          body: Auto-created Pull Request
+          branch: ${{ github.ref }}
+          base: main
+      - name: Merge Release PR
+        uses: actions/github-script@v6.1.0
+        with:
+          script: |
+            const repository = context.repo
+            
+            await github.rest.pulls.merge({
+              merge_method: "merge",
+              owner: repository.owner,
+              pull_number: ${{ steps.cpr.outputs.pull-request-number }},
+              repo: repository.repo,
+            })
+
