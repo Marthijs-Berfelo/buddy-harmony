@@ -4,18 +4,21 @@ on:
 
 jobs:
   release:
+    environment: release
+    env:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_APP_TOKEN }}
     name: Create
     runs-on: ubuntu-latest
     steps:
       - name: check token
         run: echo "TOKEN [ $TOKEN ]"
         env:
-          TOKEN: ${{ secrets.RELEASE_APP_TOKEN }}
+          TOKEN: ${{ env.RELEASE_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.RELEASE_APP_TOKEN }}
+          token: ${{ env.RELEASE_TOKEN }}
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -33,7 +36,7 @@ jobs:
           echo "Next version: $(cat next-version.txt)"
           echo "release_version=$(cat next-version.txt)" >> $GITHUB_ENV
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ env.RELEASE_TOKEN }}
       - name: Configure git user
         run: |
           git config --global user.name github-actions
@@ -44,7 +47,7 @@ jobs:
       - name: Release
         run: npm run release:ci
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_APP_TOKEN }}
+          GITHUB_TOKEN: ${{ env.RELEASE_TOKEN }}
       - name: Create PR
         id: release-pr
         uses: thomaseizinger/create-pull-request@1.2.2
@@ -53,4 +56,4 @@ jobs:
           body: PR Release ${{ env.release_version }}
           head: release/v${{ env.release_version }}
           base: main
-          GITHUB_TOKEN: ${{ secrets.RELEASE_APP_TOKEN }}
+          GITHUB_TOKEN: ${{ env.RELEASE_TOKEN }}
