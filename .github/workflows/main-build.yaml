@@ -48,4 +48,4 @@ jobs:
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
           git checkout -b release/v${{ env.release_version }}
-          git push -U origin release/v${{ env.release_version }}
+          git push -u origin release/v${{ env.release_version }}
