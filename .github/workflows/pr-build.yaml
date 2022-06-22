@@ -1,15 +1,20 @@
 name: Build PR
 on:
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
     branches:
       - main
     paths-ignore:
       - '**/*.md'
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
   checks: write
+  pages: write
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
@@ -41,3 +46,9 @@ jobs:
     needs:
       - build
     uses: ./.github/workflows/job.release-complete.yaml
+  deploy:
+    name: Deploy
+    if: startsWith(github.head_ref, 'Release')
+    needs:
+      - release
+    uses: ./.github/workflows/job.deploy.gh-pages.yaml
