@@ -31,7 +31,7 @@ aims to help you to playing guitar. By displaying guitar chords in multiple vari
 
 ## Live demo
 
-TODO
+The app can be viewed/used [here](https://marthijs-berfelo.github.io/buddy-harmony)
 
 ## Bugs
 
