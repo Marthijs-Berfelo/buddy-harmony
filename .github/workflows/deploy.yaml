@@ -5,8 +5,7 @@ on:
       - 'v*'
     branches:
       - main
-    branches-ignore:
-      - 'release/**'
+      - '!release/**'
 
 permissions:
   contents: write
