@@ -41,13 +41,13 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Create Release PR
         id: release-pr
-        uses: siematypie/merge-or-pr@v1.0.1
+        uses: thomaseizinger/create-pull-request@1.2.2
         with:
-          pr_title: Release v${{ env.release_version }}
+          title: Release v${{ env.release_version }}
           pr_body: Auto-created Pull Request
-          merge_branch_name: release/v${{ env.release_version }}
-          target_branch: main
-          repo_token: ${{ github.token }}
+          head: release/v${{ env.release_version }}
+          base: main
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Merge Release PR
         uses: actions/github-script@v6.1.0
         with:
@@ -57,6 +57,6 @@ jobs:
             await github.rest.pulls.merge({
               merge_method: "merge",
               owner: repository.owner,
-              pull_number: ${{ steps.release-pr.outputs.PR_NUMBER }},
+              pull_number: ${{ steps.release-pr.outputs.number }},
               repo: repository.repo,
             })
