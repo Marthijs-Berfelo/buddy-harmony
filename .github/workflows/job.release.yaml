@@ -1,24 +1,20 @@
 name: Release
 on:
   workflow_call:
+    secrets:
+      RELEASE_TOKEN:
+        required: true
 
 jobs:
   release:
     name: Create
     runs-on: ubuntu-latest
     steps:
-      - name: Obtain GitHub App Installation Access Token
-        id: githubAppAuth
-        run: |
-          echo "TKN [${{ secrets.RELEASE_APP_TOKEN }}]"
-          TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.RELEASE_APP_TOKEN }})"
-          echo "::add-mask::$TOKEN"
-          echo "release_token=$TOKEN >> $GITHUB_ENV"
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ env.release_token }}
+          token: ${{ secrets.RELEASE_TOKEN }}
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -36,7 +32,7 @@ jobs:
           echo "Next version: $(cat next-version.txt)"
           echo "release_version=$(cat next-version.txt)" >> $GITHUB_ENV
         env:
-          GITHUB_TOKEN: ${{ env.release_token }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
       - name: Configure git user
         run: |
           git config --global user.name github-actions
@@ -47,7 +43,7 @@ jobs:
       - name: Release
         run: npm run release:ci
         env:
-          GITHUB_TOKEN: ${{ env.release_token }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
       - name: Create PR
         id: release-pr
         uses: thomaseizinger/create-pull-request@1.2.2
@@ -56,4 +52,4 @@ jobs:
           body: PR Release ${{ env.release_version }}
           head: release/v${{ env.release_version }}
           base: main
-          GITHUB_TOKEN: ${{ env.release_token }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
