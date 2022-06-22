@@ -3,8 +3,9 @@ on:
   push:
     tags:
       - 'v*'
-    branches-ignore:
-      - '**'
+    branches:
+      - main
+      - '!release/**'
 
 permissions:
   contents: write
@@ -15,7 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

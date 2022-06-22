@@ -18,12 +18,15 @@ concurrency:
 
 jobs:
   test:
+    name: QA
     uses: ./.github/workflows/job.test.yaml
   build:
+    name: Build
     needs:
       - test
     uses: ./.github/workflows/job.build.yaml
   release:
+    name: Release
     needs:
       - test
       - build

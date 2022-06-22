@@ -1,0 +1,31 @@
+name: Release
+on:
+  workflow_call:
+
+jobs:
+  complete:
+    name: Merge PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge Release PR
+        uses: actions/github-script@v6.1.0
+        with:
+          script: |
+            const repository = context.repo
+            const pullRequest = context.payload.pull_request
+            const release = pullRequest.head.ref
+            
+            await github.rest.pulls.createReview({
+              event: "APPROVE",
+              owner: repository.owner,
+              pull_number: pullRequest.number,
+              repo: repository.repo,
+            })
+
+            await github.rest.pulls.merge({
+              merge_method: "merge",
+              owner: repository.owner,
+              pull_number: pullRequest.number,
+              repo: repository.repo,
+              commit_title: "Complete $release [skip ci]"
+            })
