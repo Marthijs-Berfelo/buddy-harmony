@@ -17,14 +17,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  prepare:
-    name: Prepare
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Token
-        id: get_token
-        run: |
-          echo "TKN [${{ secrets.RELEASE_APP_TOKEN }}]"
   test:
     name: QA
     uses: ./.github/workflows/job.test.yaml
