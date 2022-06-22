@@ -12,6 +12,7 @@
     "format": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "release": "release-it",
     "release:ci": "npm run release --minor --ci",
+    "release:ci-prepare": "echo $(release-it --ci --minor --release-version) > next-version.txt",
     "predeploy": "npm run build -- PUBLIC_URL=https://Marthijs-Berfelo.github.io/buddy-harmony",
     "deploy": "gh-pages -d build"
   },
@@ -99,7 +100,6 @@
   },
   "release-it": {
     "git": {
-      "requireBranch": "release/*",
       "commitMessage": "Release: v${version} [skip ci]",
       "requireUpstream": false,
       "requireCleanWorkingDir": false
