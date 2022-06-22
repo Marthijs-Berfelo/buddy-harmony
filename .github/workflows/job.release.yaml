@@ -1,19 +1,6 @@
 name: Release
 on:
-  push:
-    branches:
-      - 'release/**'
-    tags-ignore:
-      - '**'
-    paths-ignore:
-      - '**/*.md'
-
-permissions:
-  contents: write
-
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
+  workflow_call:
 
 jobs:
   release:
@@ -31,10 +18,23 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       - name: Install
         run: npm ci
+      - name: Switch to next-release branch
+        run: |
+          git checkout -b release/next
+      - name: Set next version
+        run: |
+          npm run release:ci-prepare
+          echo "Next version: $(cat next-version.txt)"
+          echo "release_version=$(cat next-version.txt)" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Configure git user
         run: |
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
+      - name: Switch to release branch
+        run: |
+          git checkout -b release/v${{ env.release_version }}
       - name: Release
         run: npm run release:ci
         env:
@@ -60,4 +60,3 @@ jobs:
               pull_number: ${{ steps.cpr.outputs.pull-request-number }},
               repo: repository.repo,
             })
-
