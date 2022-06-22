@@ -12,17 +12,17 @@
     "format": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "release": "release-it",
     "release:ci": "npm run release --minor --ci",
-    "release:ci-prepare": "echo $(release-it --ci --minor --release-version) > next-version.txt",
-    "predeploy": "npm run build -- PUBLIC_URL=https://Marthijs-Berfelo.github.io/buddy-harmony",
-    "deploy": "gh-pages -d build"
+    "release:ci-prepare": "echo $(release-it --ci --minor --release-version) > next-version.txt"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@material-tailwind/react": "^1.0.3",
     "@tombatossals/chords-db": "^0.5.1",
     "assert-ts": "^0.3.4",
+    "babel-plugin-macros": "^3.1.0",
     "fretboard-api": "^0.7.1",
     "guitar-scales": "^1.0.4",
     "i18next": "^21.8.10",
@@ -53,7 +53,6 @@
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "gh-pages": "^4.0.0",
     "jest": "^28.1.1",
     "jest-environment-jsdom": "^28.1.1",
     "jest-junit": "^13.2.0",
