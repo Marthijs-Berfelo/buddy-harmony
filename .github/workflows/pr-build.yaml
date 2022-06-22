@@ -19,6 +19,7 @@ jobs:
   test:
     uses: ./.github/workflows/job.test.yaml
   coverage:
+    name: Coverage
     needs:
       - test
     runs-on: ubuntu-latest
@@ -33,13 +34,7 @@ jobs:
       - coverage
     uses: ./.github/workflows/job.build.yaml
   release:
+    if: startsWith( ${{ github.head_ref }}, 'Release' )
     needs:
       - build
-    runs-on: ubuntu-latest
-    name: Release
-    steps:
-      - name: Check PR Source
-        run: |
-          echo "PR SOURCE: $PR_SOURCE"
-        env:
-          PR_SOURCE: ${{ github.head_ref }}
+    uses: ./.github/workflows/job.release-complete.yaml

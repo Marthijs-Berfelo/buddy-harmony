@@ -4,6 +4,7 @@ on:
 
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,20 +44,8 @@ jobs:
         id: release-pr
         uses: thomaseizinger/create-pull-request@1.2.2
         with:
-          title: Release v${{ env.release_version }} [skip ci]
+          title: Release v${{ env.release_version }}
           body: PR Release ${{ env.release_version }}
           head: release/v${{ env.release_version }}
           base: main
           GITHUB_TOKEN: ${{ github.token }}
-#      - name: Merge Release PR
-#        uses: actions/github-script@v6.1.0
-#        with:
-#          script: |
-#            const repository = context.repo
-#
-#            await github.rest.pulls.merge({
-#              merge_method: "merge",
-#              owner: repository.owner,
-#              pull_number: ${{ steps.release-pr.outputs.number }},
-#              repo: repository.repo,
-#            })
