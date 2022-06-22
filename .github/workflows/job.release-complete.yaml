@@ -4,11 +4,11 @@ on:
 
 jobs:
   complete:
-    name: Merge Release PR
+    name: Merge PR
     runs-on: ubuntu-latest
     steps:
       - name: Check refs
-        run: echo "$PR_NUMBER $RELEASE
+        run: echo "$PR_NUMBER $RELEASE"
         env:
           PR_NUMBER: ${{ github.ref }}
           RELEASE: ${{ github.head_ref }}

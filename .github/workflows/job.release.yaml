@@ -4,7 +4,7 @@ on:
 
 jobs:
   release:
-    name: Release
+    name: Create
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,7 +40,7 @@ jobs:
         run: npm run release:ci
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Create Release PR
+      - name: Create PR
         id: release-pr
         uses: thomaseizinger/create-pull-request@1.2.2
         with:

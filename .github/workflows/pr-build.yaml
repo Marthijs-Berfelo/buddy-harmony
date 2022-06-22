@@ -17,9 +17,10 @@ concurrency:
 
 jobs:
   test:
+    name: QA
     uses: ./.github/workflows/job.test.yaml
   coverage:
-    name: Coverage
+    name: QA / Coverage
     needs:
       - test
     runs-on: ubuntu-latest
@@ -29,12 +30,14 @@ jobs:
         with:
           test-script: npm test
   build:
+    name: Build
     needs:
       - test
       - coverage
     uses: ./.github/workflows/job.build.yaml
   release:
-    if: startsWith( ${{ github.head_ref }}, 'Release' )
+    name: Release
+    if: startsWith(github.head_ref, 'Release')
     needs:
       - build
     uses: ./.github/workflows/job.release-complete.yaml
