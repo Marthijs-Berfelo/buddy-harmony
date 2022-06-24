@@ -1,4 +1,3 @@
-import { Tuning, TuningType } from 'fretboard-api';
 import { chordTuning, guitar, instruments } from './chord-db';
 import { RefObject } from 'react';
 import { Orientation } from '../common/fretboard';
@@ -12,6 +11,8 @@ export interface PrintableProps {
 export interface Printable extends PrintableProps {
   printStyle: (orientation: Orientation) => string;
 }
+
+type TuningType = { [name: string]: string[] };
 
 export type GuitarType = {
   name: string;
@@ -34,10 +35,20 @@ const extractTuning = (guitar: GuitarType): StringTuningType[] =>
     tuning: value[1],
   }));
 
-const scaleGuitarTypes: GuitarType[] = Object.entries(Tuning).map((value) => ({
-  name: value[0],
-  type: value[1],
-}));
+const scaleGuitarTypes: GuitarType[] = [
+  {
+    name: DEFAULT_TYPE,
+    type: {
+      standard: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
+      standard_flat: ['Eb2', 'Ab2', 'C#3', 'F#3', 'Bb3', 'Eb4'],
+      standard_d: ['D2', 'G2', 'C3', 'F3', 'A3', 'D4'],
+      drop_d: ['D2', 'A2', 'D3', 'G3', 'B3', 'E4'],
+      drop_c: ['C2', 'G2', 'C3', 'F3', 'A3', 'D4'],
+      double_drop_d: ['D2', 'A2', 'D3', 'G3', 'B3', 'D4'],
+      dadgad: ['D2', 'A2', 'D3', 'G3', 'A3', 'D4'],
+    },
+  },
+];
 
 const chordGuitarTypes: GuitarType[] = Object.entries(instruments).map((value) => ({
   name: value[0],

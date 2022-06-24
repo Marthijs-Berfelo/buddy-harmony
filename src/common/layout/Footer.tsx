@@ -4,6 +4,7 @@ import { Navbar, Tooltip, Typography } from '@material-tailwind/react';
 import packageJson from '../../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
 import { appInfo } from '../app-info';
 
 const Footer = (): JSX.Element => {
@@ -42,7 +43,7 @@ const Footer = (): JSX.Element => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <FontAwesomeIcon className="flex text-xl text-black mr-2" icon={'bug'} />
+                <FontAwesomeIcon className="flex text-xl text-black mr-2" icon={faBug} />
               </Typography>
             </Tooltip>
           </div>
@@ -82,7 +83,7 @@ const Footer = (): JSX.Element => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <FontAwesomeIcon className="flex text-xl text-black mr-2" icon={'at'} />
+                <FontAwesomeIcon className="flex text-xl text-black mr-2" icon={faAt} />
               </Typography>
             </Tooltip>
           </div>
