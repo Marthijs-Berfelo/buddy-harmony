@@ -1,6 +1,6 @@
 {
   "name": "buddy-harmony",
-  "version": "0.0.18",
+  "version": "0.0.21",
   "homepage": "https://Marthijs-Berfelo.github.io/buddy-harmony",
   "private": true,
   "scripts": {
@@ -32,7 +32,7 @@
     "i18next-http-backend": "^1.4.1",
     "immer": "^9.0.15",
     "react": "^18.2.0",
-    "react-dom": "^18.1.0",
+    "react-dom": "^18.2.0",
     "react-flags-select": "^2.2.3",
     "react-i18next": "^11.17.2",
     "react-router-dom": "^6.3.0",
@@ -60,7 +60,7 @@
     "jest-junit": "^13.2.0",
     "msw": "^0.42.1",
     "postcss": "^8.4.14",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "release-it": "^15.0.0",
     "tailwindcss": "^3.1.4",
     "typescript": "^4.7.4"
