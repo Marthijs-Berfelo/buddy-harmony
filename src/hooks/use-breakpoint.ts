@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import conf from 'tailwindcss/defaultConfig';
 import { ScreensConfig } from 'tailwindcss/types/config';
-import * as resolveConfig from 'tailwindcss/resolveConfig';
+import resolveConfig from 'tailwindcss/resolveConfig';
 
 const fallbackScreens: ScreensConfig = {
   'sm': '640px',
