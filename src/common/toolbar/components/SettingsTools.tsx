@@ -1,17 +1,20 @@
 import React from 'react';
 import { useSettings } from '../../../hooks';
 import {
-  Button,
+  IconButton,
   Menu,
   MenuHandler,
   MenuItem,
   MenuList,
   Option,
   Select,
+  Typography,
 } from '@material-tailwind/react';
 import { GuitarType } from '../../../hooks';
 import { useTranslation } from 'react-i18next';
 import { FretNumberType } from '../../fretboard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGears } from '@fortawesome/free-solid-svg-icons';
 
 export interface SettingsToolsProps {
   supportedGuitars?: GuitarType[];
@@ -36,32 +39,39 @@ const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element =>
   } = useSettings();
 
   return (
-    <ul className="flex justify-center gap-4 mx-12">
-      <Menu key={'tool-guitar'}>
-        <MenuHandler>
-          <Button variant="gradient" className="capitalize">
-            {t('settings:guitar.label', { type: guitarType.name }).toLowerCase()}
-          </Button>
-        </MenuHandler>
-        <MenuList className="flex flex-col flex-grow">
-          {Array.from(guitarTypes)
-            .filter(onlySupportedGuitars(supportedGuitars))
-            .map((type) => (
-              <MenuItem
-                key={type.name}
-                disabled={type.name === guitarType.name}
-                className={
-                  'justify-items-stretch' +
-                  `${type.name === guitarType.name ? ' font-extrabold bg-blue-800 text-white' : ''}`
-                }
-                onClick={() => setGuitarType(type)}
-              >
-                {t('settings:guitar.type', { context: type.name })}
-              </MenuItem>
-            ))}
-        </MenuList>
-      </Menu>
-      <li key={'tool-tuning'}>
+    <Menu placement="bottom-start">
+      <MenuHandler>
+        <IconButton className="mr-1">
+          <FontAwesomeIcon className="text-xl" icon={faGears} />
+        </IconButton>
+      </MenuHandler>
+      <MenuList>
+        <Menu key={'tool-guitar'} placement="right" offset={15}>
+          <MenuHandler>
+            <Typography className="flex flex-grow capitalize pb-3">
+              {t('settings:guitar.label', { type: guitarType.name }).toLowerCase()}
+            </Typography>
+          </MenuHandler>
+          <MenuList className="flex flex-col flex-grow">
+            {Array.from(guitarTypes)
+              .filter(onlySupportedGuitars(supportedGuitars))
+              .map((type) => (
+                <MenuItem
+                  key={type.name}
+                  disabled={type.name === guitarType.name}
+                  className={
+                    'justify-items-stretch' +
+                    `${
+                      type.name === guitarType.name ? ' font-extrabold bg-blue-800 text-white' : ''
+                    }`
+                  }
+                  onClick={() => setGuitarType(type)}
+                >
+                  {t('settings:guitar.type', { context: type.name })}
+                </MenuItem>
+              ))}
+          </MenuList>
+        </Menu>
         <Select
           label={t('settings:tuning')}
           className="flex items-center bg-white z-40"
@@ -74,17 +84,15 @@ const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element =>
             </Option>
           ))}
         </Select>
-      </li>
-      <li key={'tool-orientation'}>
-        <Menu>
+        <Menu placement="right" offset={15}>
           <MenuHandler>
-            <Button variant="gradient">
+            <Typography className="pt-3">
               {t('settings:layout.label', {
                 orientation,
                 handed: leftHanded ? 'left' : 'right',
                 fretNumbers,
               })}
-            </Button>
+            </Typography>
           </MenuHandler>
           <MenuList>
             <MenuItem onClick={() => toggleOrientation()}>
@@ -109,8 +117,8 @@ const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element =>
             </Menu>
           </MenuList>
         </Menu>
-      </li>
-    </ul>
+      </MenuList>
+    </Menu>
   );
 };
 
