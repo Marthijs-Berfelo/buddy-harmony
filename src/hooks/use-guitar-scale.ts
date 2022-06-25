@@ -3,6 +3,7 @@ import { Orientation, ScaleModel } from '../common/fretboard';
 import * as gs from 'guitar-scales';
 import { KeysHook, useKeys } from './use-keys';
 import { Printable, PrintableProps } from './constants';
+import { useBreakpoint } from './use-breakpoint';
 
 export interface GuitarScaleHook extends KeysHook, Printable {
   scales: string[];
@@ -13,6 +14,7 @@ export interface GuitarScaleHook extends KeysHook, Printable {
 
 export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook => {
   const guitarScale = gs.GuitarScale;
+  useBreakpoint();
   const { keys, selectedKey, setSelectedKey } = useKeys();
   // const { tuningType } = useSettings();
   const [scale, setScale] = useState<string>();

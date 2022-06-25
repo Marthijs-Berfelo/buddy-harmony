@@ -7,11 +7,6 @@
       "esnext"
     ],
     "baseUrl": "src",
-    "paths": {
-      "test-utils": [
-        "test-utils/*"
-      ]
-    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

@@ -4,3 +4,7 @@
 }
 
 .fretboard-fret-numbers {}
+
+.active-link {
+  cursor: default;
+}

@@ -7,7 +7,7 @@ const ChordPage = lazy(() => import('../../modules/chord'));
 
 const Content = (): JSX.Element => {
   return (
-    <div className="flex justify-center pt-24" id="content" style={{ width: '100vw' }}>
+    <div className="pt-24" id="content">
       <SettingsContextProvider>
         <Suspense fallback={'Loading..'}>
           <Routes>
