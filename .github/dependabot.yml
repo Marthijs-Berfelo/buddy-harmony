@@ -5,22 +5,22 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: "daily"
+      interval: daily
     reviewers:
       - "Marthijs-Berfelo"
     assignees:
       - "Marthijs-Berfelo"
-    rebase-strategy: "auto"
+    rebase-strategy: auto
 
-- package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "daily"
+      interval: daily
     reviewers:
       - "Marthijs-Berfelo"
     assignees:
       - "Marthijs-Berfelo"
-    rebase-strategy: "auto"
+    rebase-strategy: auto
