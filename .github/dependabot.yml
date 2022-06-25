@@ -8,9 +8,19 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     reviewers:
       - "Marthijs-Berfelo"
     assignees:
       - "Marthijs-Berfelo"
-    rebase-strategy: "disabled"
+    rebase-strategy: "auto"
+
+- package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "Marthijs-Berfelo"
+    assignees:
+      - "Marthijs-Berfelo"
+    rebase-strategy: "auto"
