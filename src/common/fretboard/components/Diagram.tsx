@@ -18,6 +18,7 @@ export interface DiagramProps {
   scale?: ScaleModel;
   chords?: ChordPosition[];
   chord?: ChordPosition;
+  cagedColor?: string;
   debug?: boolean;
   clickHandler?: (
     event: MouseEvent<SVGSVGElement>,
@@ -33,7 +34,7 @@ const Diagram = (props: DiagramProps): JSX.Element => {
   const { onMouseClick, onMouseMove, frets, startAt, viewBox, getHeight, getWidth, getShapes } =
     useDiagram(props);
   const { fretNumbers } = useSettings();
-  const { className, scale, chord, chords, text } = props;
+  const { className, scale, chord, chords, cagedColor, text } = props;
 
   return (
     <svg
@@ -49,8 +50,8 @@ const Diagram = (props: DiagramProps): JSX.Element => {
       <g className={'fretboard'}>
         <Fretboard frets={frets} chord={!!chord} startAt={startAt} />
         {scale && <ScaleShape className={className} scale={getShapes(scale)} text={text} />}
-        {chord && <ChordShape className={className} chord={chord} />}
-        {chords && <ChordShape className={className} chords={chords} />}
+        {chord && <ChordShape className={className} chord={chord} cagedColor={cagedColor} />}
+        {chords && <ChordShape className={className} chords={chords} cagedColor={cagedColor} />}
         {fretNumbers !== FretNumberType.NONE && <FretNumbers frets={frets} startAt={startAt} />}
         <Tuning />
       </g>
@@ -72,7 +73,6 @@ type DiagramHook = {
 };
 
 const useDiagram = ({
-  diagramCount,
   scale,
   chord,
   chords,
@@ -131,7 +131,7 @@ const useDiagram = ({
   };
 
   const getWidth = (): number => {
-    return width() / ((diagramCount || 1) > 1 ? (diagramCount || 1) / 2 : 1.5);
+    return (width() / height()) * getHeight();
   };
 
   const height = (): number => {

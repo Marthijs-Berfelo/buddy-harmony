@@ -3,6 +3,7 @@ import { useSettings } from '../../../hooks';
 
 export interface ShapeProps {
   className: string;
+  cagedColor?: string;
 }
 
 type ShapeHook = {

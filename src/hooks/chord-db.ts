@@ -24,6 +24,7 @@ export interface ChordPosition {
   barres?: number[];
   capo?: boolean;
   midi: number[];
+  notes?: string[];
 }
 export interface ChordDetail {
   key: string;

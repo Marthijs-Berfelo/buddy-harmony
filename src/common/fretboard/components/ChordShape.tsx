@@ -21,7 +21,12 @@ type ChordShapeHook = {
   chordShapes: JSX.Element[];
 };
 
-const useChordShape = ({ className, chords, chord }: ChordShapeProps): ChordShapeHook => {
+const useChordShape = ({
+  className,
+  cagedColor,
+  chords,
+  chord,
+}: ChordShapeProps): ChordShapeHook => {
   const { orientation, leftHanded, diagramStyle } = useSettings();
   const { onStrings } = useDirectional<number, unknown>({ orientation, leftHanded });
 
@@ -150,7 +155,7 @@ const useChordShape = ({ className, chords, chord }: ChordShapeProps): ChordShap
           x={fingerX}
           y={fingerY}
           alignmentBaseline={'central'}
-          className={`${className} text-xl font-sans stroke-1 stroke-black`}
+          className={`${className} text-2xl font-sans stroke-1 stroke-black`}
         >
           {finger}
         </text>
@@ -158,8 +163,11 @@ const useChordShape = ({ className, chords, chord }: ChordShapeProps): ChordShap
     );
   };
 
-  const dotText = (string: number, fingers: number[]): string | undefined =>
+  const dotFingerText = (string: number, fingers: number[]): string | undefined =>
     fingers[string]?.toString();
+
+  const dotNoteText = (string: number, chordNotes: string[]): string | undefined =>
+    chordNotes[string];
 
   const dot = (
     string: number,
@@ -174,14 +182,14 @@ const useChordShape = ({ className, chords, chord }: ChordShapeProps): ChordShap
         cx={x(diagramStyle.padding, string, fret, xOffset(startAt === 0))}
         cy={y(diagramStyle.padding, string, fret, yOffset(startAt === 0))}
         r={diagramStyle.dotRadius}
-        className={`${className} stroke-black fill-black`}
+        className={`${className} ${cagedColor || 'stroke-black fill-black'}`}
       />
       <text
         key={`${chordPosition}.${string}.${fret}.finger`}
         x={x(diagramStyle.padding, string, fret, xOffset(startAt === 0))}
         y={y(diagramStyle.padding, string, fret, yOffset(startAt === 0))}
         alignmentBaseline={'central'}
-        className={`${className} text-xl font-sans stroke-1 stroke-white`}
+        className={`${className} text-2xl font-sans stroke-2 stroke-white`}
       >
         {text}
       </text>
@@ -220,16 +228,25 @@ const useChordShape = ({ className, chords, chord }: ChordShapeProps): ChordShap
         return cross(string, chordPosition);
       } else if (fret === 0) {
         return open(string, chordPosition);
-      } else if (chord.barres?.includes(fret)) {
+      } else if (chord.barres?.includes(fret) && !cagedColor) {
         return blank(string, chordPosition);
       } else {
-        return dot(string, fret, baseFret, chordPosition, dotText(string, fingerNumbers));
+        return dot(
+          string,
+          fret,
+          baseFret,
+          chordPosition,
+          !!cagedColor
+            ? dotNoteText(string, chord.notes || [])
+            : dotFingerText(string, fingerNumbers)
+        );
       }
     });
-    const barres =
-      (chord.barres || []).map((barreFret) =>
-        barre(barreFret, baseFret, chord.frets, fingerNumbers, chordPosition)
-      ) || [];
+    const barres = !!cagedColor
+      ? []
+      : (chord.barres || []).map((barreFret) =>
+          barre(barreFret, baseFret, chord.frets, fingerNumbers, chordPosition)
+        ) || [];
 
     return [...dots, ...barres];
   };
