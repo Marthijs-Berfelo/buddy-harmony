@@ -4,6 +4,7 @@ import { Pages } from '../routing/pages';
 import ScalePage from '../../modules/scale';
 import { SettingsContextProvider } from '../../hooks';
 const ChordPage = lazy(() => import('../../modules/chord'));
+const CagedPage = lazy(() => import('../../modules/caged'));
 
 const Content = (): JSX.Element => {
   return (
@@ -13,6 +14,7 @@ const Content = (): JSX.Element => {
           <Routes>
             <Route path={Pages.SCALE} element={<ScalePage />} />
             <Route path={Pages.CHORD} element={<ChordPage />} />
+            <Route path={Pages.CAGED} element={<CagedPage />} />
             <Route path={'*'} element={<Navigate to={Pages.SCALE} replace />} />
           </Routes>
         </Suspense>

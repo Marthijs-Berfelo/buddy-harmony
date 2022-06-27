@@ -4,6 +4,7 @@
     "page": "",
     "page_CHORD": "Accoorden",
     "page_SCALE": "Toonladders",
+    "page_CAGED": "C A G E D",
     "page_HARMONY": "Harmonie",
     "page_HELP": "Help"
   },
@@ -12,6 +13,7 @@
     "title": "Instellingen",
     "title_/chord": "Accoord",
     "title_/scale": "Toonladder",
+    "title_/caged": "C A G E D",
     "title_/harmony": "Harmonie"
   },
   "app-version": "Versie: {{version}}",

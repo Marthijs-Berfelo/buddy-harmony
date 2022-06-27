@@ -28,16 +28,15 @@ const Header = (): JSX.Element => {
               >
                 <NavLink to={name[1]}>
                   {({ isActive }) => (
-                    <Typography
-                      variant={'text'}
-                      className={`flex w-full hover:bg-green-50 font-sans text-xl bg-white items-center ${
+                    <div
+                      className={`flex w-full hover:bg-green-50 font-sans text-sm bg-white items-center ${
                         isActive
                           ? 'text-blue-grey-600 hover:bg-blue-grey-100 active-link'
                           : 'text-green-700'
                       }`}
                     >
                       {t('common:routing.page', { context: name[0] })}
-                    </Typography>
+                    </div>
                   )}
                 </NavLink>
               </Typography>

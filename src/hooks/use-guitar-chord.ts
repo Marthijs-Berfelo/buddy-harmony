@@ -33,6 +33,7 @@ export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook =>
   useEffect(() => {
     if (isSupportedType(guitarType) && !!selectedKey && !!chord) {
       const models = chordModels(guitarType.name, selectedKey, chord);
+      console.log('Chord models', guitarType.name, selectedKey, chord, models);
       if (models.length > 0) {
         setChordModel(models[0]);
       }

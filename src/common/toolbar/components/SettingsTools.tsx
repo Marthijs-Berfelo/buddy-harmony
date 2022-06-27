@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSettings } from '../../../hooks';
+import React, { useEffect } from 'react';
+import { GuitarType, useSettings } from '../../../hooks';
 import {
   IconButton,
   Menu,
@@ -10,17 +10,18 @@ import {
   Select,
   Typography,
 } from '@material-tailwind/react';
-import { GuitarType } from '../../../hooks';
 import { useTranslation } from 'react-i18next';
-import { FretNumberType } from '../../fretboard';
+import { FretNumberType, Orientation } from '../../fretboard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGears } from '@fortawesome/free-solid-svg-icons';
+import { Pages } from '../../routing/pages';
 
 export interface SettingsToolsProps {
   supportedGuitars?: GuitarType[];
+  page: Pages;
 }
 
-const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element => {
+const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Element => {
   const { t } = useTranslation('settings');
   const {
     guitarTypes,
@@ -37,6 +38,12 @@ const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element =>
     fretNumbers,
     onSelectFretNumber,
   } = useSettings();
+
+  useEffect(() => {
+    if (page === Pages.CAGED && orientation === Orientation.HORIZONTAL) {
+      toggleOrientation();
+    }
+  }, [page]);
 
   return (
     <Menu placement="bottom-start">
@@ -95,7 +102,7 @@ const SettingsTools = ({ supportedGuitars }: SettingsToolsProps): JSX.Element =>
             </Typography>
           </MenuHandler>
           <MenuList>
-            <MenuItem onClick={() => toggleOrientation()}>
+            <MenuItem onClick={() => toggleOrientation()} disabled={page === Pages.CAGED}>
               {t('settings:layout.orientation', { context: orientationLabel })}
             </MenuItem>
             <MenuItem onClick={() => setLeftHanded((value) => !value)}>
