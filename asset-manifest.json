@@ -1,18 +1,20 @@
 {
   "files": {
-    "main.css": "/buddy-harmony/static/css/main.146744d4.css",
-    "main.js": "/buddy-harmony/static/js/main.0df9cb8c.js",
-    "static/js/323.03819563.chunk.js": "/buddy-harmony/static/js/323.03819563.chunk.js",
+    "main.css": "/buddy-harmony/static/css/main.6623b203.css",
+    "main.js": "/buddy-harmony/static/js/main.9e39d62f.js",
+    "static/js/323.6be9dd17.chunk.js": "/buddy-harmony/static/js/323.6be9dd17.chunk.js",
+    "static/js/77.b6f4ba4e.chunk.js": "/buddy-harmony/static/js/77.b6f4ba4e.chunk.js",
     "static/js/787.1f13de19.chunk.js": "/buddy-harmony/static/js/787.1f13de19.chunk.js",
     "index.html": "/buddy-harmony/index.html",
     "static/media/getFetch.cjs": "/buddy-harmony/static/media/getFetch.c780682470504fffbd04.cjs",
-    "main.146744d4.css.map": "/buddy-harmony/static/css/main.146744d4.css.map",
-    "main.0df9cb8c.js.map": "/buddy-harmony/static/js/main.0df9cb8c.js.map",
-    "323.03819563.chunk.js.map": "/buddy-harmony/static/js/323.03819563.chunk.js.map",
+    "main.6623b203.css.map": "/buddy-harmony/static/css/main.6623b203.css.map",
+    "main.9e39d62f.js.map": "/buddy-harmony/static/js/main.9e39d62f.js.map",
+    "323.6be9dd17.chunk.js.map": "/buddy-harmony/static/js/323.6be9dd17.chunk.js.map",
+    "77.b6f4ba4e.chunk.js.map": "/buddy-harmony/static/js/77.b6f4ba4e.chunk.js.map",
     "787.1f13de19.chunk.js.map": "/buddy-harmony/static/js/787.1f13de19.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.146744d4.css",
-    "static/js/main.0df9cb8c.js"
+    "static/css/main.6623b203.css",
+    "static/js/main.9e39d62f.js"
   ]
 }
