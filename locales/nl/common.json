@@ -2,20 +2,14 @@
   "title": "Buddy Harmony",
   "routing": {
     "page": "",
-    "page_CHORD": "Accoorden",
+    "page_CHORD": "Akkoorden",
     "page_SCALE": "Toonladders",
     "page_CAGED": "C A G E D",
     "page_HARMONY": "Harmonie",
     "page_HELP": "Help"
   },
   "key": "Toonsoort",
-  "page": {
-    "title": "Instellingen",
-    "title_/chord": "Accoord",
-    "title_/scale": "Toonladder",
-    "title_/caged": "C A G E D",
-    "title_/harmony": "Harmonie"
-  },
+  "key_selected": "Toonsoort: {{key}}",
   "app-version": "Versie: {{version}}",
   "app-source": "Bron code",
   "app-issues": "Issues",

@@ -1,9 +1,9 @@
 {
   "print": {
     "tool-tip": "Print",
-    "tool-tip_/chord": "Print chord(s)",
-    "tool-tip_/scale": "Print scale",
-    "tool-tip_/harmony": "Print harmony"
+    "tool-tip_CHORD": "Print chord(s)",
+    "tool-tip_SCALE": "Print scale",
+    "tool-tip_HARMONY": "Print harmony"
   },
   "guitar": {
     "type": "Unknown",

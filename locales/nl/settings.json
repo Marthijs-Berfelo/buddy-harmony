@@ -1,9 +1,9 @@
 {
   "print": {
     "tool-tip": "Afdrukken",
-    "tool-tip_/chord": "Accoord(en) afdrukken",
-    "tool-tip_/scale": "Toonladder afdrukken",
-    "tool-tip_/harmony": "Harmonie afdrukken"
+    "tool-tip_CHORD": "Akkoord(en) afdrukken",
+    "tool-tip_SCALE": "Toonladder afdrukken",
+    "tool-tip_HARMONY": "Harmonie afdrukken"
   },
   "guitar": {
     "type": "Onbekend",
