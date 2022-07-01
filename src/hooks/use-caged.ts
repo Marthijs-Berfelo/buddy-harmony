@@ -1,9 +1,22 @@
 import { Interval, transpose } from '@tonaljs/tonal';
-import { GuitarType, Printable, PrintableProps, StringTuningType } from './constants';
-import { chordModels, ChordPosition } from './chord-db';
+import {
+  chordGuitarTypes,
+  GuitarType,
+  Printable,
+  PrintableProps,
+  StringTuningType,
+} from './constants';
+import {
+  cagedChordsForKey,
+  ChordDetail,
+  ChordsHook,
+  chordModels,
+  ChordPosition,
+  handleSelectionForChords,
+} from './chord-db';
 import { KeysHook, useKeys } from './use-keys';
 import { useSettings } from './settings';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   CagedChords,
   cagedConfig,
@@ -13,24 +26,40 @@ import {
 } from './caged-constants';
 import { Orientation } from '../common/fretboard';
 
-export interface CagedHook extends KeysHook, Printable {
+export interface CagedHook extends KeysHook, ChordsHook, Printable {
   cagedChords?: CagedChords;
 }
+
+const isSupportedType = (guitar: GuitarType): boolean =>
+  chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1;
 
 export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
   const { keys, selectedKey, setSelectedKey } = useKeys();
   const { guitarType, tuningType } = useSettings();
-  const type = useMemo(() => 'major', []);
+  const [chords, setChords] = useState<ChordDetail[]>([]);
+  const [chord, setChord] = useState<ChordDetail>();
   const [cagedChords, setCagedChords] = useState<CagedChords>();
 
   useEffect(() => {
-    if (!!selectedKey) {
-      const caged = buildCagedChords(selectedKey, type, tuningType, guitarType);
+    if (!!chord) {
+      const caged = buildCagedChords(chord.key, chord.suffix, tuningType, guitarType);
       setCagedChords(caged);
     } else {
       setCagedChords(undefined);
     }
-  }, [selectedKey, guitarType, tuningType, type]);
+  }, [chord]);
+
+  useEffect(() => {
+    handleSelectionForChords(
+      guitarType,
+      selectedKey,
+      isSupportedType,
+      cagedChordsForKey,
+      setChords,
+      setChord,
+      chord
+    );
+  }, [guitarType, selectedKey]);
 
   const printStyle = (orientation: Orientation): string =>
     `@page: { size: A4 ${
@@ -41,6 +70,9 @@ export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
     keys,
     selectedKey,
     setSelectedKey,
+    chords,
+    chord,
+    setChord,
     cagedChords,
     printRef,
     printStyle,

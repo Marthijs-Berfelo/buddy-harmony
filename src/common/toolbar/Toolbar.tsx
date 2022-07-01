@@ -6,13 +6,20 @@ import { useReactToPrint } from 'react-to-print';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Pages } from '../routing/pages';
 import { useTranslation } from 'react-i18next';
+import { enumKeyByValue } from '../utils';
 
 interface ToolbarProps extends SettingsToolsProps, PrintableProps {
   tools: JSX.Element[];
   page: Pages;
 }
 
-const Toolbar = ({ tools, page, supportedGuitars, printRef }: ToolbarProps): JSX.Element => {
+const Toolbar = ({
+  tools,
+  page,
+  supportedGuitars,
+  printRef,
+  printDisabled,
+}: ToolbarProps): JSX.Element => {
   const { t } = useTranslation('settings');
   const handlePrint = useReactToPrint({ content: () => printRef.current });
   return (
@@ -21,17 +28,23 @@ const Toolbar = ({ tools, page, supportedGuitars, printRef }: ToolbarProps): JSX
         <SettingsTools supportedGuitars={supportedGuitars} page={page} />
         <div className="flex flex-col items-center">
           <Typography className="flex pb-1.5 font-sans font-bold text-blue-grey-900 text-xl">
-            {t('common:page.title', { context: page })}
+            {t('common:routing.page', { context: enumKeyByValue(Pages, page) })}
           </Typography>
           <ul className="flex flex-row justify-center gap-1 md:gap-6">
             {tools.map((tool, index) => (
-              <li key={`tool-${index}`}>{tool}</li>
+              <li key={`tool-${index}`} className="w-40">
+                {tool}
+              </li>
             ))}
           </ul>
         </div>
         {printRef.current !== null ? (
-          <Tooltip content={t('settings:print.tool-tip', { context: page })}>
-            <IconButton onClick={handlePrint} className="flex ml-1">
+          <Tooltip content={t('settings:print.tool-tip', { context: enumKeyByValue(Pages, page) })}>
+            <IconButton
+              onClick={handlePrint}
+              className="flex ml-1 disabled:bg-blue-grey-300"
+              disabled={printDisabled}
+            >
               <FontAwesomeIcon className="flex text-lg" icon="print" />
             </IconButton>
           </Tooltip>

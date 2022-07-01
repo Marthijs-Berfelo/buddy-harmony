@@ -1,35 +1,28 @@
 import React from 'react';
 import { Pages } from 'common/routing/pages';
-import { useTranslation } from 'react-i18next';
-import { Toolbar } from '../../../common';
+import { ChordSelector, KeySelector, Toolbar } from '../../../common';
 import { CagedHook, chordGuitarTypes } from '../../../hooks';
-import { Option, Select } from '@material-tailwind/react';
 
 const context = Pages.CAGED;
 
-const CagedToolBar = ({ keys, selectedKey, setSelectedKey, printRef }: CagedHook): JSX.Element => {
-  const { t } = useTranslation('caged');
+const CagedToolBar = ({
+  keys,
+  selectedKey,
+  setSelectedKey,
+  chords,
+  chord,
+  setChord,
+  printRef,
+}: CagedHook): JSX.Element => {
   return (
     <Toolbar
       page={context}
       supportedGuitars={chordGuitarTypes}
       printRef={printRef}
+      printDisabled={!chord}
       tools={[
-        <Select
-          key={'chord-note'}
-          label={t('common:key')}
-          className="flex items-center bg-white z-40"
-          selected={(value) => {
-            if (value?.key && value?.key !== selectedKey) {
-              setSelectedKey(value?.key?.toString());
-            }
-            return value;
-          }}
-        >
-          {keys.map((noteOption) => (
-            <Option key={noteOption}>{noteOption}</Option>
-          ))}
-        </Select>,
+        <KeySelector key={'caged-key'} {...{ keys, selectedKey, setSelectedKey }} />,
+        <ChordSelector key={'caged-chord'} {...{ chords, chord, setChord }} />,
       ]}
     />
   );

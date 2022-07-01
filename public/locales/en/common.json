@@ -8,12 +8,7 @@
     "page_HELP": "Help"
   },
   "key": "Key",
-  "page": {
-    "title": "Settings",
-    "title_/chord": "Chord",
-    "title_/scale": "Scale",
-    "title_/harmony": "Harmony"
-  },
+  "key_selected": "Key: {{key}}",
   "app-version": "Version: {{version}}",
   "app-source": "Source code",
   "app-issues": "Issues",
