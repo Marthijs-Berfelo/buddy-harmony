@@ -6,6 +6,7 @@ const DEFAULT_TYPE = 'guitar';
 
 export interface PrintableProps {
   printRef: RefObject<HTMLDivElement>;
+  printDisabled?: boolean;
 }
 
 export interface Printable extends PrintableProps {

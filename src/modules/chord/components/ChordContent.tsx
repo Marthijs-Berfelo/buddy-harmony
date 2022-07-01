@@ -3,7 +3,7 @@ import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard'
 import React from 'react';
 import { Typography } from '@material-tailwind/react';
 
-const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JSX.Element => {
+const ChordContent = ({ chord, printRef, printStyle }: GuitarChordHook): JSX.Element => {
   const { orientation } = useSettings();
 
   return (
@@ -11,24 +11,22 @@ const ChordContent = ({ chordModel, printRef, printStyle }: GuitarChordHook): JS
       <style type="text/css" media="print">
         {printStyle(orientation)}
       </style>
-      {chordModel && (
+      {chord && (
         <div className="flex flex-row items-center">
-          <Typography className="text-3xl pt-2">{`${chordModel.key} ${chordModel.suffix}`}</Typography>
+          <Typography className="text-3xl pt-2">{`${chord.key} ${chord.suffix}`}</Typography>
         </div>
       )}
       <div className="flex flex-row items-center">
-        {chordModel && chordModel.positions ? (
-          chordModel.positions.map((chord, chordPosition) => (
+        {chord &&
+          chord.positions &&
+          chord.positions.map((position, chordPosition) => (
             <ChordDiagram
               key={`chord-${chordPosition}`}
-              chord={chord}
+              chord={position}
               chordPosition={chordPosition}
-              diagramCount={chordModel?.positions?.length}
+              diagramCount={chord?.positions?.length}
             />
-          ))
-        ) : (
-          <ChordDiagram />
-        )}
+          ))}
       </div>
     </div>
   );
