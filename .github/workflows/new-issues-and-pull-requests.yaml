@@ -17,3 +17,5 @@ jobs:
         with:
           project-url: https://github.com/users/Marthijs-Berfelo/projects/1
           github-token: ${{ secrets.PROJECT_ADD_TOKEN }}
+          labeled: dependencies
+          label-operator: NOT

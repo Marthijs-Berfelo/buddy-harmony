@@ -9,8 +9,7 @@ on:
       - '**/*.md'
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
@@ -25,11 +24,3 @@ jobs:
     needs:
       - test
     uses: ./.github/workflows/job.build.yaml
-  release:
-    name: Release
-    needs:
-      - test
-      - build
-    uses: ./.github/workflows/job.release.yaml
-    secrets:
-      RELEASE_TOKEN: ${{ secrets.RELEASE_APP_TOKEN }}
