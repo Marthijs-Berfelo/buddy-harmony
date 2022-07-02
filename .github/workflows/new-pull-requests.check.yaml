@@ -1,0 +1,13 @@
+name: Check new PR for project
+
+on:
+  pull_request:
+    types:
+    - opened
+
+jobs:
+  check-new-pr:
+    name: Check new pull-request
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PR created by ${{ github.actor }}"
