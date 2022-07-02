@@ -13,7 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - uses: actions/add-to-project@v0.1.0
+      - name: Add projects beta
+        uses: sunadoi/add-projects-beta@v1
         with:
-          project-url: https://github.com/users/Marthijs-Berfelo/projects/1
+          project-owner: 'Marthijs-Berfelo'
+          project-number: 1
           github-token: ${{ secrets.PROJECT_ADD_TOKEN }}
+          content-id: ${{ github.event.pull_request.node_id }}
