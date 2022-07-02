@@ -1,7 +1,8 @@
-import { chordGuitarTypes, GuitarChordHook } from '../../../hooks';
+import { chordGuitarTypes } from '../../../hooks';
 import { ChordSelector, KeySelector, Toolbar } from '../../../common';
 import React from 'react';
 import { Pages } from '../../../common/routing/pages';
+import { GuitarChordHook } from '../hooks';
 
 const context = Pages.CHORD;
 

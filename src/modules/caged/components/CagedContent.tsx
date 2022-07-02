@@ -1,7 +1,8 @@
 import React from 'react';
-import { CagedHook, useSettings } from '../../../hooks';
+import { useSettings } from '../../../hooks';
 import { Typography } from '@material-tailwind/react';
 import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard';
+import { CagedHook } from '../hooks';
 
 const CagedContent = ({
   selectedKey,

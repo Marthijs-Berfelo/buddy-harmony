@@ -1,7 +1,8 @@
-import { useSettings, GuitarChordHook, ChordPosition } from '../../../hooks';
+import { useSettings, ChordPosition } from '../../../hooks';
 import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard';
 import React from 'react';
 import { Typography } from '@material-tailwind/react';
+import { GuitarChordHook } from '../hooks';
 
 const ChordContent = ({ chord, printRef, printStyle }: GuitarChordHook): JSX.Element => {
   const { orientation } = useSettings();

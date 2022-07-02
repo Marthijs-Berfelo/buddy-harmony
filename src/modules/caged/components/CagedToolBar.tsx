@@ -1,7 +1,8 @@
 import React from 'react';
 import { Pages } from 'common/routing/pages';
 import { ChordSelector, KeySelector, Toolbar } from '../../../common';
-import { CagedHook, chordGuitarTypes } from '../../../hooks';
+import { chordGuitarTypes } from '../../../hooks';
+import { CagedHook } from '../hooks';
 
 const context = Pages.CAGED;
 

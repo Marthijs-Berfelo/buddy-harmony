@@ -1,9 +1,18 @@
-import { KeysHook, useKeys } from './use-keys';
 import { useEffect, useState } from 'react';
-import { ChordDetail, chordsForKey, ChordsHook, handleSelectionForChords } from './chord-db';
-import { useSettings } from './settings';
-import { chordGuitarTypes, GuitarType, Printable, PrintableProps } from './constants';
-import { Orientation } from '../common/fretboard';
+import {
+  KeysHook,
+  useKeys,
+  ChordDetail,
+  chordsForKey,
+  ChordsHook,
+  handleSelectionForChords,
+  useSettings,
+  chordGuitarTypes,
+  GuitarType,
+  Printable,
+  PrintableProps,
+} from '../../../hooks';
+import { Orientation } from '../../../common/fretboard';
 
 export interface GuitarChordHook extends KeysHook, ChordsHook, Printable {}
 

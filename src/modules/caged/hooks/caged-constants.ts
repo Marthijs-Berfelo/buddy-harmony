@@ -1,4 +1,4 @@
-import { ChordPosition } from './chord-db';
+import { ChordPosition } from '../../../hooks';
 
 export interface CagedPositionConfig {
   key: string;
