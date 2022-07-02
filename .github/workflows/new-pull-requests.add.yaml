@@ -1,22 +1,16 @@
 name: Add pull-requests to project
 
 on:
-  workflow_run:
-    workflows:
-      - 'Check new PR for project'
+  pull_request_target:
     types:
-      - completed
+      - opened
 
 jobs:
   add-pr-to-project:
     name: Add pull-request to project
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Add projects beta
-        uses: sunadoi/add-projects-beta@v1
+      - uses: actions/add-to-project@v0.1.0
         with:
-          project-owner: 'Marthijs-Berfelo'
-          project-number: 1
+          project-url: https://github.com/users/Marthijs-Berfelo/projects/1
           github-token: ${{ secrets.PROJECT_ADD_TOKEN }}
-          content-id: ${{ github.event.pull_request.node_id }}
