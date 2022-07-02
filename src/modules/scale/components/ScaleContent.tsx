@@ -1,7 +1,8 @@
 import React from 'react';
-import { GuitarScaleHook, useSettings } from '../../../hooks';
+import { useSettings } from '../../../hooks';
 import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard';
 import { Typography } from '@material-tailwind/react';
+import { GuitarScaleHook } from '../hooks';
 
 const ScaleContent = ({
   scaleModel,

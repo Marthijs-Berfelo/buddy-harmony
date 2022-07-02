@@ -1,22 +1,21 @@
 import { Interval, transpose } from '@tonaljs/tonal';
+import { useEffect, useState } from 'react';
 import {
   chordGuitarTypes,
   GuitarType,
   Printable,
   PrintableProps,
   StringTuningType,
-} from './constants';
-import {
   cagedChordsForKey,
   ChordDetail,
   ChordsHook,
   chordModels,
   ChordPosition,
   handleSelectionForChords,
-} from './chord-db';
-import { KeysHook, useKeys } from './use-keys';
-import { useSettings } from './settings';
-import { useEffect, useState } from 'react';
+  KeysHook,
+  useKeys,
+  useSettings,
+} from '../../../hooks';
 import {
   CagedChords,
   cagedConfig,
@@ -24,7 +23,7 @@ import {
   CagedKeyConfig,
   CagedPositionConfig,
 } from './caged-constants';
-import { Orientation } from '../common/fretboard';
+import { Orientation } from '../../../common/fretboard';
 
 export interface CagedHook extends KeysHook, ChordsHook, Printable {
   cagedChords?: CagedChords;

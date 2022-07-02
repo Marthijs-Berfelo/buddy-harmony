@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useGuitarChord } from '../../hooks';
+import { useGuitarChord } from './hooks';
 import ChordToolBar from './components/ChordToolBar';
 import ChordContent from './components/ChordContent';
 import '../../common/Page.css';
