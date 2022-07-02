@@ -1,0 +1,18 @@
+name: Create Release
+on:
+  workflow_run:
+    workflows:
+      - Build MAIN
+    types:
+      - completed
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+
+jobs:
+  release:
+    name: Release
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    uses: ./.github/workflows/job.release.yaml
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_APP_TOKEN }}
