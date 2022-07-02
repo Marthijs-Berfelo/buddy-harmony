@@ -1,4 +1,4 @@
-name: Add issues and Pull requests to project
+name: Add pull-requests to project
 
 on:
   workflow_run:
