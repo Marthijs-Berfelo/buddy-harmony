@@ -1,21 +1,19 @@
 name: Add issues and Pull requests to project
 
 on:
-  pull_request:
+  workflow_run:
+    workflows:
+      - 'Check new PR for project'
     types:
-    - opened
-  issues:
-    types:
-      - opened
+      - completed
 
 jobs:
-  add-to-project:
-    name: Add to project
+  add-pr-to-project:
+    name: Add pull-request to project
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/add-to-project@v0.1.0
         with:
           project-url: https://github.com/users/Marthijs-Berfelo/projects/1
           github-token: ${{ secrets.PROJECT_ADD_TOKEN }}
-          labeled: dependencies
-          label-operator: NOT
