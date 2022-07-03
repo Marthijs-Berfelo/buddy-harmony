@@ -1,6 +1,11 @@
 name: Release
 on:
   workflow_call:
+    inputs:
+      release_type:
+        required: false
+        default: ci
+        type: string
     secrets:
       RELEASE_TOKEN:
         required: true
@@ -34,7 +39,7 @@ jobs:
           git checkout -b release/next
       - name: Set next version
         run: |
-          npm run release:ci-prepare
+          npm run release:${{ inputs.release_type }}-prepare
           echo "Next version: $(cat next-version.txt)"
           echo "release_version=$(cat next-version.txt)" >> $GITHUB_ENV
         env:
@@ -47,7 +52,7 @@ jobs:
         run: |
           git checkout -b release/v${{ env.release_version }}
       - name: Release
-        run: npm run release:ci
+        run: npm run release:${{ inputs.release_type }}
         env:
           GITHUB_TOKEN: ${{ env.release_token }}
       - name: Create PR

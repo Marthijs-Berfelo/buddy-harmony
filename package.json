@@ -11,8 +11,10 @@
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
     "format": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "release": "release-it",
-    "release:ci": "npm run release --minor --ci",
-    "release:ci-prepare": "echo $(release-it --ci --minor --release-version) > next-version.txt",
+    "release:ci": "npm run release patch --ci",
+    "release:ci-prepare": "echo $(release-it patch --ci --release-version) > next-version.txt",
+    "release:milestone": "npm run release minor --ci",
+    "release:milestone-prepare": "echo $(release-it minor --ci --release-version) > next-version.txt",
     "predeploy": "npm run build -- PUBLIC_URL=https://Marthijs-Berfelo.github.io/buddy-harmony",
     "deploy": "gh-pages -d build"
   },
