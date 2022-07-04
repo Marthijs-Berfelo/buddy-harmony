@@ -42,7 +42,9 @@ const useLanguage = (): LanguageHook => {
   const { i18n } = useTranslation();
   const [browserLanguage, setBrowserLanguage] = useState<string>(i18n.language);
   const [languages, setLanguages] = useState<string[]>([]);
-  const [selectedLanguage, setSelectedLanguage] = useState<string>(defaultLanguage);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(
+    localStorage.getItem('i18nextLng') || defaultLanguage
+  );
 
   useEffect(() => {
     setBrowserLanguage(i18n.language);

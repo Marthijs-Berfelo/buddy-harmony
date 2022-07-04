@@ -12,7 +12,7 @@ i18n
     backend: {
       loadPath: `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
     },
-    fallbackLng: 'en',
+    fallbackLng: ['en', 'nl'],
     defaultNS: 'common',
     interpolation: {
       escapeValue: false,
