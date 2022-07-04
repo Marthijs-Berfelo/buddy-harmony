@@ -33,20 +33,33 @@ aims to help you to playing guitar. By displaying guitar chords in multiple vari
 
 The app can be viewed/used [here](https://marthijs-berfelo.github.io/buddy-harmony)
 
-## Bugs
+## Bugs, Feature requests, questions
 
-TODO
+In case you encounter a bug, have an idea for a new feature or a question about the project.
+
+Please check the [issues](https://github.com/Marthijs-Berfelo/buddy-harmony/issues), and if you can't find an answer feel free to [create an issue](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/new/choose)
 
 # Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-TODO
+To run this project locally follow these steps:
 
+- Go to the project directory
+- Install dependencies
+```shell
+# npm ci will clear `node_modules`, but won't rewrite the `package.lock.json`
+npm ci 
+```
+- Start the app
+```shell
+npm start
+```
 # Contribute
+Contributions are very welcome.
 
-TODO
+Please take note of the [Code of conduct](./CODE_OF_CONDUCT.md) and the [Contribution guide](./CONTRIBUTING.md).
 
 # Changelog
 
-TODO
+See the [releases](https://github.com/Marthijs-Berfelo/buddy-harmony/releases).
