@@ -14,14 +14,14 @@ const KeySelector = ({ keys, selectedKey, setSelectedKey }: ChordSelectorProps):
       variant="text"
       disabled
       color="blue-grey"
-      className="capitalize bg-grey-200 hover:bg-grey-200 w-40"
+      className="capitalize bg-grey-200 hover:bg-grey-200 w-48"
     >
       {t('common:key', !!selectedKey ? { context: 'selected', key: selectedKey } : undefined)}
     </Button>
   ) : (
     <Menu offset={3}>
       <MenuHandler>
-        <Button variant="outlined" className="capitalize bg-white w-40">
+        <Button variant="outlined" className="capitalize bg-white w-48">
           {t('common:key', !!selectedKey ? { context: 'selected', key: selectedKey } : undefined)}
         </Button>
       </MenuHandler>

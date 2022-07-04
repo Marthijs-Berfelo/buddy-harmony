@@ -23,20 +23,18 @@ const Toolbar = ({
   const { t } = useTranslation('settings');
   const handlePrint = useReactToPrint({ content: () => printRef.current });
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex flex-row w-full justify-between items-center w-full md:w-2xl py-1.5 px-1.5 md:px-6 mb-3 bg-blue-100 border-blue-100 text-blue-grey-900 md:rounded-xl z40">
+    <div className="flex flex-col items-center md:px-96">
+      <div className="flex flex-row w-full justify-between items-center py-1.5 px-1.5 md:px-6 mb-3 bg-blue-100 border-blue-100 text-blue-grey-900 md:rounded-xl z40">
         <SettingsTools supportedGuitars={supportedGuitars} page={page} />
         <div className="flex flex-col items-center">
           <Typography className="flex pb-1.5 font-sans font-bold text-blue-grey-900 text-xl">
             {t('common:routing.page', { context: enumKeyByValue(Pages, page) })}
           </Typography>
-          <ul className="flex flex-row justify-center gap-1 md:gap-6">
+          <div className="flex flex-row justify-center gap-1 md:gap-6">
             {tools.map((tool, index) => (
-              <li key={`tool-${index}`} className="w-40">
-                {tool}
-              </li>
+              <div key={`tool-${index}`}>{tool}</div>
             ))}
-          </ul>
+          </div>
         </div>
         {printRef.current !== null ? (
           <Tooltip content={t('settings:print.tool-tip', { context: enumKeyByValue(Pages, page) })}>
