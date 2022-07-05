@@ -86,11 +86,8 @@ export const handleSelectionForChords = (
     if (chords.length === 1) {
       setChord(chords[0]);
     }
-    if (
-      chords.length > 1 &&
-      chords.findIndex((type) => type.suffix === (chord?.suffix || type.suffix)) < 0
-    ) {
-      setChord(undefined);
+    if (chords.length > 1) {
+      setChord(chords.find((type) => type.suffix === chord?.suffix));
     }
   } else {
     setChords([]);
@@ -106,11 +103,3 @@ export const chordModels = (instrument: string, key: string, name: string): Chor
 
 export const chordNamesForKey = (instrument: string, key: string): string[] =>
   chordsForKey(instrument, key).map((chord) => chord.suffix);
-
-export const cagedChordsForKey = (instrument: string, key: string): ChordDetail[] =>
-  chordsForKey(instrument, key)
-    .filter((chord) => chordNamesForKey(instrument, 'C').includes(chord.suffix))
-    .filter((chord) => chordNamesForKey(instrument, 'A').includes(chord.suffix))
-    .filter((chord) => chordNamesForKey(instrument, 'G').includes(chord.suffix))
-    .filter((chord) => chordNamesForKey(instrument, 'E').includes(chord.suffix))
-    .filter((chord) => chordNamesForKey(instrument, 'D').includes(chord.suffix));
