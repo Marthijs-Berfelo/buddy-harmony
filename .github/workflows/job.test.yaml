@@ -21,7 +21,7 @@ jobs:
       - name: Test
         run: npm run test -- --reporters=jest-junit --reporters=default
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1.39
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           files: 'test-results/**/*.xml'
