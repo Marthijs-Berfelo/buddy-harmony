@@ -29,20 +29,24 @@ jobs:
         if: always()
         with:
           junit_files: 'test-results/**/*.xml'
-      - name: Jest Coverage Comment
+      - name: QA Report
+        id: coverageComment
         uses: MishaKav/jest-coverage-comment@v1.0.11
         with:
           coverage-summary-path: ./coverage/coverage-summary.json
-          title: My Jest Coverage Comment
+          title: QA Results
           summary-title: Test results
           badge-title: Coverage
           hide-comment: false
           create-new-comment: false
           hide-summary: false
           junitxml-title: Unit tests
-          junitxml-path: './test-results/**/*.xml'
-          coverage-title: Test coverage
-          coverage-path: ./coverage/coverage-summary.json
+          junitxml-path: ./test-results/TEST-junit.xml
+      - name: Check the output coverage
+        run: |
+          echo "Coverage Percentage - ${{ steps.coverageComment.outputs.coverage }}"
+          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
+          echo "Summary Html - ${{ steps.coverageComment.outputs.summaryHtml }}"
       - name: Create the Badge
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: schneegans/dynamic-badges-action@v1.0.0

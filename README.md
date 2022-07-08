@@ -3,7 +3,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![Build](https://github.com/Marthijs-Berfelo/buddy-harmony/actions/workflows/main-build.yaml/badge.svg?branch=main)](https://github.com/Marthijs-Berfelo/buddy-harmony/actions/workflows/main-build.yaml) [![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Marthijs-Berfelo/cf80179d3c1077b9c719e9e737992d38/raw/buddy-harmony__main.json)] ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Marthijs-Berfelo/buddy-harmony?color=blue&sort=semver) ![GitHub](https://img.shields.io/github/license/Marthijs-Berfelo/buddy-harmony) 
+[![Build](https://github.com/Marthijs-Berfelo/buddy-harmony/actions/workflows/main-build.yaml/badge.svg?branch=main)](https://github.com/Marthijs-Berfelo/buddy-harmony/actions/workflows/main-build.yaml) ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Marthijs-Berfelo/cf80179d3c1077b9c719e9e737992d38/raw/buddy-harmony__main.json) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Marthijs-Berfelo/buddy-harmony?color=blue&sort=semver) ![GitHub](https://img.shields.io/github/license/Marthijs-Berfelo/buddy-harmony) 
 
 With a wink to [Buddy Holly](https://en.wikipedia.org/wiki/Buddy_Holly), a guitar hero that passed too soon. This buddy
 aims to help you to playing guitar. By displaying guitar chords in multiple varieties and various scales.
