@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --reporters=jest-junit --reporters=default  --coverage --coverageReporters=json-summary --coverageReporters=lcov",
     "eject": "react-scripts eject",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
     "format": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",

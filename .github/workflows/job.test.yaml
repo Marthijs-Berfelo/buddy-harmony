@@ -1,6 +1,10 @@
 name: Test
 on:
   workflow_call:
+    secrets:
+      COVERAGE_COMMENT:
+        required: true
+
 jobs:
   test:
     name: Test
@@ -19,9 +23,34 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test
-        run: npm run test -- --reporters=jest-junit --reporters=default
+        run: npm run test
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: 'test-results/**/*.xml'
+          junit_files: 'test-results/**/*.xml'
+      - name: Jest Coverage Comment
+        uses: MishaKav/jest-coverage-comment@v1.0.11
+        with:
+          coverage-summary-path: ./coverage/coverage-summary.json
+          title: My Jest Coverage Comment
+          summary-title: Test results
+          badge-title: Coverage
+          hide-comment: false
+          create-new-comment: false
+          hide-summary: false
+          junitxml-title: Unit tests
+          junitxml-path: './test-results/**/*.xml'
+          coverage-title: Test coverage
+          coverage-path: ./coverage/coverage-summary.json
+      - name: Create the Badge
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: schneegans/dynamic-badges-action@v1.0.0
+        with:
+          auth: ${{ secrets.COVERAGE_COMMENT }}
+          gistID: cf80179d3c1077b9c719e9e737992d38
+          filename: buddy-harmony__main.json
+          label: Coverage
+          message: ${{ steps.coverageComment.outputs.coverage }}%
+          color: ${{ steps.coverageComment.outputs.color }}
+          namedLogo: javascript

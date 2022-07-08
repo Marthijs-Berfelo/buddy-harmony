@@ -11,6 +11,7 @@ on:
       - '**/*.md'
 
 permissions:
+  issues: read
   contents: write
   pull-requests: write
   checks: write
@@ -24,16 +25,8 @@ jobs:
   test:
     name: QA
     uses: ./.github/workflows/job.test.yaml
-  coverage:
-    name: QA / Coverage
-    needs:
-      - test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          test-script: npm test
+    secrets:
+      COVERAGE_COMMENT: ${{ secrets.GISTS_TOKEN }}
   build:
     name: Build
     needs:
@@ -44,7 +37,6 @@ jobs:
     if: startsWith(github.head_ref, 'Release')
     needs:
       - build
-      - coverage
     uses: ./.github/workflows/job.release-complete.yaml
   deploy:
     name: Deploy

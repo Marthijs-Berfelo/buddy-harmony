@@ -9,6 +9,7 @@ on:
       - '**/*.md'
 
 permissions:
+  issues: read
   contents: read
   checks: write
 
@@ -20,6 +21,8 @@ jobs:
   test:
     name: QA
     uses: ./.github/workflows/job.test.yaml
+    secrets:
+      COVERAGE_COMMENT: ${{ secrets.GISTS_TOKEN }}
   build:
     name: Build
     needs:
