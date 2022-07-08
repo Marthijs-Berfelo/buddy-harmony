@@ -29,7 +29,8 @@ jobs:
         if: always()
         with:
           junit_files: 'test-results/**/*.xml'
-      - name: Jest Coverage Comment
+      - name: QA Report
+        id: coverageComment
         uses: MishaKav/jest-coverage-comment@v1.0.11
         with:
           coverage-summary-path: ./coverage/coverage-summary.json
