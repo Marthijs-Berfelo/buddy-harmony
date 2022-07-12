@@ -1,12 +1,9 @@
 name: Build MAIN
 on:
-  push:
-    branches:
-      - main
-    tags-ignore:
-      - '**'
-    paths-ignore:
-      - '**/*.md'
+  workflow_run:
+    workflows: ["Main pre build"]
+    types:
+      - completed
 
 permissions:
   issues: read
@@ -21,10 +18,12 @@ jobs:
   test:
     name: QA
     uses: ./.github/workflows/job.test.yaml
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     secrets:
       COVERAGE_COMMENT: ${{ secrets.GISTS_TOKEN }}
   build:
     name: Build
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     needs:
       - test
     uses: ./.github/workflows/job.build.yaml
