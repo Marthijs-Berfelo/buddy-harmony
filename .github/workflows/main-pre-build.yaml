@@ -9,8 +9,9 @@ on:
       - '**/*.md'
 
 jobs:
-  check-dependabot:
+  check:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - run: echo "PR created by Dependabot"
+      - run: echo "PR merged by $ACTOR"
+        env:
+          ACTOR: ${{ github.actor }}
