@@ -44,7 +44,7 @@ const Header = (): JSX.Element => {
           </MenuList>
         </Menu>
         <Typography
-          className="py-1.5 mx-4 font-sans font-bold text-green-800 text-2xl"
+          className="py-1.5 mx-4 font-sans font-medium text-green-800 text-2xl"
           textGradient
           color="green"
         >

@@ -55,7 +55,7 @@ interface FooterTextProps {
 
 const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX.Element => (
   <Typography
-    className="flex font-sans text-sm mx-1.5"
+    className="flex font-sans font-normal text-sm mx-1.5"
     as={!!link ? 'a' : undefined}
     href={link}
     target={!!link ? '_blank' : undefined}
