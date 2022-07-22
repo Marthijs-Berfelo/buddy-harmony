@@ -11,8 +11,7 @@ updates:
       interval: daily
     reviewers:
       - "Marthijs-Berfelo"
-    assignees:
-      - "Marthijs-Berfelo"
+    assignees: []
     rebase-strategy: auto
 
   - package-ecosystem: github-actions
@@ -21,6 +20,5 @@ updates:
       interval: daily
     reviewers:
       - "Marthijs-Berfelo"
-    assignees:
-      - "Marthijs-Berfelo"
+    assignees: []
     rebase-strategy: auto
