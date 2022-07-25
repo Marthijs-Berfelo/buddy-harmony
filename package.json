@@ -24,7 +24,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@material-tailwind/react": "^1.0.7",
+    "@material-tailwind/react": "^1.0.8",
     "@tombatossals/chords-db": "^0.5.1",
     "@tonaljs/tonal": "^4.6.5",
     "assert-ts": "^0.3.4",
