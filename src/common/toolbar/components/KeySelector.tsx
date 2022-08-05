@@ -13,7 +13,7 @@ const KeySelector = ({ keys, selectedKey, setSelectedKey }: ChordSelectorProps):
     <Button
       variant="text"
       disabled
-      color="blue-grey"
+      color="blue-gray"
       className="capitalize bg-grey-200 hover:bg-grey-200 w-48"
     >
       {t('common:key', !!selectedKey ? { context: 'selected', key: selectedKey } : undefined)}
