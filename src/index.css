@@ -12,7 +12,7 @@ body {
 }
 
 code {
-  @apply text-grey-600;
+  @apply text-gray-600;
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
