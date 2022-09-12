@@ -31,7 +31,7 @@ jobs:
           junit_files: 'test-results/**/*.xml'
       - name: QA Report
         id: coverageComment
-        uses: MishaKav/jest-coverage-comment@v1.0.14
+        uses: MishaKav/jest-coverage-comment@v1.0.15
         with:
           coverage-summary-path: ./coverage/coverage-summary.json
           title: QA Results
