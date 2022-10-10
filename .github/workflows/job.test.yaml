@@ -44,7 +44,7 @@ jobs:
           junitxml-path: ./test-results/TEST-junit.xml
       - name: Create the Badge
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: schneegans/dynamic-badges-action@v1.4.0
+        uses: schneegans/dynamic-badges-action@v1.5.0
         with:
           auth: ${{ secrets.COVERAGE_COMMENT }}
           gistID: cf80179d3c1077b9c719e9e737992d38
