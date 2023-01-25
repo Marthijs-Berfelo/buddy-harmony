@@ -57,7 +57,7 @@ jobs:
           GITHUB_TOKEN: ${{ env.release_token }}
       - name: Create PR
         id: release-pr
-        uses: thomaseizinger/create-pull-request@1.2.2
+        uses: thomaseizinger/create-pull-request@1.3.0
         with:
           title: Release v${{ env.release_version }}
           body: PR Release ${{ env.release_version }}
