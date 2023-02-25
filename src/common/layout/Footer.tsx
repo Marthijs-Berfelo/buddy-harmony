@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Tooltip, Typography } from '@material-tailwind/react';
 import packageJson from '../../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faTwitter, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
 import { appInfo } from '../app-info';
-import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation();
