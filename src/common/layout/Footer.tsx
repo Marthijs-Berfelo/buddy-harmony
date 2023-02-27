@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tooltip, Typography } from '@material-tailwind/react';
 import packageJson from '../../../package.json';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
 import { appInfo } from '../app-info';
@@ -17,7 +17,7 @@ const Footer = (): JSX.Element => {
         <FooterText link={`${appInfo.app.source}${appInfo.app.releasesUri}/${packageJson.version}`}>
           {t('common:app-version', { version: appInfo.app.version })}
         </FooterText>
-        <FooterIcon content={t('common:app-source')} link={appInfo.app.source} icon={faGithub} />
+        <FooterIcon content={t('common:app-source')} link={appInfo.app.source} icon={faGithub as IconProp} />
         <FooterIcon
           content={t('common:app-issues')}
           link={`${appInfo.app.source}${appInfo.app.issuesUri}`}
@@ -29,12 +29,12 @@ const Footer = (): JSX.Element => {
         <FooterIcon
           content={t('common:author.github-profile')}
           link={appInfo.author.profile}
-          icon={faGithub}
+          icon={faGithub as IconProp}
         />
         <FooterIcon
           content={t('common:author.twitter', { handle: appInfo.author.twitter.name })}
           link={appInfo.author.twitter.link}
-          icon={faTwitter}
+          icon={faTwitter as IconProp}
           color={'blue-700'}
         />
         <FooterIcon
@@ -65,11 +65,9 @@ const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX
   </Typography>
 );
 
-interface FooterIconProps extends FooterTextProps {
+interface FooterIconProps extends FooterTextProps, FontAwesomeIconProps {
   content: string;
   link: string;
-  icon: IconProp;
-  color?: string;
 }
 
 const FooterIcon = ({ content, link, icon, color }: FooterIconProps): JSX.Element => (
