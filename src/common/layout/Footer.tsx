@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
 import { appInfo } from '../app-info';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation();
@@ -68,7 +68,7 @@ const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX
 interface FooterIconProps extends FooterTextProps {
   content: string;
   link: string;
-  icon: IconDefinition;
+  icon: IconProp;
   color?: string;
 }
 
