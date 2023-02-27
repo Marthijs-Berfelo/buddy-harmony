@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "target": "es2015",
+    "paths": {
+      "@fortawesome/fontawesome-common-types": [
+        "./node_modules/@fortawesome/fontawesome-common-types/index"
+      ]
+    },
     "lib": [
       "dom",
       "dom.iterable",
