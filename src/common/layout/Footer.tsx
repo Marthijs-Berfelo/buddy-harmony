@@ -17,7 +17,11 @@ const Footer = (): JSX.Element => {
         <FooterText link={`${appInfo.app.source}${appInfo.app.releasesUri}/${packageJson.version}`}>
           {t('common:app-version', { version: appInfo.app.version })}
         </FooterText>
-        <FooterIcon content={t('common:app-source')} link={appInfo.app.source} icon={faGithub as IconProp} />
+        <FooterIcon
+          content={t('common:app-source')}
+          link={appInfo.app.source}
+          icon={faGithub as IconProp}
+        />
         <FooterIcon
           content={t('common:app-issues')}
           link={`${appInfo.app.source}${appInfo.app.issuesUri}`}
