@@ -3,10 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Tooltip, Typography } from '@material-tailwind/react';
 import packageJson from '../../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
 import { appInfo } from '../app-info';
-import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation();
@@ -17,31 +15,30 @@ const Footer = (): JSX.Element => {
         <FooterText link={`${appInfo.app.source}${appInfo.app.releasesUri}/${packageJson.version}`}>
           {t('common:app-version', { version: appInfo.app.version })}
         </FooterText>
-        <FooterIcon content={t('common:app-source')} link={appInfo.app.source} icon={faGithub} />
+        <FooterIcon content={t('common:app-source')} link={appInfo.app.source}>
+          <i className={'text-xl text-black fa-brands fa-github'} />
+        </FooterIcon>
         <FooterIcon
           content={t('common:app-issues')}
           link={`${appInfo.app.source}${appInfo.app.issuesUri}`}
-          icon={faBug}
-        />
+        >
+          <FontAwesomeIcon className={'text-xl text-black'} icon={faBug} />
+        </FooterIcon>
       </div>
       <div className="flex flex-row items-center">
         <FooterText>{t('common:app-creator', { name: appInfo.author.name })}</FooterText>
-        <FooterIcon
-          content={t('common:author.github-profile')}
-          link={appInfo.author.profile}
-          icon={faGithub}
-        />
+        <FooterIcon content={t('common:author.github-profile')} link={appInfo.author.profile}>
+          <i className={'text-xl text-black fa-brands fa-github'} />
+        </FooterIcon>
         <FooterIcon
           content={t('common:author.twitter', { handle: appInfo.author.twitter.name })}
           link={appInfo.author.twitter.link}
-          icon={faTwitter}
-          color={'blue-700'}
-        />
-        <FooterIcon
-          content={t('common:author.send-email')}
-          link={`mailto:${appInfo.author.email}`}
-          icon={faAt}
-        />
+        >
+          <i className={'text-xl text-blue-700 fa-brands fa-twitter'} />
+        </FooterIcon>
+        <FooterIcon content={t('common:author.send-email')} link={`mailto:${appInfo.author.email}`}>
+          <FontAwesomeIcon className={'text-xl text-black'} icon={faAt} />
+        </FooterIcon>
       </div>
     </div>
   );
@@ -68,14 +65,14 @@ const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX
 interface FooterIconProps extends FooterTextProps {
   content: string;
   link: string;
-  icon: IconDefinition;
-  color?: string;
 }
 
-const FooterIcon = ({ content, link, icon, color }: FooterIconProps): JSX.Element => (
+const FooterIcon = ({
+  content,
+  link,
+  children,
+}: PropsWithChildren<FooterIconProps>): JSX.Element => (
   <FooterText link={link}>
-    <Tooltip content={content}>
-      <FontAwesomeIcon className={`text-xl text-${color || 'black'}`} icon={icon} />
-    </Tooltip>
+    <Tooltip content={content}>{children}</Tooltip>
   </FooterText>
 );
