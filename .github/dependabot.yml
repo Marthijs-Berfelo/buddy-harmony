@@ -21,6 +21,49 @@ updates:
       # eslint-plugin-react does not support eslint 10 yet
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
+    groups:
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint/*"
+          - "typescript-eslint"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+      types-react:
+        patterns:
+          - "@types/react"
+          - "@types/react-dom"
+      testing-library:
+        patterns:
+          - "@testing-library/*"
+      fortawesome:
+        patterns:
+          - "@fortawesome/*"
+      i18next:
+        patterns:
+          - "i18next"
+          - "i18next-*"
+          - "react-i18next"
+      eslint:
+        patterns:
+          - "eslint"
+          - "@eslint/*"
+          - "eslint-*"
+          - "globals"
+      vite:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+      commitizen:
+        patterns:
+          - "commitizen"
+          - "cz-conventional-changelog"
+          - "cosmiconfig"
 
   - package-ecosystem: github-actions
     directory: /
