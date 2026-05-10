@@ -50,6 +50,28 @@ To run the linting:
 
 Unit tests should be isolated (see what is an unencapsulated test).
 
+## Commit messages
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+Commit messages must use the format:
+
+```
+type(scope): short description
+```
+
+Common types: `feat`, `fix`, `refactor`, `chore`, `test`, `docs`, `style`, `perf`, `ci`, `build`
+
+The scope is optional — use the GitHub issue ID when relevant (e.g. `fix(#42): ...`).
+
+Use the interactive commit prompt to avoid getting the format wrong:
+
+```shell
+$ npm run commit
+```
+
+This runs [commitizen](https://github.com/commitizen/cz-cli) and guides you through type, scope,
+and description step by step.
+
 ## Pull-requests
 
 When creating a pull-request, please include a description of your change and if it's related to an existing
