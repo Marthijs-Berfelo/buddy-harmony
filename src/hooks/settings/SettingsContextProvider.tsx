@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { SettingsContext } from './use-settings';
 import { DEFAULT_STYLE, FretNumberType, Orientation, ScaleModel } from '../../common/fretboard';
@@ -71,11 +72,11 @@ const SettingsContextProvider = ({
     setFretNumbers(FretNumberType[fretNumber as keyof typeof FretNumberType]);
 
   const fretCount = (scale?: ScaleModel, chord?: ChordPosition) =>
-    !!scale
+    scale
       ? scale.fretzNumber
-      : !!chord
-      ? chordFretSize || CHORD_FRETS
-      : defaultFretSize || DEFAULT_FRETS;
+      : chord
+        ? chordFretSize || CHORD_FRETS
+        : defaultFretSize || DEFAULT_FRETS;
 
   const context = {
     diagramStyle: diagramStyle || DEFAULT_STYLE,

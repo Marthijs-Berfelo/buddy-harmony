@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import type { JSX } from 'react';
+import { useRef } from 'react';
 import { useCaged } from './hooks';
 import '../../common/Page.css';
 import CagedToolBar from './components/CagedToolBar';

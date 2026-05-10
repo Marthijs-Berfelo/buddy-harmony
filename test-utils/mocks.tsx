@@ -1,30 +1,28 @@
-import React, { PropsWithChildren } from 'react';
+import type { JSX } from 'react';
+import { PropsWithChildren } from 'react';
 import i18n from 'i18next';
 import { I18nextProvider } from 'react-i18next';
+import { vi } from 'vitest';
 
 interface MockLibraries {
-  gsMock: typeof jest;
-  fretboardApi: typeof jest;
+  gsMock: ReturnType<typeof vi.fn>;
+  fretboardApi: ReturnType<typeof vi.fn>;
 }
 
 export function mockLibraries(): MockLibraries {
-  const gsMock = jest.doMock('guitar-scales');
-  const fretboardApi = jest.doMock('fretboard-api');
   return {
-    gsMock,
-    fretboardApi,
+    gsMock: vi.fn(),
+    fretboardApi: vi.fn(),
   };
 }
 
 export function mockI18Next() {
-  jest.mock('react-i18next', () => ({
-    // this mock makes sure any components using the translate hook can use it without a warning being shown
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  vi.mock('react-i18next', () => ({
     useTranslation: (ns?: string | string[]) => {
+      void ns;
       return {
         t: (str: string) => str,
         i18n: {
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
           changeLanguage: () => new Promise(() => {}),
         },
       };

@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { useSettings, ChordPosition } from '../../../hooks';
 import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard';
 import React from 'react';

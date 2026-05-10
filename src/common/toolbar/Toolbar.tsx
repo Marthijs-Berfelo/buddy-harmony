@@ -1,8 +1,9 @@
+import type { JSX } from 'react';
 import { IconButton, Tooltip, Typography } from '@material-tailwind/react';
-import React from 'react';
 import SettingsTools, { SettingsToolsProps } from './components/SettingsTools';
 import { PrintableProps } from '../../hooks';
 import { useReactToPrint } from 'react-to-print';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Pages } from '../routing/pages';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +22,7 @@ const Toolbar = ({
   printDisabled,
 }: ToolbarProps): JSX.Element => {
   const { t } = useTranslation('settings');
-  const handlePrint = useReactToPrint({ content: () => printRef.current });
+  const handlePrint = useReactToPrint({ contentRef: printRef });
   return (
     <div className="flex flex-col items-center md:px-96">
       <div className="flex flex-row w-full justify-between items-center py-1.5 px-1.5 md:px-6 mb-3 bg-blue-100 border-blue-100 text-blue-grey-400 md:rounded-xl z40">
@@ -36,19 +37,16 @@ const Toolbar = ({
             ))}
           </div>
         </div>
-        {printRef.current !== null ? (
-          <Tooltip content={t('settings:print.tool-tip', { context: enumKeyByValue(Pages, page) })}>
-            <IconButton
-              onClick={handlePrint}
-              className="flex ml-1 disabled:bg-blue-grey-300"
-              disabled={printDisabled}
-            >
-              <FontAwesomeIcon className="flex text-lg" icon="print" />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <div className="flex" />
-        )}
+        <Tooltip content={t('settings:print.tool-tip', { context: enumKeyByValue(Pages, page) })}>
+          <IconButton
+            color="blue"
+            onClick={handlePrint}
+            className="flex ml-1 disabled:bg-blue-grey-300"
+            disabled={printDisabled}
+          >
+            <FontAwesomeIcon className="flex text-lg" icon={faPrint} />
+          </IconButton>
+        </Tooltip>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
+import type { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactFlagsSelect from 'react-flags-select';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CustomLabels } from 'react-flags-select/build/types';
 
 const LanguageSelector = (): JSX.Element => {
@@ -38,30 +39,33 @@ const languageLabels: CustomLabels = {
 const defaultLanguageCode = 'nl-NL';
 const defaultLanguage = 'NL';
 
+const getInitialLanguage = (): string => {
+  const stored = localStorage.getItem('i18nextLng');
+  if (!stored) return defaultLanguage;
+  return stored.includes('-') ? stored.split('-')[1].toUpperCase() : stored.toUpperCase();
+};
+
 const useLanguage = (): LanguageHook => {
   const { i18n } = useTranslation();
   const [browserLanguage, setBrowserLanguage] = useState<string>(i18n.language);
-  const [languages, setLanguages] = useState<string[]>([]);
-  const [selectedLanguage, setSelectedLanguage] = useState<string>(
-    localStorage.getItem('i18nextLng') || defaultLanguage
-  );
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(getInitialLanguage());
 
   useEffect(() => {
-    setBrowserLanguage(i18n.language);
-    setLanguages(i18n.languages.filter((value) => !value.includes('-')));
-    setSelectedLanguage(i18n.language.split('-')[1]);
+    const lang = i18n.resolvedLanguage || i18n.language;
+    setBrowserLanguage(lang);
+    setSelectedLanguage(lang.split('-')[1]?.toUpperCase() ?? defaultLanguage);
 
     return () => {
-      i18n.changeLanguage(browserLanguage).then();
-      setSelectedLanguage(browserLanguage.split('-')[1]);
+      i18n.changeLanguage(browserLanguage).catch(console.error);
+      setSelectedLanguage(browserLanguage.split('-')[1]?.toUpperCase() ?? defaultLanguage);
     };
-  }, []);
+  }, [i18n, browserLanguage]);
 
   useEffect(() => {
-    if (!i18n.language.endsWith(selectedLanguage)) {
-      i18n.changeLanguage(languageCode(selectedLanguage)).then();
+    if (!i18n.language.toUpperCase().endsWith(selectedLanguage)) {
+      i18n.changeLanguage(languageCode(selectedLanguage)).catch(console.error);
     }
-  }, [selectedLanguage]);
+  }, [selectedLanguage, i18n]);
 
   const onSelectLanguage = (lang: string) => {
     setSelectedLanguage(lang);
@@ -71,18 +75,13 @@ const useLanguage = (): LanguageHook => {
     const codes = Object.entries(languageLabels)
       .filter((label) => label[0] === lang)
       .map((label) => `${label[1].toString()}-${label[0]}`);
-    if (codes.length > 0) {
-      return codes[0];
-    }
-    return defaultLanguageCode;
+    return codes.length > 0 ? codes[0] : defaultLanguageCode;
   };
 
   return {
     selectedLanguage,
     onSelectLanguage,
     languageLabels,
-    countries: Object.entries(languageLabels)
-      .filter((label) => languages.includes(label[1].toString()))
-      .map((label) => label[0]),
+    countries: Object.keys(languageLabels),
   };
 };

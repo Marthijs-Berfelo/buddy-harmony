@@ -1,6 +1,7 @@
+import type { JSX } from 'react';
 import { Orientation } from '../options';
 import { svg } from '../utils';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { useSettings } from '../../../hooks';
 
 type FretboardProps = {
@@ -16,7 +17,7 @@ const Fretboard = (props: FretboardProps): JSX.Element => {
       {includeNut && (
         <path strokeWidth={fretWidth} className="fill-none stroke-black" d={fretsPath(true)} />
       )}
-      <path strokeWidth={fretWidth} className="fill-none stroke-grey-600" d={fretsPath(false)} />
+      <path strokeWidth={fretWidth} className="fill-none stroke-gray-600" d={fretsPath(false)} />
       <path strokeWidth={stringWidth} className="fill-none stroke-black" d={stringsPath()} />
     </Fragment>
   );

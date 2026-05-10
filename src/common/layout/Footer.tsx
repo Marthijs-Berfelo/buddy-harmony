@@ -1,9 +1,11 @@
-import React, { PropsWithChildren } from 'react';
+import type { JSX } from 'react';
+import { PropsWithChildren } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tooltip, Typography } from '@material-tailwind/react';
 import packageJson from '../../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
+import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { appInfo } from '../app-info';
 
 const Footer = (): JSX.Element => {
@@ -16,7 +18,7 @@ const Footer = (): JSX.Element => {
           {t('common:app-version', { version: appInfo.app.version })}
         </FooterText>
         <FooterIcon content={t('common:app-source')} link={appInfo.app.source}>
-          <i className={'text-xl text-black fa-brands fa-github'} />
+          <FontAwesomeIcon className={'text-xl text-black'} icon={faGithub} />
         </FooterIcon>
         <FooterIcon
           content={t('common:app-issues')}
@@ -28,13 +30,13 @@ const Footer = (): JSX.Element => {
       <div className="flex flex-row items-center">
         <FooterText>{t('common:app-creator', { name: appInfo.author.name })}</FooterText>
         <FooterIcon content={t('common:author.github-profile')} link={appInfo.author.profile}>
-          <i className={'text-xl text-black fa-brands fa-github'} />
+          <FontAwesomeIcon className={'text-xl text-black'} icon={faGithub} />
         </FooterIcon>
         <FooterIcon
           content={t('common:author.twitter', { handle: appInfo.author.twitter.name })}
           link={appInfo.author.twitter.link}
         >
-          <i className={'text-xl text-blue-700 fa-brands fa-twitter'} />
+          <FontAwesomeIcon className={'text-xl text-blue-700'} icon={faTwitter} />
         </FooterIcon>
         <FooterIcon content={t('common:author.send-email')} link={`mailto:${appInfo.author.email}`}>
           <FontAwesomeIcon className={'text-xl text-black'} icon={faAt} />
@@ -53,10 +55,10 @@ interface FooterTextProps {
 const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX.Element => (
   <Typography
     className="flex font-sans text-sm mx-1.5"
-    as={!!link ? 'a' : undefined}
+    as={link ? 'a' : undefined}
     href={link}
-    target={!!link ? '_blank' : undefined}
-    rel={!!link ? 'noreferrer' : undefined}
+    target={link ? '_blank' : undefined}
+    rel={link ? 'noreferrer' : undefined}
   >
     {children}
   </Typography>

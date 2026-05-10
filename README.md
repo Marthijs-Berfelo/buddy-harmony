@@ -11,8 +11,8 @@ aims to help you to playing guitar. By displaying guitar chords in multiple vari
 ## Features
 
 - :white_large_square: Chords (Displaying various chords of specific type and key)
-    - :white_check_mark:: Change direction (horizontal / vertical)
-    - :white_check_mark:: Display for left-handed vertical
+    - :white_check_mark: Change direction (horizontal / vertical)
+    - :white_check_mark: Display for left-handed vertical
     - :white_large_square: Display for left-handed horizontal
     - :white_check_mark: Display for right-handed vertical
     - :white_check_mark: Display for right-handed horizontal
@@ -26,7 +26,7 @@ aims to help you to playing guitar. By displaying guitar chords in multiple vari
     - :white_check_mark: Display for right-handed vertical
     - :white_check_mark: Display for right-handed horizontal
     - :white_check_mark: Show notes
-    - :white_check_mark: Show distinction of the scale position of a note (prime, second, etc.)
+    - :white_check_mark: Show distinction in relation to the scale position of a note (prime, second, etc.)
     - :white_large_square: Show legend for scale positions
     - :white_check_mark: Show fret numbers (Latin and Roman numerals)
     - :white_large_square: Change Tuning

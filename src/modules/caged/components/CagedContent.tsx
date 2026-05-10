@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React from 'react';
 import { useSettings } from '../../../hooks';
 import { Typography } from '@material-tailwind/react';

@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import type { JSX } from 'react';
+import { Fragment } from 'react';
 import { ChordPosition, useSettings } from '../../../hooks';
 import { ShapeProps, useShape, svg } from '../utils';
 import { Orientation } from '../options';
@@ -236,13 +237,11 @@ const useChordShape = ({
           fret,
           baseFret,
           chordPosition,
-          !!cagedColor
-            ? dotNoteText(string, chord.notes || [])
-            : dotFingerText(string, fingerNumbers)
+          cagedColor ? dotNoteText(string, chord.notes || []) : dotFingerText(string, fingerNumbers)
         );
       }
     });
-    const barres = !!cagedColor
+    const barres = cagedColor
       ? []
       : (chord.barres || []).map((barreFret) =>
           barre(barreFret, baseFret, chord.frets, fingerNumbers, chordPosition)
@@ -252,7 +251,7 @@ const useChordShape = ({
   };
 
   const chordShapes = (chords || [chord]).flatMap((chordModel, chordPosition) => {
-    if (!!chordModel) {
+    if (chordModel) {
       return renderChord(chordModel, chordPosition);
     } else {
       return <></>;

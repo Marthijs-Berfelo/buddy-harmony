@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -24,11 +24,6 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm run test
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          junit_files: 'test-results/**/*.xml'
       - name: QA Report
         id: coverageComment
         uses: MishaKav/jest-coverage-comment@v1.0.22
@@ -40,10 +35,8 @@ jobs:
           hide-comment: false
           create-new-comment: true
           hide-summary: false
-          junitxml-title: Unit tests
-          junitxml-path: ./test-results/TEST-junit.xml
       - name: Create the Badge
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.COVERAGE_COMMENT }}

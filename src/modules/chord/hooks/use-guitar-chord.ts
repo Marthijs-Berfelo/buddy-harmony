@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   KeysHook,
   useKeys,
@@ -24,6 +24,8 @@ export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook =>
   const { guitarType } = useSettings();
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
+  const chordRef = useRef(chord);
+  chordRef.current = chord;
 
   useEffect(() => {
     handleSelectionForChords(
@@ -33,7 +35,7 @@ export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook =>
       chordsForKey,
       setChords,
       setChord,
-      chord
+      chordRef.current
     );
   }, [guitarType, selectedKey]);
 

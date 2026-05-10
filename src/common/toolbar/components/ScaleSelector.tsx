@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react';
@@ -22,7 +23,7 @@ const ScaleSelector = ({
       color="blue-gray"
       className="capitalize bg-grey-200 hover:bg-grey-200 w-48"
     >
-      {t('scale:title', !!scale ? { context: 'selected', scale } : undefined)}
+      {t('scale:title', scale ? { context: 'selected', scale } : undefined)}
     </Button>
   ) : (
     <Menu offset={3}>

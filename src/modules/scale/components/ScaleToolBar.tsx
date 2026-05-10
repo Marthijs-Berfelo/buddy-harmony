@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { KeySelector, ScaleSelector, Toolbar } from '../../../common';
 import React from 'react';
 import { scaleGuitarTypes } from '../../../hooks';

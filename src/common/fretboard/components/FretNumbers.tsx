@@ -1,5 +1,5 @@
+import type { JSX } from 'react';
 import { FretNumberType, Orientation } from '../options';
-import React from 'react';
 import { useSettings } from '../../../hooks';
 import { useDirectional } from '../utils/directional';
 
@@ -99,7 +99,7 @@ const useFretNumbers = ({ frets, startAt }: FretNumbersProps): FretNumbersHook =
         }
         x={x}
         fontSize={diagramStyle.fretNumberFontSize}
-        className="font-sans stroke-0 fill-grey-800 stroke-grey-800"
+        className="font-sans stroke-0 fill-gray-800 stroke-gray-800"
       >
         {numberText(fret)}
       </text>

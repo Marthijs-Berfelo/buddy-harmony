@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useGuitarScale } from './hooks';
 import ScaleToolBar from './components/ScaleToolBar';
 import ScaleContent from './components/ScaleContent';
