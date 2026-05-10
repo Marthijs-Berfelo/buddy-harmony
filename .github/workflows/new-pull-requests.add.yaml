@@ -9,8 +9,27 @@ jobs:
   add-pr-to-project:
     name: Add pull-request to project
     runs-on: ubuntu-latest
+    if: github.actor != 'dependabot[bot]'
     steps:
       - uses: actions/add-to-project@v0.4.0
+        with:
+          project-url: https://github.com/users/Marthijs-Berfelo/projects/1
+          github-token: ${{ secrets.PROJECT_ADD_TOKEN }}
+
+  add-dependabot-major-to-project:
+    name: Add major Dependabot PR to project
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add to project
+        if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+        uses: actions/add-to-project@v0.4.0
         with:
           project-url: https://github.com/users/Marthijs-Berfelo/projects/1
           github-token: ${{ secrets.PROJECT_ADD_TOKEN }}
