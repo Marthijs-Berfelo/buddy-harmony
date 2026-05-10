@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { useEffect } from 'react';
 import { GuitarType, useSettings } from '../../../hooks';
 import {
@@ -48,7 +49,7 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
   return (
     <Menu placement="bottom-start">
       <MenuHandler>
-        <IconButton className="mr-1">
+        <IconButton color="blue" className="mr-1">
           <FontAwesomeIcon className="text-xl" icon={faGears} />
         </IconButton>
       </MenuHandler>

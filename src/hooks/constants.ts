@@ -5,7 +5,7 @@ import { Orientation } from '../common/fretboard';
 const DEFAULT_TYPE = 'guitar';
 
 export interface PrintableProps {
-  printRef: RefObject<HTMLDivElement>;
+  printRef: RefObject<HTMLDivElement | null>;
   printDisabled?: boolean;
 }
 

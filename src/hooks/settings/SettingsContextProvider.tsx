@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { SettingsContext } from './use-settings';
 import { DEFAULT_STYLE, FretNumberType, Orientation, ScaleModel } from '../../common/fretboard';

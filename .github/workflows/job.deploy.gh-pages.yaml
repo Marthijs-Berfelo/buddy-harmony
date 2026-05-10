@@ -18,17 +18,17 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.15.x
+          node-version-file: '.nvmrc'
           cache: npm
           cache-dependency-path: '**/package-lock.json'
       - name: Install
         run: npm ci
       - name: Build
-        run: npm run build  -- PUBLIC_URL=https://Marthijs-Berfelo.github.io/buddy-harmony
+        run: npm run build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
-          folder: build
+          folder: dist
           git-config-name: github-actions
           git-config-email: github-actions@github.com

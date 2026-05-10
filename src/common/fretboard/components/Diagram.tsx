@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { MouseEvent } from 'react';
 import { ScaleFret, ScaleModel, StringAndFret } from '../utils';
 import { DotText, FretNumberPosition, FretNumberType, Orientation } from '../options';

@@ -1,4 +1,4 @@
-import React from 'react';
+import type { JSX } from 'react';
 import { IconButton, Menu, MenuHandler, MenuList, Typography } from '@material-tailwind/react';
 import { Pages } from '../routing/pages';
 import { NavLink } from 'react-router-dom';

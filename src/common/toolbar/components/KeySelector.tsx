@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react';

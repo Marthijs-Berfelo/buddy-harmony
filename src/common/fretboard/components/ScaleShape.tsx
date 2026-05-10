@@ -1,5 +1,6 @@
+import type { JSX } from 'react';
 import { DotText } from '../options';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { ShapeProps, useShape, ScaleFret } from '../utils';
 import { useSettings } from '../../../hooks';
 

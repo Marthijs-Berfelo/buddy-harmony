@@ -1,22 +1,17 @@
-import React, { lazy, Suspense } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { Pages } from '../routing/pages';
-import ScalePage from '../../modules/scale';
+import type { JSX } from 'react';
+import { lazy, Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
 import { SettingsContextProvider } from '../../hooks';
-const ChordPage = lazy(() => import('../../modules/chord'));
-const CagedPage = lazy(() => import('../../modules/caged'));
+
+export const ChordPage = lazy(() => import('../../modules/chord'));
+export const CagedPage = lazy(() => import('../../modules/caged'));
 
 const Content = (): JSX.Element => {
   return (
     <div className="pt-24" id="content">
       <SettingsContextProvider>
         <Suspense fallback={'Loading..'}>
-          <Routes>
-            <Route path={Pages.SCALE} element={<ScalePage />} />
-            <Route path={Pages.CHORD} element={<ChordPage />} />
-            <Route path={Pages.CAGED} element={<CagedPage />} />
-            <Route path={'*'} element={<Navigate to={Pages.SCALE} replace />} />
-          </Routes>
+          <Outlet />
         </Suspense>
       </SettingsContextProvider>
     </div>

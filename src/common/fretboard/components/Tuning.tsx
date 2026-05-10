@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { Orientation } from '../options';
 import React from 'react';
 import { useSettings } from '../../../hooks';

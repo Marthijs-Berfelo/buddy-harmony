@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { chordGuitarTypes } from '../../../hooks';
 import { ChordSelector, KeySelector, Toolbar } from '../../../common';
 import React from 'react';

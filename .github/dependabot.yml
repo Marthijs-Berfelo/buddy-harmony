@@ -9,6 +9,11 @@ updates:
     directory: /
     schedule:
       interval: daily
+    cooldown:
+      default: 5
+      patch: 5
+      minor: 5
+      major: 14
     reviewers:
       - "Marthijs-Berfelo"
     assignees: []
@@ -18,6 +23,8 @@ updates:
     directory: /
     schedule:
       interval: daily
+    cooldown:
+      default: 5
     reviewers:
       - "Marthijs-Berfelo"
     assignees: []

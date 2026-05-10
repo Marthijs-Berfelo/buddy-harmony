@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import type { JSX } from 'react';
+import { useRef } from 'react';
 import { useGuitarChord } from './hooks';
 import ChordToolBar from './components/ChordToolBar';
 import ChordContent from './components/ChordContent';

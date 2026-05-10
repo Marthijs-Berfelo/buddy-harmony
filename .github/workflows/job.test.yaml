@@ -24,11 +24,6 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm run test
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          junit_files: 'test-results/**/*.xml'
       - name: QA Report
         id: coverageComment
         uses: MishaKav/jest-coverage-comment@v1.0.22
@@ -40,8 +35,6 @@ jobs:
           hide-comment: false
           create-new-comment: true
           hide-summary: false
-          junitxml-title: Unit tests
-          junitxml-path: ./test-results/TEST-junit.xml
       - name: Create the Badge
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: schneegans/dynamic-badges-action@v1.6.0

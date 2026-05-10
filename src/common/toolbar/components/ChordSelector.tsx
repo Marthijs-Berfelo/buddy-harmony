@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { ChordDetail } from '../../../hooks';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';

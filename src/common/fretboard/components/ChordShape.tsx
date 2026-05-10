@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import type { JSX } from 'react';
+import { Fragment } from 'react';
 import { ChordPosition, useSettings } from '../../../hooks';
 import { ShapeProps, useShape, svg } from '../utils';
 import { Orientation } from '../options';
