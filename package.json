@@ -12,10 +12,11 @@
     "test:watch": "vitest",
     "lint": "eslint src",
     "format": "eslint src --fix",
+    "commit": "cz",
     "release": "release-it",
-    "release:ci": "npm run release patch --ci",
-    "release:ci-prepare": "echo $(release-it patch --ci --release-version) > next-version.txt",
-    "release:milestone": "npm run release minor --ci",
+    "release:ci": "release-it --ci",
+    "release:ci-prepare": "echo $(release-it --ci --release-version) > next-version.txt",
+    "release:milestone": "release-it minor --ci",
     "release:milestone-prepare": "echo $(release-it minor --ci --release-version) > next-version.txt",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
@@ -46,6 +47,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@release-it/conventional-changelog": "^11.0.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.0",
@@ -58,6 +60,8 @@
     "@vitejs/plugin-react": "^4.0.0",
     "@vitest/coverage-v8": "^3.0.0",
     "autoprefixer": "^10.4.20",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -91,14 +95,28 @@
       "last 1 safari version"
     ]
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "release-it": {
     "git": {
       "requiresBranch": "release/**",
-      "commitMessage": "Release: v${version}",
+      "commitMessage": "chore: release v${version}",
       "requireUpstream": false
     },
     "github": {
-      "release": true
+      "release": true,
+      "releaseName": "v${version}"
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "conventionalcommits"
+        },
+        "infile": "CHANGELOG.md"
+      }
     }
   }
 }
