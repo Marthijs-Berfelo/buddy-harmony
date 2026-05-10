@@ -1,0 +1,85 @@
+name: Copilot review gate
+on:
+  pull_request_review:
+    types:
+      - submitted
+  pull_request_review_thread:
+    types:
+      - resolved
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check:
+    name: Check Copilot review status
+    runs-on: ubuntu-latest
+    # Skip automated PRs entirely
+    if: |
+      github.event.pull_request.user.login != 'dependabot[bot]' &&
+      !startsWith(github.event.pull_request.head.ref, 'release/')
+    outputs:
+      approved: ${{ steps.check.outputs.approved }}
+    steps:
+      - name: Evaluate Copilot review
+        id: check
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+
+          # Get all Copilot reviews on this PR
+          REVIEWS=$(gh api repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews \
+            --jq '[.[] | select(.user.login == "copilot-pull-request-reviewer[bot]")]')
+
+          REVIEW_COUNT=$(echo "$REVIEWS" | jq 'length')
+
+          if [ "$REVIEW_COUNT" = "0" ]; then
+            echo "approved=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Check unresolved review threads via GraphQL
+          NODE_ID=$(gh api repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER --jq '.node_id')
+          UNRESOLVED=$(gh api graphql -f query='
+            query($pr: ID!) {
+              node(id: $pr) {
+                ... on PullRequest {
+                  reviewThreads(first: 100) {
+                    nodes { isResolved }
+                  }
+                }
+              }
+            }' -f pr="$NODE_ID" \
+            --jq '[.data.node.reviewThreads.nodes[] | select(.isResolved == false)] | length')
+
+          if [ "$UNRESOLVED" = "0" ]; then
+            echo "approved=true" >> $GITHUB_OUTPUT
+          else
+            echo "approved=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  approve:
+    name: Approve PR
+    needs: check
+    if: needs.check.outputs.approved == 'true'
+    uses: ./.github/workflows/job.auto-approve.yaml
+    with:
+      pr-number: ${{ github.event.pull_request.number }}
+    secrets:
+      APPROVE_TOKEN: ${{ secrets.APPROVE_APP_TOKEN }}
+
+  auto-merge:
+    name: Queue auto-merge
+    runs-on: ubuntu-latest
+    needs:
+      - check
+      - approve
+    if: needs.check.outputs.approved == 'true'
+    steps:
+      - name: Enable auto-merge
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

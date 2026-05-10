@@ -1,0 +1,27 @@
+name: Auto Approve
+on:
+  workflow_call:
+    inputs:
+      pr-number:
+        required: true
+        type: string
+    secrets:
+      APPROVE_TOKEN:
+        required: true
+
+jobs:
+  approve:
+    name: Approve PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtain GitHub App Installation Access Token
+        id: get_token
+        run: |
+          TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.APPROVE_TOKEN }})"
+          echo "::add-mask::$TOKEN"
+          echo "approve_token=$TOKEN" >> $GITHUB_ENV
+
+      - name: Approve PR
+        run: gh pr review "${{ inputs.pr-number }}" --approve --repo "$GITHUB_REPOSITORY"
+        env:
+          GH_TOKEN: ${{ env.approve_token }}
