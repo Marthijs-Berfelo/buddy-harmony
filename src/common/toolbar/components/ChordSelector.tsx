@@ -18,13 +18,13 @@ const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): JSX.Ele
       color="blue-gray"
       className="capitalize bg-grey-200 hover:bg-grey-200 w-48"
     >
-      {t('chord:title', !!chord ? { context: 'selected', chord } : undefined)}
+      {t('chord:title', chord ? { context: 'selected', chord } : undefined)}
     </Button>
   ) : (
     <Menu offset={3}>
       <MenuHandler>
         <Button variant="outlined" className="capitalize bg-white w-48">
-          {t('chord:title', !!chord ? { context: 'selected', chord } : undefined)}
+          {t('chord:title', chord ? { context: 'selected', chord } : undefined)}
         </Button>
       </MenuHandler>
       <MenuList className="max-h-96 overflow-y-auto">

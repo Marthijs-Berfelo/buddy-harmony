@@ -55,10 +55,10 @@ interface FooterTextProps {
 const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX.Element => (
   <Typography
     className="flex font-sans text-sm mx-1.5"
-    as={!!link ? 'a' : undefined}
+    as={link ? 'a' : undefined}
     href={link}
-    target={!!link ? '_blank' : undefined}
-    rel={!!link ? 'noreferrer' : undefined}
+    target={link ? '_blank' : undefined}
+    rel={link ? 'noreferrer' : undefined}
   >
     {children}
   </Typography>

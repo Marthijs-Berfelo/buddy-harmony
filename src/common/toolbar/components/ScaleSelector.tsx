@@ -23,7 +23,7 @@ const ScaleSelector = ({
       color="blue-gray"
       className="capitalize bg-grey-200 hover:bg-grey-200 w-48"
     >
-      {t('scale:title', !!scale ? { context: 'selected', scale } : undefined)}
+      {t('scale:title', scale ? { context: 'selected', scale } : undefined)}
     </Button>
   ) : (
     <Menu offset={3}>

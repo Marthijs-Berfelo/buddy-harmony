@@ -40,7 +40,7 @@ export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
   }, [chord, cagedConfig]);
 
   useEffect(() => {
-    if (!!chord) {
+    if (chord) {
       setCagedConfig(cagedConfigs.get(chord.suffix));
     } else {
       setCagedChords(undefined);

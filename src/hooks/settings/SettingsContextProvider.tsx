@@ -72,11 +72,11 @@ const SettingsContextProvider = ({
     setFretNumbers(FretNumberType[fretNumber as keyof typeof FretNumberType]);
 
   const fretCount = (scale?: ScaleModel, chord?: ChordPosition) =>
-    !!scale
+    scale
       ? scale.fretzNumber
-      : !!chord
-      ? chordFretSize || CHORD_FRETS
-      : defaultFretSize || DEFAULT_FRETS;
+      : chord
+        ? chordFretSize || CHORD_FRETS
+        : defaultFretSize || DEFAULT_FRETS;
 
   const context = {
     diagramStyle: diagramStyle || DEFAULT_STYLE,
