@@ -16,7 +16,6 @@ updates:
       semver-major-days: 14
     reviewers:
       - "Marthijs-Berfelo"
-    assignees: []
     rebase-strategy: auto
     ignore:
       # eslint-plugin-react does not support eslint 10 yet
@@ -31,5 +30,4 @@ updates:
       default-days: 5
     reviewers:
       - "Marthijs-Berfelo"
-    assignees: []
     rebase-strategy: auto
