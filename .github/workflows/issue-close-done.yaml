@@ -1,0 +1,48 @@
+name: Move closed issues to Done
+
+on:
+  issues:
+    types:
+      - closed
+
+permissions:
+  issues: read
+
+jobs:
+  move-to-done:
+    name: Set status to Done
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move issue to Done on project board
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_ADD_TOKEN }}
+          ISSUE_NODE_ID: ${{ github.event.issue.node_id }}
+          PROJECT_ID: PVT_kwHOAoS0Fs4ADhGc
+          STATUS_FIELD_ID: PVTSSF_lAHOAoS0Fs4ADhGczgCBh9A
+          DONE_OPTION_ID: "98236657"
+        run: |
+          item_id=$(gh api graphql -f query='
+            mutation($projectId: ID!, $contentId: ID!) {
+              addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
+                item { id }
+              }
+            }' \
+            -f projectId="$PROJECT_ID" \
+            -f contentId="$ISSUE_NODE_ID" \
+            --jq '.data.addProjectV2ItemById.item.id')
+
+          gh api graphql -f query='
+            mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+              updateProjectV2ItemFieldValue(input: {
+                projectId: $projectId
+                itemId: $itemId
+                fieldId: $fieldId
+                value: { singleSelectOptionId: $optionId }
+              }) {
+                projectV2Item { id }
+              }
+            }' \
+            -f projectId="$PROJECT_ID" \
+            -f itemId="$item_id" \
+            -f fieldId="$STATUS_FIELD_ID" \
+            -f optionId="$DONE_OPTION_ID"
