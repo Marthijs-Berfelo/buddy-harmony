@@ -5,6 +5,10 @@ on:
     types:
       - opened
 
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
   add-pr-to-project:
     name: Add pull-request to project
@@ -33,3 +37,26 @@ jobs:
         with:
           project-url: https://github.com/users/Marthijs-Berfelo/projects/1
           github-token: ${{ secrets.PROJECT_ADD_TOKEN }}
+
+      - name: Check for linked issues
+        id: linked
+        if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          count=$(gh pr view $PR_NUMBER --repo $REPO --json closingIssuesReferences --jq '.closingIssuesReferences | length')
+          echo "count=$count" >> $GITHUB_OUTPUT
+
+      - name: Create tracking issue and link to PR
+        if: steps.metadata.outputs.update-type == 'version-update:semver-major' && steps.linked.outputs.count == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          REPO: ${{ github.repository }}
+        run: |
+          issue=$(gh issue create --repo $REPO --title "$PR_TITLE" --body "Dependency update tracked in #$PR_NUMBER." --json number --jq '.number')
+          gh pr edit $PR_NUMBER --repo $REPO --body "$PR_BODY"$'\n\nCloses #'"$issue"
