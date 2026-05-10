@@ -28,7 +28,7 @@ jobs:
         run: npm run test
       - name: QA Report
         id: coverageComment
-        uses: MishaKav/jest-coverage-comment@v1.0.22
+        uses: MishaKav/jest-coverage-comment@v1.0.33
         with:
           coverage-summary-path: ./coverage/coverage-summary.json
           title: QA Results
