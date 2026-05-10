@@ -177,3 +177,11 @@ msbuild.wrn
 *.sln.docstates
 *.db
 
+### Visual regression baselines ###
+baseline/
+
+### Claude Code ###
+!.claude/
+!.claude/settings.json
+.claude/settings.local.json
+

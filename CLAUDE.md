@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Claude Code configuration
+
+All project-specific Claude Code configuration belongs in this repo, not in global settings:
+- **Permissions & settings** → `.claude/settings.json` (committed)
+- **Local overrides** → `.claude/settings.local.json` (gitignored)
+- **Project instructions** → this file (`CLAUDE.md`)
+
+Never store buddy-harmony permissions or plans in `~/.claude/`.
+
 ## Commands
 
 ```shell
