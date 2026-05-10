@@ -18,6 +18,10 @@ updates:
       - "Marthijs-Berfelo"
     assignees: []
     rebase-strategy: auto
+    ignore:
+      # eslint-plugin-react does not support eslint 10 yet
+      - dependency-name: "eslint"
+        versions: [">=10"]
 
   - package-ecosystem: github-actions
     directory: /
