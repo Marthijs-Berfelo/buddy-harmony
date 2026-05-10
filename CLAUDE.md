@@ -83,3 +83,42 @@ Chord and CAGED modules share `chordGuitarTypes` (instruments from chords-db); t
 ### Internationalisation
 
 All user-facing strings go through `i18next` / `react-i18next`. Translation files live in `public/` (loaded at runtime via `i18next-http-backend`). The `<TranslationsProvider>` in `translations.tsx` initialises i18next.
+
+## CI / GitHub Actions
+
+Reusable jobs live in `.github/workflows/job.*.yaml` and are composed by the trigger workflows.
+
+### Trigger workflows
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `pr-build.yaml` | PR opened / updated → `main` | Runs QA (lint + test + coverage report) and build |
+| `main-build.yaml` | Push to `main` | Same as PR build; also updates the coverage badge |
+| `release-build.yaml` | Push to `release/**` | Runs QA, build, publishes a release, deploys to GitHub Pages |
+| `dependabot-auto-merge.yaml` | Dependabot PR opened | Auto-merges patch and minor bumps after CI passes |
+
+### Project board automation
+
+All automation uses `PROJECT_ADD_TOKEN` (a PAT with `project` write scope stored as a repository secret).
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `new-pull-requests.add.yaml` | PR opened | Adds non-Dependabot PRs to the project board; for major Dependabot bumps: adds to board, creates a tracking issue, and links it via `Closes #X` in the PR body |
+| `new-issues.add.yaml` | Issue opened | Adds new issues to the project board |
+| `pr-close-done.yaml` | PR merged or closed → `main` | Moves the PR's board item to **Done** |
+| `issue-close-done.yaml` | Issue closed | Moves the issue's board item to **Done** |
+| `dependabot-close-issue.yaml` | Dependabot PR closed without merge | Closes the linked tracking issue (which then triggers `issue-close-done`) |
+
+### Dependabot flow for major bumps
+
+```
+PR opened
+  → added to board
+  → tracking issue created + linked (Closes #X)
+      ↓ PR merged          ↓ PR closed (superseded)
+  GitHub closes issue    dependabot-close-issue closes issue
+         ↓                          ↓
+    issue-close-done sets board item to Done
+```
+
+Patch/minor bumps skip the board and issue entirely — they auto-merge silently.
