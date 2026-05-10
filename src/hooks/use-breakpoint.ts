@@ -20,7 +20,7 @@ interface BreakpointHook {
 
 export const useBreakpoint = (): BreakpointHook => {
   const screens = useMemo(() => config.theme?.screens || fallbackScreens, []);
-  const minWidth = useMemo(() => screens.sm, []);
+  const minWidth = useMemo(() => screens.sm, [screens]);
   const [breakpoints, setBreakpoints] = useState<string[]>([]);
 
   useEffect(() => {
@@ -32,7 +32,8 @@ export const useBreakpoint = (): BreakpointHook => {
       setBreakpoints(breakpoints);
     }
     window.addEventListener('resize', handleResize);
-  }, []);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [screens]);
 
   return {
     minWidth,

@@ -59,7 +59,7 @@ const useLanguage = (): LanguageHook => {
       i18n.changeLanguage(browserLanguage).catch(console.error);
       setSelectedLanguage(browserLanguage.split('-')[1]?.toUpperCase() ?? defaultLanguage);
     };
-  }, [i18n]);
+  }, [i18n, browserLanguage]);
 
   useEffect(() => {
     if (!i18n.language.toUpperCase().endsWith(selectedLanguage)) {

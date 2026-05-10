@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   chordGuitarTypes,
   GuitarType,
@@ -27,6 +27,8 @@ export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
   const { guitarType, tuningType } = useSettings();
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
+  const chordRef = useRef(chord);
+  chordRef.current = chord;
   const [cagedConfig, setCagedConfig] = useState<CagedConfig>();
   const [cagedChords, setCagedChords] = useState<CagedChords>();
 
@@ -37,7 +39,7 @@ export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
     } else {
       setCagedChords(undefined);
     }
-  }, [chord, cagedConfig]);
+  }, [chord, cagedConfig, guitarType, tuningType]);
 
   useEffect(() => {
     if (chord) {
@@ -55,7 +57,7 @@ export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
       cagedChordsForKey(Array.from(cagedConfigs.keys())),
       setChords,
       setChord,
-      chord
+      chordRef.current
     );
   }, [guitarType, selectedKey]);
 

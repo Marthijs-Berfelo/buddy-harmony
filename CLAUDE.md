@@ -23,7 +23,7 @@ npm run build      # production build
 
 Run a single test file:
 ```shell
-npx react-scripts test --testPathPattern="src/modules/caged/hooks/__tests__/caged-utils.spec.ts" --watchAll=false
+npx vitest run src/modules/caged/hooks/__tests__/caged-utils.spec.ts
 ```
 
 ## Architecture

@@ -10,8 +10,9 @@ export interface GuitarScaleHook extends KeysHook, Printable {
   scaleModel: ScaleModel | undefined;
 }
 
+const guitarScale = gs.GuitarScale;
+
 export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook => {
-  const guitarScale = gs.GuitarScale;
   const { keys, selectedKey, setSelectedKey } = useKeys();
   // const { tuningType } = useSettings();
   const [scale, setScale] = useState<string>();

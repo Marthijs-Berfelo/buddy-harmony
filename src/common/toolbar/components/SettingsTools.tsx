@@ -44,7 +44,7 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
     if (page === Pages.CAGED && orientation === Orientation.HORIZONTAL) {
       toggleOrientation();
     }
-  }, [page]);
+  }, [page, orientation, toggleOrientation]);
 
   return (
     <Menu placement="bottom-start">
