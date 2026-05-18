@@ -32,15 +32,26 @@ jobs:
     needs:
       - test
     uses: ./.github/workflows/job.build.yaml
-  release:
-    name: Release
-    if: startsWith(github.head_ref, 'Release')
+  approve-release:
+    name: Approve Release PR
+    if: startsWith(github.head_ref, 'release/')
     needs:
       - build
+    uses: ./.github/workflows/job.auto-approve.yaml
+    with:
+      pr-number: ${{ github.event.pull_request.number }}
+    secrets:
+      APPROVE_TOKEN: ${{ secrets.APPROVE_APP_TOKEN }}
+
+  release:
+    name: Release
+    if: startsWith(github.head_ref, 'release/')
+    needs:
+      - approve-release
     uses: ./.github/workflows/job.release-complete.yaml
   deploy:
     name: Deploy
-    if: startsWith(github.head_ref, 'Release')
+    if: startsWith(github.head_ref, 'release/')
     needs:
       - release
     uses: ./.github/workflows/job.deploy.gh-pages.yaml

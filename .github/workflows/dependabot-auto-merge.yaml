@@ -6,10 +6,12 @@ permissions:
   pull-requests: write
 
 jobs:
-  auto-merge:
-    name: Auto-merge non-major bumps
+  metadata:
+    name: Fetch metadata
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
+    outputs:
+      update-type: ${{ steps.metadata.outputs.update-type }}
     steps:
       - name: Fetch Dependabot metadata
         id: metadata
@@ -17,10 +19,30 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Enable auto-merge for patch and minor bumps
-        if: |
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+  approve:
+    name: Approve patch/minor bumps
+    needs:
+      - metadata
+    if: |
+      needs.metadata.outputs.update-type == 'version-update:semver-patch' ||
+      needs.metadata.outputs.update-type == 'version-update:semver-minor'
+    uses: ./.github/workflows/job.auto-approve.yaml
+    with:
+      pr-number: ${{ github.event.pull_request.number }}
+    secrets:
+      APPROVE_TOKEN: ${{ secrets.APPROVE_APP_TOKEN }}
+
+  auto-merge:
+    name: Auto-merge
+    runs-on: ubuntu-latest
+    needs:
+      - metadata
+      - approve
+    if: |
+      needs.metadata.outputs.update-type == 'version-update:semver-patch' ||
+      needs.metadata.outputs.update-type == 'version-update:semver-minor'
+    steps:
+      - name: Enable auto-merge
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
