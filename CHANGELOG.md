@@ -1,5 +1,7 @@
 # Changelog
 
+## [0.11.5](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.5) (2026-05-18)
+
 ## [0.11.4](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.3...0.11.4) (2026-05-10)
 
 ## [0.11.3](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.2...0.11.3) (2026-05-10)
