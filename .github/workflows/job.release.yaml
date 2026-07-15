@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
           token: ${{ env.release_token }}
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v6.4.0
         with:
           node-version-file: '.nvmrc'
           cache: npm
