@@ -2,7 +2,13 @@ import type { JSX } from 'react';
 import { ChordDetail } from '../../../hooks';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react';
+import { Button } from '../../../components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../../../components/ui/dropdown-menu';
 
 interface ChordSelectorProps {
   chords: ChordDetail[];
@@ -13,33 +19,32 @@ const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): JSX.Ele
   const { t } = useTranslation(['chord']);
   return chords.length < 2 ? (
     <Button
-      variant="text"
+      variant="ghost"
       disabled
-      color="blue-gray"
-      className="capitalize bg-grey-200 hover:bg-grey-200 w-48"
+      className="capitalize text-slate-500 bg-gray-200 hover:bg-gray-200 w-48"
     >
       {t('chord:title', chord ? { context: 'selected', chord } : undefined)}
     </Button>
   ) : (
-    <Menu offset={3}>
-      <MenuHandler>
-        <Button variant="outlined" className="capitalize bg-white w-48">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" className="capitalize bg-white w-48">
           {t('chord:title', chord ? { context: 'selected', chord } : undefined)}
         </Button>
-      </MenuHandler>
-      <MenuList className="max-h-96 overflow-y-auto">
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="max-h-96 overflow-y-auto">
         {chords.map((option) => (
-          <MenuItem
+          <DropdownMenuItem
             key={option.suffix}
             disabled={option.suffix === chord?.suffix}
             className={'justify-items-stretch'}
             onClick={() => setChord(option)}
           >
             {option.suffix}
-          </MenuItem>
+          </DropdownMenuItem>
         ))}
-      </MenuList>
-    </Menu>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
