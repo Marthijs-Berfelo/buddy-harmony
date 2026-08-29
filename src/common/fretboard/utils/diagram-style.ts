@@ -1,5 +1,8 @@
 import { MouseEvent } from 'react';
-import assert from 'assert-ts';
+// Named import is required: assert-ts is CJS, and Vite's dep optimizer turns its
+// `exports.default` into the module namespace object, so a default import
+// resolves to a non-function at runtime (type-checks fine; dev-server only).
+import { assert } from 'assert-ts';
 import { Orientation } from '../options';
 
 export interface DiagramStyle {
