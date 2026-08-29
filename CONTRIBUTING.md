@@ -14,7 +14,7 @@ To compile, test and contribute towards the code and document you will need:
 
 Begin at GitHub by forking buddy-harmony, then clone your fork locally. 
 
-Add the conventional [upstream][] `git` remote in order to fetch changes from the main
+Add the conventional [upstream][] `git` remote in order to fetch changes from buddy-harmony's main
 branch and to create pull requests:
 
 ```shell
