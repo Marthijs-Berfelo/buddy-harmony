@@ -24,15 +24,17 @@ jobs:
       - name: Check for other open PRs against main, or a release commit
         id: preflight
         run: |
-          OPEN_COUNT="$(gh api repos/${{ github.repository }}/pulls --jq '[.[] | select(.base.ref == "main")] | length')"
+          OPEN_COUNT="$(gh api repos/$REPO/pulls --jq '[.[] | select(.base.ref == "main")] | length')"
           echo "Open PRs against main: $OPEN_COUNT"
 
-          LAST_COMMIT_MESSAGE="$(gh api repos/${{ github.repository }}/commits/main --jq '.commit.message')"
+          LAST_COMMIT_MESSAGE="$(gh api repos/$REPO/commits/main --jq '.commit.message')"
           echo "Last commit message on main: $LAST_COMMIT_MESSAGE"
 
           if [ "$OPEN_COUNT" -gt 0 ]; then
             echo "Other PRs still open - skipping this release, it will be picked up by whichever merge empties the queue."
             echo "should_release=false" >> "$GITHUB_OUTPUT"
+          # This pattern must stay in sync with release-it.git.commitMessage in package.json and the
+          # "Commit messages" section of CONTRIBUTING.md - it's how we detect a release commit vs a real change.
           elif [[ "$LAST_COMMIT_MESSAGE" =~ ^chore:\ release\ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
             echo "Last commit on main is itself a release commit - skipping to avoid releasing a release."
             echo "should_release=false" >> "$GITHUB_OUTPUT"
@@ -41,6 +43,7 @@ jobs:
           fi
         env:
           GH_TOKEN: ${{ env.release_token }}
+          REPO: ${{ github.repository }}
       - name: Checkout
         if: steps.preflight.outputs.should_release == 'true'
         uses: actions/checkout@v6

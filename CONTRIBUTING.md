@@ -14,7 +14,7 @@ To compile, test and contribute towards the code and document you will need:
 
 Begin at GitHub by forking buddy-harmony, then clone your fork locally. 
 
-Add the conventional [upstream][] `git` remote in order to fetch changes from jx's main master
+Add the conventional [upstream][] `git` remote in order to fetch changes from the main
 branch and to create pull requests:
 
 ```shell
@@ -71,6 +71,11 @@ $ npm run commit
 
 This runs [commitizen](https://github.com/commitizen/cz-cli) and guides you through type, scope,
 and description step by step.
+
+> **Note:** The exact message `chore: release v<version>` is reserved for automated release commits
+> (see `release-it.git.commitMessage` in [package.json](./package.json) and the release preflight
+> check in [`job.release.yaml`](./.github/workflows/job.release.yaml)). Don't use this literal format
+> for a manual commit — the release pipeline uses it to detect and skip re-releasing a release.
 
 ## Pull-requests
 
