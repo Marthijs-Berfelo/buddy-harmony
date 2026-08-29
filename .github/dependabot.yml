@@ -14,6 +14,9 @@ updates:
       semver-patch-days: 5
       semver-minor-days: 5
       semver-major-days: 14
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
     reviewers:
       - "Marthijs-Berfelo"
     rebase-strategy: auto
@@ -71,6 +74,8 @@ updates:
       interval: daily
     cooldown:
       default-days: 5
+    commit-message:
+      prefix: "deps-ci"
     reviewers:
       - "Marthijs-Berfelo"
     rebase-strategy: auto
