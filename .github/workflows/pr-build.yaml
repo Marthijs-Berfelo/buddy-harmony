@@ -49,6 +49,8 @@ jobs:
     needs:
       - approve-release
     uses: ./.github/workflows/job.release-complete.yaml
+    secrets:
+      APPROVE_TOKEN: ${{ secrets.APPROVE_APP_TOKEN }}
   deploy:
     name: Deploy
     if: startsWith(github.head_ref, 'release/')
