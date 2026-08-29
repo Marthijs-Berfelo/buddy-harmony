@@ -63,12 +63,12 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
           <FontAwesomeIcon className="text-xl" icon={faGears} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
-        <DropdownMenuSub key={'tool-guitar'}>
-          <DropdownMenuSubTrigger className="flex flex-grow capitalize pb-3">
+      <DropdownMenuContent className="w-auto">
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className="flex capitalize pb-3">
             {t('settings:guitar.label', { type: guitarType.name }).toLowerCase()}
           </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="flex flex-col flex-grow">
+          <DropdownMenuSubContent className="flex flex-col">
             {Array.from(guitarTypes)
               .filter(onlySupportedGuitars(supportedGuitars))
               .map((type) => (
@@ -76,10 +76,7 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
                   key={type.name}
                   disabled={type.name === guitarType.name}
                   className={
-                    'justify-items-stretch' +
-                    `${
-                      type.name === guitarType.name ? ' font-extrabold bg-blue-800 text-white' : ''
-                    }`
+                    type.name === guitarType.name ? 'font-extrabold bg-blue-800 text-white' : ''
                   }
                   onClick={() => setGuitarType(type)}
                 >
@@ -89,10 +86,8 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <Select value={tuningType.name} disabled>
-          <SelectTrigger className="flex items-center bg-white z-40">
-            <SelectValue placeholder={t('settings:tuning')}>
-              {t('settings:tuning', { context: tuningType.name })}
-            </SelectValue>
+          <SelectTrigger className="flex items-center">
+            <SelectValue>{t('settings:tuning', { context: tuningType.name })}</SelectValue>
           </SelectTrigger>
           <SelectContent>
             {tuningTypes.map((tuning) => (
