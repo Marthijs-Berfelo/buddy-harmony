@@ -17,8 +17,8 @@ jobs:
           echo "::add-mask::$TOKEN"
           echo "approve_token=$TOKEN" >> $GITHUB_ENV
 
-      - name: Enable auto-merge for Release PR
-        run: gh pr merge "$PR_URL" --auto --rebase
+      - name: Merge Release PR
+        run: gh pr merge "$PR_URL" --rebase
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ env.approve_token }}
