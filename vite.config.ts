@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   base: '/buddy-harmony/',
   resolve: {
     alias: {
+      '@': path.resolve(__dirname, './src'),
       common: path.resolve(__dirname, './src/common'),
       hooks: path.resolve(__dirname, './src/hooks'),
       modules: path.resolve(__dirname, './src/modules'),
