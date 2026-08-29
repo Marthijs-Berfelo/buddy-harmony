@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
-import assert from 'assert-ts';
+import { assert } from 'assert-ts';
 import { Orientation } from '../options';
 
 export interface DiagramStyle {

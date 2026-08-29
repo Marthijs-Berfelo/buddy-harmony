@@ -59,13 +59,15 @@ const useLanguage = (): LanguageHook => {
       i18n.changeLanguage(browserLanguage).catch(console.error);
       setSelectedLanguage(browserLanguage.split('-')[1]?.toUpperCase() ?? defaultLanguage);
     };
-  }, [i18n, browserLanguage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!i18n.language.toUpperCase().endsWith(selectedLanguage)) {
       i18n.changeLanguage(languageCode(selectedLanguage)).catch(console.error);
     }
-  }, [selectedLanguage, i18n]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLanguage]);
 
   const onSelectLanguage = (lang: string) => {
     setSelectedLanguage(lang);

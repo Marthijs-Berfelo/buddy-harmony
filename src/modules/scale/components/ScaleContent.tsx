@@ -2,7 +2,6 @@ import type { JSX } from 'react';
 import React from 'react';
 import { useSettings } from '../../../hooks';
 import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard';
-import { Typography } from '@material-tailwind/react';
 import { GuitarScaleHook } from '../hooks';
 
 const ScaleContent = ({
@@ -21,7 +20,7 @@ const ScaleContent = ({
       </style>
       {scale && selectedKey && (
         <div className="flex flex-row items-center">
-          <Typography className="text-3xl pt-2">{`${selectedKey} ${scale}`}</Typography>
+          <p className="text-3xl pt-2">{`${selectedKey} ${scale}`}</p>
         </div>
       )}
       <div className="flex flex-row items-center">

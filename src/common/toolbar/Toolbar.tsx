@@ -1,5 +1,6 @@
 import type { JSX } from 'react';
-import { IconButton, Tooltip, Typography } from '@material-tailwind/react';
+import { Button } from '../../components/ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../components/ui/tooltip';
 import SettingsTools, { SettingsToolsProps } from './components/SettingsTools';
 import { PrintableProps } from '../../hooks';
 import { useReactToPrint } from 'react-to-print';
@@ -25,27 +26,32 @@ const Toolbar = ({
   const handlePrint = useReactToPrint({ contentRef: printRef });
   return (
     <div className="flex flex-col items-center md:px-96">
-      <div className="flex flex-row w-full justify-between items-center py-1.5 px-1.5 md:px-6 mb-3 bg-blue-100 border-blue-100 text-blue-grey-400 md:rounded-xl z40">
+      <div className="flex flex-row w-full justify-between items-center py-1.5 px-1.5 md:px-6 mb-3 bg-blue-100 border-blue-100 text-slate-400 md:rounded-xl z40">
         <SettingsTools supportedGuitars={supportedGuitars} page={page} />
         <div className="flex flex-col items-center">
-          <Typography className="flex pb-1.5 font-sans font-bold text-blue-grey-900 text-xl">
+          <p className="flex pb-1.5 font-sans font-bold text-slate-900 text-xl">
             {t('common:routing.page', { context: enumKeyByValue(Pages, page) })}
-          </Typography>
+          </p>
           <div className="flex flex-row justify-center gap-1 md:gap-6">
             {tools.map((tool, index) => (
               <div key={`tool-${index}`}>{tool}</div>
             ))}
           </div>
         </div>
-        <Tooltip content={t('settings:print.tool-tip', { context: enumKeyByValue(Pages, page) })}>
-          <IconButton
-            color="blue"
-            onClick={handlePrint}
-            className="flex ml-1 disabled:bg-blue-grey-300"
-            disabled={printDisabled}
-          >
-            <FontAwesomeIcon className="flex text-lg" icon={faPrint} />
-          </IconButton>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              onClick={handlePrint}
+              className="flex ml-1 bg-blue-500 text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/40 disabled:bg-slate-300"
+              disabled={printDisabled}
+            >
+              <FontAwesomeIcon className="flex size-[1.125rem]" icon={faPrint} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            {t('settings:print.tool-tip', { context: enumKeyByValue(Pages, page) })}
+          </TooltipContent>
         </Tooltip>
       </div>
     </div>
