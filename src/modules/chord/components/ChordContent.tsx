@@ -2,7 +2,6 @@ import type { JSX } from 'react';
 import { useSettings, ChordPosition } from '../../../hooks';
 import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard';
 import React from 'react';
-import { Typography } from '@material-tailwind/react';
 import { GuitarChordHook } from '../hooks';
 
 const ChordContent = ({ chord, printRef, printStyle }: GuitarChordHook): JSX.Element => {
@@ -15,7 +14,7 @@ const ChordContent = ({ chord, printRef, printStyle }: GuitarChordHook): JSX.Ele
       </style>
       {chord && (
         <div className="flex flex-row items-center">
-          <Typography className="text-3xl pt-2">{`${chord.key} ${chord.suffix}`}</Typography>
+          <p className="text-3xl pt-2">{`${chord.key} ${chord.suffix}`}</p>
         </div>
       )}
       <div className="flex flex-row items-center">
