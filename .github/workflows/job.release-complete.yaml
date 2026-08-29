@@ -1,14 +1,24 @@
 name: Release
 on:
   workflow_call:
+    secrets:
+      APPROVE_TOKEN:
+        required: true
 
 jobs:
   complete:
     name: Merge PR
     runs-on: ubuntu-latest
     steps:
+      - name: Obtain GitHub App Installation Access Token
+        id: get_token
+        run: |
+          TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.APPROVE_TOKEN }})"
+          echo "::add-mask::$TOKEN"
+          echo "approve_token=$TOKEN" >> $GITHUB_ENV
+
       - name: Enable auto-merge for Release PR
         run: gh pr merge "$PR_URL" --auto --rebase
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ env.approve_token }}
