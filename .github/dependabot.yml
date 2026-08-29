@@ -22,6 +22,10 @@ updates:
       # eslint-plugin-react does not support eslint 10 yet
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
+    # Each group below must stay dependency-type-homogeneous (all prod, or all dev).
+    # Dependabot's commit-message.prefix-development only applies when every
+    # dependency in an update is a dev dependency - a mixed group would get
+    # the "deps" prefix even if mostly dev tooling, misfiling it in the changelog.
     groups:
       vitest:
         patterns:
@@ -72,6 +76,9 @@ updates:
       interval: daily
     cooldown:
       default-days: 5
+    # Distinct "deps-ci" prefix (not "deps"/"deps-dev") because this ecosystem has no
+    # prod/dev split (prefix-development isn't supported here), and CI tooling bumps
+    # aren't user-facing release content - release-it hides deps-ci from the changelog.
     commit-message:
       prefix: "deps-ci"
     reviewers:
