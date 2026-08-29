@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { PropsWithChildren } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tooltip, Typography } from '@material-tailwind/react';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../components/ui/tooltip';
 import packageJson from '../../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
@@ -52,17 +52,14 @@ interface FooterTextProps {
   link?: string;
 }
 
-const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX.Element => (
-  <Typography
-    className="flex font-sans text-sm mx-1.5"
-    as={link ? 'a' : undefined}
-    href={link}
-    target={link ? '_blank' : undefined}
-    rel={link ? 'noreferrer' : undefined}
-  >
-    {children}
-  </Typography>
-);
+const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX.Element =>
+  link ? (
+    <a className="flex font-sans text-sm mx-1.5" href={link} target="_blank" rel="noreferrer">
+      {children}
+    </a>
+  ) : (
+    <p className="flex font-sans text-sm mx-1.5">{children}</p>
+  );
 
 interface FooterIconProps extends FooterTextProps {
   content: string;
@@ -75,6 +72,11 @@ const FooterIcon = ({
   children,
 }: PropsWithChildren<FooterIconProps>): JSX.Element => (
   <FooterText link={link}>
-    <Tooltip content={content}>{children}</Tooltip>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span>{children}</span>
+      </TooltipTrigger>
+      <TooltipContent>{content}</TooltipContent>
+    </Tooltip>
   </FooterText>
 );
