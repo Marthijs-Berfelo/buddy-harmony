@@ -46,7 +46,7 @@ const Toolbar = ({
               className="flex ml-1 bg-blue-500 text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/40 disabled:bg-slate-300"
               disabled={printDisabled}
             >
-              <FontAwesomeIcon className="flex text-lg" icon={faPrint} />
+              <FontAwesomeIcon className="flex size-[1.125rem]" icon={faPrint} />
             </Button>
           </TooltipTrigger>
           <TooltipContent>
