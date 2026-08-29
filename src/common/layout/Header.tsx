@@ -3,6 +3,7 @@ import { Button } from '../../components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../../components/ui/dropdown-menu';
 import { Pages } from '../routing/pages';
@@ -19,17 +20,25 @@ const Header = (): JSX.Element => {
       <div className="flex flex-grow justify-between items-center text-green-900">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button size="icon" className="bg-green-600 border-green-600">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="bg-green-600 border-green-600 hover:bg-green-700 text-white"
+            >
               <FontAwesomeIcon className="text-xl" icon={faBars} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {Object.entries(Pages).map((name) => (
-              <li key={`link-to-${name[0]}`} className="p-1 font-normal text-xl leading-relaxed">
+              <DropdownMenuItem
+                key={`link-to-${name[0]}`}
+                asChild
+                className="p-1 font-normal text-xl leading-relaxed"
+              >
                 <NavLink to={name[1]}>
                   {({ isActive }) => (
                     <div
-                      className={`flex w-full hover:bg-green-50 font-sans text-sm bg-white items-center ${
+                      className={`flex w-full hover:bg-green-50 font-sans text-sm items-center ${
                         isActive
                           ? 'text-slate-600 hover:bg-slate-100 active-link'
                           : 'text-green-700'
@@ -39,7 +48,7 @@ const Header = (): JSX.Element => {
                     </div>
                   )}
                 </NavLink>
-              </li>
+              </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
