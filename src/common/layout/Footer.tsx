@@ -52,13 +52,15 @@ interface FooterTextProps {
   link?: string;
 }
 
+const FOOTER_TEXT_CLASS = 'flex font-sans text-sm mx-1.5';
+
 const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX.Element =>
   link ? (
-    <a className="flex font-sans text-sm mx-1.5" href={link} target="_blank" rel="noreferrer">
+    <a className={FOOTER_TEXT_CLASS} href={link} target="_blank" rel="noreferrer">
       {children}
     </a>
   ) : (
-    <p className="flex font-sans text-sm mx-1.5">{children}</p>
+    <p className={FOOTER_TEXT_CLASS}>{children}</p>
   );
 
 interface FooterIconProps extends FooterTextProps {
@@ -71,12 +73,10 @@ const FooterIcon = ({
   link,
   children,
 }: PropsWithChildren<FooterIconProps>): JSX.Element => (
-  <FooterText link={link}>
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <span>{children}</span>
-      </TooltipTrigger>
-      <TooltipContent>{content}</TooltipContent>
-    </Tooltip>
-  </FooterText>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <FooterText link={link}>{children}</FooterText>
+    </TooltipTrigger>
+    <TooltipContent>{content}</TooltipContent>
+  </Tooltip>
 );
