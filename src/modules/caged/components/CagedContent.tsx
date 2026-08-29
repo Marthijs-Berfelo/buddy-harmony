@@ -1,7 +1,6 @@
 import type { JSX } from 'react';
 import React from 'react';
 import { useSettings } from '../../../hooks';
-import { Typography } from '@material-tailwind/react';
 import { Diagram, DotText, FretNumberPosition } from '../../../common/fretboard';
 import { CagedHook } from '../hooks';
 
@@ -22,11 +21,11 @@ const CagedContent = ({
           </style>
           <div className="flex flex-row" id="caged-C">
             <div className="flex flex-col justify-evenly" id="caged-step">
-              <Typography className="text-4xl font-extrabold text-blue-700">C</Typography>
+              <p className="text-4xl font-extrabold text-blue-700">C</p>
             </div>
             <div className="flex flex-col items-center justify-start" id="caged-open-c">
               <div className="flex flex-row items-center">
-                <Typography className="text-2xl">{`Open`}</Typography>
+                <p className="text-2xl">{`Open`}</p>
               </div>
               <div className="flex flex-row items-center">
                 <Diagram
@@ -41,7 +40,7 @@ const CagedContent = ({
             </div>
             <div className="flex flex-col items-center justify-start" id="caged-chord">
               <div className="flex flex-row items-center">
-                <Typography className="text-2xl">{`Positioned ${selectedKey}`}</Typography>
+                <p className="text-2xl">{`Positioned ${selectedKey}`}</p>
               </div>
               <div className="flex flex-row items-center">
                 <Diagram
@@ -58,7 +57,7 @@ const CagedContent = ({
           </div>
           <div className="flex flex-row" id="caged-A">
             <div className="flex flex-col justify-evenly" id="caged-step">
-              <Typography className="text-4xl font-extrabold text-red-700">A</Typography>
+              <p className="text-4xl font-extrabold text-red-700">A</p>
             </div>
             <div className="flex flex-col items-center justify-start" id="caged-open-c">
               <div className="flex flex-row items-center">
@@ -88,7 +87,7 @@ const CagedContent = ({
           </div>
           <div className="flex flex-row" id="caged-G">
             <div className="flex flex-col justify-evenly" id="caged-step">
-              <Typography className="text-4xl font-extrabold text-green-700">G</Typography>
+              <p className="text-4xl font-extrabold text-green-700">G</p>
             </div>
             <div className="flex flex-col items-center justify-start" id="caged-open-c">
               <div className="flex flex-row items-center">
@@ -118,7 +117,7 @@ const CagedContent = ({
           </div>
           <div className="flex flex-row" id="caged-E">
             <div className="flex flex-col justify-evenly" id="caged-step">
-              <Typography className="text-4xl font-extrabold text-orange-800">E</Typography>
+              <p className="text-4xl font-extrabold text-orange-800">E</p>
             </div>
             <div className="flex flex-col items-center justify-start" id="caged-open-c">
               <div className="flex flex-row items-center">
@@ -148,7 +147,7 @@ const CagedContent = ({
           </div>
           <div className="flex flex-row" id="caged-D">
             <div className="flex flex-col justify-evenly" id="caged-step">
-              <Typography className="text-4xl font-extrabold text-deep-purple-700">D</Typography>
+              <p className="text-4xl font-extrabold text-violet-800">D</p>
             </div>
             <div className="flex flex-col items-center justify-start" id="caged-open-c">
               <div className="flex flex-row items-center">
@@ -171,7 +170,7 @@ const CagedContent = ({
                   text={DotText.NOTE}
                   chord={cagedChords.D.positioned.chord}
                   fretNumbersPosition={FretNumberPosition.LEFT}
-                  cagedColor={'stroke-deep-purple-700 fill-deep-purple-700'}
+                  cagedColor={'stroke-violet-800 fill-violet-800'}
                 />
               </div>
             </div>
