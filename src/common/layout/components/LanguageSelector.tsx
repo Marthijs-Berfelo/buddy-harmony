@@ -59,13 +59,32 @@ const useLanguage = (): LanguageHook => {
       i18n.changeLanguage(browserLanguage).catch(console.error);
       setSelectedLanguage(browserLanguage.split('-')[1]?.toUpperCase() ?? defaultLanguage);
     };
-  }, [i18n, browserLanguage]);
+    // Mount/unmount only — deliberately omits `i18n` and `browserLanguage`.
+    //
+    // react-i18next's useTranslation() returns a NEW `i18n` wrapper object every time
+    // the resolved language changes (see node_modules/react-i18next/src/useTranslation.js,
+    // "language changed -> create fresh wrapper so identity changes"). This effect's own
+    // cleanup calls i18n.changeLanguage(...), which changes the resolved language, which
+    // gives us a new `i18n` reference on the next render. If `i18n` were a dependency here,
+    // that identity change would re-trigger this effect's cleanup + body on every render,
+    // an oscillation that never reaches a fixed point (confirmed via console logging:
+    // browserLanguage flips between 'nl' and 'en' indefinitely) until React throws
+    // "Maximum update depth exceeded". Likewise, `browserLanguage` is written by this
+    // effect's own body, so depending on it directly self-triggers the same loop.
+    // All of `i18n`'s methods (changeLanguage, .language, .resolvedLanguage) are valid on
+    // every wrapper instance regardless of identity, so this effect never actually needs
+    // to re-run when `i18n`'s identity changes — only on mount/unmount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!i18n.language.toUpperCase().endsWith(selectedLanguage)) {
       i18n.changeLanguage(languageCode(selectedLanguage)).catch(console.error);
     }
-  }, [selectedLanguage, i18n]);
+    // Only re-run when the user's selection changes, for the same reason as above —
+    // `i18n`'s identity is language-dependent, so including it here would self-trigger.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLanguage]);
 
   const onSelectLanguage = (lang: string) => {
     setSelectedLanguage(lang);
