@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from '@material-tailwind/react';
+import { TooltipProvider } from './components/ui/tooltip';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <ThemeProvider value={{}}>
+    <TooltipProvider>
       <App />
-    </ThemeProvider>
+    </TooltipProvider>
   </React.StrictMode>
 );
 
