@@ -45,7 +45,7 @@
     "react-dom": "^19.0.0",
     "react-flags-select": "^2.5.0",
     "react-i18next": "^17.0.4",
-    "react-router-dom": "^7.0.0",
+    "react-router-dom": "^7.18.3",
     "react-to-print": "^3.0.0",
     "shadcn": "^4.19.0",
     "tailwind-merge": "^3.6.0",
