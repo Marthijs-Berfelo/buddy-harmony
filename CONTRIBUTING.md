@@ -14,7 +14,7 @@ To compile, test and contribute towards the code and document you will need:
 
 Begin at GitHub by forking buddy-harmony, then clone your fork locally. 
 
-Add the conventional [upstream][] `git` remote in order to fetch changes from jx's main master
+Add the conventional [upstream][] `git` remote in order to fetch changes from buddy-harmony's main
 branch and to create pull requests:
 
 ```shell
@@ -59,7 +59,12 @@ Commit messages must use the format:
 type(scope): short description
 ```
 
-Common types: `feat`, `fix`, `refactor`, `chore`, `test`, `docs`, `style`, `perf`, `ci`, `build`
+Accepted types (enforced in CI, see below): `feat`, `feature`, `fix`, `perf`, `revert`, `refactor`,
+`deps`, `deps-dev`, `deps-ci`, `chore`, `ci`, `docs`, `style`, `test`, `build`.
+
+`deps`/`deps-dev`/`deps-ci` are reserved for Dependabot's own commits (configured in
+[`dependabot.yml`](./.github/dependabot.yml)) and drive dedicated changelog sections — don't use
+them by hand for a manual dependency bump, use `chore` instead.
 
 The scope is optional — use the GitHub issue ID when relevant (e.g. `fix(#42): ...`).
 
@@ -71,6 +76,16 @@ $ npm run commit
 
 This runs [commitizen](https://github.com/commitizen/cz-cli) and guides you through type, scope,
 and description step by step.
+
+> **Note:** The exact message `chore: release v<version>` is reserved for automated release commits
+> (see `release-it.git.commitMessage` in [package.json](./package.json) and the release preflight
+> check in [`job.release.yaml`](./.github/workflows/job.release.yaml)). Don't use this literal format
+> for a manual commit — the release pipeline uses it to detect and skip re-releasing a release.
+
+Every commit on a pull request is checked against
+[`commitlint.config.cjs`](./commitlint.config.cjs) in CI (this repo merges via rebase, so every
+individual commit lands on `main` — not just the PR title). A commit with an unrecognized type
+fails the check; fix it locally with `git commit --amend` or an interactive rebase before pushing.
 
 ## Pull-requests
 

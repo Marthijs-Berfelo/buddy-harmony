@@ -21,23 +21,51 @@ jobs:
           TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.RELEASE_TOKEN }})"
           echo "::add-mask::$TOKEN"
           echo "release_token=$TOKEN" >> $GITHUB_ENV
+      - name: Check for other open PRs against main, or a release commit
+        id: preflight
+        run: |
+          OPEN_COUNT="$(gh api repos/$REPO/pulls --jq '[.[] | select(.base.ref == "main")] | length')"
+          echo "Open PRs against main: $OPEN_COUNT"
+
+          LAST_COMMIT_MESSAGE="$(gh api repos/$REPO/commits/main --jq '.commit.message')"
+          echo "Last commit message on main: $LAST_COMMIT_MESSAGE"
+
+          if [ "$OPEN_COUNT" -gt 0 ]; then
+            echo "Other PRs still open - skipping this release, it will be picked up by whichever merge empties the queue."
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+          # This pattern must stay in sync with release-it.git.commitMessage in package.json and the
+          # "Commit messages" section of CONTRIBUTING.md - it's how we detect a release commit vs a real change.
+          elif [[ "$LAST_COMMIT_MESSAGE" =~ ^chore:\ release\ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            echo "Last commit on main is itself a release commit - skipping to avoid releasing a release."
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GH_TOKEN: ${{ env.release_token }}
+          REPO: ${{ github.repository }}
       - name: Checkout
+        if: steps.preflight.outputs.should_release == 'true'
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ env.release_token }}
       - name: Setup Node
+        if: steps.preflight.outputs.should_release == 'true'
         uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: npm
           cache-dependency-path: '**/package-lock.json'
       - name: Install
+        if: steps.preflight.outputs.should_release == 'true'
         run: npm ci
       - name: Switch to next-release branch
+        if: steps.preflight.outputs.should_release == 'true'
         run: |
           git checkout -b release/next
       - name: Set next version
+        if: steps.preflight.outputs.should_release == 'true'
         run: |
           npm run release:${{ inputs.release_type }}-prepare
           echo "Next version: $(cat next-version.txt)"
@@ -45,18 +73,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ env.release_token }}
       - name: Configure git user
+        if: steps.preflight.outputs.should_release == 'true'
         run: |
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
       - name: Switch to release branch
+        if: steps.preflight.outputs.should_release == 'true'
         run: |
           git checkout -b release/v${{ env.release_version }}
       - name: Release
+        if: steps.preflight.outputs.should_release == 'true'
         run: npm run release:${{ inputs.release_type }}
         env:
           GITHUB_TOKEN: ${{ env.release_token }}
       - name: Create PR
         id: release-pr
+        if: steps.preflight.outputs.should_release == 'true'
         uses: thomaseizinger/create-pull-request@1.4.0
         with:
           title: Release v${{ env.release_version }}
