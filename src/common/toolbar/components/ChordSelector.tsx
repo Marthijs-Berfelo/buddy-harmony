@@ -32,12 +32,11 @@ const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): JSX.Ele
           {t('chord:title', chord ? { context: 'selected', chord } : undefined)}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-h-96 overflow-y-auto">
+      <DropdownMenuContent>
         {chords.map((option) => (
           <DropdownMenuItem
             key={option.suffix}
             disabled={option.suffix === chord?.suffix}
-            className={'justify-items-stretch'}
             onClick={() => setChord(option)}
           >
             {option.suffix}

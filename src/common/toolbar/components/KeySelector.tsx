@@ -31,12 +31,11 @@ const KeySelector = ({ keys, selectedKey, setSelectedKey }: ChordSelectorProps):
           {t('common:key', selectedKey ? { context: 'selected', key: selectedKey } : undefined)}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-h-96 overflow-y-auto">
+      <DropdownMenuContent>
         {keys.map((key) => (
           <DropdownMenuItem
             key={`key-${key}`}
             disabled={key === selectedKey}
-            className={'justify-items-stretch'}
             onClick={() => setSelectedKey(key)}
           >
             {key}

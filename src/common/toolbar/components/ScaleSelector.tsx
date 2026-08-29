@@ -37,12 +37,11 @@ const ScaleSelector = ({
           {scale || t('scale:title')}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-h-96 overflow-y-auto">
+      <DropdownMenuContent>
         {scales.map((option) => (
           <DropdownMenuItem
             key={option}
             disabled={option === scale}
-            className={'justify-items-stretch'}
             onClick={() => setScale(option)}
           >
             {option}
