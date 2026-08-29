@@ -1,16 +1,23 @@
 import type { JSX } from 'react';
 import React, { useEffect } from 'react';
 import { GuitarType, useSettings } from '../../../hooks';
+import { Button } from '../../../components/ui/button';
 import {
-  IconButton,
-  Menu,
-  MenuHandler,
-  MenuItem,
-  MenuList,
-  Option,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '../../../components/ui/dropdown-menu';
+import {
   Select,
-  Typography,
-} from '@material-tailwind/react';
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../../../components/ui/select';
 import { useTranslation } from 'react-i18next';
 import { FretNumberType, Orientation } from '../../fretboard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -47,24 +54,25 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
   }, [page, orientation, toggleOrientation]);
 
   return (
-    <Menu placement="bottom-start">
-      <MenuHandler>
-        <IconButton color="blue" className="mr-1">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          size="icon"
+          className="mr-1 bg-blue-500 text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/40"
+        >
           <FontAwesomeIcon className="text-xl" icon={faGears} />
-        </IconButton>
-      </MenuHandler>
-      <MenuList>
-        <Menu key={'tool-guitar'} placement="right" offset={15}>
-          <MenuHandler>
-            <Typography className="flex flex-grow capitalize pb-3">
-              {t('settings:guitar.label', { type: guitarType.name }).toLowerCase()}
-            </Typography>
-          </MenuHandler>
-          <MenuList className="flex flex-col flex-grow">
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        <DropdownMenuSub key={'tool-guitar'}>
+          <DropdownMenuSubTrigger className="flex flex-grow capitalize pb-3">
+            {t('settings:guitar.label', { type: guitarType.name }).toLowerCase()}
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent className="flex flex-col flex-grow">
             {Array.from(guitarTypes)
               .filter(onlySupportedGuitars(supportedGuitars))
               .map((type) => (
-                <MenuItem
+                <DropdownMenuItem
                   key={type.name}
                   disabled={type.name === guitarType.name}
                   className={
@@ -76,57 +84,60 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
                   onClick={() => setGuitarType(type)}
                 >
                   {t('settings:guitar.type', { context: type.name })}
-                </MenuItem>
+                </DropdownMenuItem>
               ))}
-          </MenuList>
-        </Menu>
-        <Select
-          label={t('settings:tuning')}
-          className="flex items-center bg-white z-40"
-          value={t('settings:tuning', { context: tuningType.name })}
-          disabled
-        >
-          {tuningTypes.map((tuning) => (
-            <Option key={tuning.name} value={tuning.name}>
-              {t('settings:tuning', { context: tuning.name })}
-            </Option>
-          ))}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <Select value={tuningType.name} disabled>
+          <SelectTrigger className="flex items-center bg-white z-40">
+            <SelectValue placeholder={t('settings:tuning')}>
+              {t('settings:tuning', { context: tuningType.name })}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {tuningTypes.map((tuning) => (
+              <SelectItem key={tuning.name} value={tuning.name}>
+                {t('settings:tuning', { context: tuning.name })}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
-        <Menu placement="right" offset={15}>
-          <MenuHandler>
-            <Typography className="pt-3">
-              {t('settings:layout.label', {
-                orientation,
-                handed: leftHanded ? 'left' : 'right',
-                fretNumbers,
-              })}
-            </Typography>
-          </MenuHandler>
-          <MenuList>
-            <MenuItem onClick={() => toggleOrientation()} disabled={page === Pages.CAGED}>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className="pt-3">
+            {t('settings:layout.label', {
+              orientation,
+              handed: leftHanded ? 'left' : 'right',
+              fretNumbers,
+            })}
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuItem onClick={() => toggleOrientation()} disabled={page === Pages.CAGED}>
               {t('settings:layout.orientation', { context: orientationLabel })}
-            </MenuItem>
-            <MenuItem onClick={() => setLeftHanded((value) => !value)}>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLeftHanded((value) => !value)}>
               {t('settings:layout.handed.label', { context: leftHanded ? 'right' : 'left' })}
-            </MenuItem>
-            <Menu placement="right-start" offset={15}>
-              <MenuHandler>
-                <MenuItem>{t('settings:layout.fret-numbers', { context: fretNumbers })}</MenuItem>
-              </MenuHandler>
-              <MenuList>
+            </DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                {t('settings:layout.fret-numbers', { context: fretNumbers })}
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
                 {Object.keys(FretNumberType)
                   .filter((fretNumber) => fretNumber !== fretNumbers.valueOf())
                   .map((fretNumber) => (
-                    <MenuItem key={fretNumber} onClick={() => onSelectFretNumber(fretNumber)}>
+                    <DropdownMenuItem
+                      key={fretNumber}
+                      onClick={() => onSelectFretNumber(fretNumber)}
+                    >
                       {t('settings:layout.fret-numbers', { context: fretNumber })}
-                    </MenuItem>
+                    </DropdownMenuItem>
                   ))}
-              </MenuList>
-            </Menu>
-          </MenuList>
-        </Menu>
-      </MenuList>
-    </Menu>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
