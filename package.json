@@ -79,7 +79,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "gh-pages": "^6.0.0",
     "globals": "^15.0.0",
-    "jsdom": "^29.0.2",
+    "jsdom": "^30.0.1",
     "prettier": "^3.0.0",
     "release-it": "^20.0.1",
     "typescript": "^5.0.0",
