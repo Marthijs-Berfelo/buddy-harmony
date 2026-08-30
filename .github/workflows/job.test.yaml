@@ -34,11 +34,11 @@ jobs:
           title: QA Results
           summary-title: Test results
           badge-title: Coverage
-          hide-comment: false
+          hide-comment: ${{ github.event_name != 'pull_request_target' }}
           create-new-comment: true
           hide-summary: false
       - name: Create the Badge
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        if: ${{ github.event_name == 'workflow_run' }}
         uses: schneegans/dynamic-badges-action@v1.9.0
         with:
           auth: ${{ secrets.COVERAGE_COMMENT }}
