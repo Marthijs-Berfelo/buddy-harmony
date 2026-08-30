@@ -46,13 +46,13 @@ jobs:
           REPO: ${{ github.repository }}
       - name: Checkout
         if: steps.preflight.outputs.should_release == 'true'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           token: ${{ env.release_token }}
       - name: Setup Node
         if: steps.preflight.outputs.should_release == 'true'
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: npm
