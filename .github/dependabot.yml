@@ -22,6 +22,12 @@ updates:
       # eslint-plugin-react does not support eslint 10 yet
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
+      # @eslint/js majors track eslint majors 1:1 - must stay pinned alongside it
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
+      # typescript-eslint does not support typescript >=6.1 yet
+      - dependency-name: "typescript"
+        versions: [">=6.1.0"]
     # Each group below must stay dependency-type-homogeneous (all prod, or all dev).
     # Dependabot's commit-message.prefix-development only applies when every
     # dependency in an update is a dev dependency - a mixed group would get
