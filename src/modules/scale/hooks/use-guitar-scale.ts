@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Orientation, ScaleModel } from '../../../common/fretboard';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import { Orientation, ScaleModel } from '@/common/fretboard';
 import * as gs from 'guitar-scales';
-import { KeysHook, useKeys, Printable, PrintableProps } from '../../../hooks';
+import { KeysHook, useKeys, Printable, PrintableProps } from '@/hooks';
 
 export interface GuitarScaleHook extends KeysHook, Printable {
   scales: string[];
@@ -16,7 +16,6 @@ export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook =>
   const { keys, selectedKey, setSelectedKey } = useKeys();
   // const { tuningType } = useSettings();
   const [scale, setScale] = useState<string>();
-  const [scaleModel, setScaleModel] = useState<ScaleModel>();
 
   // useEffect(() => {
   //   TODO library error when setting tuning
@@ -26,12 +25,9 @@ export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook =>
   // guitarScale.setTuning(newTuning);
   // }, [tuningType]);
 
-  useEffect(() => {
+  const scaleModel = useMemo(() => {
     if (!!selectedKey && !!scale) {
-      const model = guitarScale.get(selectedKey, scale);
-      setScaleModel(model as ScaleModel);
-    } else {
-      setScaleModel(undefined);
+      return guitarScale.get(selectedKey, scale) as ScaleModel;
     }
   }, [selectedKey, scale]);
 
