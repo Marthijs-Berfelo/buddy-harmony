@@ -15,11 +15,12 @@ Never store buddy-harmony permissions or plans in `~/.claude/`.
 ## Commands
 
 ```shell
-npm start          # dev server
-npm test           # run all tests with coverage
-npm run lint       # lint (quiet)
-npm run format     # lint + auto-fix
-npm run build      # production build
+npm start           # dev server
+npm test            # run all tests with coverage
+npm run lint        # lint (quiet)
+npm run format      # lint + auto-fix
+npm run typecheck   # tsc --noEmit
+npm run build       # production build
 ```
 
 Run a single test file:
@@ -93,7 +94,7 @@ Reusable jobs live in `.github/workflows/job.*.yaml` and are composed by the tri
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `pr-build.yaml` | PR opened / updated → `main` | Runs QA (lint + test + coverage report) and build |
+| `pr-build.yaml` | PR opened / updated → `main` | Runs QA (lint + typecheck + test + coverage report) and build |
 | `main-build.yaml` | Push to `main` | Same as PR build; also updates the coverage badge |
 | `release-build.yaml` | Push to `release/**` | Runs QA, build, publishes a release, deploys to GitHub Pages |
 | `dependabot-auto-merge.yaml` | Dependabot PR opened | Auto-merges patch and minor bumps after CI passes |
