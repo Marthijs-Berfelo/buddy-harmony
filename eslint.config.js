@@ -49,6 +49,7 @@ export default [
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       'prettier/prettier': 'warn',
+      curly: ['error', 'all'],
     },
   },
 ];
