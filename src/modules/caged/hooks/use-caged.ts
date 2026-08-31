@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   chordGuitarTypes,
   GuitarType,
@@ -11,7 +11,7 @@ import {
   useKeys,
   useSettings,
 } from '../../../hooks';
-import { CagedChords, cagedConfigs, CagedConfig } from './caged-constants';
+import { CagedChords, cagedConfigs } from './caged-constants';
 import { Orientation } from '../../../common/fretboard';
 import { buildCagedChords, cagedChordsForKey } from './caged-utils';
 
@@ -28,26 +28,21 @@ export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
   const chordRef = useRef(chord);
-  chordRef.current = chord;
-  const [cagedConfig, setCagedConfig] = useState<CagedConfig>();
-  const [cagedChords, setCagedChords] = useState<CagedChords>();
-
   useEffect(() => {
-    if (!!cagedConfig && !!chord) {
-      const caged = buildCagedChords(chord.key, chord.suffix, cagedConfig, tuningType, guitarType);
-      setCagedChords(caged);
-    } else {
-      setCagedChords(undefined);
-    }
-  }, [chord, cagedConfig, guitarType, tuningType]);
+    chordRef.current = chord;
+  }, [chord]);
 
-  useEffect(() => {
+  const cagedConfig = useMemo(() => {
     if (chord) {
-      setCagedConfig(cagedConfigs.get(chord.suffix));
-    } else {
-      setCagedChords(undefined);
+      return cagedConfigs.get(chord.suffix);
     }
   }, [chord]);
+
+  const cagedChords = useMemo(() => {
+    if (!!cagedConfig && !!chord) {
+      return buildCagedChords(chord.key, chord.suffix, cagedConfig, tuningType, guitarType);
+    }
+  }, [chord, cagedConfig, guitarType, tuningType]);
 
   useEffect(() => {
     handleSelectionForChords(

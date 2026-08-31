@@ -25,7 +25,9 @@ export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook =>
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
   const chordRef = useRef(chord);
-  chordRef.current = chord;
+  useEffect(() => {
+    chordRef.current = chord;
+  }, [chord]);
 
   useEffect(() => {
     handleSelectionForChords(
