@@ -75,6 +75,10 @@ updates:
           - "commitizen"
           - "cz-conventional-changelog"
           - "cosmiconfig"
+      release-it:
+        patterns:
+          - "release-it"
+          - "@release-it/*"
 
   - package-ecosystem: github-actions
     directory: /
