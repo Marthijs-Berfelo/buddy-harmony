@@ -17,5 +17,7 @@
     "github-profile": "Find me on Github",
     "twitter": "Twitter: {{handle}}",
     "send-email": "Send me a message"
-  }
+  },
+  "menu": "Menu",
+  "language-selector": "Select language"
 }

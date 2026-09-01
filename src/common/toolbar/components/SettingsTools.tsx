@@ -59,6 +59,7 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
         <Button
           size="icon"
           className="mr-1 bg-blue-500 text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/40"
+          aria-label={t('settings:button-label')}
         >
           <FontAwesomeIcon className="text-xl" icon={faGears} />
         </Button>

@@ -33,5 +33,6 @@
     "fret-numbers_NONE": "Geen",
     "fret-numbers_ROMAN": "Romeins",
     "fret-numbers_LATIN": "Normaal"
-  }
+  },
+  "button-label": "Instellingen"
 }

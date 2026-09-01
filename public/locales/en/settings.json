@@ -33,5 +33,6 @@
     "fret-numbers_NONE": "None",
     "fret-numbers_ROMAN": "Roman",
     "fret-numbers_LATIN": "Normal"
-  }
+  },
+  "button-label": "Settings"
 }
