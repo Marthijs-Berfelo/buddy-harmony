@@ -5,10 +5,18 @@ import { useEffect, useRef, useState } from 'react';
 import { CustomLabels } from 'react-flags-select/build/types';
 
 const LanguageSelector = (): JSX.Element => {
+  const { t } = useTranslation();
   const { selectedLanguage, onSelectLanguage, languageLabels, countries } = useLanguage();
+  const selectorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    selectorRef.current
+      ?.querySelector('button')
+      ?.setAttribute('aria-label', t('common:language-selector'));
+  }, [selectedLanguage, t]);
 
   return (
-    <div className="flex" id={'lang-selector'}>
+    <div className="flex" id={'lang-selector'} ref={selectorRef}>
       <ReactFlagsSelect
         selected={selectedLanguage}
         onSelect={onSelectLanguage}
