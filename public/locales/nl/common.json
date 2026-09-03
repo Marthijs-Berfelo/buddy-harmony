@@ -18,5 +18,7 @@
     "github-profile": "Vind me op Github",
     "twitter": "Twitter: {{handle}}",
     "send-email": "Stuur me een e-mail"
-  }
+  },
+  "menu": "Menu",
+  "language-selector": "Taal selecteren"
 }

@@ -24,6 +24,7 @@ const Header = (): JSX.Element => {
               variant="ghost"
               size="icon"
               className="bg-green-600 border-green-600 hover:bg-green-700 text-white"
+              aria-label={t('common:menu')}
             >
               <FontAwesomeIcon className="text-xl" icon={faBars} />
             </Button>

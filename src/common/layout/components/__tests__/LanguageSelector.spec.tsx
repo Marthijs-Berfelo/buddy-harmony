@@ -49,6 +49,20 @@ function createFakeI18n(language: string, resolvedLanguage?: string): FakeI18n {
 }
 
 describe('LanguageSelector', () => {
+  test('gives the rendered language button an accessible name', () => {
+    const fakeI18n = createFakeI18n('en-US', 'en-US');
+    const { container } = render(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      <I18nextProvider i18n={fakeI18n as any}>
+        <LanguageSelector />
+      </I18nextProvider>
+    );
+
+    expect(container.querySelector('#lang-selector button')?.getAttribute('aria-label')).toBe(
+      'common:language-selector'
+    );
+  });
+
   test('renders immediately when i18n has already resolved a language before mount', () => {
     const fakeI18n = createFakeI18n('nl-NL', 'nl-NL');
 
