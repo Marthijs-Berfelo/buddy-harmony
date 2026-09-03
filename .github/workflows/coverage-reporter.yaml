@@ -18,6 +18,8 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Download coverage artifact
+        id: download
+        continue-on-error: true
         uses: actions/download-artifact@v8
         with:
           name: coverage-report
@@ -25,10 +27,11 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
       - name: Read PR number
         id: pr
+        if: ${{ steps.download.outcome == 'success' }}
         run: echo "number=$(cat pr_number.txt)" >> "$GITHUB_OUTPUT"
       - name: Comment on PR
         id: coverageComment
-        if: ${{ github.event.workflow_run.name == 'Build PR' }}
+        if: ${{ steps.download.outcome == 'success' && github.event.workflow_run.name == 'Build PR' }}
         uses: MishaKav/jest-coverage-comment@v1.0.36
         with:
           issue-number: ${{ steps.pr.outputs.number }}
@@ -40,13 +43,13 @@ jobs:
           hide-summary: false
       - name: Read coverage for badge
         id: coverageBadge
-        if: ${{ github.event.workflow_run.name == 'Build MAIN' }}
+        if: ${{ steps.download.outcome == 'success' && github.event.workflow_run.name == 'Build MAIN' }}
         uses: MishaKav/jest-coverage-comment@v1.0.36
         with:
           coverage-summary-path: ./coverage/coverage-summary.json
           hide-comment: true
       - name: Update the badge
-        if: ${{ github.event.workflow_run.name == 'Build MAIN' }}
+        if: ${{ steps.download.outcome == 'success' && github.event.workflow_run.name == 'Build MAIN' }}
         uses: schneegans/dynamic-badges-action@v1.9.0
         with:
           auth: ${{ secrets.GISTS_TOKEN }}
