@@ -19,8 +19,6 @@ jobs:
     name: QA
     uses: ./.github/workflows/job.test.yaml
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    secrets:
-      COVERAGE_COMMENT: ${{ secrets.GISTS_TOKEN }}
   build:
     name: Build
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
