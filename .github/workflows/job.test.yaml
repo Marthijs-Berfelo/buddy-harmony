@@ -1,9 +1,6 @@
 name: Test
 on:
-  workflow_call:
-    secrets:
-      COVERAGE_COMMENT:
-        required: true
+  workflow_call: {}
 
 jobs:
   test:
@@ -28,25 +25,13 @@ jobs:
         run: npm run typecheck
       - name: Test
         run: npm run test
-      - name: QA Report
-        id: coverageComment
-        uses: MishaKav/jest-coverage-comment@v1.0.36
+      - name: Save PR number
+        run: echo "${{ github.event.pull_request.number }}" > pr_number.txt
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v7
         with:
-          coverage-summary-path: ./coverage/coverage-summary.json
-          title: QA Results
-          summary-title: Test results
-          badge-title: Coverage
-          hide-comment: ${{ github.event_name != 'pull_request_target' }}
-          create-new-comment: true
-          hide-summary: false
-      - name: Create the Badge
-        if: ${{ github.event_name == 'workflow_run' }}
-        uses: schneegans/dynamic-badges-action@v1.9.0
-        with:
-          auth: ${{ secrets.COVERAGE_COMMENT }}
-          gistID: cf80179d3c1077b9c719e9e737992d38
-          filename: buddy-harmony__main.json
-          label: Coverage
-          message: ${{ steps.coverageComment.outputs.coverage }}%
-          color: ${{ steps.coverageComment.outputs.color }}
-          namedLogo: typescript
+          name: coverage-report
+          path: |
+            coverage/coverage-summary.json
+            pr_number.txt
+          retention-days: 1

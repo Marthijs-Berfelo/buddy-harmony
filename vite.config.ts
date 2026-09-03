@@ -8,10 +8,10 @@ export default defineConfig({
   base: '/buddy-harmony/',
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      common: path.resolve(__dirname, './src/common'),
-      hooks: path.resolve(__dirname, './src/hooks'),
-      modules: path.resolve(__dirname, './src/modules'),
+      '@': path.resolve(import.meta.dirname, './src'),
+      common: path.resolve(import.meta.dirname, './src/common'),
+      hooks: path.resolve(import.meta.dirname, './src/hooks'),
+      modules: path.resolve(import.meta.dirname, './src/modules'),
     },
   },
   server: {
