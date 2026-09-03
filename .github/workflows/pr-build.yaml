@@ -1,6 +1,6 @@
 name: Build PR
 on:
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - reopened
@@ -28,8 +28,6 @@ jobs:
   test:
     name: QA
     uses: ./.github/workflows/job.test.yaml
-    secrets:
-      COVERAGE_COMMENT: ${{ secrets.GISTS_TOKEN }}
   build:
     name: Build
     needs:
