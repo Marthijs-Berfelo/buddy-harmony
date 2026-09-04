@@ -1,17 +1,30 @@
-import { createContext, Dispatch, JSX, SetStateAction, useContext, useMemo } from 'react';
-import React, { PropsWithChildren, useState } from 'react';
-import { DEFAULT_STYLE, FretNumberType, Orientation, ScaleModel } from '@/common/fretboard';
+import React, {
+  createContext,
+  Dispatch,
+  JSX,
+  PropsWithChildren,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
-  defaultGuitar,
+  DEFAULT_STYLE,
+  DiagramStyle,
+  FretNumberType,
+  Orientation,
+  ScaleModel,
+} from '@/common/fretboard/options';
+import {
+  ChordPosition,
+  computeGuitarTypes,
   extractTuning,
   GuitarType,
-  guitarTypes,
-  standardTuning,
+  GuitarTypesData,
   StringTuningType,
 } from '@/hooks';
-import { DiagramStyle } from '@/common/fretboard/utils';
-import { ChordPosition } from '@/hooks';
-import { BaseContext } from '@/hooks/base-context.ts';
+import { BaseContext } from '@/hooks/base-context';
 
 const CHORD_FRETS = 5;
 const DEFAULT_FRETS = 12;
@@ -27,6 +40,7 @@ interface Settings extends BaseContext {
   fretCount: (scale?: ScaleModel, chord?: ChordPosition) => number;
   stringCount: number;
   guitarTypes: GuitarType[];
+  chordGuitarTypes: GuitarType[];
   guitarType: GuitarType;
   onlySupportedGuitars: (
     supportedGuitarTypes?: GuitarType[]
@@ -54,14 +68,31 @@ const useSettings = (): Settings => {
   throw new Error('`useSettings` must be used with `SettingsContextProvider`');
 };
 
-const SettingsContextProvider = ({
+const SettingsContextProvider = (props: PropsWithChildren<Props>): JSX.Element => {
+  const [guitarTypesData, setGuitarTypesData] = useState<GuitarTypesData>();
+
+  useEffect(() => {
+    computeGuitarTypes()
+      .then(setGuitarTypesData)
+      .catch((err) => console.error('Failed to load chord data:', err));
+  }, []);
+
+  if (!guitarTypesData) {
+    return <>Loading..</>;
+  }
+
+  return <SettingsContextProviderInner {...props} guitarTypesData={guitarTypesData} />;
+};
+
+const SettingsContextProviderInner = ({
   children,
   diagramStyle,
   chordFretSize,
   defaultFretSize,
-}: PropsWithChildren<Props>): JSX.Element => {
-  const [guitarType, setGuitarType] = useState<GuitarType>(defaultGuitar);
-  const [tuningType, setTuningType] = useState<StringTuningType>(standardTuning());
+  guitarTypesData,
+}: PropsWithChildren<Props> & { guitarTypesData: GuitarTypesData }): JSX.Element => {
+  const [guitarType, setGuitarType] = useState<GuitarType>(guitarTypesData.defaultGuitar);
+  const [tuningType, setTuningType] = useState<StringTuningType>(guitarTypesData.standardTuning);
   const [leftHanded, setLeftHanded] = useState<boolean>(false);
   const [orientation, setOrientation] = useState<Orientation>(Orientation.VERTICAL);
   const [orientationLabel, setOrientationLabel] = useState<Orientation>(Orientation.HORIZONTAL);
@@ -111,7 +142,8 @@ const SettingsContextProvider = ({
     diagramStyle: diagramStyle || DEFAULT_STYLE,
     fretCount,
     stringCount,
-    guitarTypes,
+    guitarTypes: guitarTypesData.guitarTypes,
+    chordGuitarTypes: guitarTypesData.chordGuitarTypes,
     guitarType,
     onlySupportedGuitars,
     setGuitarType,
