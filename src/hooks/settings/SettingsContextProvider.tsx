@@ -21,7 +21,7 @@ import {
   computeGuitarTypes,
   extractTuning,
   GuitarType,
-  GuitarTypesData,
+  scaleGuitarTypes,
   StringTuningType,
 } from '@/hooks';
 import { BaseContext } from '@/hooks/base-context';
@@ -41,6 +41,7 @@ interface Settings extends BaseContext {
   stringCount: number;
   guitarTypes: GuitarType[];
   chordGuitarTypes: GuitarType[];
+  chordDataLoading: boolean;
   guitarType: GuitarType;
   onlySupportedGuitars: (
     supportedGuitarTypes?: GuitarType[]
@@ -68,35 +69,35 @@ const useSettings = (): Settings => {
   throw new Error('`useSettings` must be used with `SettingsContextProvider`');
 };
 
-const SettingsContextProvider = (props: PropsWithChildren<Props>): JSX.Element => {
-  const [guitarTypesData, setGuitarTypesData] = useState<GuitarTypesData>();
-
-  useEffect(() => {
-    computeGuitarTypes()
-      .then(setGuitarTypesData)
-      .catch((err) => console.error('Failed to load chord data:', err));
-  }, []);
-
-  if (!guitarTypesData) {
-    return <>Loading..</>;
-  }
-
-  return <SettingsContextProviderInner {...props} guitarTypesData={guitarTypesData} />;
-};
-
-const SettingsContextProviderInner = ({
+const SettingsContextProvider = ({
   children,
   diagramStyle,
   chordFretSize,
   defaultFretSize,
-  guitarTypesData,
-}: PropsWithChildren<Props> & { guitarTypesData: GuitarTypesData }): JSX.Element => {
-  const [guitarType, setGuitarType] = useState<GuitarType>(guitarTypesData.defaultGuitar);
-  const [tuningType, setTuningType] = useState<StringTuningType>(guitarTypesData.standardTuning);
+}: PropsWithChildren<Props>): JSX.Element => {
+  const [guitarTypes, setGuitarTypes] = useState<GuitarType[]>(scaleGuitarTypes);
+  const [chordGuitarTypes, setChordGuitarTypes] = useState<GuitarType[]>([]);
+  const [chordDataLoading, setChordDataLoading] = useState<boolean>(true);
+  const [guitarType, setGuitarType] = useState<GuitarType>(() => scaleGuitarTypes[0]);
+  const [tuningType, setTuningType] = useState<StringTuningType>(
+    () => extractTuning(scaleGuitarTypes[0])[0]
+  );
   const [leftHanded, setLeftHanded] = useState<boolean>(false);
   const [orientation, setOrientation] = useState<Orientation>(Orientation.VERTICAL);
   const [orientationLabel, setOrientationLabel] = useState<Orientation>(Orientation.HORIZONTAL);
   const [fretNumbers, setFretNumbers] = useState<FretNumberType>(FretNumberType.ROMAN);
+
+  useEffect(() => {
+    computeGuitarTypes()
+      .then((data) => {
+        setChordGuitarTypes(data.chordGuitarTypes);
+        setGuitarTypes(data.guitarTypes);
+        setGuitarType(data.defaultGuitar);
+        setTuningType(data.standardTuning);
+        setChordDataLoading(false);
+      })
+      .catch((err) => console.error('Failed to load chord data:', err));
+  }, []);
 
   const tuningTypes = useMemo(() => {
     return extractTuning(guitarType);
@@ -142,8 +143,9 @@ const SettingsContextProviderInner = ({
     diagramStyle: diagramStyle || DEFAULT_STYLE,
     fretCount,
     stringCount,
-    guitarTypes: guitarTypesData.guitarTypes,
-    chordGuitarTypes: guitarTypesData.chordGuitarTypes,
+    guitarTypes,
+    chordGuitarTypes,
+    chordDataLoading,
     guitarType,
     onlySupportedGuitars,
     setGuitarType,
