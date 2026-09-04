@@ -1,23 +1,25 @@
 import type { JSX } from 'react';
-import { Button } from '../../components/ui/button';
+import { lazy, Suspense } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../../components/ui/dropdown-menu';
-import { Pages } from '../routing/pages';
+} from '@/components/ui/dropdown-menu';
+import { Pages } from '@/common/routing/pages';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import LanguageSelector from './components/LanguageSelector';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const LanguageSelector = lazy(() => import('./components/LanguageSelector'));
 
 const Header = (): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div className="flex flex-row w-full p-4 bg-opacity-80 backdrop-saturate-200 backdrop-blur bg-green-100 border-green-100 z-50 fixed">
-      <div className="flex flex-grow justify-between items-center text-green-900">
+      <div className="flex grow justify-between items-center text-green-900">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -52,10 +54,12 @@ const Header = (): JSX.Element => {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <p className="py-1.5 mx-4 font-sans font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-tr from-green-600 to-green-400">
+        <p className="py-1.5 mx-4 font-sans font-bold text-2xl bg-clip-text text-transparent bg-linear-to-tr from-green-600 to-green-400">
           {t('common:title')}
         </p>
-        <LanguageSelector />
+        <Suspense fallback={undefined}>
+          <LanguageSelector />
+        </Suspense>
       </div>
     </div>
   );
