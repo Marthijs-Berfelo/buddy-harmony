@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import { Orientation } from '../options';
 import { svg } from '../utils';
 import { Fragment } from 'react';
-import { useSettings } from '../../../hooks';
+import { useSettings } from '@/hooks';
 
 type FretboardProps = {
   frets: number;

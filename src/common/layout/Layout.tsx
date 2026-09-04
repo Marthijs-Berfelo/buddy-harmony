@@ -1,11 +1,9 @@
 import type { JSX } from 'react';
-import { TranslationsProvider } from '../../translations';
-import Header from './Header';
-import Content from './Content';
-import Footer from './Footer';
+import { TranslationsProvider } from '@/translations';
+import { Content, Footer, Header } from '.';
 
 const Layout = (): JSX.Element => (
-  <div id="app" className="flex-grow flex-col items-center justify-center">
+  <div id="app" className="grow flex-col items-center justify-center">
     <TranslationsProvider>
       <Header />
       <Content />

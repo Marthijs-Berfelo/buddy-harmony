@@ -1,5 +1,5 @@
 import { Orientation } from '../options';
-import { useSettings } from '../../../hooks';
+import { useSettings } from '@/hooks';
 
 export interface ShapeProps {
   className: string;
