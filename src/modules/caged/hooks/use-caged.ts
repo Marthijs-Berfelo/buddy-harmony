@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  chordGuitarTypes,
   GuitarType,
   Printable,
   PrintableProps,
@@ -10,21 +9,20 @@ import {
   KeysHook,
   useKeys,
   useSettings,
-} from '../../../hooks';
+} from '@/hooks';
 import { CagedChords, cagedConfigs } from './caged-constants';
-import { Orientation } from '../../../common/fretboard';
+import { Orientation } from '@/common/fretboard/options';
 import { buildCagedChords, cagedChordsForKey } from './caged-utils';
 
 export interface CagedHook extends KeysHook, ChordsHook, Printable {
   cagedChords?: CagedChords;
 }
 
-const isSupportedType = (guitar: GuitarType): boolean =>
-  chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1;
-
 export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
   const { keys, selectedKey, setSelectedKey } = useKeys();
-  const { guitarType, tuningType } = useSettings();
+  const { guitarType, tuningType, chordGuitarTypes } = useSettings();
+  const isSupportedType = (guitar: GuitarType): boolean =>
+    chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1;
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
   const chordRef = useRef(chord);

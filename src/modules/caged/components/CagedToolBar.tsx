@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import React from 'react';
 import { Pages } from 'common/routing/pages';
 import { ChordSelector, KeySelector, Toolbar } from '../../../common';
-import { chordGuitarTypes } from '../../../hooks';
+import { useSettings } from '@/hooks';
 import { CagedHook } from '../hooks';
 
 const context = Pages.CAGED;
@@ -16,6 +16,7 @@ const CagedToolBar = ({
   setChord,
   printRef,
 }: CagedHook): JSX.Element => {
+  const { chordGuitarTypes } = useSettings();
   return (
     <Toolbar
       page={context}
