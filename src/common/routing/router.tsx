@@ -1,8 +1,11 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Pages } from './pages';
-import ScalePage from '../../modules/scale';
-import { ChordPage, CagedPage } from '../layout/Content';
-import Layout from '../layout/Layout';
+import { Layout } from '../layout';
+import { lazy } from 'react';
+
+const ScalePage = lazy(() => import('@/modules/scale'));
+const ChordPage = lazy(() => import('@/modules/chord'));
+const CagedPage = lazy(() => import('@/modules/caged'));
 
 export const router = createBrowserRouter(
   [

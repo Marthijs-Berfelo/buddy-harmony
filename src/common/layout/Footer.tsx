@@ -1,12 +1,12 @@
 import type { JSX } from 'react';
 import { PropsWithChildren } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../components/ui/tooltip';
-import packageJson from '../../../package.json';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import packageJson from '@/../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { appInfo } from '../app-info';
+import { appInfo } from '@/common';
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation();

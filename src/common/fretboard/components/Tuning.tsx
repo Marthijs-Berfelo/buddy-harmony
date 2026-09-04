@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { Orientation } from '../options';
 import React from 'react';
-import { useSettings } from '../../../hooks';
+import { useSettings } from '@/hooks';
 
 const Tuning = (): JSX.Element => {
   const { tunings } = useTuning();

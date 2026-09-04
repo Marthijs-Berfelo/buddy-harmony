@@ -1,12 +1,19 @@
 import type { JSX } from 'react';
 import React, { MouseEvent } from 'react';
-import { ScaleFret, ScaleModel, StringAndFret } from '../utils';
-import { DotText, FretNumberPosition, FretNumberType, Orientation } from '../options';
+import {
+  DotText,
+  FretNumberPosition,
+  FretNumberType,
+  Orientation,
+  ScaleFret,
+  ScaleModel,
+  StringAndFret,
+} from '../options';
 import Fretboard from './Fretboard';
 import FretNumbers from './FretNumbers';
 import ScaleShape from './ScaleShape';
 import Tuning from './Tuning';
-import { ChordPosition, useSettings } from '../../../hooks';
+import { ChordPosition, useSettings } from '@/hooks';
 import ChordShape from './ChordShape';
 import { useDirectional } from '../utils/directional';
 

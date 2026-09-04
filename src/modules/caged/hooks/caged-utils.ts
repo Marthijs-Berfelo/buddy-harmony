@@ -13,7 +13,7 @@ import {
   chordsForKey,
   GuitarType,
   StringTuningType,
-} from '../../../hooks';
+} from '@/hooks';
 import { Interval, transpose } from '@tonaljs/tonal';
 
 export const cagedChordsForKey =
