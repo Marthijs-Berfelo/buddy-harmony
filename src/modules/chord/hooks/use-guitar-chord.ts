@@ -7,21 +7,19 @@ import {
   ChordsHook,
   handleSelectionForChords,
   useSettings,
-  chordGuitarTypes,
   GuitarType,
   Printable,
   PrintableProps,
-} from '../../../hooks';
-import { Orientation } from '../../../common/fretboard';
+} from '@/hooks';
+import { Orientation } from '@/common/fretboard/options';
 
 export interface GuitarChordHook extends KeysHook, ChordsHook, Printable {}
 
-const isSupportedType = (guitar: GuitarType): boolean =>
-  chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1;
-
 export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook => {
   const { keys, selectedKey, setSelectedKey } = useKeys();
-  const { guitarType } = useSettings();
+  const { guitarType, chordGuitarTypes } = useSettings();
+  const isSupportedType = (guitar: GuitarType): boolean =>
+    chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1;
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
   const chordRef = useRef(chord);

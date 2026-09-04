@@ -1,12 +1,16 @@
 import { test_export } from '../caged-utils';
 import { majorCagedConfig } from '../caged-constants';
-import { standardTuning } from '../../../../hooks';
+import { computeGuitarTypes, StringTuningType } from '@/hooks';
 
 const { keyRoot, cagedChord, addNotes, baseFret, buildCagedKey } = test_export;
 
 describe('Caged Utils', () => {
-  const tuning = standardTuning();
+  let tuning: StringTuningType;
   const guitarType = { name: 'guitar', type: {} };
+
+  beforeAll(async () => {
+    ({ standardTuning: tuning } = await computeGuitarTypes());
+  });
 
   describe('cagedChord', () => {
     test('returns the requested position from the matching chord model', () => {
