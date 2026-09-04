@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   KeysHook,
   useKeys,
@@ -18,8 +18,11 @@ export interface GuitarChordHook extends KeysHook, ChordsHook, Printable {}
 export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook => {
   const { keys, selectedKey, setSelectedKey } = useKeys();
   const { guitarType, chordGuitarTypes } = useSettings();
-  const isSupportedType = (guitar: GuitarType): boolean =>
-    chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1;
+  const isSupportedType = useCallback(
+    (guitar: GuitarType): boolean =>
+      chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1,
+    [chordGuitarTypes]
+  );
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
   const chordRef = useRef(chord);
@@ -37,7 +40,7 @@ export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook =>
       setChord,
       chordRef.current
     );
-  }, [guitarType, selectedKey]);
+  }, [guitarType, selectedKey, isSupportedType]);
 
   const printStyle = (orientation: Orientation): string =>
     `@page: { size: A4 ${
