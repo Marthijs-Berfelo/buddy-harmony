@@ -8,6 +8,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import NoteWaveLoader from '@/components/ui/note-wave-loader';
+import { useSettings } from '@/hooks';
 
 interface ChordSelectorProps {
   keys: string[];
@@ -16,6 +18,20 @@ interface ChordSelectorProps {
 }
 const KeySelector = ({ keys, selectedKey, setSelectedKey }: ChordSelectorProps): JSX.Element => {
   const { t } = useTranslation();
+  const { chordDataLoading } = useSettings();
+
+  if (chordDataLoading) {
+    return (
+      <Button
+        variant="ghost"
+        disabled
+        className="capitalize text-slate-500 bg-gray-200 hover:bg-gray-200 w-48"
+      >
+        <NoteWaveLoader />
+      </Button>
+    );
+  }
+
   return keys.length < 2 ? (
     <Button
       variant="ghost"
