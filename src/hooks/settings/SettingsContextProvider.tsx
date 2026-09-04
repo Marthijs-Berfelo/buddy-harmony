@@ -78,6 +78,8 @@ const SettingsContextProvider = ({
   const [guitarTypes, setGuitarTypes] = useState<GuitarType[]>(scaleGuitarTypes);
   const [chordGuitarTypes, setChordGuitarTypes] = useState<GuitarType[]>([]);
   const [chordDataLoading, setChordDataLoading] = useState<boolean>(true);
+  // Lazy initializers (not module-level constants) — `@/hooks` re-exports `./settings`
+  // before `./constants`, so `scaleGuitarTypes` can be undefined at module-evaluation time.
   const [guitarType, setGuitarType] = useState<GuitarType>(() => scaleGuitarTypes[0]);
   const [tuningType, setTuningType] = useState<StringTuningType>(
     () => extractTuning(scaleGuitarTypes[0])[0]
