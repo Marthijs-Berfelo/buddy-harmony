@@ -2,10 +2,19 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Pages } from './pages';
 import { Layout } from '../layout';
 import { lazy } from 'react';
+import { withMinDelay } from '@/common/utils';
 
-const ScalePage = lazy(() => import('@/modules/scale'));
-const ChordPage = lazy(() => import('@/modules/chord'));
-const CagedPage = lazy(() => import('@/modules/caged'));
+const FRETBOARD_LOADER_MIN_DISPLAY_MS = 3000;
+
+const ScalePage = lazy(() =>
+  withMinDelay(import('@/modules/scale'), FRETBOARD_LOADER_MIN_DISPLAY_MS)
+);
+const ChordPage = lazy(() =>
+  withMinDelay(import('@/modules/chord'), FRETBOARD_LOADER_MIN_DISPLAY_MS)
+);
+const CagedPage = lazy(() =>
+  withMinDelay(import('@/modules/caged'), FRETBOARD_LOADER_MIN_DISPLAY_MS)
+);
 
 export const router = createBrowserRouter(
   [
