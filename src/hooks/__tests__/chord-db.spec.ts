@@ -4,15 +4,37 @@ import {
   chordNamesForKey,
   chordsForKey,
   chordTuning,
-  guitar,
   handleSelectionForChords,
-  ukulele,
+  loadChordDb,
 } from '../chord-db';
 
 describe('chord-db', () => {
+  let guitarInstrument: Awaited<ReturnType<typeof loadChordDb>>['guitar'];
+  let ukuleleInstrument: Awaited<ReturnType<typeof loadChordDb>>['ukulele'];
+
+  beforeAll(async () => {
+    const db = await loadChordDb();
+    guitarInstrument = db.guitar;
+    ukuleleInstrument = db.ukulele;
+  });
+
+  describe('loadChordDb', () => {
+    test('returns the same cached promise on subsequent calls', () => {
+      const first = loadChordDb();
+      const second = loadChordDb();
+      expect(first).toBe(second);
+    });
+
+    test('resolves guitar and ukulele instrument data', async () => {
+      const db = await loadChordDb();
+      expect(db.guitar.main.name).toBe('guitar');
+      expect(db.ukulele.main.name).toBe('ukulele');
+    });
+  });
+
   describe('chordTuning', () => {
     test('returns the tunings for a known instrument', () => {
-      expect(chordTuning('guitar')).toEqual({ standard: guitar.tunings.standard });
+      expect(chordTuning('guitar')).toEqual({ standard: guitarInstrument.tunings.standard });
     });
 
     test('throws for an unsupported instrument', () => {
@@ -62,14 +84,7 @@ describe('chord-db', () => {
       const setChords = vi.fn();
       const setChord = vi.fn();
 
-      handleSelectionForChords(
-        guitarType,
-        'C',
-        () => false,
-        vi.fn(),
-        setChords,
-        setChord
-      );
+      handleSelectionForChords(guitarType, 'C', () => false, vi.fn(), setChords, setChord);
 
       expect(setChords).toHaveBeenCalledWith([]);
       expect(setChord).toHaveBeenCalledWith(undefined);
@@ -79,14 +94,7 @@ describe('chord-db', () => {
       const setChords = vi.fn();
       const setChord = vi.fn();
 
-      handleSelectionForChords(
-        guitarType,
-        undefined,
-        () => true,
-        vi.fn(),
-        setChords,
-        setChord
-      );
+      handleSelectionForChords(guitarType, undefined, () => true, vi.fn(), setChords, setChord);
 
       expect(setChords).toHaveBeenCalledWith([]);
       expect(setChord).toHaveBeenCalledWith(undefined);
@@ -97,14 +105,7 @@ describe('chord-db', () => {
       const setChord = vi.fn();
       const getChords = vi.fn().mockReturnValue([chordA]);
 
-      handleSelectionForChords(
-        guitarType,
-        'C',
-        () => true,
-        getChords,
-        setChords,
-        setChord
-      );
+      handleSelectionForChords(guitarType, 'C', () => true, getChords, setChords, setChord);
 
       expect(getChords).toHaveBeenCalledWith('guitar', 'C');
       expect(setChords).toHaveBeenCalledWith([chordA]);
@@ -116,15 +117,7 @@ describe('chord-db', () => {
       const setChord = vi.fn();
       const getChords = vi.fn().mockReturnValue([chordA, chordB]);
 
-      handleSelectionForChords(
-        guitarType,
-        'C',
-        () => true,
-        getChords,
-        setChords,
-        setChord,
-        chordB
-      );
+      handleSelectionForChords(guitarType, 'C', () => true, getChords, setChords, setChord, chordB);
 
       expect(setChord).toHaveBeenCalledWith(chordB);
     });
