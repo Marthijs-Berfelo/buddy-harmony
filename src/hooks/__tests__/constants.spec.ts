@@ -1,8 +1,9 @@
-import { computeGuitarTypes, extractTuning, keys, scaleGuitarTypes } from '@/hooks';
+import { computeGuitarTypes, extractTuning, keys, loadChordDb, scaleGuitarTypes } from '@/hooks';
 
 describe('constants', () => {
-  test('keys is a hardcoded list covering all twelve chromatic keys', () => {
-    expect(keys).toEqual(['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']);
+  test('keys matches the guitar keys from chords-db', async () => {
+    const { guitar } = await loadChordDb();
+    expect(keys).toEqual(guitar.keys);
   });
 
   describe('extractTuning', () => {
