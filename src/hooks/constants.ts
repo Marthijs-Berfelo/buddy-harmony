@@ -1,6 +1,6 @@
-import { chordTuning, guitar, instruments } from './chord-db';
+import { chordTuning, getInstruments, loadChordDb } from './chord-db';
 import { RefObject } from 'react';
-import { Orientation } from '../common/fretboard';
+import { Orientation } from '@/common/fretboard/options';
 
 const DEFAULT_TYPE = 'guitar';
 
@@ -25,7 +25,15 @@ export type StringTuningType = {
   tuning: string[];
 };
 
-const keys = guitar.keys;
+export interface GuitarTypesData {
+  chordGuitarTypes: GuitarType[];
+  guitarTypes: GuitarType[];
+  defaultGuitar: GuitarType;
+  standardTuning: StringTuningType;
+}
+
+// Stable across chords-db releases — see @tombatossals/chords-db/lib/guitar.json's `keys` field.
+const keys = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
 
 const onlyUniqueGuitarTypes = (type: GuitarType, index: number, array: GuitarType[]): boolean =>
   array.findIndex((origin) => origin.name == type.name) === index;
@@ -51,14 +59,7 @@ const scaleGuitarTypes: GuitarType[] = [
   },
 ];
 
-const chordGuitarTypes: GuitarType[] = Object.entries(instruments).map((value) => ({
-  name: value[0],
-  type: chordTuning(value[0]) as TuningType,
-}));
-
-const guitarTypes = [...scaleGuitarTypes, ...chordGuitarTypes].filter(onlyUniqueGuitarTypes);
-
-const commonGuitarTypes = (): GuitarType[] => {
+const commonGuitarTypes = (chordGuitarTypes: GuitarType[]): GuitarType[] => {
   const common = [];
   for (const scaleGuitar of scaleGuitarTypes) {
     for (const chordGuitar of chordGuitarTypes) {
@@ -70,21 +71,24 @@ const commonGuitarTypes = (): GuitarType[] => {
   return common;
 };
 
-const defaultGuitar = commonGuitarTypes()[0];
+let cache: Promise<GuitarTypesData> | undefined;
 
-const standardTuning = (): StringTuningType => {
-  const guitar = chordGuitarTypes.filter((type) => type.name === DEFAULT_TYPE)[0];
-  const tunings = extractTuning(guitar);
-  return tunings[0];
+export const computeGuitarTypes = (): Promise<GuitarTypesData> => {
+  cache ??= loadChordDb().then(() => {
+    const chordGuitarTypes: GuitarType[] = Object.entries(getInstruments()).map((value) => ({
+      name: value[0],
+      type: chordTuning(value[0]) as TuningType,
+    }));
+
+    const guitarTypes = [...scaleGuitarTypes, ...chordGuitarTypes].filter(onlyUniqueGuitarTypes);
+    const defaultGuitar = commonGuitarTypes(chordGuitarTypes)[0];
+
+    const guitar = chordGuitarTypes.filter((type) => type.name === DEFAULT_TYPE)[0];
+    const standardTuning = extractTuning(guitar)[0];
+
+    return { chordGuitarTypes, guitarTypes, defaultGuitar, standardTuning };
+  });
+  return cache;
 };
 
-export {
-  keys,
-  extractTuning,
-  scaleGuitarTypes,
-  chordGuitarTypes,
-  guitarTypes,
-  defaultGuitar,
-  commonGuitarTypes,
-  standardTuning,
-};
+export { keys, extractTuning, scaleGuitarTypes };

@@ -1,17 +1,8 @@
-import {
-  chordGuitarTypes,
-  commonGuitarTypes,
-  defaultGuitar,
-  extractTuning,
-  guitarTypes,
-  keys,
-  scaleGuitarTypes,
-  standardTuning,
-} from '../constants';
+import { computeGuitarTypes, extractTuning, keys, scaleGuitarTypes } from '@/hooks';
 
 describe('constants', () => {
-  test('keys are sourced from the guitar chord db', () => {
-    expect(keys).toEqual(expect.arrayContaining(['C', 'D', 'E']));
+  test('keys is a hardcoded list covering all twelve chromatic keys', () => {
+    expect(keys).toEqual(['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']);
   });
 
   describe('extractTuning', () => {
@@ -41,43 +32,39 @@ describe('constants', () => {
     });
   });
 
-  describe('chordGuitarTypes', () => {
-    test('derives one entry per instrument in the chords-db, each with a standard tuning', () => {
+  describe('computeGuitarTypes', () => {
+    test('derives one chordGuitarTypes entry per instrument in the chords-db, each with a standard tuning', async () => {
+      const { chordGuitarTypes } = await computeGuitarTypes();
       expect(chordGuitarTypes.length).toBeGreaterThan(0);
       const guitar = chordGuitarTypes.find((type) => type.name === 'guitar');
       expect(guitar).toBeDefined();
       expect(guitar?.type.standard).toEqual(['E2', 'A2', 'D3', 'G3', 'B3', 'E4']);
     });
-  });
 
-  describe('guitarTypes', () => {
-    test('is the union of scale and chord guitar types, de-duplicated by name', () => {
+    test('guitarTypes is the union of scale and chord guitar types, de-duplicated by name', async () => {
+      const { guitarTypes } = await computeGuitarTypes();
       const names = guitarTypes.map((type) => type.name);
       expect(new Set(names).size).toBe(names.length);
       expect(names).toEqual(expect.arrayContaining(['guitar', 'ukulele']));
     });
-  });
 
-  describe('commonGuitarTypes', () => {
-    test('only returns guitar types present in both scale and chord lists', () => {
-      const common = commonGuitarTypes();
-      expect(common.every((type) => type.name === 'guitar')).toBe(true);
-      expect(common).toHaveLength(1);
-    });
-  });
-
-  describe('defaultGuitar', () => {
-    test('is the first guitar type common to both scale and chord types', () => {
+    test('defaultGuitar is the first guitar type common to both scale and chord types', async () => {
+      const { defaultGuitar } = await computeGuitarTypes();
       expect(defaultGuitar.name).toBe('guitar');
     });
-  });
 
-  describe('standardTuning', () => {
-    test('returns the standard tuning for the default guitar', () => {
-      expect(standardTuning()).toEqual({
+    test('standardTuning returns the standard tuning for the default guitar', async () => {
+      const { standardTuning } = await computeGuitarTypes();
+      expect(standardTuning).toEqual({
         name: 'standard',
         tuning: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
       });
+    });
+
+    test('resolves the same underlying data on repeated calls', async () => {
+      const first = await computeGuitarTypes();
+      const second = await computeGuitarTypes();
+      expect(first.defaultGuitar).toEqual(second.defaultGuitar);
     });
   });
 });
