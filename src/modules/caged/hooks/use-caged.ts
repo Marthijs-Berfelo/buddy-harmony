@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   GuitarType,
   Printable,
@@ -21,8 +21,11 @@ export interface CagedHook extends KeysHook, ChordsHook, Printable {
 export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
   const { keys, selectedKey, setSelectedKey } = useKeys();
   const { guitarType, tuningType, chordGuitarTypes } = useSettings();
-  const isSupportedType = (guitar: GuitarType): boolean =>
-    chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1;
+  const isSupportedType = useCallback(
+    (guitar: GuitarType): boolean =>
+      chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1,
+    [chordGuitarTypes]
+  );
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
   const chordRef = useRef(chord);
@@ -52,7 +55,7 @@ export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
       setChord,
       chordRef.current
     );
-  }, [guitarType, selectedKey]);
+  }, [guitarType, selectedKey, isSupportedType]);
 
   const printStyle = (orientation: Orientation): string =>
     `@page: { size: A4 ${
