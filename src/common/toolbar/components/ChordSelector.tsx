@@ -1,14 +1,14 @@
 import type { JSX } from 'react';
-import { ChordDetail } from '../../../hooks';
+import { ChordDetail } from '@/hooks';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../../components/ui/button';
+import { Button } from '@/components/ui/button.tsx';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../../../components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu.tsx';
 
 interface ChordSelectorProps {
   chords: ChordDetail[];

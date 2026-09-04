@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import React, { useEffect } from 'react';
-import { GuitarType, useSettings } from '../../../hooks';
-import { Button } from '../../../components/ui/button';
+import { GuitarType, useSettings } from '@/hooks';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,16 +10,16 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '../../../components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../../../components/ui/select';
+} from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
-import { FretNumberType, Orientation } from '../../fretboard';
+import { FretNumberType, Orientation } from '@/common/fretboard/options';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGears } from '@fortawesome/free-solid-svg-icons';
 import { Pages } from '../../routing/pages';

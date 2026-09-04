@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { FretNumberType, Orientation } from '../options';
-import { useSettings } from '../../../hooks';
+import { useSettings } from '@/hooks';
 import { useDirectional } from '../utils/directional';
 
 const NUMBERS = new Map([

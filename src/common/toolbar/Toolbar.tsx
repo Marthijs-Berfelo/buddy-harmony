@@ -1,8 +1,8 @@
 import type { JSX } from 'react';
-import { Button } from '../../components/ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../components/ui/tooltip';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import SettingsTools, { SettingsToolsProps } from './components/SettingsTools';
-import { PrintableProps } from '../../hooks';
+import { PrintableProps } from '@/hooks';
 import { useReactToPrint } from 'react-to-print';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,10 +43,10 @@ const Toolbar = ({
             <Button
               size="icon"
               onClick={handlePrint}
-              className="flex ml-1 bg-blue-500 text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/40 disabled:bg-slate-300"
+              className="flex ml-1 bg-blue-500 text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/40"
               disabled={printDisabled}
             >
-              <FontAwesomeIcon className="flex size-[1.125rem]" icon={faPrint} />
+              <FontAwesomeIcon className="flex size-4.5" icon={faPrint} />
             </Button>
           </TooltipTrigger>
           <TooltipContent>

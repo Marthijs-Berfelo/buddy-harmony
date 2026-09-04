@@ -1,10 +1,7 @@
 import type { JSX } from 'react';
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { SettingsContextProvider } from '../../hooks';
-
-export const ChordPage = lazy(() => import('../../modules/chord'));
-export const CagedPage = lazy(() => import('../../modules/caged'));
+import { SettingsContextProvider } from '@/hooks';
 
 const Content = (): JSX.Element => {
   return (

@@ -1,3 +1,6 @@
+export * from './utils/scale';
+export * from './utils/diagram-style';
+
 export enum DotText {
   NOTE = 'note',
   NOTE_OCTAVE = 'note-octave',
