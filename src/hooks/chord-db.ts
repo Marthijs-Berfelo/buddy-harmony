@@ -1,6 +1,3 @@
-import instrumentsJson from '@tombatossals/chords-db/lib/instruments.json';
-import guitarJson from '@tombatossals/chords-db/lib/guitar.json';
-import ukuleleJson from '@tombatossals/chords-db/lib/ukulele.json';
 import { Dispatch, SetStateAction } from 'react';
 import { GuitarType } from './constants';
 
@@ -52,18 +49,50 @@ export interface ChordsHook {
   setChord: Dispatch<SetStateAction<ChordDetail | undefined>>;
 }
 
-export const guitar: Instrument = guitarJson;
-export const ukulele: Instrument = ukuleleJson;
-export const instruments: Instruments = instrumentsJson;
+interface ChordDb {
+  guitar: Instrument;
+  ukulele: Instrument;
+  instruments: Instruments;
+}
+
+let guitar: Instrument | undefined;
+let ukulele: Instrument | undefined;
+let instruments: Instruments | undefined;
+let cache: Promise<ChordDb> | undefined;
+
+export const loadChordDb = (): Promise<ChordDb> => {
+  cache ??= Promise.all([
+    import('@tombatossals/chords-db/lib/guitar.json'),
+    import('@tombatossals/chords-db/lib/ukulele.json'),
+    import('@tombatossals/chords-db/lib/instruments.json'),
+  ]).then(([guitarModule, ukuleleModule, instrumentsModule]) => {
+    guitar = guitarModule.default as Instrument;
+    ukulele = ukuleleModule.default as Instrument;
+    instruments = instrumentsModule.default as Instruments;
+    return { guitar, ukulele, instruments };
+  });
+  return cache;
+};
 
 const getInstrument = (instrument: string): Instrument => {
-  if (instrument === guitar.main.name) {
-    return guitar;
-  } else if (instrument === ukulele.main.name) {
-    return ukulele;
-  } else {
-    throw new Error(`Unsupported CHORD instrument: ${instrument}`);
+  if (!guitar || !ukulele) {
+    throw new Error('chord-db has not been loaded yet — call loadChordDb() first');
   }
+  switch (instrument) {
+    case guitar.main.name:
+      return guitar;
+    case ukulele.main.name:
+      return ukulele;
+    default:
+      throw new Error(`Unsupported CHORD instrument: ${instrument}`);
+  }
+};
+
+export const getInstruments = (): Instruments => {
+  if (!instruments) {
+    throw new Error('chord-db has not been loaded yet — call loadChordDb() first');
+  }
+  return instruments;
 };
 
 const getChords = (instrument: string): ChordDetail[] =>
