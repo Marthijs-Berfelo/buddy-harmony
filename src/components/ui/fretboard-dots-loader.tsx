@@ -1,4 +1,6 @@
 import type { JSX } from 'react';
+import { cn } from '@/lib/utils';
+import './fretboard-dots-loader.css';
 
 const DOT_POSITIONS = [
   { left: '5%', top: '5%', delay: 0 },
@@ -10,28 +12,19 @@ const DOT_POSITIONS = [
 const FretboardDotsLoader = (): JSX.Element => {
   return (
     <div
-      className="flex items-center justify-center"
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-sm"
       role="status"
       aria-label="loading"
-      style={{ height: '160px' }}
     >
-      <div style={{ position: 'relative', width: '130px', height: '90px' }}>
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gridTemplateRows: 'repeat(4, 1fr)',
-          }}
-        >
+      <div className="relative aspect-4/3 w-56 sm:w-72 md:w-80">
+        <div className="absolute inset-0 grid grid-cols-4 grid-rows-4">
           {Array.from({ length: 16 }, (_, index) => (
             <div
               key={`cell-${index}`}
-              style={{
-                borderRight: index % 4 !== 3 ? '2px solid #d1d5db' : undefined,
-                borderBottom: index < 12 ? '2px solid #d1d5db' : undefined,
-              }}
+              className={cn(
+                index % 4 !== 3 && 'border-r-2 border-gray-300',
+                index < 12 && 'border-b-2 border-gray-300'
+              )}
             />
           ))}
         </div>
@@ -39,26 +32,11 @@ const FretboardDotsLoader = (): JSX.Element => {
           <span
             key={`dot-${index}`}
             data-testid="fret-dot"
-            style={{
-              position: 'absolute',
-              width: '14px',
-              height: '14px',
-              background: '#3b82f6',
-              borderRadius: '50%',
-              left: dot.left,
-              top: dot.top,
-              animation: 'fretpulse 1.6s ease-in-out infinite',
-              animationDelay: `${dot.delay}s`,
-            }}
+            className="animate-fretpulse absolute aspect-square w-[11%] rounded-full bg-blue-500"
+            style={{ left: dot.left, top: dot.top, animationDelay: `${dot.delay}s` }}
           />
         ))}
       </div>
-      <style>{`
-        @keyframes fretpulse {
-          0%, 100% { opacity: 0.15; transform: scale(0.8); }
-          50% { opacity: 1; transform: scale(1); }
-        }
-      `}</style>
     </div>
   );
 };
