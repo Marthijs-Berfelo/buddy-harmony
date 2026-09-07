@@ -33,6 +33,17 @@ Run `npm start` to start buddy harmony:
 $ npm start 
 ```
 
+## Styling
+
+Use Tailwind utility classes for styling components, not inline `style={{}}` objects. Inline styles
+are reserved for genuinely dynamic per-instance values (e.g. a computed position, or a per-item
+`animationDelay`) that can't be expressed as a class.
+
+Custom `@keyframes`/animations should live in a CSS file co-located next to the component that uses
+them (e.g. `my-component.css` beside `my-component.tsx`), imported with `import './my-component.css'`
+— not appended to the shared `src/index.css`. Shared styles used across multiple modules (e.g.
+`common/Page.css`) are the exception.
+
 ## Testing
 
 The buddy-harmony test suite is divided into two sections:
