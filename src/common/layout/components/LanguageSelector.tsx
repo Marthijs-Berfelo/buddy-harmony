@@ -1,6 +1,7 @@
-import type { JSX } from 'react';
+import { JSX, useEffect, useRef } from 'react';
 import ReactFlagsSelect from 'react-flags-select';
 import { useLanguage } from './use-language';
+import { useTranslation } from 'react-i18next';
 
 const LanguageSelector = (): JSX.Element => {
   const { t } = useTranslation();
