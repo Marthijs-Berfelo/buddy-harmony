@@ -1,0 +1,15 @@
+@keyframes fretpulse {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fretpulse {
+  animation: fretpulse 1.6s ease-in-out infinite;
+}
