@@ -1,14 +1,15 @@
 import type { JSX } from 'react';
-import { ChordDetail } from '@/hooks';
+import { ChordDetail, useSettings } from '@/hooks';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button.tsx';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu.tsx';
+} from '@/components/ui/dropdown-menu';
+import NoteWaveLoader from '@/components/ui/note-wave-loader';
 
 interface ChordSelectorProps {
   chords: ChordDetail[];
@@ -17,6 +18,20 @@ interface ChordSelectorProps {
 }
 const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): JSX.Element => {
   const { t } = useTranslation(['chord']);
+  const { chordDataLoading } = useSettings();
+
+  if (chordDataLoading) {
+    return (
+      <Button
+        variant="ghost"
+        disabled
+        className="capitalize text-slate-500 bg-gray-200 hover:bg-gray-200 w-48"
+      >
+        <NoteWaveLoader />
+      </Button>
+    );
+  }
+
   return chords.length < 2 ? (
     <Button
       variant="ghost"
