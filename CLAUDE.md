@@ -86,6 +86,12 @@ Chord and CAGED modules share `chordGuitarTypes` (instruments from chords-db); t
 
 All user-facing strings go through `i18next` / `react-i18next`. Translation files live in `public/` (loaded at runtime via `i18next-http-backend`). The `<TranslationsProvider>` in `translations.tsx` initialises i18next.
 
+### Styling conventions
+
+Use Tailwind utility classes for styling, not inline `style={{}}` objects. Reserve inline `style` for genuinely dynamic per-instance values (e.g. a computed position or an index-based `animationDelay`) that can't be expressed as a class.
+
+Custom `@keyframes`/animations belong in a CSS file co-located next to the component that uses them (e.g. `fretboard-dots-loader.css` beside `fretboard-dots-loader.tsx`), imported with `import './foo.css'` — not appended to the shared `src/index.css`. Shared/global styles (e.g. `common/Page.css`) are the exception, reserved for styles genuinely shared across multiple modules.
+
 ## CI / GitHub Actions
 
 Reusable jobs live in `.github/workflows/job.*.yaml` and are composed by the trigger workflows.
