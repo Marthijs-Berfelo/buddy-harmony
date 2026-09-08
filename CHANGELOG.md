@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.13.1](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.13.0...0.13.1) (2026-09-08)
+
+### Bug Fixes
+
+* **618:** correct historical changelog compare links to their true predecessor ([868e899](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/868e8997892d86d2fd0ce5d721358529fd75a960))
+* **618:** re-tag release commit on main after rebase-merge ([e01a44f](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/e01a44fa546317535f1ef242c5a38c772b7b158f))
+* show Suspense fallback during router navigations ([2af23f9](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/2af23f95997ccfe6e7300e65ce156c7a07355477))
+
+### Code Refactoring
+
+* merge App.css and Page.css into index.css ([d21be77](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/d21be7716d0384a93a506677a14924506f44dde3))
+
 ## [0.13.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.12.0...0.13.0) (2026-09-08)
 
 ### Features
