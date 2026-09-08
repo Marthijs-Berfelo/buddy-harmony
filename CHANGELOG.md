@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.13.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.13.0) (2026-09-08)
+## [0.13.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.12.0...0.13.0) (2026-09-08)
 
 ### Features
 
@@ -144,7 +144,7 @@
 * add typecheck script and wire it into the QA pipeline ([ef1914f](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ef1914fa3ac70ff23bd92d51e710a0475f1b86f1))
 * use import.meta.dirname instead of __dirname in vite config ([e968622](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/e968622c9d5fe14c788923b1ff622e003ab18454))
 
-## [0.12.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.12.0) (2026-09-07)
+## [0.12.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.18...0.12.0) (2026-09-07)
 
 ### Features
 
@@ -262,7 +262,7 @@
 * add typecheck script and wire it into the QA pipeline ([ef1914f](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ef1914fa3ac70ff23bd92d51e710a0475f1b86f1))
 * use import.meta.dirname instead of __dirname in vite config ([e968622](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/e968622c9d5fe14c788923b1ff622e003ab18454))
 
-## [0.11.18](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.18) (2026-09-01)
+## [0.11.18](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.17...0.11.18) (2026-09-01)
 
 ### Bug Fixes
 
@@ -362,7 +362,7 @@
 
 * add typecheck script and wire it into the QA pipeline ([ef1914f](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ef1914fa3ac70ff23bd92d51e710a0475f1b86f1))
 
-## [0.11.17](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.17) (2026-09-01)
+## [0.11.17](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.16...0.11.17) (2026-09-01)
 
 ### Bug Fixes
 
@@ -442,7 +442,7 @@
 * shorten dependabot.yml header comment ([5668121](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/5668121da222d3ba229dae020dfeccdb575cd292))
 * upgrade Tailwind CSS v3 to v4 ([ad845b0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ad845b02fbde13861cedddb019aa2704de0fff71)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.16](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.16) (2026-08-30)
+## [0.11.16](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.15...0.11.16) (2026-08-30)
 
 ### Bug Fixes
 
@@ -514,7 +514,7 @@
 * shorten dependabot.yml header comment ([5668121](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/5668121da222d3ba229dae020dfeccdb575cd292))
 * upgrade Tailwind CSS v3 to v4 ([ad845b0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ad845b02fbde13861cedddb019aa2704de0fff71)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.15](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.15) (2026-08-29)
+## [0.11.15](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.14...0.11.15) (2026-08-29)
 
 ### Bug Fixes
 
@@ -531,7 +531,7 @@
 * update auto-merge commands from squash/merge to rebase ([dd1d9f7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd1d9f78f2a3aa1ff4c029612f789536282faa03))
 * use named import for assert-ts to fix broken default-export interop under Vite ([73483d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/73483d08cf31d9e71c376d14bf396d0bfe67a2f5)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.14](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.14) (2026-08-29)
+## [0.11.14](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.13...0.11.14) (2026-08-29)
 
 ### Bug Fixes
 
@@ -548,7 +548,7 @@
 * update auto-merge commands from squash/merge to rebase ([dd1d9f7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd1d9f78f2a3aa1ff4c029612f789536282faa03))
 * use named import for assert-ts to fix broken default-export interop under Vite ([73483d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/73483d08cf31d9e71c376d14bf396d0bfe67a2f5)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.13](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.13) (2026-08-29)
+## [0.11.13](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.12...0.11.13) (2026-08-29)
 
 ### Bug Fixes
 
@@ -565,7 +565,7 @@
 * update auto-merge commands from squash/merge to rebase ([dd1d9f7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd1d9f78f2a3aa1ff4c029612f789536282faa03))
 * use named import for assert-ts to fix broken default-export interop under Vite ([73483d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/73483d08cf31d9e71c376d14bf396d0bfe67a2f5)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.12](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.12) (2026-08-29)
+## [0.11.12](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.11...0.11.12) (2026-08-29)
 
 ### Bug Fixes
 
@@ -582,7 +582,7 @@
 * update auto-merge commands from squash/merge to rebase ([dd1d9f7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd1d9f78f2a3aa1ff4c029612f789536282faa03))
 * use named import for assert-ts to fix broken default-export interop under Vite ([73483d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/73483d08cf31d9e71c376d14bf396d0bfe67a2f5)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.11](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.11) (2026-08-29)
+## [0.11.11](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.10...0.11.11) (2026-08-29)
 
 ### Bug Fixes
 
@@ -599,7 +599,7 @@
 * update auto-merge commands from squash/merge to rebase ([dd1d9f7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd1d9f78f2a3aa1ff4c029612f789536282faa03))
 * use named import for assert-ts to fix broken default-export interop under Vite ([73483d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/73483d08cf31d9e71c376d14bf396d0bfe67a2f5)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.10](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.10) (2026-08-29)
+## [0.11.10](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.9...0.11.10) (2026-08-29)
 
 ### Bug Fixes
 
@@ -616,7 +616,7 @@
 * update auto-merge commands from squash/merge to rebase ([dd1d9f7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd1d9f78f2a3aa1ff4c029612f789536282faa03))
 * use named import for assert-ts to fix broken default-export interop under Vite ([73483d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/73483d08cf31d9e71c376d14bf396d0bfe67a2f5)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.9](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.9) (2026-08-29)
+## [0.11.9](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.8...0.11.9) (2026-08-29)
 
 ### Bug Fixes
 
@@ -633,7 +633,7 @@
 * update auto-merge commands from squash/merge to rebase ([dd1d9f7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd1d9f78f2a3aa1ff4c029612f789536282faa03))
 * use named import for assert-ts to fix broken default-export interop under Vite ([73483d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/73483d08cf31d9e71c376d14bf396d0bfe67a2f5)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.8](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.8) (2026-08-29)
+## [0.11.8](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.7...0.11.8) (2026-08-29)
 
 ### Bug Fixes
 
@@ -650,7 +650,7 @@
 * update auto-merge commands from squash/merge to rebase ([dd1d9f7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd1d9f78f2a3aa1ff4c029612f789536282faa03))
 * use named import for assert-ts to fix broken default-export interop under Vite ([73483d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/73483d08cf31d9e71c376d14bf396d0bfe67a2f5)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.7](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.7) (2026-08-29)
+## [0.11.7](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.6...0.11.7) (2026-08-29)
 
 ### Bug Fixes
 
@@ -667,7 +667,7 @@
 * update auto-merge commands from squash/merge to rebase ([dd1d9f7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd1d9f78f2a3aa1ff4c029612f789536282faa03))
 * use named import for assert-ts to fix broken default-export interop under Vite ([73483d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/73483d08cf31d9e71c376d14bf396d0bfe67a2f5)), closes [#556](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/556)
 
-## [0.11.6](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.4...0.11.6) (2026-08-29)
+## [0.11.6](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.11.5...0.11.6) (2026-08-29)
 
 ### Bug Fixes
 
