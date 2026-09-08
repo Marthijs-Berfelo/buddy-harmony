@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import KeySelector from '../KeySelector';
@@ -16,6 +16,14 @@ const renderKeySelector = () =>
   );
 
 describe('KeySelector', () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   test('shows the note-wave loader while chord data is loading', () => {
     renderKeySelector();
 
@@ -25,7 +33,9 @@ describe('KeySelector', () => {
   test('shows the key dropdown once chord data has resolved', async () => {
     renderKeySelector();
 
-    const trigger = await screen.findByRole('button', { name: 'key' });
+    await act(() => vi.advanceTimersByTimeAsync(3000));
+
+    const trigger = screen.getByRole('button', { name: 'key' });
     expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
     expect(screen.queryByTestId('note-wave-glyph')).not.toBeInTheDocument();
   });

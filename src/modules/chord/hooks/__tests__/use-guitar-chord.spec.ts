@@ -1,7 +1,7 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { createElement, PropsWithChildren, RefObject } from 'react';
 import { useGuitarChord } from '../use-guitar-chord';
-import { SettingsContextProvider, useSettings } from '@/hooks';
+import { computeGuitarTypes, SettingsContextProvider, useSettings } from '@/hooks';
 
 const wrapper = ({ children }: PropsWithChildren) =>
   createElement(SettingsContextProvider, null, children);
@@ -13,6 +13,14 @@ const renderGuitarChord = () =>
   });
 
 describe('useGuitarChord', () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   test('does not throw and leaves chords empty when a key is selected while chord data is loading', () => {
     const { result } = renderGuitarChord();
     expect(result.current.settings.chordDataLoading).toBe(true);
@@ -25,7 +33,10 @@ describe('useGuitarChord', () => {
     const { result } = renderGuitarChord();
     act(() => result.current.chord.setSelectedKey('C'));
 
-    await waitFor(() => expect(result.current.settings.chordDataLoading).toBe(false));
-    await waitFor(() => expect(result.current.chord.chords.length).toBeGreaterThan(0));
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(3000));
+
+    expect(result.current.settings.chordDataLoading).toBe(false);
+    expect(result.current.chord.chords.length).toBeGreaterThan(0);
   });
 });
