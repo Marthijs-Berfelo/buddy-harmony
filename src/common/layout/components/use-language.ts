@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomLabels } from 'react-flags-select/build/types';
 
@@ -7,6 +7,7 @@ export interface LanguageHook {
   onSelectLanguage: (lang: string) => void;
   languageLabels: CustomLabels;
   countries: string[];
+  selectorRef: RefObject<HTMLDivElement | null>;
 }
 
 const languageLabels: CustomLabels = {
@@ -34,9 +35,10 @@ const languageCode = (lang: string): string => {
 };
 
 export const useLanguage = (): LanguageHook => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const initialLang = i18n.resolvedLanguage || i18n.language;
   const browserLanguage = useRef<string>(initialLang);
+  const selectorRef = useRef<HTMLDivElement>(null);
   const [selectedLanguage, setSelectedLanguage] = useState<string>(
     initialLang
       ? (initialLang.split('-')[1]?.toUpperCase() ?? defaultLanguage)
@@ -66,6 +68,33 @@ export const useLanguage = (): LanguageHook => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLanguage]);
 
+  useEffect(() => {
+    const container = selectorRef.current;
+    if (!container) {
+      return;
+    }
+
+    const labelSelector = () => {
+      container.querySelector('button')?.setAttribute('aria-label', t('common:language-selector'));
+      container.querySelectorAll('li[role="option"]').forEach((option) => {
+        const countryCode = option.id.split('-').pop();
+        if (!countryCode) {
+          return;
+        }
+        option.setAttribute('aria-label', t(`common:language-option.${countryCode}`));
+      });
+    };
+
+    labelSelector();
+    const observer = new MutationObserver(labelSelector);
+    observer.observe(container, { childList: true, subtree: true });
+    return () => observer.disconnect();
+    // `t` intentionally excluded: this effect must only rerun when the selected
+    // language changes (which drives the dropdown's visible options), not on
+    // every translation-function identity change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLanguage]);
+
   const onSelectLanguage = (lang: string) => {
     setSelectedLanguage(lang);
   };
@@ -75,5 +104,6 @@ export const useLanguage = (): LanguageHook => {
     onSelectLanguage,
     languageLabels,
     countries: Object.keys(languageLabels),
+    selectorRef,
   };
 };
