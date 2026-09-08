@@ -3,7 +3,6 @@ import { useRef } from 'react';
 import { useGuitarChord } from './hooks';
 import ChordToolBar from './components/ChordToolBar';
 import ChordContent from './components/ChordContent';
-import '../../common/Page.css';
 
 const ChordPage = (): JSX.Element => {
   const printRef = useRef<HTMLDivElement>(null);

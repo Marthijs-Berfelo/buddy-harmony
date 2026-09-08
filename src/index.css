@@ -143,3 +143,19 @@ code {
     @apply font-sans;
   }
 }
+
+.fretboard {
+  text-anchor: middle;
+}
+
+.fretboard-fret-numbers {}
+
+.active-link {
+  cursor: default;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}

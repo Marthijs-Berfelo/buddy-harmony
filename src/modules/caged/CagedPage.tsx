@@ -1,7 +1,6 @@
 import type { JSX } from 'react';
 import { useRef } from 'react';
 import { useCaged } from './hooks';
-import '../../common/Page.css';
 import CagedToolBar from './components/CagedToolBar';
 import CagedContent from './components/CagedContent';
 
