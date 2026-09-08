@@ -1,18 +1,10 @@
-import { JSX, useEffect, useRef } from 'react';
+import { JSX } from 'react';
 import ReactFlagsSelect from 'react-flags-select';
 import { useLanguage } from './use-language';
-import { useTranslation } from 'react-i18next';
 
 const LanguageSelector = (): JSX.Element => {
-  const { t } = useTranslation();
-  const { selectedLanguage, onSelectLanguage, languageLabels, countries } = useLanguage();
-  const selectorRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    selectorRef.current
-      ?.querySelector('button')
-      ?.setAttribute('aria-label', t('common:language-selector'));
-  }, [selectedLanguage, t]);
+  const { selectedLanguage, onSelectLanguage, languageLabels, countries, selectorRef } =
+    useLanguage();
 
   return (
     <div className="flex" id={'lang-selector'} ref={selectorRef}>

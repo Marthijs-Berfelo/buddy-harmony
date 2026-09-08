@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { EventEmitter } from 'events';
 import { I18nextProvider } from 'react-i18next';
 import LanguageSelector from '../LanguageSelector';
@@ -87,5 +88,56 @@ describe('LanguageSelector', () => {
     );
 
     expect(container.querySelector('#lang-selector')).toBeTruthy();
+  });
+
+  test('gives each dropdown option an accessible name when opened', async () => {
+    const fakeI18n = createFakeI18n('en-US', 'en-US');
+    const user = userEvent.setup();
+
+    const { container } = render(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      <I18nextProvider i18n={fakeI18n as any}>
+        <LanguageSelector />
+      </I18nextProvider>
+    );
+
+    const button = container.querySelector('#lang-selector button');
+    expect(button).toBeTruthy();
+    await user.click(button as HTMLButtonElement);
+
+    const options = container.querySelectorAll('#lang-selector li[role="option"]');
+    expect(options.length).toBe(3);
+    options.forEach((option) => {
+      const countryCode = option.id.split('-').pop();
+      expect(option.getAttribute('aria-label')).toBe(`common:language-option.${countryCode}`);
+    });
+  });
+
+  test('labels options that appear after the dropdown reopens', async () => {
+    // The <li role="option"> elements only exist in the DOM while the dropdown
+    // is open. Opening, closing, and reopening exercises the MutationObserver
+    // path (rather than only the initial-mount labeling pass) since the nodes
+    // are removed and recreated on each open.
+    const fakeI18n = createFakeI18n('en-US', 'en-US');
+    const user = userEvent.setup();
+
+    const { container } = render(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      <I18nextProvider i18n={fakeI18n as any}>
+        <LanguageSelector />
+      </I18nextProvider>
+    );
+
+    const button = container.querySelector('#lang-selector button') as HTMLButtonElement;
+    await user.click(button); // open
+    await user.click(button); // close
+    await user.click(button); // reopen
+
+    const options = container.querySelectorAll('#lang-selector li[role="option"]');
+    expect(options.length).toBe(3);
+    options.forEach((option) => {
+      const countryCode = option.id.split('-').pop();
+      expect(option.getAttribute('aria-label')).toBe(`common:language-option.${countryCode}`);
+    });
   });
 });

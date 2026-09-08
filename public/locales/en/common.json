@@ -19,5 +19,10 @@
     "send-email": "Send me a message"
   },
   "menu": "Menu",
-  "language-selector": "Select language"
+  "language-selector": "Select language",
+  "language-option": {
+    "US": "English (US)",
+    "GB": "English (UK)",
+    "NL": "Dutch"
+  }
 }

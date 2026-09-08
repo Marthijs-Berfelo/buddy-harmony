@@ -20,5 +20,10 @@
     "send-email": "Stuur me een e-mail"
   },
   "menu": "Menu",
-  "language-selector": "Taal selecteren"
+  "language-selector": "Taal selecteren",
+  "language-option": {
+    "US": "Engels (VS)",
+    "GB": "Engels (VK)",
+    "NL": "Nederlands"
+  }
 }
