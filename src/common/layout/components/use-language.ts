@@ -35,7 +35,7 @@ const languageCode = (lang: string): string => {
 };
 
 export const useLanguage = (): LanguageHook => {
-  const { i18n, t } = useTranslation();
+  const { i18n } = useTranslation();
   const initialLang = i18n.resolvedLanguage || i18n.language;
   const browserLanguage = useRef<string>(initialLang);
   const selectorRef = useRef<HTMLDivElement>(null);
@@ -74,26 +74,32 @@ export const useLanguage = (): LanguageHook => {
       return;
     }
 
+    // Read translations via `i18n.t` (not the `t` from useTranslation) so this
+    // always reflects i18n's *current* language: `i18n.changeLanguage` resolves
+    // asynchronously, so the `t` snapshot bound at render time can still be
+    // pointing at the previous language when this effect (re-)runs.
     const labelSelector = () => {
-      container.querySelector('button')?.setAttribute('aria-label', t('common:language-selector'));
+      container
+        .querySelector('button')
+        ?.setAttribute('aria-label', i18n.t('common:language-selector'));
       container.querySelectorAll('li[role="option"]').forEach((option) => {
         const countryCode = option.id.split('-').pop();
         if (!countryCode) {
           return;
         }
-        option.setAttribute('aria-label', t(`common:language-option.${countryCode}`));
+        option.setAttribute('aria-label', i18n.t(`common:language-option.${countryCode}`));
       });
     };
 
     labelSelector();
+    i18n.on('languageChanged', labelSelector);
     const observer = new MutationObserver(labelSelector);
     observer.observe(container, { childList: true, subtree: true });
-    return () => observer.disconnect();
-    // `t` intentionally excluded: this effect must only rerun when the selected
-    // language changes (which drives the dropdown's visible options), not on
-    // every translation-function identity change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLanguage]);
+    return () => {
+      i18n.off('languageChanged', labelSelector);
+      observer.disconnect();
+    };
+  }, [i18n, selectedLanguage]);
 
   const onSelectLanguage = (lang: string) => {
     setSelectedLanguage(lang);
