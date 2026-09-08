@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import { useGuitarScale } from './hooks';
 import ScaleToolBar from './components/ScaleToolBar';
 import ScaleContent from './components/ScaleContent';
-import '../../common/Page.css';
 
 const ScalePage = () => {
   const printRef = useRef<HTMLDivElement>(null);
