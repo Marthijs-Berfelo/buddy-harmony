@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { EventEmitter } from 'events';
 import { I18nextProvider } from 'react-i18next';
@@ -19,7 +19,13 @@ interface FakeI18n {
   loadNamespaces: (ns: string | string[], cb: () => void) => void;
 }
 
-function createFakeI18n(language: string, resolvedLanguage?: string): FakeI18n {
+function createFakeI18n(
+  language: string,
+  resolvedLanguage?: string,
+  // Keyed by language so `t` can reflect a language switch without a real
+  // translation backend; only used by tests that need per-language strings.
+  translationsByLanguage?: Record<string, Record<string, string>>
+): FakeI18n {
   const emitter = new EventEmitter();
   const fakeI18n: FakeI18n = {
     language,
@@ -39,7 +45,7 @@ function createFakeI18n(language: string, resolvedLanguage?: string): FakeI18n {
       return Promise.resolve();
     },
     getFixedT: () => (key: string) => key,
-    t: (key: string) => key,
+    t: (key: string) => translationsByLanguage?.[fakeI18n.language ?? '']?.[key] ?? key,
     emit: (event, ...args) => emitter.emit(event, ...args),
     // react-i18next calls this from a `useEffect` (non-suspense path) whenever `ready`
     // is false at render time; a no-op is sufficient since these tests don't depend
@@ -139,5 +145,47 @@ describe('LanguageSelector', () => {
       const countryCode = option.id.split('-').pop();
       expect(option.getAttribute('aria-label')).toBe(`common:language-option.${countryCode}`);
     });
+  });
+
+  test('re-labels the button and open options when the active language changes', async () => {
+    // Regression test for a real bug: the labeling effect used to read translations
+    // via the `t` from `useTranslation`, a snapshot that only updates once
+    // `useTranslation`'s own internal listener has processed `languageChanged` — but
+    // that listener firing doesn't guarantee this effect reruns, since the resulting
+    // `setSelectedLanguage` call was often a no-op (state unchanged) that React skips
+    // re-rendering for. Labels would then stay stuck on the language active at the
+    // last dropdown open. The fix reads via `i18n.t` directly and listens to
+    // `languageChanged` itself, so relabeling no longer depends on a React re-render.
+    const fakeI18n = createFakeI18n('en-US', 'en-US', {
+      'en-US': {
+        'common:language-selector': 'Select language',
+        'common:language-option.US': 'English (US)',
+      },
+      'nl-NL': {
+        'common:language-selector': 'Taal selecteren',
+        'common:language-option.US': 'Engels (VS)',
+      },
+    });
+    const user = userEvent.setup();
+
+    const { container } = render(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      <I18nextProvider i18n={fakeI18n as any}>
+        <LanguageSelector />
+      </I18nextProvider>
+    );
+
+    const button = container.querySelector('#lang-selector button') as HTMLButtonElement;
+    await user.click(button); // open, so the US option is present to re-label
+
+    expect(button.getAttribute('aria-label')).toBe('Select language');
+
+    await act(async () => {
+      await fakeI18n.changeLanguage('nl-NL');
+    });
+
+    expect(button.getAttribute('aria-label')).toBe('Taal selecteren');
+    const usOption = container.querySelector('#lang-selector li[id$="US"]');
+    expect(usOption?.getAttribute('aria-label')).toBe('Engels (VS)');
   });
 });
