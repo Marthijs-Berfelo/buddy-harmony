@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.14.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.13.1...0.14.0) (2026-09-08)
+
+### Features
+
+* **611:** label language dropdown options for screen readers ([d6e3cb2](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/d6e3cb2d0e0a5efa1059766903e169f5226a2727))
+
+### Bug Fixes
+
+* **611:** re-label dropdown options when the active language changes ([2220251](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/2220251a61ffa9ea3dab0e93079badce2ce8178e))
+
 ## [0.13.1](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.13.0...0.13.1) (2026-09-08)
 
 ### Bug Fixes
