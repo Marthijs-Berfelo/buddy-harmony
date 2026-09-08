@@ -22,3 +22,21 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ env.approve_token }}
+
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ env.approve_token }}
+
+      # The rebase-merge above gives the release commit a new SHA on main, orphaning the tag
+      # release-it pushed on the release branch. Re-point the tag at main's HEAD so it stays an
+      # ancestor for future `@release-it/conventional-changelog` compare-link lookups (#618).
+      - name: Move release tag onto main
+        run: |
+          VERSION="${HEAD_REF#release/v}"
+          git tag -f "$VERSION" HEAD
+          git push origin "refs/tags/$VERSION" --force
+        env:
+          HEAD_REF: ${{ github.head_ref }}
