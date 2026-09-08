@@ -1,0 +1,2 @@
+var e={strings:6,fretsOnChord:4,name:`guitar`,numberOfChords:2069},t={strings:4,fretsOnChord:4,name:`ukulele`,numberOfChords:2114},n={guitar:e,ukulele:t};export{n as default,e as guitar,t as ukulele};
+//# sourceMappingURL=instruments-BvZlQU9z.js.map
