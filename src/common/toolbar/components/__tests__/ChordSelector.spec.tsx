@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import ChordSelector from '../ChordSelector';
@@ -17,6 +17,14 @@ const renderChordSelector = (chords: ChordDetail[]) =>
   );
 
 describe('ChordSelector', () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   test('shows the note-wave loader while chord data is loading', () => {
     renderChordSelector([]);
 
@@ -26,7 +34,9 @@ describe('ChordSelector', () => {
   test('shows the disabled placeholder once chord data has resolved with fewer than two chords', async () => {
     renderChordSelector([]);
 
-    await waitFor(() => expect(screen.queryByTestId('note-wave-glyph')).not.toBeInTheDocument());
+    await act(() => vi.advanceTimersByTimeAsync(3000));
+
+    expect(screen.queryByTestId('note-wave-glyph')).not.toBeInTheDocument();
     const trigger = screen.getByRole('button');
     expect(trigger).toBeDisabled();
     expect(trigger).not.toHaveAttribute('aria-haspopup');
@@ -38,7 +48,9 @@ describe('ChordSelector', () => {
       { key: 'C', suffix: 'minor', positions: [] },
     ]);
 
-    const trigger = await screen.findByRole('button', { name: 'title' });
+    await act(() => vi.advanceTimersByTimeAsync(3000));
+
+    const trigger = screen.getByRole('button', { name: 'title' });
     expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
     expect(screen.queryByTestId('note-wave-glyph')).not.toBeInTheDocument();
   });

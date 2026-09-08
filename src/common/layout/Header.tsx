@@ -31,7 +31,7 @@ const Header = (): JSX.Element => {
               <FontAwesomeIcon className="text-xl" icon={faBars} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="start">
             {Object.entries(Pages).map((name) => (
               <DropdownMenuItem
                 key={`link-to-${name[0]}`}

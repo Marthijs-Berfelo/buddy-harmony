@@ -25,9 +25,11 @@ import {
   StringTuningType,
 } from '@/hooks';
 import { BaseContext } from '@/hooks/base-context';
+import { withMinDelay } from '@/common/utils';
 
 const CHORD_FRETS = 5;
 const DEFAULT_FRETS = 12;
+const NOTE_WAVE_LOADER_MIN_DISPLAY_MS = 3000;
 
 interface Props {
   diagramStyle?: DiagramStyle;
@@ -90,7 +92,7 @@ const SettingsContextProvider = ({
   const [fretNumbers, setFretNumbers] = useState<FretNumberType>(FretNumberType.ROMAN);
 
   useEffect(() => {
-    computeGuitarTypes()
+    withMinDelay(computeGuitarTypes(), NOTE_WAVE_LOADER_MIN_DISPLAY_MS)
       .then((data) => {
         setChordGuitarTypes(data.chordGuitarTypes);
         setGuitarTypes(data.guitarTypes);
