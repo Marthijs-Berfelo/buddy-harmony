@@ -13,7 +13,7 @@ import {
   chordsForKey,
   GuitarType,
   StringTuningType,
-} from '@/hooks';
+} from 'hooks';
 import { Interval, transpose } from '@tonaljs/tonal';
 
 export const cagedChordsForKey =
@@ -41,7 +41,7 @@ export const buildCagedChords = (
   D: buildCagedKey(key, type, config.D, tuning, guitarType),
 });
 
-const buildCagedKey = (
+export const buildCagedKey = (
   key: string,
   type: string,
   config: CagedKeyConfig,
@@ -64,7 +64,7 @@ const buildCagedKey = (
   };
 };
 
-const cagedChord = (
+export const cagedChord = (
   position: CagedPositionConfig,
   guitarType: GuitarType,
   type: string
@@ -78,7 +78,7 @@ const cagedChord = (
   }
 };
 
-const addNotes = (chord: ChordPosition, tuning: StringTuningType): ChordPosition => {
+export const addNotes = (chord: ChordPosition, tuning: StringTuningType): ChordPosition => {
   const notes = chord.frets
     .map((fret) => fret + chord.baseFret - 1)
     .map(Interval.fromSemitones)
@@ -86,17 +86,16 @@ const addNotes = (chord: ChordPosition, tuning: StringTuningType): ChordPosition
   return Object.assign({}, chord, { notes });
 };
 
-const baseFret = (key: string, baseChord: ChordPosition, config: CagedKeyConfig): number => {
+export const baseFret = (key: string, baseChord: ChordPosition, config: CagedKeyConfig): number => {
   const baseFret =
     baseChord.baseFret + fretDistance(keyRoot(key, config.base.rootString), config.base.root);
-  console.log('Base fret', baseFret, baseChord, config);
   if (baseFret < 1) {
     return baseFret + 12;
   }
   return baseFret;
 };
 
-const keyRoot = (key: string, stringRoot: number): string => {
+export const keyRoot = (key: string, stringRoot: number): string => {
   if (inSecondOctaveOnFirstString(stringRoot, key)) {
     return `${key}2`;
   } else if (inSecondOctaveOnSecondString(stringRoot, key)) {
@@ -120,12 +119,4 @@ const inFourthOctaveOnThirdString = (stringRoot: number, key: string): boolean =
 const fretDistance = (keyRoot: string, chordRoot: string): number => {
   const intervalLiteral = Interval.distance(chordRoot, keyRoot);
   return Interval.semitones(intervalLiteral) || 0;
-};
-
-export const test_export = {
-  buildCagedKey,
-  cagedChord,
-  addNotes,
-  baseFret,
-  keyRoot,
 };

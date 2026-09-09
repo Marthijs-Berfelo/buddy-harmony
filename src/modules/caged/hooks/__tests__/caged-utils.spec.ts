@@ -1,8 +1,6 @@
-import { test_export } from '../caged-utils';
+import { addNotes, baseFret, buildCagedKey, cagedChord, keyRoot } from '../caged-utils';
 import { majorCagedConfig } from '../caged-constants';
-import { computeGuitarTypes, StringTuningType } from '@/hooks';
-
-const { keyRoot, cagedChord, addNotes, baseFret, buildCagedKey } = test_export;
+import { computeGuitarTypes, StringTuningType } from 'hooks';
 
 describe('Caged Utils', () => {
   let tuning: StringTuningType;
