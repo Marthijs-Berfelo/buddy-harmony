@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import { SettingsContextProvider, useSettings } from '../SettingsContextProvider';
-import { computeGuitarTypes } from '@/hooks';
+import { computeGuitarTypes } from 'hooks';
 
 const ProbeChild = () => {
   const { guitarType, tuningType, chordGuitarTypes, chordDataLoading } = useSettings();

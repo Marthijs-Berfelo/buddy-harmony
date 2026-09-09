@@ -4,6 +4,7 @@ import React, {
   JSX,
   PropsWithChildren,
   SetStateAction,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -15,7 +16,7 @@ import {
   FretNumberType,
   Orientation,
   ScaleModel,
-} from '@/common/fretboard/options';
+} from 'common/fretboard/options';
 import {
   ChordPosition,
   computeGuitarTypes,
@@ -23,9 +24,8 @@ import {
   GuitarType,
   scaleGuitarTypes,
   StringTuningType,
-} from '@/hooks';
-import { BaseContext } from '@/hooks/base-context';
-import { withMinDelay } from '@/common/utils';
+} from 'hooks';
+import { withMinDelay } from 'common/utils';
 
 const CHORD_FRETS = 5;
 const DEFAULT_FRETS = 12;
@@ -37,7 +37,7 @@ interface Props {
   defaultFretSize?: number;
 }
 
-interface Settings extends BaseContext {
+interface Settings {
   diagramStyle: DiagramStyle;
   fretCount: (scale?: ScaleModel, chord?: ChordPosition) => number;
   stringCount: number;
@@ -111,17 +111,19 @@ const SettingsContextProvider = ({
     return tuningType.tuning.length;
   }, [tuningType]);
 
-  const onlySupportedGuitars =
+  const onlySupportedGuitars = useCallback(
     (supportedGuitarTypes?: GuitarType[]): ((type: GuitarType) => boolean) =>
-    (type) => {
-      if (supportedGuitarTypes !== undefined) {
-        return supportedGuitarTypes.findIndex((supported) => supported.name === type.name) > -1;
-      } else {
-        return true;
-      }
-    };
+      (type) => {
+        if (supportedGuitarTypes !== undefined) {
+          return supportedGuitarTypes.findIndex((supported) => supported.name === type.name) > -1;
+        } else {
+          return true;
+        }
+      },
+    []
+  );
 
-  const toggleOrientation = (): void => {
+  const toggleOrientation = useCallback((): void => {
     setOrientationLabel(orientation);
     switch (orientation) {
       case Orientation.VERTICAL:
@@ -131,40 +133,68 @@ const SettingsContextProvider = ({
         setOrientation(Orientation.VERTICAL);
         break;
     }
-  };
+  }, [orientation]);
 
-  const onSelectFretNumber = (fretNumber: string): void =>
-    setFretNumbers(FretNumberType[fretNumber as keyof typeof FretNumberType]);
+  const onSelectFretNumber = useCallback(
+    (fretNumber: string): void =>
+      setFretNumbers(FretNumberType[fretNumber as keyof typeof FretNumberType]),
+    []
+  );
 
-  const fretCount = (scale?: ScaleModel, chord?: ChordPosition) =>
-    scale
-      ? scale.fretzNumber
-      : chord
-        ? chordFretSize || CHORD_FRETS
-        : defaultFretSize || DEFAULT_FRETS;
+  const fretCount = useCallback(
+    (scale?: ScaleModel, chord?: ChordPosition) =>
+      scale
+        ? scale.fretzNumber
+        : chord
+          ? chordFretSize || CHORD_FRETS
+          : defaultFretSize || DEFAULT_FRETS,
+    [chordFretSize, defaultFretSize]
+  );
 
-  const context = {
-    diagramStyle: diagramStyle || DEFAULT_STYLE,
-    fretCount,
-    stringCount,
-    guitarTypes,
-    chordGuitarTypes,
-    chordDataLoading,
-    guitarType,
-    onlySupportedGuitars,
-    setGuitarType,
-    tuningTypes,
-    tuningType,
-    setTuningType,
-    leftHanded,
-    setLeftHanded,
-    orientation: orientation,
-    toggleOrientation,
-    orientationLabel,
-    fretNumbers,
-    onSelectFretNumber,
-    check: () => null,
-  };
+  const context = useMemo<Settings>(
+    () => ({
+      diagramStyle: diagramStyle || DEFAULT_STYLE,
+      fretCount,
+      stringCount,
+      guitarTypes,
+      chordGuitarTypes,
+      chordDataLoading,
+      guitarType,
+      onlySupportedGuitars,
+      setGuitarType,
+      tuningTypes,
+      tuningType,
+      setTuningType,
+      leftHanded,
+      setLeftHanded,
+      orientation,
+      toggleOrientation,
+      orientationLabel,
+      fretNumbers,
+      onSelectFretNumber,
+    }),
+    [
+      diagramStyle,
+      fretCount,
+      stringCount,
+      guitarTypes,
+      chordGuitarTypes,
+      chordDataLoading,
+      guitarType,
+      onlySupportedGuitars,
+      setGuitarType,
+      tuningTypes,
+      tuningType,
+      setTuningType,
+      leftHanded,
+      setLeftHanded,
+      orientation,
+      toggleOrientation,
+      orientationLabel,
+      fretNumbers,
+      onSelectFretNumber,
+    ]
+  );
 
   return <SettingsContext.Provider value={context}>{children}</SettingsContext.Provider>;
 };
