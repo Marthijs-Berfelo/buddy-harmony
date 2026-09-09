@@ -9,12 +9,12 @@ import {
   ScaleModel,
   StringAndFret,
 } from '../options';
-import Fretboard from './Fretboard';
-import FretNumbers from './FretNumbers';
-import ScaleShape from './ScaleShape';
-import Tuning from './Tuning';
+import { Fretboard } from './fretboard';
+import { FretNumbers } from './fret-numbers';
+import { ScaleShape } from './scale-shape';
+import { Tuning } from './tuning';
 import { ChordPosition, useSettings } from 'hooks';
-import ChordShape from './ChordShape';
+import { ChordShape } from './chord-shape';
 import { useDirectional } from '../utils/directional';
 
 export interface DiagramProps {
@@ -38,7 +38,7 @@ export interface DiagramProps {
   ) => void | Promise<void>;
 }
 
-const Diagram = (props: DiagramProps): JSX.Element => {
+export const Diagram = (props: DiagramProps): JSX.Element => {
   const { onMouseClick, onMouseMove, frets, startAt, viewBox, getHeight, getWidth, getShapes } =
     useDiagram(props);
   const { fretNumbers } = useSettings();
@@ -66,8 +66,6 @@ const Diagram = (props: DiagramProps): JSX.Element => {
     </svg>
   );
 };
-
-export default Diagram;
 
 type DiagramHook = {
   onMouseClick: (event: MouseEvent<SVGSVGElement>) => void;

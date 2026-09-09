@@ -7,13 +7,19 @@ import { withMinDelay } from 'lib/delay';
 const FRETBOARD_LOADER_MIN_DISPLAY_MS = 3000;
 
 const ScalePage = lazy(() =>
-  withMinDelay(import('modules/scale'), FRETBOARD_LOADER_MIN_DISPLAY_MS)
+  withMinDelay(import('modules/scale'), FRETBOARD_LOADER_MIN_DISPLAY_MS).then((module) => ({
+    default: module.ScalePage,
+  }))
 );
 const ChordPage = lazy(() =>
-  withMinDelay(import('modules/chord'), FRETBOARD_LOADER_MIN_DISPLAY_MS)
+  withMinDelay(import('modules/chord'), FRETBOARD_LOADER_MIN_DISPLAY_MS).then((module) => ({
+    default: module.ChordPage,
+  }))
 );
 const CagedPage = lazy(() =>
-  withMinDelay(import('modules/caged'), FRETBOARD_LOADER_MIN_DISPLAY_MS)
+  withMinDelay(import('modules/caged'), FRETBOARD_LOADER_MIN_DISPLAY_MS).then((module) => ({
+    default: module.CagedPage,
+  }))
 );
 
 export const router = createBrowserRouter(

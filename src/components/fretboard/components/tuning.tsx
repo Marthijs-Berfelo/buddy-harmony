@@ -3,13 +3,11 @@ import { Orientation } from '../options';
 import React from 'react';
 import { useSettings } from 'hooks';
 
-const Tuning = (): JSX.Element => {
+export const Tuning = (): JSX.Element => {
   const { tunings } = useTuning();
 
   return <g className={'fretboard-tunings'}>{tunings()}</g>;
 };
-
-export default Tuning;
 
 type TuningHook = {
   tunings: () => JSX.Element[];

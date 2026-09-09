@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
-import { SettingsContextProvider, useSettings } from '../SettingsContextProvider';
+import { SettingsContextProvider, useSettings } from '../settings-context-provider';
 import { computeGuitarTypes } from 'hooks';
 
 const ProbeChild = () => {

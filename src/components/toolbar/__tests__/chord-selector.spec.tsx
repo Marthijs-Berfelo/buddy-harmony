@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
-import ChordSelector from '../ChordSelector';
+import { ChordSelector } from '../chord-selector';
 import { SettingsContextProvider } from 'hooks';
 import type { ChordDetail } from 'hooks';
 

@@ -1,3 +1,1 @@
-import ChordPage from './ChordPage';
-
-export { ChordPage as default };
+export { ChordPage } from './chord-page';

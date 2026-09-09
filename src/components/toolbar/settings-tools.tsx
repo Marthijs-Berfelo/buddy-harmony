@@ -29,7 +29,7 @@ export interface SettingsToolsProps {
   page: Pages;
 }
 
-const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Element => {
+export const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Element => {
   const { t } = useTranslation('settings');
   const {
     guitarTypes,
@@ -136,5 +136,3 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
     </DropdownMenu>
   );
 };
-
-export default SettingsTools;

@@ -21,13 +21,11 @@ type FretNumbersProps = {
   startAt: number;
 };
 
-const FretNumbers = (props: FretNumbersProps): JSX.Element => {
+export const FretNumbers = (props: FretNumbersProps): JSX.Element => {
   const { fretNumberElements } = useFretNumbers(props);
 
   return <g className={'fretboard-fret-numbers'}>{fretNumberElements()}</g>;
 };
-
-export default FretNumbers;
 
 type FretNumbersHook = {
   fretNumberElements: () => JSX.Element[];

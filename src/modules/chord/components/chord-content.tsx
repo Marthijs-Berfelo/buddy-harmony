@@ -2,11 +2,11 @@ import type { JSX } from 'react';
 import { useSettings, ChordPosition } from 'hooks';
 import { Diagram } from 'components/fretboard';
 import React from 'react';
-import { useGuitarChordContext } from '../hooks';
+import { useGuitarChord } from '../hooks';
 import { DotText, FretNumberPosition } from 'components/fretboard/options';
 
-const ChordContent = (): JSX.Element => {
-  const { chord, printRef, printStyle } = useGuitarChordContext();
+export const ChordContent = (): JSX.Element => {
+  const { chord, printRef, printStyle } = useGuitarChord();
   const { orientation } = useSettings();
 
   return (
@@ -34,8 +34,6 @@ const ChordContent = (): JSX.Element => {
     </div>
   );
 };
-
-export default ChordContent;
 
 type ChordDiagramProps = {
   chord?: ChordPosition;

@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import NoteWaveLoader from '@/components/ui/note-wave-loader';
+import { NoteWaveLoader } from '@/components/ui/note-wave-loader';
 import { useSettings } from 'hooks';
 
 interface ChordSelectorProps {
@@ -16,7 +16,11 @@ interface ChordSelectorProps {
   selectedKey?: string;
   setSelectedKey: Dispatch<SetStateAction<string | undefined>>;
 }
-const KeySelector = ({ keys, selectedKey, setSelectedKey }: ChordSelectorProps): JSX.Element => {
+export const KeySelector = ({
+  keys,
+  selectedKey,
+  setSelectedKey,
+}: ChordSelectorProps): JSX.Element => {
   const { t } = useTranslation('common');
   const { chordDataLoading } = useSettings();
 
@@ -61,5 +65,3 @@ const KeySelector = ({ keys, selectedKey, setSelectedKey }: ChordSelectorProps):
     </DropdownMenu>
   );
 };
-
-export default KeySelector;

@@ -10,13 +10,11 @@ interface ChordShapeProps extends ShapeProps {
   chord?: ChordPosition;
 }
 
-const ChordShape = (props: ChordShapeProps): JSX.Element => {
+export const ChordShape = (props: ChordShapeProps): JSX.Element => {
   const { chordShapes } = useChordShape(props);
 
   return <g>{chordShapes}</g>;
 };
-
-export default ChordShape;
 
 type ChordShapeHook = {
   chordShapes: JSX.Element[];

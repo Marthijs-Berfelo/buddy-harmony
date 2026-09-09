@@ -1,6 +1,5 @@
-import Content from './Content';
-import Header from './Header';
-import Footer from './Footer';
-import Layout from './Layout';
-
-export { Header, Content, Footer, Layout };
+export { Header } from './header';
+export { Content } from './content';
+export { Footer } from './footer';
+export { Layout } from './layout';
+export { Toolbar } from './toolbar';

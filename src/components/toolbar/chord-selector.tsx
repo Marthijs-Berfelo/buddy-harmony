@@ -9,14 +9,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import NoteWaveLoader from '@/components/ui/note-wave-loader';
+import { NoteWaveLoader } from '@/components/ui/note-wave-loader';
 
 interface ChordSelectorProps {
   chords: ChordDetail[];
   chord?: ChordDetail;
   setChord: Dispatch<SetStateAction<ChordDetail | undefined>>;
 }
-const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): JSX.Element => {
+export const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): JSX.Element => {
   const { t } = useTranslation(['chord']);
   const { chordDataLoading } = useSettings();
 
@@ -61,5 +61,3 @@ const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): JSX.Ele
     </DropdownMenu>
   );
 };
-
-export default ChordSelector;

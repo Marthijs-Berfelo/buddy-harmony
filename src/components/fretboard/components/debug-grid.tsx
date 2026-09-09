@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-const DebugGrid = () => (
+export const DebugGrid = () => (
   <Fragment>
     <defs>
       <pattern id="grid" width="1" height="1" patternUnits="userSpaceOnUse">
@@ -10,5 +10,3 @@ const DebugGrid = () => (
     <rect width="100%" height="100%" fill="url(#grid)" />
   </Fragment>
 );
-
-export default DebugGrid;

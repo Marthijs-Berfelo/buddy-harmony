@@ -1,4 +1,4 @@
-export { default as ChordSelector } from './ChordSelector';
-export { default as KeySelector } from './KeySelector';
-export { default as ScaleSelector } from './ScaleSelector';
-export { default as SettingsTools } from './SettingsTools';
+export { ChordSelector } from './chord-selector';
+export { KeySelector } from './key-selector';
+export { ScaleSelector } from './scale-selector';
+export { SettingsTools } from './settings-tools';

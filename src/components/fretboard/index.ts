@@ -1,4 +1,2 @@
-import DebugGrid from './components/DebugGrid';
-import Diagram from './components/Diagram';
-
-export { DebugGrid, Diagram };
+export { DebugGrid } from './components/debug-grid';
+export { Diagram } from './components/diagram';

@@ -13,9 +13,13 @@ import { useTranslation } from 'react-i18next';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const LanguageSelector = lazy(() => import('./components/LanguageSelector'));
+const LanguageSelector = lazy(() =>
+  import('./components/language-selector').then((module) => ({
+    default: module.LanguageSelector,
+  }))
+);
 
-const Header = (): JSX.Element => {
+export const Header = (): JSX.Element => {
   const { t } = useTranslation('common');
   return (
     <div className="flex flex-row w-full p-4 bg-opacity-80 backdrop-saturate-200 backdrop-blur bg-green-100 border-green-100 z-50 fixed">
@@ -65,5 +69,3 @@ const Header = (): JSX.Element => {
     </div>
   );
 };
-
-export default Header;

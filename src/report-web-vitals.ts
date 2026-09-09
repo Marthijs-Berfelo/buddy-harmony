@@ -2,7 +2,7 @@ import { onCLS, onFCP, onLCP, onTTFB, onINP, type MetricType } from 'web-vitals'
 
 type ReportHandler = (metric: MetricType) => void;
 
-const reportWebVitals = (onPerfEntry?: ReportHandler) => {
+export const reportWebVitals = (onPerfEntry?: ReportHandler) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     onCLS(onPerfEntry);
     onFCP(onPerfEntry);
@@ -11,5 +11,3 @@ const reportWebVitals = (onPerfEntry?: ReportHandler) => {
     onINP(onPerfEntry);
   }
 };
-
-export default reportWebVitals;

@@ -2,11 +2,11 @@ import type { JSX } from 'react';
 import React from 'react';
 import { useSettings } from 'hooks';
 import { Diagram } from 'components/fretboard';
-import { useGuitarScaleContext } from '../hooks';
+import { useGuitarScale } from '../hooks';
 import { DotText, FretNumberPosition } from 'components/fretboard/options';
 
-const ScaleContent = (): JSX.Element => {
-  const { scaleModel, printRef, printStyle, selectedKey, scale } = useGuitarScaleContext();
+export const ScaleContent = (): JSX.Element => {
+  const { scaleModel, printRef, printStyle, selectedKey, scale } = useGuitarScale();
   const { orientation } = useSettings();
 
   return (
@@ -30,5 +30,3 @@ const ScaleContent = (): JSX.Element => {
     </div>
   );
 };
-
-export default ScaleContent;

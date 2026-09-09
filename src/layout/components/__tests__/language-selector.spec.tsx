@@ -2,7 +2,7 @@ import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { EventEmitter } from 'events';
 import { I18nextProvider } from 'react-i18next';
-import LanguageSelector from '../LanguageSelector';
+import { LanguageSelector } from '../language-selector';
 
 interface FakeI18n {
   language: string | undefined;

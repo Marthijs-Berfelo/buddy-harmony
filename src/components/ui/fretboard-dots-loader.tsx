@@ -9,7 +9,7 @@ const DOT_POSITIONS = [
   { left: '75%', top: '75%', delay: 1.2 },
 ];
 
-const FretboardDotsLoader = (): JSX.Element => {
+export const FretboardDotsLoader = (): JSX.Element => {
   return (
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-sm"
@@ -40,5 +40,3 @@ const FretboardDotsLoader = (): JSX.Element => {
     </div>
   );
 };
-
-export default FretboardDotsLoader;

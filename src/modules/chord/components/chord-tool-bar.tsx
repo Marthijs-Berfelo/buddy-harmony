@@ -1,16 +1,15 @@
 import type { JSX } from 'react';
 import { useSettings } from 'hooks';
 import { ChordSelector, KeySelector } from 'components/toolbar';
-import Toolbar from 'layout/toolbar/Toolbar';
+import { Toolbar } from 'layout/toolbar';
 import React from 'react';
-import { Pages } from 'routing/pages.ts';
-import { useGuitarChordContext } from '../hooks';
+import { Pages } from 'routing/pages';
+import { useGuitarChord } from '../hooks';
 
 const context = Pages.CHORD;
 
-const ChordToolBar = (): JSX.Element => {
-  const { keys, selectedKey, setSelectedKey, chords, chord, setChord, printRef } =
-    useGuitarChordContext();
+export const ChordToolBar = (): JSX.Element => {
+  const { keys, selectedKey, setSelectedKey, chords, chord, setChord, printRef } = useGuitarChord();
   const { chordGuitarTypes } = useSettings();
   return (
     <Toolbar
@@ -25,5 +24,3 @@ const ChordToolBar = (): JSX.Element => {
     />
   );
 };
-
-export default ChordToolBar;

@@ -10,7 +10,7 @@ type FretboardProps = {
   startAt: number;
 };
 
-const Fretboard = (props: FretboardProps): JSX.Element => {
+export const Fretboard = (props: FretboardProps): JSX.Element => {
   const { stringsPath, stringWidth, fretsPath, fretWidth, includeNut } = useFretboard(props);
   return (
     <Fragment>
@@ -22,8 +22,6 @@ const Fretboard = (props: FretboardProps): JSX.Element => {
     </Fragment>
   );
 };
-
-export default Fretboard;
 
 type FretboardHook = {
   stringsPath: () => string;

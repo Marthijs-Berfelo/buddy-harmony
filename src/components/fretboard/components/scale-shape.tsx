@@ -9,13 +9,11 @@ interface ScaleShapeProps extends ShapeProps {
   text: DotText;
 }
 
-const ScaleShape = (props: ScaleShapeProps): JSX.Element => {
+export const ScaleShape = (props: ScaleShapeProps): JSX.Element => {
   const { scaleShape } = useScaleShape(props);
 
   return <g>{scaleShape}</g>;
 };
-
-export default ScaleShape;
 
 type ScaleShapeHook = {
   scaleShape: JSX.Element[];

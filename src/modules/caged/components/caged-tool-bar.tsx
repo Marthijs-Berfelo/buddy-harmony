@@ -2,15 +2,14 @@ import type { JSX } from 'react';
 import React from 'react';
 import { Pages } from 'routing/pages';
 import { ChordSelector, KeySelector } from 'components/toolbar';
-import Toolbar from 'layout/toolbar/Toolbar';
+import { Toolbar } from 'layout/toolbar';
 import { useSettings } from 'hooks';
-import { useCagedContext } from '../hooks';
+import { useCaged } from '../hooks';
 
 const context = Pages.CAGED;
 
-const CagedToolBar = (): JSX.Element => {
-  const { keys, selectedKey, setSelectedKey, chords, chord, setChord, printRef } =
-    useCagedContext();
+export const CagedToolBar = (): JSX.Element => {
+  const { keys, selectedKey, setSelectedKey, chords, chord, setChord, printRef } = useCaged();
   const { chordGuitarTypes } = useSettings();
   return (
     <Toolbar
@@ -25,5 +24,3 @@ const CagedToolBar = (): JSX.Element => {
     />
   );
 };
-
-export default CagedToolBar;
