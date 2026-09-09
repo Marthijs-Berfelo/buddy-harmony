@@ -18,6 +18,7 @@ const languageLabels: CustomLabels = {
 
 const defaultLanguageCode = 'nl-NL';
 const defaultLanguage = 'NL';
+const languageChangeEvent = 'languageChanged';
 
 const getInitialLanguage = (): string => {
   const stored = localStorage.getItem('i18nextLng');
@@ -35,7 +36,7 @@ const languageCode = (lang: string): string => {
 };
 
 export const useLanguage = (): LanguageHook => {
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslation('common');
   const initialLang = i18n.resolvedLanguage || i18n.language;
   const browserLanguage = useRef<string>(initialLang);
   const selectorRef = useRef<HTMLDivElement>(null);
@@ -51,10 +52,10 @@ export const useLanguage = (): LanguageHook => {
       setSelectedLanguage(lang.split('-')[1]?.toUpperCase() ?? defaultLanguage);
     };
 
-    i18n.on('languageChanged', handleLanguageChanged);
+    i18n.on(languageChangeEvent, handleLanguageChanged);
 
     return () => {
-      i18n.off('languageChanged', handleLanguageChanged);
+      i18n.off(languageChangeEvent, handleLanguageChanged);
       i18n.changeLanguage(browserLanguage.current).catch(console.error);
       setSelectedLanguage(browserLanguage.current.split('-')[1]?.toUpperCase() ?? defaultLanguage);
     };
@@ -74,29 +75,30 @@ export const useLanguage = (): LanguageHook => {
       return;
     }
 
-    // Read translations via `i18n.t` (not the `t` from useTranslation) so this
-    // always reflects i18n's *current* language: `i18n.changeLanguage` resolves
-    // asynchronously, so the `t` snapshot bound at render time can still be
-    // pointing at the previous language when this effect (re-)runs.
+    /**
+     * Updates ARIA labels for the language selector button and its options.
+     * Uses i18n.t directly to ensure labels reflect the current language state,
+     * as useTranslation's t may lag behind during async language changes.
+     */
     const labelSelector = () => {
-      container
-        .querySelector('button')
-        ?.setAttribute('aria-label', i18n.t('common:language-selector'));
+      const a11yKey = 'aria-label';
+      container.querySelector('button')?.setAttribute(a11yKey, i18n.t('common:language-selector'));
       container.querySelectorAll('li[role="option"]').forEach((option) => {
         const countryCode = option.id.split('-').pop();
         if (!countryCode) {
           return;
         }
-        option.setAttribute('aria-label', i18n.t(`common:language-option.${countryCode}`));
+        const code = countryCode as 'US' | 'GB' | 'NL';
+        option.setAttribute(a11yKey, i18n.t(`common:language-option.${code}`));
       });
     };
 
     labelSelector();
-    i18n.on('languageChanged', labelSelector);
+    i18n.on(languageChangeEvent, labelSelector);
     const observer = new MutationObserver(labelSelector);
     observer.observe(container, { childList: true, subtree: true });
     return () => {
-      i18n.off('languageChanged', labelSelector);
+      i18n.off(languageChangeEvent, labelSelector);
       observer.disconnect();
     };
   }, [i18n, selectedLanguage]);

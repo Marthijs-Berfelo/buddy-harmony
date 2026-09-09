@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Pages } from '@/common/routing/pages';
+import { Pages } from 'common/routing/pages';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const LanguageSelector = lazy(() => import('./components/LanguageSelector'));
 
 const Header = (): JSX.Element => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
   return (
     <div className="flex flex-row w-full p-4 bg-opacity-80 backdrop-saturate-200 backdrop-blur bg-green-100 border-green-100 z-50 fixed">
       <div className="flex grow justify-between items-center text-green-900">
@@ -26,7 +26,7 @@ const Header = (): JSX.Element => {
               variant="ghost"
               size="icon"
               className="bg-green-600 border-green-600 hover:bg-green-700 text-white"
-              aria-label={t('common:menu')}
+              aria-label={t('menu')}
             >
               <FontAwesomeIcon className="text-xl" icon={faBars} />
             </Button>
@@ -47,7 +47,7 @@ const Header = (): JSX.Element => {
                           : 'text-green-700'
                       }`}
                     >
-                      {t('common:routing.page', { context: name[0] })}
+                      {t('routing.page', { context: name[0] })}
                     </div>
                   )}
                 </NavLink>
@@ -56,7 +56,7 @@ const Header = (): JSX.Element => {
           </DropdownMenuContent>
         </DropdownMenu>
         <p className="py-1.5 mx-4 font-sans font-bold text-2xl bg-clip-text text-transparent bg-linear-to-tr from-green-600 to-green-400">
-          {t('common:title')}
+          {t('title')}
         </p>
         <Suspense fallback={undefined}>
           <LanguageSelector />

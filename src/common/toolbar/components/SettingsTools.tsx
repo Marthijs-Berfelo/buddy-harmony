@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import React, { useEffect } from 'react';
-import { GuitarType, useSettings } from '@/hooks';
+import { GuitarType, useSettings } from 'hooks';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -19,10 +19,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
-import { FretNumberType, Orientation } from '@/common/fretboard/options';
+import { FretNumberType, Orientation } from 'common/fretboard/options';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGears } from '@fortawesome/free-solid-svg-icons';
-import { Pages } from '../../routing/pages';
+import { Pages } from 'common/routing/pages';
 
 export interface SettingsToolsProps {
   supportedGuitars?: GuitarType[];
@@ -59,7 +59,7 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
         <Button
           size="icon"
           className="mr-1 bg-blue-500 text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/40"
-          aria-label={t('settings:button-label')}
+          aria-label={t('button-label')}
         >
           <FontAwesomeIcon className="text-xl" icon={faGears} />
         </Button>
@@ -67,7 +67,7 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
       <DropdownMenuContent className="w-auto">
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className="flex capitalize pb-3">
-            {t('settings:guitar.label', { type: guitarType.name }).toLowerCase()}
+            {t('guitar.label', { type: guitarType.name }).toLowerCase()}
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent className="flex flex-col">
             {Array.from(guitarTypes)
@@ -81,26 +81,26 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
                   }
                   onClick={() => setGuitarType(type)}
                 >
-                  {t('settings:guitar.type', { context: type.name })}
+                  {t('guitar.type', { context: type.name })}
                 </DropdownMenuItem>
               ))}
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <Select value={tuningType.name} disabled>
           <SelectTrigger className="flex items-center">
-            <SelectValue>{t('settings:tuning', { context: tuningType.name })}</SelectValue>
+            <SelectValue>{t('tuning', { context: tuningType.name })}</SelectValue>
           </SelectTrigger>
           <SelectContent>
             {tuningTypes.map((tuning) => (
               <SelectItem key={tuning.name} value={tuning.name}>
-                {t('settings:tuning', { context: tuning.name })}
+                {t('tuning', { context: tuning.name })}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className="pt-3">
-            {t('settings:layout.label', {
+            {t('layout.label', {
               orientation,
               handed: leftHanded ? 'left' : 'right',
               fretNumbers,
@@ -108,14 +108,14 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuItem onClick={() => toggleOrientation()} disabled={page === Pages.CAGED}>
-              {t('settings:layout.orientation', { context: orientationLabel })}
+              {t('layout.orientation', { context: orientationLabel })}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setLeftHanded((value) => !value)}>
-              {t('settings:layout.handed.label', { context: leftHanded ? 'right' : 'left' })}
+              {t('layout.handed.label', { context: leftHanded ? 'right' : 'left' })}
             </DropdownMenuItem>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                {t('settings:layout.fret-numbers', { context: fretNumbers })}
+                {t('layout.fret-numbers', { context: fretNumbers })}
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
                 {Object.keys(FretNumberType)
@@ -125,7 +125,7 @@ const SettingsTools = ({ supportedGuitars, page }: SettingsToolsProps): JSX.Elem
                       key={fretNumber}
                       onClick={() => onSelectFretNumber(fretNumber)}
                     >
-                      {t('settings:layout.fret-numbers', { context: fretNumber })}
+                      {t('layout.fret-numbers', { context: fretNumber })}
                     </DropdownMenuItem>
                   ))}
               </DropdownMenuSubContent>
