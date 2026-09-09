@@ -1,15 +1,16 @@
 import { useRef } from 'react';
-import { useGuitarScale } from './hooks';
+import { GuitarScaleProvider } from './hooks';
 import ScaleToolBar from './components/ScaleToolBar';
 import ScaleContent from './components/ScaleContent';
 
 const ScalePage = () => {
   const printRef = useRef<HTMLDivElement>(null);
-  const hook = useGuitarScale({ printRef });
   return (
     <div className="page" id="scale-page">
-      <ScaleToolBar {...hook} />
-      <ScaleContent {...hook} />
+      <GuitarScaleProvider printRef={printRef}>
+        <ScaleToolBar />
+        <ScaleContent />
+      </GuitarScaleProvider>
     </div>
   );
 };
