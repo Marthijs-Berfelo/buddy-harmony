@@ -9,9 +9,9 @@ import {
   KeysHook,
   useKeys,
   useSettings,
-} from '@/hooks';
+} from 'hooks';
 import { CagedChords, cagedConfigs } from './caged-constants';
-import { Orientation } from '@/common/fretboard/options';
+import { Orientation } from 'common/fretboard/options';
 import { buildCagedChords, cagedChordsForKey } from './caged-utils';
 
 export interface CagedHook extends KeysHook, ChordsHook, Printable {

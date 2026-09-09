@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { createElement, PropsWithChildren, RefObject } from 'react';
 import { useCaged } from '../use-caged';
-import { computeGuitarTypes, SettingsContextProvider, useSettings } from '@/hooks';
+import { computeGuitarTypes, SettingsContextProvider, useSettings } from 'hooks';
 
 const wrapper = ({ children }: PropsWithChildren) =>
   createElement(SettingsContextProvider, null, children);

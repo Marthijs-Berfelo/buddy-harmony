@@ -1,4 +1,4 @@
-import { computeGuitarTypes, extractTuning, keys, loadChordDb, scaleGuitarTypes } from '@/hooks';
+import { computeGuitarTypes, extractTuning, keys, loadChordDb, scaleGuitarTypes } from 'hooks';
 
 describe('constants', () => {
   test('keys matches the guitar keys from chords-db', async () => {

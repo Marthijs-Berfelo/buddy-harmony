@@ -13,7 +13,7 @@ import Fretboard from './Fretboard';
 import FretNumbers from './FretNumbers';
 import ScaleShape from './ScaleShape';
 import Tuning from './Tuning';
-import { ChordPosition, useSettings } from '@/hooks';
+import { ChordPosition, useSettings } from 'hooks';
 import ChordShape from './ChordShape';
 import { useDirectional } from '../utils/directional';
 
