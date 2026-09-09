@@ -11,7 +11,7 @@ import {
   useSettings,
 } from 'hooks';
 import { CagedChords, cagedConfigs } from './caged-constants';
-import { Orientation } from 'common/fretboard/options';
+import { Orientation } from 'components/fretboard/options';
 import { buildCagedChords, cagedChordsForKey } from './caged-utils';
 
 export interface CagedHook extends KeysHook, ChordsHook, Printable {

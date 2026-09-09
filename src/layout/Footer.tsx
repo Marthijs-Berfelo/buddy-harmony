@@ -6,7 +6,7 @@ import packageJson from '@/../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { appInfo } from 'common';
+import { appInfo } from 'lib/app-info';
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation('common');

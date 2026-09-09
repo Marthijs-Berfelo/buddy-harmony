@@ -1,8 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Pages } from './pages';
-import { Layout } from '../layout';
+import { Layout } from 'layout';
 import { lazy } from 'react';
-import { withMinDelay } from 'common/utils';
+import { withMinDelay } from 'lib/delay';
 
 const FRETBOARD_LOADER_MIN_DISPLAY_MS = 3000;
 

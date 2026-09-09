@@ -19,10 +19,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
-import { FretNumberType, Orientation } from 'common/fretboard/options';
+import { FretNumberType, Orientation } from 'components/fretboard/options';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGears } from '@fortawesome/free-solid-svg-icons';
-import { Pages } from 'common/routing/pages';
+import { Pages } from 'routing/pages';
 
 export interface SettingsToolsProps {
   supportedGuitars?: GuitarType[];

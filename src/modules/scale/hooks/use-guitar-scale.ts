@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import { Orientation, ScaleModel } from 'common/fretboard/options';
+import { Orientation, ScaleModel } from 'components/fretboard/options';
 import * as gs from 'guitar-scales';
 import { KeysHook, useKeys, Printable, PrintableProps } from 'hooks';
 
