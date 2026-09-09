@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import NoteWaveLoader from '@/components/ui/note-wave-loader';
-import { useSettings } from '@/hooks';
+import { useSettings } from 'hooks';
 
 interface ChordSelectorProps {
   keys: string[];
@@ -17,7 +17,7 @@ interface ChordSelectorProps {
   setSelectedKey: Dispatch<SetStateAction<string | undefined>>;
 }
 const KeySelector = ({ keys, selectedKey, setSelectedKey }: ChordSelectorProps): JSX.Element => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
   const { chordDataLoading } = useSettings();
 
   if (chordDataLoading) {
@@ -38,13 +38,13 @@ const KeySelector = ({ keys, selectedKey, setSelectedKey }: ChordSelectorProps):
       disabled
       className="capitalize text-slate-500 bg-gray-200 hover:bg-gray-200 w-48"
     >
-      {t('common:key', selectedKey ? { context: 'selected', key: selectedKey } : undefined)}
+      {t('key', selectedKey ? { context: 'selected', key: selectedKey } : undefined)}
     </Button>
   ) : (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="capitalize bg-white w-48">
-          {t('common:key', selectedKey ? { context: 'selected', key: selectedKey } : undefined)}
+          {t('key', selectedKey ? { context: 'selected', key: selectedKey } : undefined)}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

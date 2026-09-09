@@ -13,7 +13,8 @@ i18n
     backend: {
       loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json`,
     },
-    fallbackLng: ['en', 'nl'],
+    fallbackLng: ['nl', 'en'],
+    lng: 'nl',
     defaultNS: 'common',
     interpolation: {
       escapeValue: false,
