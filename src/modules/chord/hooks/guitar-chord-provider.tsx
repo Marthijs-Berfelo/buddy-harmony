@@ -1,4 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  createContext,
+  JSX,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   KeysHook,
   useKeys,
@@ -9,13 +18,15 @@ import {
   useSettings,
   GuitarType,
   Printable,
-  PrintableProps,
 } from 'hooks';
 import { Orientation } from 'components/fretboard/options';
 
 export interface GuitarChordHook extends KeysHook, ChordsHook, Printable {}
 
-export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook => {
+const GuitarChordContext = createContext<GuitarChordHook | undefined>(undefined);
+
+export const GuitarChordProvider = ({ children }: PropsWithChildren): JSX.Element => {
+  const printRef = useRef<HTMLDivElement>(null);
   const { keys, selectedKey, setSelectedKey } = useKeys();
   const { guitarType, chordGuitarTypes } = useSettings();
   const isSupportedType = useCallback(
@@ -47,7 +58,7 @@ export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook =>
       orientation === Orientation.HORIZONTAL ? 'landscape' : 'portrait'
     }, margin: 0mm 30mm 30mm 30mm }`;
 
-  return {
+  const chordHook: GuitarChordHook = {
     keys,
     selectedKey,
     setSelectedKey,
@@ -57,4 +68,14 @@ export const useGuitarChord = ({ printRef }: PrintableProps): GuitarChordHook =>
     printRef,
     printStyle,
   };
+
+  return <GuitarChordContext.Provider value={chordHook}>{children}</GuitarChordContext.Provider>;
+};
+
+export const useGuitarChord = (): GuitarChordHook => {
+  const context = useContext(GuitarChordContext);
+  if (context) {
+    return context;
+  }
+  throw new Error('`useGuitarChord` must be used with `GuitarChordProvider`');
 };

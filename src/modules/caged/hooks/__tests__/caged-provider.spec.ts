@@ -1,14 +1,13 @@
 import { act, renderHook } from '@testing-library/react';
-import { createElement, PropsWithChildren, RefObject } from 'react';
-import { useCaged } from '../use-caged';
+import { createElement, PropsWithChildren } from 'react';
+import { CagedProvider, useCaged } from '../caged-provider';
 import { computeGuitarTypes, SettingsContextProvider, useSettings } from 'hooks';
 
 const wrapper = ({ children }: PropsWithChildren) =>
-  createElement(SettingsContextProvider, null, children);
-const printRef = { current: null } as RefObject<HTMLDivElement | null>;
+  createElement(SettingsContextProvider, null, createElement(CagedProvider, null, children));
 
 const renderCaged = () =>
-  renderHook(() => ({ caged: useCaged({ printRef }), settings: useSettings() }), { wrapper });
+  renderHook(() => ({ caged: useCaged(), settings: useSettings() }), { wrapper });
 
 describe('useCaged', () => {
   beforeEach(() => {

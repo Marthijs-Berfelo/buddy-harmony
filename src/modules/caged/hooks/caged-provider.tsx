@@ -1,8 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  createContext,
+  JSX,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   GuitarType,
   Printable,
-  PrintableProps,
   ChordDetail,
   ChordsHook,
   handleSelectionForChords,
@@ -18,7 +27,10 @@ export interface CagedHook extends KeysHook, ChordsHook, Printable {
   cagedChords?: CagedChords;
 }
 
-export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
+const CagedContext = createContext<CagedHook | undefined>(undefined);
+
+export const CagedProvider = ({ children }: PropsWithChildren): JSX.Element => {
+  const printRef = useRef<HTMLDivElement>(null);
   const { keys, selectedKey, setSelectedKey } = useKeys();
   const { guitarType, tuningType, chordGuitarTypes } = useSettings();
   const isSupportedType = useCallback(
@@ -62,7 +74,7 @@ export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
       orientation === Orientation.HORIZONTAL ? 'portrait' : 'portrait'
     }, margin: 0mm 30mm 30mm 30mm }`;
 
-  return {
+  const caged: CagedHook = {
     keys,
     selectedKey,
     setSelectedKey,
@@ -73,4 +85,14 @@ export const useCaged = ({ printRef }: PrintableProps): CagedHook => {
     printRef,
     printStyle,
   };
+
+  return <CagedContext.Provider value={caged}>{children}</CagedContext.Provider>;
+};
+
+export const useCaged = (): CagedHook => {
+  const context = useContext(CagedContext);
+  if (context) {
+    return context;
+  }
+  throw new Error('`useCaged` must be used with `CagedProvider`');
 };

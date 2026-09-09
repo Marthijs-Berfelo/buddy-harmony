@@ -1,14 +1,17 @@
 import { act, renderHook } from '@testing-library/react';
-import { createElement, PropsWithChildren, RefObject } from 'react';
-import { useGuitarChord } from '../use-guitar-chord';
+import { createElement, PropsWithChildren } from 'react';
+import { GuitarChordProvider, useGuitarChord } from '../guitar-chord-provider';
 import { computeGuitarTypes, SettingsContextProvider, useSettings } from 'hooks';
 
 const wrapper = ({ children }: PropsWithChildren) =>
-  createElement(SettingsContextProvider, null, children);
-const printRef = { current: null } as RefObject<HTMLDivElement | null>;
+  createElement(
+    SettingsContextProvider,
+    null,
+    createElement(GuitarChordProvider, null, children)
+  );
 
 const renderGuitarChord = () =>
-  renderHook(() => ({ chord: useGuitarChord({ printRef }), settings: useSettings() }), {
+  renderHook(() => ({ chord: useGuitarChord(), settings: useSettings() }), {
     wrapper,
   });
 
