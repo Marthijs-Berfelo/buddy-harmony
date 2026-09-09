@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.15.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.14.0...0.15.0) (2026-09-09)
+
+### Features
+
+* add compile-time type safety for translation keys ([d979d6c](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/d979d6ccc83e06f77712cd078e8cc73906f9caa6))
+
+### Bug Fixes
+
+* correct locale key mismatches and add en/nl parity test ([89fef18](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/89fef18cb2d0508b9aad6b3a6a3874fb3c8883fa))
+* resolve vite.config.ts type error for the test option ([cf36e4a](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/cf36e4aa88761955bc4abff8ac42ddf7fece07e2))
+
+### Performance Improvements
+
+* memoize settings context value and callbacks ([e830b43](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/e830b4379e745cf29ac551bc43a8e784c9143f1b))
+
+### Code Refactoring
+
+* convert module hooks to context providers to remove prop forwarding ([95565b0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/95565b04594bed1f67bca231956a142513381564))
+* convert remaining default exports to named exports and enforce kebab-case filenames ([bfbf5b4](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/bfbf5b4b54d4c31f409fd67d501d544d5464c9e7))
+* dissolve common/ folder into components, layout, routing, and lib ([dd0357f](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dd0357fbaca27dbe69f0008e979682c763941370))
+* export caged-utils helpers directly instead of via test_export ([8fcbb45](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/8fcbb4529b8ec6219d93b95560dc67e7791a56ce))
+* merge feature module hooks into their context providers ([f72833b](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f72833bdbeb5edda08f4df29c846b21c1b9240b6))
+* use dedicated common/hooks/modules aliases consistently ([36b31d1](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/36b31d196f9c04f881819c08bc95addc57a1fb30))
+
+### Dependency Updates
+
+* bump i18next in the i18next group across 1 directory ([750b3ea](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/750b3ea0d1a553d5ad474a3fd6a4c964ae578662))
+* bump lucide-react from 1.39.0 to 1.40.0 ([27a1888](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/27a18882c0ef24880d76e47828685061af12069d))
+
+### Miscellaneous Chores
+
+* remove dead code and unused assets ([8ac8405](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/8ac8405103455300da217be13bb6d6eeb823eaed))
+
+### Documentation
+
+* document kebab-case filenames, named-exports, and provider pattern ([f1a1907](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f1a19075f2db9f9cd2626c43e8bbe82dd428a2be))
+
 ## [0.14.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.13.1...0.14.0) (2026-09-08)
 
 ### Features
