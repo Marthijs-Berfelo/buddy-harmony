@@ -1,20 +1,15 @@
 import type { JSX } from 'react';
-import { useRef } from 'react';
 import { GuitarChordProvider } from './hooks';
-import ChordToolBar from './components/ChordToolBar';
-import ChordContent from './components/ChordContent';
+import { ChordToolBar } from './components/chord-tool-bar';
+import { ChordContent } from './components/chord-content';
 
-const ChordPage = (): JSX.Element => {
-  const printRef = useRef<HTMLDivElement>(null);
-
+export const ChordPage = (): JSX.Element => {
   return (
     <div className="page" id="chord-page">
-      <GuitarChordProvider printRef={printRef}>
+      <GuitarChordProvider>
         <ChordToolBar />
         <ChordContent />
       </GuitarChordProvider>
     </div>
   );
 };
-
-export default ChordPage;

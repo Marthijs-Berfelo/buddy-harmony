@@ -4,7 +4,7 @@ import './note-wave-loader.css';
 const GLYPHS = ['♪', '♫', '♪'];
 const DELAY_STEP_S = 0.15;
 
-const NoteWaveLoader = (): JSX.Element => {
+export const NoteWaveLoader = (): JSX.Element => {
   return (
     <span className="inline-flex items-center gap-1" role="status" aria-label="loading">
       {GLYPHS.map((glyph, index) => (
@@ -20,5 +20,3 @@ const NoteWaveLoader = (): JSX.Element => {
     </span>
   );
 };
-
-export default NoteWaveLoader;

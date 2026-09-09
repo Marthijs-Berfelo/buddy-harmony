@@ -15,7 +15,7 @@ interface ScaleSelectorProps {
   scale?: string;
   setScale: Dispatch<SetStateAction<string | undefined>>;
 }
-const ScaleSelector = ({
+export const ScaleSelector = ({
   selectedKey,
   scales,
   scale,
@@ -51,5 +51,3 @@ const ScaleSelector = ({
     </DropdownMenu>
   );
 };
-
-export default ScaleSelector;

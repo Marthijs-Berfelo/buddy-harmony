@@ -1,3 +1,1 @@
-import CagedPage from './CagedPage';
-
-export { CagedPage as default };
+export { CagedPage } from './caged-page';

@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import SettingsTools, { SettingsToolsProps } from 'components/toolbar/SettingsTools';
+import { SettingsTools, SettingsToolsProps } from 'components/toolbar/settings-tools';
 import { PrintableProps } from 'hooks';
 import { useReactToPrint } from 'react-to-print';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +15,7 @@ interface ToolbarProps extends SettingsToolsProps, PrintableProps {
   page: Pages;
 }
 
-const Toolbar = ({
+export const Toolbar = ({
   tools,
   page,
   supportedGuitars,
@@ -58,5 +58,3 @@ const Toolbar = ({
     </div>
   );
 };
-
-export default Toolbar;

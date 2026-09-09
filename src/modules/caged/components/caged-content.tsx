@@ -2,11 +2,11 @@ import type { JSX } from 'react';
 import React from 'react';
 import { useSettings } from 'hooks';
 import { Diagram } from 'components/fretboard';
-import { useCagedContext } from '../hooks';
+import { useCaged } from '../hooks';
 import { DotText, FretNumberPosition } from 'components/fretboard/options';
 
-const CagedContent = (): JSX.Element => {
-  const { selectedKey, cagedChords, printRef, printStyle } = useCagedContext();
+export const CagedContent = (): JSX.Element => {
+  const { selectedKey, cagedChords, printRef, printStyle } = useCaged();
   const { orientation } = useSettings();
 
   return (
@@ -177,5 +177,3 @@ const CagedContent = (): JSX.Element => {
     </div>
   );
 };
-
-export default CagedContent;

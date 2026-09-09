@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import FretboardDotsLoader from '../fretboard-dots-loader';
+import { FretboardDotsLoader } from '../fretboard-dots-loader';
 
 describe('FretboardDotsLoader', () => {
   test('renders four pulsing fret dots', () => {

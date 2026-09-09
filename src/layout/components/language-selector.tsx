@@ -2,7 +2,7 @@ import { JSX } from 'react';
 import ReactFlagsSelect from 'react-flags-select';
 import { useLanguage } from './use-language';
 
-const LanguageSelector = (): JSX.Element => {
+export const LanguageSelector = (): JSX.Element => {
   const { selectedLanguage, onSelectLanguage, languageLabels, countries, selectorRef } =
     useLanguage();
 
@@ -19,5 +19,3 @@ const LanguageSelector = (): JSX.Element => {
     </div>
   );
 };
-
-export default LanguageSelector;

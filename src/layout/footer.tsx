@@ -8,7 +8,7 @@ import { faAt, faBug } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { appInfo } from 'lib/app-info';
 
-const Footer = (): JSX.Element => {
+export const Footer = (): JSX.Element => {
   const { t } = useTranslation('common');
 
   return (
@@ -45,8 +45,6 @@ const Footer = (): JSX.Element => {
     </div>
   );
 };
-
-export default Footer;
 
 interface FooterTextProps {
   link?: string;

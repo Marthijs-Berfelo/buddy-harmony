@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import NoteWaveLoader from '../note-wave-loader';
+import { NoteWaveLoader } from '../note-wave-loader';
 
 describe('NoteWaveLoader', () => {
   test('renders three note glyphs', () => {

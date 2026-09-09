@@ -1,16 +1,16 @@
 import type { JSX } from 'react';
 import { KeySelector, ScaleSelector } from 'components/toolbar';
-import Toolbar from 'layout/toolbar/Toolbar';
+import { Toolbar } from 'layout/toolbar';
 import React from 'react';
 import { scaleGuitarTypes } from 'hooks';
-import { Pages } from 'routing/pages.ts';
-import { useGuitarScaleContext } from '../hooks';
+import { Pages } from 'routing/pages';
+import { useGuitarScale } from '../hooks';
 
 const context = Pages.SCALE;
 
-const ScaleToolBar = (): JSX.Element => {
+export const ScaleToolBar = (): JSX.Element => {
   const { keys, selectedKey, setSelectedKey, scales, scale, setScale, printRef, printDisabled } =
-    useGuitarScaleContext();
+    useGuitarScale();
   return (
     <Toolbar
       page={context}
@@ -24,5 +24,3 @@ const ScaleToolBar = (): JSX.Element => {
     />
   );
 };
-
-export default ScaleToolBar;

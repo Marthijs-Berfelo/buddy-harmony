@@ -1,20 +1,15 @@
 import type { JSX } from 'react';
-import { useRef } from 'react';
 import { CagedProvider } from './hooks';
-import CagedToolBar from './components/CagedToolBar';
-import CagedContent from './components/CagedContent';
+import { CagedToolBar } from './components/caged-tool-bar';
+import { CagedContent } from './components/caged-content';
 
-const CagedPage = (): JSX.Element => {
-  const printRef = useRef<HTMLDivElement>(null);
-
+export const CagedPage = (): JSX.Element => {
   return (
     <div className="page" id="caged-page">
-      <CagedProvider printRef={printRef}>
+      <CagedProvider>
         <CagedToolBar />
         <CagedContent />
       </CagedProvider>
     </div>
   );
 };
-
-export default CagedPage;

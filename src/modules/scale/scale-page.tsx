@@ -1,18 +1,15 @@
-import { useRef } from 'react';
+import type { JSX } from 'react';
 import { GuitarScaleProvider } from './hooks';
-import ScaleToolBar from './components/ScaleToolBar';
-import ScaleContent from './components/ScaleContent';
+import { ScaleToolBar } from './components/scale-tool-bar';
+import { ScaleContent } from './components/scale-content';
 
-const ScalePage = () => {
-  const printRef = useRef<HTMLDivElement>(null);
+export const ScalePage = (): JSX.Element => {
   return (
     <div className="page" id="scale-page">
-      <GuitarScaleProvider printRef={printRef}>
+      <GuitarScaleProvider>
         <ScaleToolBar />
         <ScaleContent />
       </GuitarScaleProvider>
     </div>
   );
 };
-
-export default ScalePage;
