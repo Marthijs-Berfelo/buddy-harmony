@@ -36,17 +36,18 @@ npx vitest run src/modules/caged/hooks/__tests__/caged-utils.spec.ts
 
 ```
 src/
-  App.tsx                    # root — BrowserRouter + TranslationsProvider + layout shell
+  app.tsx                    # root — BrowserRouter + TranslationsProvider + layout shell
   modules/                   # feature pages (chord | scale | caged)
-  common/
+  components/
     fretboard/               # SVG rendering engine (shared across all modules)
-    layout/                  # Header / Content / Footer
     toolbar/                 # shared selector components (key, chord, scale)
-    routing/pages.ts         # Pages enum — the four routes
+    ui/                      # generic UI primitives (loaders, buttons, dropdowns, …)
+  layout/                    # Header / Content / Footer / Toolbar
+  routing/pages.ts           # Pages enum — the four routes
   hooks/
     settings/                # global SettingsContext (orientation, guitar type, tuning, …)
     constants.ts             # GuitarType / StringTuningType / guitar lists
-    chord-db.ts              # thin wrapper around @tombatossals/chords-db
+    chord-db.ts              # thin wrapper over @tombatossals/chords-db
     use-keys.ts              # musical key selection hook
 ```
 
@@ -54,7 +55,7 @@ src/
 
 `SettingsContextProvider` (wraps the entire app) owns all user-facing settings and exposes them via `useSettings()`. Any component that needs orientation, left-handed mode, fret-number style, string count, or diagram style should read from this context — never manage that state locally.
 
-### SVG rendering engine (`common/fretboard/`)
+### SVG rendering engine (`components/fretboard/`)
 
 `Diagram` is the single entry-point SVG component. It composes:
 - `Fretboard` — string and fret lines
@@ -67,10 +68,10 @@ All geometry is driven by a `DiagramStyle` object (created by `diagramStyle()` i
 ### Feature modules
 
 Each module under `modules/<name>/` follows the same pattern:
-- `<Name>Page.tsx` — page wrapper (holds `printRef`, renders toolbar + content)
-- `components/<Name>ToolBar.tsx` — module-specific toolbar
-- `components/<Name>Content.tsx` — renders one or more `<Diagram>` components
-- `hooks/use-<name>.ts` — all business logic; composes `useKeys`, `useSettings`, and data hooks, returns a typed hook interface
+- `<name>-page.tsx` — page wrapper (renders toolbar + content)
+- `components/<name>-tool-bar.tsx` — module-specific toolbar
+- `components/<name>-content.tsx` — renders one or more `<Diagram>` components
+- `hooks/<name>-provider.tsx` — Context provider owning all business logic for the module (state, `printRef`, composition of `useKeys`/`useSettings`/data hooks) plus its `use<Name>` accessor hook; there is no separate standalone hook file — see "File naming & exports" below
 
 Chord and CAGED modules share `chordGuitarTypes` (instruments from chords-db); the scale module uses `scaleGuitarTypes` (hardcoded tunings). The CAGED module additionally uses `caged-constants.ts` (chord-to-CAGED config map) and `caged-utils.ts` (chord building logic).
 
@@ -91,6 +92,13 @@ All user-facing strings go through `i18next` / `react-i18next`. Translation file
 Use Tailwind utility classes for styling, not inline `style={{}}` objects. Reserve inline `style` for genuinely dynamic per-instance values (e.g. a computed position or an index-based `animationDelay`) that can't be expressed as a class.
 
 Custom `@keyframes`/animations belong in a CSS file co-located next to the component that uses them (e.g. `fretboard-dots-loader.css` beside `fretboard-dots-loader.tsx`), imported with `import './foo.css'` — not appended to the shared `src/index.css`. Shared/global styles (e.g. `common/Page.css`) are the exception, reserved for styles genuinely shared across multiple modules.
+
+### File naming & exports
+
+- **Filenames are kebab-case** for every `.ts`/`.tsx` file (e.g. `chord-selector.tsx`, `settings-context-provider.tsx`), including test files (`chord-selector.spec.tsx`). No PascalCase or camelCase filenames.
+- **Named exports only.** Components, hooks, and utilities are exported as `export const Foo = ...` / `export function useFoo() {...}`, never `export default`. This keeps import statements self-documenting and rename-safe.
+  - The one unavoidable exception is `React.lazy()`, which requires a module with a `default` export. At those call sites, map the named export instead of adding a real default export: `lazy(() => import('./foo').then((m) => ({ default: m.Foo })))`.
+- **Context modules follow the `*-provider.tsx` pattern**: a single file exports both the `<Name>Provider` component and its `use<Name>` accessor hook. There is no separate `use-<name>.ts` hook file — the provider owns all state and logic directly, and `useRef` values (like `printRef`) are created inside the provider, not passed in as props.
 
 ## CI / GitHub Actions
 
