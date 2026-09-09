@@ -16,7 +16,7 @@ import {
   FretNumberType,
   Orientation,
   ScaleModel,
-} from 'common/fretboard/options';
+} from 'components/fretboard/options';
 import {
   ChordPosition,
   computeGuitarTypes,
@@ -25,7 +25,7 @@ import {
   scaleGuitarTypes,
   StringTuningType,
 } from 'hooks';
-import { withMinDelay } from 'common/utils';
+import { withMinDelay } from 'lib/delay';
 
 const CHORD_FRETS = 5;
 const DEFAULT_FRETS = 12;

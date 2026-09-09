@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Pages } from 'common/routing/pages';
+import { Pages } from 'routing/pages';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { faBars } from '@fortawesome/free-solid-svg-icons';

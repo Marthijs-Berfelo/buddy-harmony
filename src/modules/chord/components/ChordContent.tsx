@@ -1,11 +1,12 @@
 import type { JSX } from 'react';
 import { useSettings, ChordPosition } from 'hooks';
-import { Diagram } from 'common/fretboard';
+import { Diagram } from 'components/fretboard';
 import React from 'react';
-import { GuitarChordHook } from '../hooks';
-import { DotText, FretNumberPosition } from 'common/fretboard/options';
+import { useGuitarChordContext } from '../hooks';
+import { DotText, FretNumberPosition } from 'components/fretboard/options';
 
-const ChordContent = ({ chord, printRef, printStyle }: GuitarChordHook): JSX.Element => {
+const ChordContent = (): JSX.Element => {
+  const { chord, printRef, printStyle } = useGuitarChordContext();
   const { orientation } = useSettings();
 
   return (

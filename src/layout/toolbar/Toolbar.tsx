@@ -1,14 +1,14 @@
 import type { JSX } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import SettingsTools, { SettingsToolsProps } from './components/SettingsTools';
+import SettingsTools, { SettingsToolsProps } from 'components/toolbar/SettingsTools';
 import { PrintableProps } from 'hooks';
 import { useReactToPrint } from 'react-to-print';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Pages } from 'common/routing/pages';
+import { Pages } from 'routing/pages';
 import { useTranslation } from 'react-i18next';
-import { enumKeyByValue } from '../utils';
+import { enumKeyByValue } from 'lib/enum-helper';
 
 interface ToolbarProps extends SettingsToolsProps, PrintableProps {
   tools: JSX.Element[];

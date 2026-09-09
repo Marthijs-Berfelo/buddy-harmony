@@ -1,21 +1,16 @@
 import type { JSX } from 'react';
 import { useSettings } from 'hooks';
-import { ChordSelector, KeySelector, Toolbar } from 'common';
+import { ChordSelector, KeySelector } from 'components/toolbar';
+import Toolbar from 'layout/toolbar/Toolbar';
 import React from 'react';
-import { Pages } from 'common/routing/pages.ts';
-import { GuitarChordHook } from '../hooks';
+import { Pages } from 'routing/pages.ts';
+import { useGuitarChordContext } from '../hooks';
 
 const context = Pages.CHORD;
 
-const ChordToolBar = ({
-  keys,
-  selectedKey,
-  setSelectedKey,
-  chords,
-  chord,
-  setChord,
-  printRef,
-}: GuitarChordHook): JSX.Element => {
+const ChordToolBar = (): JSX.Element => {
+  const { keys, selectedKey, setSelectedKey, chords, chord, setChord, printRef } =
+    useGuitarChordContext();
   const { chordGuitarTypes } = useSettings();
   return (
     <Toolbar

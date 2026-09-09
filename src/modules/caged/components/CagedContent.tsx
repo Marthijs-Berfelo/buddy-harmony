@@ -1,16 +1,12 @@
 import type { JSX } from 'react';
 import React from 'react';
 import { useSettings } from 'hooks';
-import { Diagram } from 'common/fretboard';
-import { CagedHook } from '../hooks';
-import { DotText, FretNumberPosition } from 'common/fretboard/options';
+import { Diagram } from 'components/fretboard';
+import { useCagedContext } from '../hooks';
+import { DotText, FretNumberPosition } from 'components/fretboard/options';
 
-const CagedContent = ({
-  selectedKey,
-  cagedChords,
-  printRef,
-  printStyle,
-}: CagedHook): JSX.Element => {
+const CagedContent = (): JSX.Element => {
+  const { selectedKey, cagedChords, printRef, printStyle } = useCagedContext();
   const { orientation } = useSettings();
 
   return (

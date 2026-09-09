@@ -1,17 +1,12 @@
 import type { JSX } from 'react';
 import React from 'react';
 import { useSettings } from 'hooks';
-import { Diagram } from 'common/fretboard';
-import { GuitarScaleHook } from '../hooks';
-import { DotText, FretNumberPosition } from 'common/fretboard/options';
+import { Diagram } from 'components/fretboard';
+import { useGuitarScaleContext } from '../hooks';
+import { DotText, FretNumberPosition } from 'components/fretboard/options';
 
-const ScaleContent = ({
-  scaleModel,
-  printRef,
-  printStyle,
-  selectedKey,
-  scale,
-}: GuitarScaleHook): JSX.Element => {
+const ScaleContent = (): JSX.Element => {
+  const { scaleModel, printRef, printStyle, selectedKey, scale } = useGuitarScaleContext();
   const { orientation } = useSettings();
 
   return (

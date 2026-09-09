@@ -1,6 +1,6 @@
 import { chordTuning, getInstruments, loadChordDb } from './chord-db';
 import { RefObject } from 'react';
-import { Orientation } from 'common/fretboard/options';
+import { Orientation } from 'components/fretboard/options';
 
 const DEFAULT_TYPE = 'guitar';
 
