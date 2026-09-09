@@ -1,0 +1,1 @@
+@keyframes note-wave{0%,60%,to{opacity:.5;transform:translateY(0)}30%{opacity:1;transform:translateY(-5px)}}.animate-note-wave{animation:1s ease-in-out infinite note-wave}
