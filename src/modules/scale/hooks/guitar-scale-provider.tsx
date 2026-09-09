@@ -1,7 +1,17 @@
-import { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  JSX,
+  PropsWithChildren,
+  SetStateAction,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Orientation, ScaleModel } from 'components/fretboard/options';
 import * as gs from 'guitar-scales';
-import { KeysHook, useKeys, Printable, PrintableProps } from 'hooks';
+import { KeysHook, useKeys, Printable } from 'hooks';
 
 export interface GuitarScaleHook extends KeysHook, Printable {
   scales: string[];
@@ -12,18 +22,12 @@ export interface GuitarScaleHook extends KeysHook, Printable {
 
 const guitarScale = gs.GuitarScale;
 
-export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook => {
-  const { keys, selectedKey, setSelectedKey } = useKeys();
-  // const { tuningType } = useSettings();
-  const [scale, setScale] = useState<string>();
+const GuitarScaleContext = createContext<GuitarScaleHook | undefined>(undefined);
 
-  // useEffect(() => {
-  //   TODO library error when setting tuning
-  // console.log('TUNING', tuningType);
-  // const newTuning = { ...guitarScale.tuning };
-  // newTuning.setTuning(tuningType.tuning);
-  // guitarScale.setTuning(newTuning);
-  // }, [tuningType]);
+export const GuitarScaleProvider = ({ children }: PropsWithChildren): JSX.Element => {
+  const printRef = useRef<HTMLDivElement>(null);
+  const { keys, selectedKey, setSelectedKey } = useKeys();
+  const [scale, setScale] = useState<string>();
 
   const scaleModel = useMemo(() => {
     if (!!selectedKey && !!scale) {
@@ -35,7 +39,7 @@ export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook =>
   const printStyle = (_: Orientation): string =>
     `@page: { size: A4 portrait, margin: 0mm 30mm 30mm 30mm }`;
 
-  return {
+  const scaleHook: GuitarScaleHook = {
     keys,
     selectedKey,
     setSelectedKey,
@@ -46,4 +50,14 @@ export const useGuitarScale = ({ printRef }: PrintableProps): GuitarScaleHook =>
     printRef,
     printStyle,
   };
+
+  return <GuitarScaleContext.Provider value={scaleHook}>{children}</GuitarScaleContext.Provider>;
+};
+
+export const useGuitarScale = (): GuitarScaleHook => {
+  const context = useContext(GuitarScaleContext);
+  if (context) {
+    return context;
+  }
+  throw new Error('`useGuitarScale` must be used with `GuitarScaleProvider`');
 };

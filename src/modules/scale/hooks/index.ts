@@ -1,2 +1,1 @@
-export * from './use-guitar-scale';
-export * from './guitar-scale-context';
+export * from './guitar-scale-provider';

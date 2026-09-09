@@ -1,2 +1,1 @@
-export * from './use-caged';
-export * from './caged-context';
+export * from './caged-provider';
