@@ -24,7 +24,7 @@
     "handed": {
       "label": "Handed",
       "label_left": "Linkshandig",
-      "handed_right": "Rechtshandig",
+      "label_right": "Rechtshandig",
       "short": "",
       "short_left": "LH",
       "short_right": "RH"
