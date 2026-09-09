@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import KeySelector from '../KeySelector';
-import { SettingsContextProvider } from '@/hooks';
+import { SettingsContextProvider } from 'hooks';
 
 i18n.init({ resources: {}, lng: 'en', fallbackLng: 'en' });
 

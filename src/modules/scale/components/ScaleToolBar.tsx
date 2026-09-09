@@ -1,8 +1,8 @@
 import type { JSX } from 'react';
-import { KeySelector, ScaleSelector, Toolbar } from '../../../common';
+import { KeySelector, ScaleSelector, Toolbar } from 'common';
 import React from 'react';
-import { scaleGuitarTypes } from '@/hooks';
-import { Pages } from '@/common/routing/pages.ts';
+import { scaleGuitarTypes } from 'hooks';
+import { Pages } from 'common/routing/pages.ts';
 import { GuitarScaleHook } from '../hooks';
 
 const context = Pages.SCALE;

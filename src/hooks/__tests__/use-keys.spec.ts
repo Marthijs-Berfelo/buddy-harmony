@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import { useKeys } from '@/hooks';
-import { keys } from '@/hooks';
+import { useKeys } from 'hooks';
+import { keys } from 'hooks';
 
 describe('useKeys', () => {
   test('exposes the full list of keys with no key selected initially', () => {

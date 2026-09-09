@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import { Orientation, ScaleModel } from '@/common/fretboard/options';
+import { Orientation, ScaleModel } from 'common/fretboard/options';
 import * as gs from 'guitar-scales';
-import { KeysHook, useKeys, Printable, PrintableProps } from '@/hooks';
+import { KeysHook, useKeys, Printable, PrintableProps } from 'hooks';
 
 export interface GuitarScaleHook extends KeysHook, Printable {
   scales: string[];

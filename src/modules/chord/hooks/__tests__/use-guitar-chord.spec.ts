@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { createElement, PropsWithChildren, RefObject } from 'react';
 import { useGuitarChord } from '../use-guitar-chord';
-import { computeGuitarTypes, SettingsContextProvider, useSettings } from '@/hooks';
+import { computeGuitarTypes, SettingsContextProvider, useSettings } from 'hooks';
 
 const wrapper = ({ children }: PropsWithChildren) =>
   createElement(SettingsContextProvider, null, children);

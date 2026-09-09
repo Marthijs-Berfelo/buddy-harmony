@@ -1,9 +1,9 @@
 import type { JSX } from 'react';
 import React from 'react';
-import { useSettings } from '@/hooks';
-import { Diagram } from '@/common/fretboard';
+import { useSettings } from 'hooks';
+import { Diagram } from 'common/fretboard';
 import { GuitarScaleHook } from '../hooks';
-import { DotText, FretNumberPosition } from '@/common/fretboard/options';
+import { DotText, FretNumberPosition } from 'common/fretboard/options';
 
 const ScaleContent = ({
   scaleModel,

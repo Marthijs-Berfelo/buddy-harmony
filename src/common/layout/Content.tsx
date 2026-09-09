@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { SettingsContextProvider } from '@/hooks';
+import { SettingsContextProvider } from 'hooks';
 import FretboardDotsLoader from '@/components/ui/fretboard-dots-loader';
 
 const Content = (): JSX.Element => {

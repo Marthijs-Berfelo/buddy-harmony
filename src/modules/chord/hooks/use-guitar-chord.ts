@@ -10,8 +10,8 @@ import {
   GuitarType,
   Printable,
   PrintableProps,
-} from '@/hooks';
-import { Orientation } from '@/common/fretboard/options';
+} from 'hooks';
+import { Orientation } from 'common/fretboard/options';
 
 export interface GuitarChordHook extends KeysHook, ChordsHook, Printable {}
 
