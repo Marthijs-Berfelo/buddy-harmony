@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.2](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.16.1...0.16.2) (2026-09-15)
+
+### Bug Fixes
+
+* force tmp to patched version via npm overrides ([bdbb46d](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/bdbb46d60c6347a6b2e7700e9b024e3108d8b957))
+
 ## [0.16.1](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.16.0...0.16.1) (2026-09-15)
 
 ### Miscellaneous Chores
