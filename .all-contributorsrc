@@ -13,6 +13,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "MisterWanted",
+      "name": "MisterWanted",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20927987?v=4",
+      "profile": "https://github.com/MisterWanted",
+      "contributions": [
+        "code",
+        "a11y"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -20,5 +30,7 @@
   "projectOwner": "Marthijs-Berfelo",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitType": "docs",
+  "commitConvention": "angular"
 }
