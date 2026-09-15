@@ -1,7 +1,5 @@
 {
-  "files": [
-    "README.md"
-  ],
+  "files": ["README.md"],
   "imageSize": 100,
   "commit": false,
   "contributors": [
@@ -10,9 +8,14 @@
       "name": "xavier-kong",
       "avatar_url": "https://avatars.githubusercontent.com/u/86543341?v=4",
       "profile": "https://github.com/xavier-kong",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
+    },
+    {
+      "login": "Marthijs-Berfelo",
+      "name": "Marthijs Berfelo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42251286?v=4",
+      "profile": "https://github.com/Marthijs-Berfelo",
+      "contributions": ["code"]
     }
   ],
   "contributorsPerLine": 7,
@@ -20,5 +23,7 @@
   "projectOwner": "Marthijs-Berfelo",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }
+

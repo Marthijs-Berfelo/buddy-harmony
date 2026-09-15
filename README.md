@@ -1,6 +1,6 @@
 # Buddy Harmony
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Build](https://github.com/Marthijs-Berfelo/buddy-harmony/actions/workflows/main-build.yaml/badge.svg?branch=main)](https://github.com/Marthijs-Berfelo/buddy-harmony/actions/workflows/main-build.yaml) ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Marthijs-Berfelo/cf80179d3c1077b9c719e9e737992d38/raw/buddy-harmony__main.json) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Marthijs-Berfelo/buddy-harmony?color=blue&sort=semver) ![GitHub](https://img.shields.io/github/license/Marthijs-Berfelo/buddy-harmony) 
@@ -75,9 +75,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://github.com/xavier-kong"><img src="https://avatars.githubusercontent.com/u/86543341?v=4?s=100" width="100px;" alt=""/><br /><sub><b>xavier-kong</b></sub></a><br /><a href="https://github.com/Marthijs-Berfelo/buddy-harmony/commits?author=xavier-kong" title="Code">💻</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/xavier-kong"><img src="https://avatars.githubusercontent.com/u/86543341?v=4?s=100" width="100px;" alt="xavier-kong"/><br /><sub><b>xavier-kong</b></sub></a><br /><a href="https://github.com/Marthijs-Berfelo/buddy-harmony/commits?author=xavier-kong" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Marthijs-Berfelo"><img src="https://avatars.githubusercontent.com/u/42251286?v=4?s=100" width="100px;" alt="Marthijs Berfelo"/><br /><sub><b>Marthijs Berfelo</b></sub></a><br /><a href="https://github.com/Marthijs-Berfelo/buddy-harmony/commits?author=Marthijs-Berfelo" title="Code">💻</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
