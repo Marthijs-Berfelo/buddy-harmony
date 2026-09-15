@@ -20,7 +20,8 @@
     "release:milestone": "release-it minor --ci",
     "release:milestone-prepare": "echo $(release-it minor --ci --release-version) > next-version.txt",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "contributors:add": "all-contributors-cli add"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",
@@ -70,6 +71,7 @@
     "@typescript-eslint/parser": "^8.70.0",
     "@vitejs/plugin-react": "^6.1.1",
     "@vitest/coverage-v8": "^4.1.11",
+    "all-contributors-cli": "^6.26.1",
     "commitizen": "^4.3.2",
     "cosmiconfig": "^10.0.1",
     "cz-conventional-changelog": "^3.3.0",

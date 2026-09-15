@@ -1,0 +1,88 @@
+# Testing this change:
+# - Merge a throwaway PR from a test (non-bot) account -> confirm a follow-up PR appears
+#   crediting that login for `code`; merge a second PR from the same author -> confirm no
+#   duplicate PR/type.
+# - Comment "@all-contributors please add @<test-user> for doc, design" as a maintainer ->
+#   confirm a thumbs-up reaction + PR opens with both types; repeat the same comment ->
+#   confirm thumbs-up again but no new PR (CLI no-op, no diff).
+# - Post the same comment as a non-collaborator test account -> confirm nothing happens
+#   (job skipped by the author_association gate).
+# - Post "@all-contributors please add @<test-user> for bogus-type" -> confirm a thumbs-down
+#   reaction + explanatory comment, no CLI run.
+# - Confirm npm test / npm run lint / npm run typecheck / npm run build are unaffected - this
+#   change touches only .github/workflows/, package.json, CONTRIBUTING.md (no src/ changes).
+name: Add Contributor
+on:
+  workflow_call:
+    inputs:
+      username:
+        required: true
+        type: string
+      contributions:
+        required: true
+        type: string
+    secrets:
+      ALL_CONTRIBUTORS_APP_TOKEN:
+        required: true
+
+jobs:
+  add-contributor:
+    name: Credit Contributor
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtain GitHub App Installation Access Token
+        id: get_token
+        run: |
+          TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.ALL_CONTRIBUTORS_APP_TOKEN }})"
+          echo "::add-mask::$TOKEN"
+          echo "contributor_token=$TOKEN" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          token: ${{ env.contributor_token }}
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+          cache-dependency-path: '**/package-lock.json'
+      - name: Install
+        run: npm ci
+      - name: Configure git user
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+      - name: Create branch
+        id: branch
+        run: |
+          BRANCH="all-contributors/add-${{ inputs.username }}-$(date +%s)"
+          git checkout -b "$BRANCH"
+          echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
+      - name: Add contributor
+        run: npx all-contributors-cli add "${{ inputs.username }}" "${{ inputs.contributions }}"
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- .all-contributorsrc README.md; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Commit changes
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git add .all-contributorsrc README.md
+          git commit -m "docs: credit @${{ inputs.username }} for ${{ inputs.contributions }}"
+      - name: Push branch
+        if: steps.diff.outputs.changed == 'true'
+        run: git push origin "${{ steps.branch.outputs.name }}"
+      - name: Create PR
+        if: steps.diff.outputs.changed == 'true'
+        uses: thomaseizinger/create-pull-request@1.4.0
+        with:
+          title: "docs: credit @${{ inputs.username }} for ${{ inputs.contributions }}"
+          body: Automated contributor credit for @${{ inputs.username }} (${{ inputs.contributions }}).
+          head: ${{ steps.branch.outputs.name }}
+          base: main
+          GITHUB_TOKEN: ${{ env.contributor_token }}
