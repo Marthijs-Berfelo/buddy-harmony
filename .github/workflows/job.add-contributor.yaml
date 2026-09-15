@@ -85,10 +85,11 @@ jobs:
         run: git push origin "${{ steps.branch.outputs.name }}"
       - name: Create PR
         if: steps.diff.outputs.changed == 'true'
-        uses: thomaseizinger/create-pull-request@1.4.0
-        with:
-          title: "docs: credit @${{ inputs.username }} for ${{ inputs.contributions }}"
-          body: Automated contributor credit for @${{ inputs.username }} (${{ inputs.contributions }}).
-          head: ${{ steps.branch.outputs.name }}
-          base: main
-          GITHUB_TOKEN: ${{ env.contributor_token }}
+        run: |
+          gh pr create \
+            --title "docs: credit @${USERNAME} for ${CONTRIBUTIONS}" \
+            --body "Automated contributor credit for @${USERNAME} (${CONTRIBUTIONS})." \
+            --head "${{ steps.branch.outputs.name }}" \
+            --base main
+        env:
+          GH_TOKEN: ${{ env.contributor_token }}
