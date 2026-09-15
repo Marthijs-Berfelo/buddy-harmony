@@ -65,8 +65,24 @@ jobs:
           BRANCH="all-contributors/add-${USERNAME}-$(date +%s)"
           git checkout -b "$BRANCH"
           echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
+      - name: Merge with existing contributions
+        # all-contributors-cli's `add` treats a shorter, overlapping contribution list as a
+        # request to shrink down to the intersection (see addWithDetails.js formatContributions).
+        # Union with what's already recorded so re-crediting one type never drops the others.
+        # CONTRIBUTIONS keeps the originally requested types for commit/PR messaging;
+        # ALL_CONTRIBUTIONS (existing + requested) is what's actually passed to the CLI.
+        run: |
+          MERGED="$(node -e '
+            const fs = require("fs");
+            const { contributors } = JSON.parse(fs.readFileSync(".all-contributorsrc", "utf8"));
+            const username = process.env.USERNAME.toLowerCase();
+            const existing = contributors.find((c) => c.login?.toLowerCase() === username)?.contributions ?? [];
+            const requested = process.env.CONTRIBUTIONS.split(",").map((c) => c.trim());
+            console.log([...new Set([...existing, ...requested])].join(","));
+          ')"
+          echo "ALL_CONTRIBUTIONS=$MERGED" >> "$GITHUB_ENV"
       - name: Add contributor
-        run: npx all-contributors-cli add "$USERNAME" "$CONTRIBUTIONS"
+        run: npx all-contributors-cli add "$USERNAME" "$ALL_CONTRIBUTIONS"
       - name: Check for changes
         id: diff
         run: |
