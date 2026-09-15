@@ -1,0 +1,19 @@
+name: Credit merged PR author
+
+on:
+  pull_request_target:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  credit-code:
+    name: Credit code contribution
+    if: github.event.pull_request.merged == true && !endsWith(github.event.pull_request.user.login, '[bot]')
+    uses: ./.github/workflows/job.add-contributor.yaml
+    with:
+      username: ${{ github.event.pull_request.user.login }}
+      contributions: code
+    secrets:
+      ALL_CONTRIBUTORS_APP_TOKEN: ${{ secrets.ALL_CONTRIBUTORS_APP_TOKEN }}

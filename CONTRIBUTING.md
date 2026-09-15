@@ -102,3 +102,25 @@ fails the check; fix it locally with `git commit --amend` or an interactive reba
 
 When creating a pull-request, please include a description of your change and if it's related to an existing
 issue reference the issue so it will be linked, see [github: link a pull-request](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword)
+
+## Contributor recognition
+
+This project uses [all-contributors](https://github.com/all-contributors/all-contributors) to credit
+everyone who helps, not just code authors.
+
+Code contributors are credited automatically: when your PR is merged to `main`, a workflow opens a
+follow-up PR crediting you for `code` in the README table. No action needed from you.
+
+Maintainers can credit any other contribution type (design, ideas, bug reports, testing, etc. — see
+the [full emoji key](https://allcontributors.org/docs/en/emoji-key)) by commenting on any issue or
+PR:
+
+```
+@all-contributors please add @username for design, ideas
+```
+
+Only users with write access (owner/member/collaborator) can trigger this. The bot reacts with 👍 if
+accepted or 👎 (with an explanatory comment) if a contribution type isn't recognized.
+
+Both flows open a pull request rather than committing directly (per `.all-contributorsrc`'s
+`commit: false` setting) — a maintainer still needs to review and merge it like any other PR.
