@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.1](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.0...0.17.1) (2026-09-15)
+
+### Documentation
+
+* credit @Marthijs-Berfelo for a11y,design,security ([0c66479](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/0c664796611a74c86f3951f0da4d195477304602))
+
 ## [0.17.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.16.2...0.17.0) (2026-09-15)
 
 ### Features
