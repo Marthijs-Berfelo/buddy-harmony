@@ -1,11 +1,11 @@
 import { act, renderHook } from '@testing-library/react';
 import { createElement, PropsWithChildren } from 'react';
 import { GuitarChordProvider, useGuitarChord } from '../guitar-chord-provider';
-import { computeGuitarTypes, SettingsContextProvider, useSettings } from 'hooks';
+import { computeGuitarTypes, SettingsProvider, useSettings } from 'hooks';
 
 const wrapper = ({ children }: PropsWithChildren) =>
   createElement(
-    SettingsContextProvider,
+    SettingsProvider,
     null,
     createElement(GuitarChordProvider, null, children)
   );

@@ -2,16 +2,16 @@ import { act, render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import { KeySelector } from '../key-selector';
-import { SettingsContextProvider } from 'hooks';
+import { SettingsProvider } from 'hooks';
 
 i18n.init({ resources: {}, lng: 'en', fallbackLng: 'en' });
 
 const renderKeySelector = () =>
   render(
     <I18nextProvider i18n={i18n}>
-      <SettingsContextProvider>
+      <SettingsProvider>
         <KeySelector keys={['C', 'D']} setSelectedKey={() => {}} />
-      </SettingsContextProvider>
+      </SettingsProvider>
     </I18nextProvider>
   );
 

@@ -68,10 +68,10 @@ const useSettings = (): Settings => {
   if (context) {
     return context;
   }
-  throw new Error('`useSettings` must be used with `SettingsContextProvider`');
+  throw new Error('`useSettings` must be used with `SettingsProvider`');
 };
 
-const SettingsContextProvider = ({
+const SettingsProvider = ({
   children,
   diagramStyle,
   chordFretSize,
@@ -199,4 +199,4 @@ const SettingsContextProvider = ({
   return <SettingsContext.Provider value={context}>{children}</SettingsContext.Provider>;
 };
 
-export { SettingsContextProvider, useSettings };
+export { SettingsProvider, useSettings };
