@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.16.2...0.17.0) (2026-09-15)
+
+### Features
+
+* replace default react favicon with guitar icon ([b906510](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/b906510ac6b3eff77afe83ac1f4502a6221ceabb))
+
 ## [0.16.2](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.16.1...0.16.2) (2026-09-15)
 
 ### Bug Fixes
