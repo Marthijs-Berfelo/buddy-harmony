@@ -1,17 +1,17 @@
 import type { JSX } from 'react';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { SettingsContextProvider } from 'hooks';
+import { SettingsProvider } from 'hooks';
 import { FretboardDotsLoader } from '@/components/ui/fretboard-dots-loader';
 
 export const Content = (): JSX.Element => {
   return (
     <div className="pt-24" id="content">
-      <SettingsContextProvider>
+      <SettingsProvider>
         <Suspense fallback={<FretboardDotsLoader />}>
           <Outlet />
         </Suspense>
-      </SettingsContextProvider>
+      </SettingsProvider>
     </div>
   );
 };
