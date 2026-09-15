@@ -28,11 +28,15 @@ jobs:
   test:
     name: QA
     uses: ./.github/workflows/job.test.yaml
+    with:
+      ref: ${{ github.event.pull_request.head.sha }}
   build:
     name: Build
     needs:
       - test
     uses: ./.github/workflows/job.build.yaml
+    with:
+      ref: ${{ github.event.pull_request.head.sha }}
   approve-release:
     name: Approve Release PR
     if: startsWith(github.head_ref, 'release/')

@@ -25,10 +25,16 @@ on:
       ALL_CONTRIBUTORS_APP_TOKEN:
         required: true
 
+permissions:
+  contents: read
+
 jobs:
   add-contributor:
     name: Credit Contributor
     runs-on: ubuntu-latest
+    env:
+      USERNAME: ${{ inputs.username }}
+      CONTRIBUTIONS: ${{ inputs.contributions }}
     steps:
       - name: Obtain GitHub App Installation Access Token
         id: get_token
@@ -56,11 +62,11 @@ jobs:
       - name: Create branch
         id: branch
         run: |
-          BRANCH="all-contributors/add-${{ inputs.username }}-$(date +%s)"
+          BRANCH="all-contributors/add-${USERNAME}-$(date +%s)"
           git checkout -b "$BRANCH"
           echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
       - name: Add contributor
-        run: npx all-contributors-cli add "${{ inputs.username }}" "${{ inputs.contributions }}"
+        run: npx all-contributors-cli add "$USERNAME" "$CONTRIBUTIONS"
       - name: Check for changes
         id: diff
         run: |
@@ -73,7 +79,7 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         run: |
           git add .all-contributorsrc README.md
-          git commit -m "docs: credit @${{ inputs.username }} for ${{ inputs.contributions }}"
+          git commit -m "docs: credit @${USERNAME} for ${CONTRIBUTIONS}"
       - name: Push branch
         if: steps.diff.outputs.changed == 'true'
         run: git push origin "${{ steps.branch.outputs.name }}"

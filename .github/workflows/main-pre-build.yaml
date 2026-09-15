@@ -8,6 +8,8 @@ on:
     paths-ignore:
       - '**/*.md'
 
+permissions: {}
+
 jobs:
   check:
     runs-on: ubuntu-latest
