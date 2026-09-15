@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.16.1](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.16.0...0.16.1) (2026-09-15)
+
+### Miscellaneous Chores
+
+* drop unmaintained create-pull-request action, use gh pr create ([0464e8d](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/0464e8db988102010d63d970973dbff784740ca2)), references [#639](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/639)
+
 ## [0.16.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.15.0...0.16.0) (2026-09-15)
 
 ### Features
