@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.16.1](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.16.0...0.16.1) (2026-09-15)
+
+### Miscellaneous Chores
+
+* drop unmaintained create-pull-request action, use gh pr create ([0464e8d](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/0464e8db988102010d63d970973dbff784740ca2)), references [#639](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/639)
+
+## [0.16.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.15.0...0.16.0) (2026-09-15)
+
+### Features
+
+* **#621:** automate all-contributors credit workflows ([1711267](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/1711267ac745cac3de9d330692888eedd02c3b81)), references [#621](https://github.com/Marthijs-Berfelo/buddy-harmony/issues/621)
+
+### Bug Fixes
+
+* **#621:** resolve open code-scanning workflow findings ([ab66ea7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ab66ea77738c31f2d93342084ebbf9746540c943))
+* grant callers contents:read so reusable workflows can start ([5f978b5](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/5f978b54de8b081d7433a2a97eef576af0f716fe))
+
+### Dependency Updates
+
+* bump lucide-react from 1.40.0 to 1.41.0 ([ecc59b1](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ecc59b19be7c7d4967f613ef87e3858628653c1e))
+* bump lucide-react from 1.41.0 to 1.43.0 ([6fdaf89](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/6fdaf893190da2f94fb4e4fdfcf764c4e2d80667))
+* bump shadcn from 4.20.1 to 4.21.0 ([44d835c](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/44d835cd68138138316c37d2144743c26ad755f7))
+* bump the react group with 2 updates ([c9364e0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/c9364e068ec8e0b055e6b460bba1cf9d1b04db28))
+
+### Documentation
+
+* credit @Marthijs-Berfelo for code ([f5a34e6](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f5a34e6ef1bdf6d17153339a3979d4c391388f82))
+* credit @MisterWanted for code,a11y ([b8dbefa](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/b8dbefaa7b5f20e4399919c2d83622aa78df8bff))
+
 ## [0.15.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.14.0...0.15.0) (2026-09-09)
 
 ### Features

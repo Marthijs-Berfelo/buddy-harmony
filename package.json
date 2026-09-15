@@ -1,6 +1,6 @@
 {
   "name": "buddy-harmony",
-  "version": "0.15.0",
+  "version": "0.16.1",
   "homepage": "https://Marthijs-Berfelo.github.io/buddy-harmony",
   "private": true,
   "type": "module",
@@ -89,6 +89,9 @@
     "typescript-eslint": "^8.70.0",
     "vite": "^8.2.2",
     "vitest": "^4.1.5"
+  },
+  "overrides": {
+    "tmp": "^0.2.7"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [

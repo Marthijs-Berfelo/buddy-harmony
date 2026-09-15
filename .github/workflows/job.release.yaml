@@ -92,10 +92,12 @@ jobs:
       - name: Create PR
         id: release-pr
         if: steps.preflight.outputs.should_release == 'true'
-        uses: thomaseizinger/create-pull-request@1.4.0
-        with:
-          title: Release v${{ env.release_version }}
-          body: PR Release ${{ env.release_version }}
-          head: release/v${{ env.release_version }}
-          base: main
-          GITHUB_TOKEN: ${{ env.release_token }}
+        run: |
+          gh pr create \
+            --title "Release v${RELEASE_VERSION}" \
+            --body "PR Release ${RELEASE_VERSION}" \
+            --head "release/v${RELEASE_VERSION}" \
+            --base main
+        env:
+          GH_TOKEN: ${{ env.release_token }}
+          RELEASE_VERSION: ${{ env.release_version }}
