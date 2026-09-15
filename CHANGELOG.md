@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.17.2](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.1...0.17.2) (2026-09-15)
+
+### Bug Fixes
+
+* prevent all-contributors add from dropping existing contribution types ([4e1d8b1](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/4e1d8b1eadfc635af74331fc7fde1397f19b262a))
+
+### Tests
+
+* expand coverage across layout, routing, modules, and settings ([0e8e248](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/0e8e248787690df0f1eb22ea0eb29791534d6d0e))
+
 ## [0.17.1](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.0...0.17.1) (2026-09-15)
 
 ### Documentation
