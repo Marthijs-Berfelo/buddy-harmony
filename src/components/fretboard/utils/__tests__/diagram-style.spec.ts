@@ -145,5 +145,65 @@ describe('diagramStyle', () => {
       expect(result?.string).toBeGreaterThanOrEqual(0);
       expect(result?.string).toBeLessThan(strings);
     });
+
+    test('clamps a below-zero string index up to 0', () => {
+      const width = style.stringBoundary(frets, Orientation.HORIZONTAL);
+      const height = style.fretBoundary(strings, Orientation.HORIZONTAL);
+      const event = makeEvent(width / 2, height - style.padding + style.stringInterval / 2);
+
+      const result = style.getStringAndFretFromMouseEvent(
+        event,
+        strings,
+        frets,
+        Orientation.HORIZONTAL
+      );
+
+      expect(result?.string).toBe(0);
+    });
+
+    test('clamps an above-max string index down to strings - 1', () => {
+      const width = style.stringBoundary(frets, Orientation.HORIZONTAL);
+      const height = style.fretBoundary(strings, Orientation.HORIZONTAL);
+      const event = makeEvent(width / 2, style.padding - style.stringInterval / 2);
+
+      const result = style.getStringAndFretFromMouseEvent(
+        event,
+        strings,
+        frets,
+        Orientation.HORIZONTAL
+      );
+
+      expect(result?.string).toBe(strings - 1);
+    });
+
+    test('clamps a below-zero fret index up to 0', () => {
+      const width = style.stringBoundary(frets, Orientation.HORIZONTAL);
+      const height = style.fretBoundary(strings, Orientation.HORIZONTAL);
+      const event = makeEvent(style.padding - style.fretWidth / 2, height / 2);
+
+      const result = style.getStringAndFretFromMouseEvent(
+        event,
+        strings,
+        frets,
+        Orientation.HORIZONTAL
+      );
+
+      expect(result?.fret).toBe(0);
+    });
+
+    test('returns undefined when the resolved fret exceeds the fret count', () => {
+      const width = style.stringBoundary(frets, Orientation.HORIZONTAL);
+      const height = style.fretBoundary(strings, Orientation.HORIZONTAL);
+      const event = makeEvent(width - style.padding, height / 2);
+
+      const result = style.getStringAndFretFromMouseEvent(
+        event,
+        strings,
+        frets,
+        Orientation.HORIZONTAL
+      );
+
+      expect(result).toBeUndefined();
+    });
   });
 });

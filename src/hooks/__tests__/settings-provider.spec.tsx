@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
-import { SettingsContextProvider, useSettings } from '../settings-context-provider';
+import { SettingsProvider, useSettings } from '../settings-provider';
 import { computeGuitarTypes } from 'hooks';
 
 const ProbeChild = () => {
@@ -11,7 +11,7 @@ const ProbeChild = () => {
   );
 };
 
-describe('SettingsContextProvider', () => {
+describe('SettingsProvider', () => {
   beforeEach(() => {
     vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
   });
@@ -22,9 +22,9 @@ describe('SettingsContextProvider', () => {
 
   test('renders children immediately with chordDataLoading true and no chord guitar types', () => {
     render(
-      <SettingsContextProvider>
+      <SettingsProvider>
         <ProbeChild />
-      </SettingsContextProvider>
+      </SettingsProvider>
     );
 
     expect(screen.getByTestId('probe')).toHaveTextContent('guitar:standard:0:true');
@@ -32,9 +32,9 @@ describe('SettingsContextProvider', () => {
 
   test('flips chordDataLoading to false and populates chordGuitarTypes once the minimum display delay elapses', async () => {
     render(
-      <SettingsContextProvider>
+      <SettingsProvider>
         <ProbeChild />
-      </SettingsContextProvider>
+      </SettingsProvider>
     );
 
     await computeGuitarTypes();

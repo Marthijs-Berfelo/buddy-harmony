@@ -1,10 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
 import { createElement, PropsWithChildren } from 'react';
 import { CagedProvider, useCaged } from '../caged-provider';
-import { computeGuitarTypes, SettingsContextProvider, useSettings } from 'hooks';
+import { computeGuitarTypes, SettingsProvider, useSettings } from 'hooks';
 
 const wrapper = ({ children }: PropsWithChildren) =>
-  createElement(SettingsContextProvider, null, createElement(CagedProvider, null, children));
+  createElement(SettingsProvider, null, createElement(CagedProvider, null, children));
 
 const renderCaged = () =>
   renderHook(() => ({ caged: useCaged(), settings: useSettings() }), { wrapper });

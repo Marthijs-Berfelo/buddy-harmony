@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import { ChordSelector } from '../chord-selector';
-import { SettingsContextProvider } from 'hooks';
+import { SettingsProvider } from 'hooks';
 import type { ChordDetail } from 'hooks';
 
 i18n.init({ resources: {}, lng: 'en', fallbackLng: 'en' });
@@ -10,9 +10,9 @@ i18n.init({ resources: {}, lng: 'en', fallbackLng: 'en' });
 const renderChordSelector = (chords: ChordDetail[]) =>
   render(
     <I18nextProvider i18n={i18n}>
-      <SettingsContextProvider>
+      <SettingsProvider>
         <ChordSelector chords={chords} setChord={() => {}} />
-      </SettingsContextProvider>
+      </SettingsProvider>
     </I18nextProvider>
   );
 
