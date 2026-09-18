@@ -6,12 +6,12 @@ import { FretboardDotsLoader } from '@/components/ui/fretboard-dots-loader';
 
 export const Content = (): JSX.Element => {
   return (
-    <div className="pt-24" id="content">
+    <main className="pt-24" id="content">
       <SettingsProvider>
         <Suspense fallback={<FretboardDotsLoader />}>
           <Outlet />
         </Suspense>
       </SettingsProvider>
-    </div>
+    </main>
   );
 };
