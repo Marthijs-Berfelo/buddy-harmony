@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import { ChordSelector } from '../chord-selector';
-import { SettingsProvider } from 'hooks';
+import { computeGuitarTypes, SettingsProvider } from 'hooks';
 import type { ChordDetail } from 'hooks';
 
 i18n.init({ resources: {}, lng: 'en', fallbackLng: 'en' });
@@ -34,6 +34,7 @@ describe('ChordSelector', () => {
   test('shows the disabled placeholder once chord data has resolved with fewer than two chords', async () => {
     renderChordSelector([]);
 
+    await computeGuitarTypes();
     await act(() => vi.advanceTimersByTimeAsync(3000));
 
     expect(screen.queryByTestId('note-wave-glyph')).not.toBeInTheDocument();
@@ -48,6 +49,7 @@ describe('ChordSelector', () => {
       { key: 'C', suffix: 'minor', positions: [] },
     ]);
 
+    await computeGuitarTypes();
     await act(() => vi.advanceTimersByTimeAsync(3000));
 
     const trigger = screen.getByRole('button', { name: 'title' });
