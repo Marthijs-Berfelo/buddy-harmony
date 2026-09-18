@@ -29,7 +29,7 @@ export const KeySelector = ({
       <Button
         variant="ghost"
         disabled
-        className="capitalize text-slate-500 bg-gray-200 hover:bg-gray-200 w-48"
+        className="capitalize text-slate-700 bg-gray-200 hover:bg-gray-200 w-48"
       >
         <NoteWaveLoader />
       </Button>
@@ -40,7 +40,7 @@ export const KeySelector = ({
     <Button
       variant="ghost"
       disabled
-      className="capitalize text-slate-500 bg-gray-200 hover:bg-gray-200 w-48"
+      className="capitalize text-slate-700 bg-gray-200 hover:bg-gray-200 w-48"
     >
       {t('key', selectedKey ? { context: 'selected', key: selectedKey } : undefined)}
     </Button>

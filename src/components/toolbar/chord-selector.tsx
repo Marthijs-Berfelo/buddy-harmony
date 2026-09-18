@@ -25,7 +25,7 @@ export const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): 
       <Button
         variant="ghost"
         disabled
-        className="capitalize text-slate-500 bg-gray-200 hover:bg-gray-200 w-48"
+        className="capitalize text-slate-700 bg-gray-200 hover:bg-gray-200 w-48"
       >
         <NoteWaveLoader />
       </Button>
@@ -36,7 +36,7 @@ export const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): 
     <Button
       variant="ghost"
       disabled
-      className="capitalize text-slate-500 bg-gray-200 hover:bg-gray-200 w-48"
+      className="capitalize text-slate-700 bg-gray-200 hover:bg-gray-200 w-48"
     >
       {t('chord:title', chord ? { context: 'selected', chord } : undefined)}
     </Button>
