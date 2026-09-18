@@ -35,4 +35,14 @@ describe('Footer', () => {
 
     expect(screen.getByText('app-version')).toBeInTheDocument();
   });
+
+  test('gives every icon-only link an accessible name', () => {
+    renderFooter();
+
+    expect(screen.getByRole('link', { name: 'app-source' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'app-issues' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'author.github-profile' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'author.twitter' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'author.send-email' })).toBeInTheDocument();
+  });
 });
