@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.4](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.3...0.17.4) (2026-09-18)
+
+### Bug Fixes
+
+* add accessible names to icon-only footer links ([7a55483](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/7a554838ba9501ea3646815ed0ddba737c73b8a9))
+
 ## [0.17.3](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.2...0.17.3) (2026-09-18)
 
 ### Bug Fixes
