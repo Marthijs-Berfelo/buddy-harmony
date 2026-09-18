@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import { KeySelector } from '../key-selector';
-import { SettingsProvider } from 'hooks';
+import { computeGuitarTypes, SettingsProvider } from 'hooks';
 
 i18n.init({ resources: {}, lng: 'en', fallbackLng: 'en' });
 
@@ -33,6 +33,7 @@ describe('KeySelector', () => {
   test('shows the key dropdown once chord data has resolved', async () => {
     renderKeySelector();
 
+    await computeGuitarTypes();
     await act(() => vi.advanceTimersByTimeAsync(3000));
 
     const trigger = screen.getByRole('button', { name: 'key' });
