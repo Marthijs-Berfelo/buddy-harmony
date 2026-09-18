@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.17.3](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.2...0.17.3) (2026-09-18)
+
+### Bug Fixes
+
+* add main landmark to page content wrapper ([05083c4](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/05083c4ccbdc82c5f7f3ea352701761678e29dff))
+* darken disabled selector button text for sufficient contrast ([b131a2e](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/b131a2e0cf85d5f285508a94f509765777901dad))
+* import jest-dom vitest entrypoint for v5 type augmentation ([48170b7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/48170b749ee393824d22de4ac306814f10021e74))
+
+### Dependency Updates
+
+* bump lucide-react from 1.43.0 to 1.44.0 ([6c4768d](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/6c4768d1b43d02629073c0411548907564574c2e))
+* bump lucide-react from 1.44.0 to 1.45.0 ([e18775a](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/e18775a63bce559a85761b558af52dfcb60e0f84))
+* bump tailwind-merge from 3.6.0 to 3.7.0 ([c850842](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/c85084251cef3caa182f8cf81865a1ef44e8caea))
+
+### Tests
+
+* await chord data load before advancing timers in selector tests ([99dc69b](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/99dc69b406f865e135e96d8273fe778428550a45))
+
 ## [0.17.2](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.1...0.17.2) (2026-09-15)
 
 ### Bug Fixes
