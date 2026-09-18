@@ -48,13 +48,24 @@ export const Footer = (): JSX.Element => {
 
 interface FooterTextProps {
   link?: string;
+  ariaLabel?: string;
 }
 
 const FOOTER_TEXT_CLASS = 'flex font-sans text-sm mx-1.5';
 
-const FooterText = ({ link, children }: PropsWithChildren<FooterTextProps>): JSX.Element =>
+const FooterText = ({
+  link,
+  ariaLabel,
+  children,
+}: PropsWithChildren<FooterTextProps>): JSX.Element =>
   link ? (
-    <a className={FOOTER_TEXT_CLASS} href={link} target="_blank" rel="noreferrer">
+    <a
+      className={FOOTER_TEXT_CLASS}
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={ariaLabel}
+    >
       {children}
     </a>
   ) : (
@@ -73,7 +84,9 @@ const FooterIcon = ({
 }: PropsWithChildren<FooterIconProps>): JSX.Element => (
   <Tooltip>
     <TooltipTrigger asChild>
-      <FooterText link={link}>{children}</FooterText>
+      <FooterText link={link} ariaLabel={content}>
+        {children}
+      </FooterText>
     </TooltipTrigger>
     <TooltipContent>{content}</TooltipContent>
   </Tooltip>
