@@ -34,6 +34,21 @@ export interface CagedConfig {
   D: CagedKeyConfig;
 }
 
+export type CagedLetter = keyof CagedChords;
+
+export interface CagedColor {
+  text: string;
+  caged: string;
+}
+
+export const CAGED_COLORS: Record<CagedLetter, CagedColor> = {
+  C: { text: 'text-blue-700', caged: 'stroke-blue-700 fill-blue-700' },
+  A: { text: 'text-red-700', caged: 'stroke-red-700 fill-red-700' },
+  G: { text: 'text-green-700', caged: 'stroke-green-700 fill-green-700' },
+  E: { text: 'text-orange-800', caged: 'stroke-orange-800 fill-orange-800' },
+  D: { text: 'text-violet-800', caged: 'stroke-violet-800 fill-violet-800' },
+};
+
 export const majorCagedConfig: CagedConfig = {
   C: {
     open: {

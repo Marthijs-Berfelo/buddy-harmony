@@ -50,17 +50,18 @@ export const buildCagedKey = (
 ): CagedKey => {
   const openChord = cagedChord(config.open, guitarType, type);
   const baseChord = cagedChord(config.base, guitarType, type);
-  const positionedChord = addNotes(
-    Object.assign({}, baseChord, {
-      baseFret: baseFret(key, baseChord, config),
-    }),
-    tuning
-  );
+  const resolvedBaseFret = baseFret(key, baseChord, config);
+  const isOpenPosition = resolvedBaseFret === 0;
+  const positionedChord = isOpenPosition
+    ? addNotes(openChord, tuning)
+    : addNotes(Object.assign({}, baseChord, { baseFret: resolvedBaseFret }), tuning);
 
   return {
     open: Object.assign({}, config.open, { chord: openChord }),
     base: Object.assign({}, config.base, { chord: baseChord }),
-    positioned: Object.assign({}, config.base, { chord: positionedChord }),
+    positioned: isOpenPosition
+      ? Object.assign({}, config.open, { chord: positionedChord })
+      : Object.assign({}, config.base, { chord: positionedChord }),
   };
 };
 
@@ -89,7 +90,7 @@ export const addNotes = (chord: ChordPosition, tuning: StringTuningType): ChordP
 export const baseFret = (key: string, baseChord: ChordPosition, config: CagedKeyConfig): number => {
   const baseFret =
     baseChord.baseFret + fretDistance(keyRoot(key, config.base.rootString), config.base.root);
-  if (baseFret < 1) {
+  if (baseFret < 0) {
     return baseFret + 12;
   }
   return baseFret;

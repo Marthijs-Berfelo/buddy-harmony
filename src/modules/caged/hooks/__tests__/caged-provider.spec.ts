@@ -53,4 +53,19 @@ describe('useCaged', () => {
       D: expect.any(Object),
     });
   });
+
+  test('orders cagedChords ascending by positioned base fret once chords are built', async () => {
+    const { result } = renderCaged();
+    act(() => result.current.caged.setSelectedKey('C'));
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(3000));
+
+    act(() => result.current.caged.setChord(result.current.caged.chords[0]));
+
+    const { cagedChords, cagedOrder } = result.current.caged;
+    expect(cagedOrder).toBeDefined();
+    const baseFrets = cagedOrder!.map((letter) => cagedChords![letter].positioned.chord.baseFret);
+    expect(baseFrets).toEqual([...baseFrets].sort((a, b) => a - b));
+    expect(cagedOrder![0]).toBe('C');
+  });
 });

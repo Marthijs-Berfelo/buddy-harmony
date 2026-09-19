@@ -1,176 +1,74 @@
 import type { JSX } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSettings } from 'hooks';
 import { Diagram } from 'components/fretboard';
 import { useCaged } from '../hooks';
 import { DotText, FretNumberPosition } from 'components/fretboard/options';
+import { CAGED_COLORS } from '../hooks/caged-constants';
 
 export const CagedContent = (): JSX.Element => {
-  const { selectedKey, cagedChords, printRef, printStyle } = useCaged();
+  const { t } = useTranslation(['caged']);
+  const { selectedKey, cagedChords, cagedOrder, printRef, printStyle } = useCaged();
   const { orientation } = useSettings();
 
   return (
     <div className="flex flex-initial flex-col items-center" id="caged-content" ref={printRef}>
-      {cagedChords && (
-        <div>
+      {cagedChords && cagedOrder && (
+        <div className="flex flex-col gap-2">
           <style type="text/css" media="print">
             {printStyle(orientation)}
           </style>
-          <div className="flex flex-row" id="caged-C">
-            <div className="flex flex-col justify-evenly" id="caged-step">
-              <p className="text-4xl font-extrabold text-blue-700">C</p>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-open-c">
-              <div className="flex flex-row items-center">
-                <p className="text-2xl">{`Open`}</p>
-              </div>
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'open-c'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.C.open.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-chord">
-              <div className="flex flex-row items-center">
-                <p className="text-2xl">{`Positioned ${selectedKey}`}</p>
-              </div>
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'positioned-c'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.C.positioned.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                  cagedColor={'stroke-blue-700 fill-blue-700'}
-                />
-              </div>
-            </div>
+          <div className="flex flex-row" id="caged-column-headers">
+            <div className="w-16 shrink-0" />
+            <p className="flex-1 text-2xl text-center">{t('caged:open')}</p>
+            <p className="flex-1 text-2xl text-center">
+              {t('caged:positioned', { context: 'selected', key: selectedKey })}
+            </p>
           </div>
-          <div className="flex flex-row" id="caged-A">
-            <div className="flex flex-col justify-evenly" id="caged-step">
-              <p className="text-4xl font-extrabold text-red-700">A</p>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-open-c">
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'open-a'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.A.open.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-chord">
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'positioned-a'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.A.positioned.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                  cagedColor={'stroke-red-700 fill-red-700'}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row" id="caged-G">
-            <div className="flex flex-col justify-evenly" id="caged-step">
-              <p className="text-4xl font-extrabold text-green-700">G</p>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-open-c">
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'open-c'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.G.open.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-chord">
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'positioned-g'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.G.positioned.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                  cagedColor={'stroke-green-700 fill-green-700'}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row" id="caged-E">
-            <div className="flex flex-col justify-evenly" id="caged-step">
-              <p className="text-4xl font-extrabold text-orange-800">E</p>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-open-c">
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'open-c'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.E.open.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-chord">
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'positioned-e'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.E.positioned.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                  cagedColor={'stroke-orange-800 fill-orange-800'}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row" id="caged-D">
-            <div className="flex flex-col justify-evenly" id="caged-step">
-              <p className="text-4xl font-extrabold text-violet-800">D</p>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-open-c">
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'open-d'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.D.open.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-start" id="caged-chord">
-              <div className="flex flex-row items-center">
-                <Diagram
-                  key={'positioned-d'}
-                  className=""
-                  diagramCount={1}
-                  text={DotText.NOTE}
-                  chord={cagedChords.D.positioned.chord}
-                  fretNumbersPosition={FretNumberPosition.LEFT}
-                  cagedColor={'stroke-violet-800 fill-violet-800'}
-                />
-              </div>
-            </div>
+          <div className="flex flex-col">
+            {cagedOrder.map((letter) => {
+              const color = CAGED_COLORS[letter];
+              const cagedKey = cagedChords[letter];
+
+              return (
+                <div className="flex flex-row" id={`caged-${letter}`} key={letter}>
+                  <div
+                    className="flex w-16 shrink-0 flex-col justify-evenly"
+                    id={`caged-step-${letter}`}
+                  >
+                    <p className={`text-4xl font-extrabold ${color.text}`}>{letter}</p>
+                  </div>
+                  <div
+                    className="flex flex-1 flex-col items-center justify-start"
+                    id={`caged-open-${letter}`}
+                  >
+                    <Diagram
+                      key={`open-${letter}`}
+                      className=""
+                      diagramCount={1}
+                      text={DotText.NOTE}
+                      chord={cagedKey.open.chord}
+                      fretNumbersPosition={FretNumberPosition.LEFT}
+                    />
+                  </div>
+                  <div
+                    className="flex flex-1 flex-col items-center justify-start"
+                    id={`caged-chord-${letter}`}
+                  >
+                    <Diagram
+                      key={`positioned-${letter}`}
+                      className=""
+                      diagramCount={1}
+                      text={DotText.NOTE}
+                      chord={cagedKey.positioned.chord}
+                      fretNumbersPosition={FretNumberPosition.LEFT}
+                      cagedColor={color.caged}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
