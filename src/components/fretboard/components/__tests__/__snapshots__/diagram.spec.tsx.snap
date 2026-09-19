@@ -1,0 +1,1633 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Diagram > renders a chord diagram 1`] = `
+<svg
+  class="flex bg-white"
+  height="399"
+  preserveAspectRatio="xMinYMin meet"
+  viewBox="0 0 608 798"
+  width="304"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <filter
+      height="300%"
+      id="note-glow"
+      width="300%"
+      x="-100%"
+      y="-100%"
+    >
+      <fegaussianblur
+        result="blur"
+        stdDeviation="3"
+      />
+      <femerge>
+        <femergenode
+          in="blur"
+        />
+        <femergenode
+          in="SourceGraphic"
+        />
+      </femerge>
+    </filter>
+  </defs>
+  <g
+    class="fretboard"
+  >
+    <path
+      class="fill-none stroke-black"
+      d="M 142,150 h 320 M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320"
+      stroke-width="8"
+    />
+    <path
+      class="fill-none stroke-gray-400"
+      d=" M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320"
+      stroke-width="8"
+    />
+    <path
+      class="fill-none stroke-black"
+      d="M 152,150 v 490 M 212,150 v 490 M 272,150 v 490 M 332,150 v 490 M 392,150 v 490 M 452,150 v 490"
+      stroke-width="4"
+    />
+    <g>
+      <text
+        alignment-baseline="central"
+        class="font-sans stroke-1 text-4xl fill-black chord-dot-text"
+        x="152"
+        y="124"
+      >
+        ✕
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="212"
+        cy="404"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="212"
+        y="404"
+      >
+        3
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="272"
+        cy="304"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="272"
+        y="304"
+      >
+        2
+      </text>
+      <text
+        alignment-baseline="central"
+        class="font-sans stroke-1 text-4xl fill-black chord-dot-text"
+        x="332"
+        y="124"
+      >
+        O
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="392"
+        cy="204"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="392"
+        y="204"
+      >
+        1
+      </text>
+      <text
+        alignment-baseline="central"
+        class="font-sans stroke-1 text-4xl fill-black chord-dot-text"
+        x="452"
+        y="124"
+      >
+        O
+      </text>
+    </g>
+    <g
+      class="fretboard-fret-numbers"
+    >
+      <text
+        class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+        font-size="30"
+        x="90"
+        y="409"
+      >
+        III
+      </text>
+      <text
+        class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+        font-size="30"
+        x="90"
+        y="609"
+      >
+        V
+      </text>
+    </g>
+    <g
+      class="fretboard-tunings"
+    >
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="154"
+        y="60"
+      >
+        E2
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="214"
+        y="60"
+      >
+        A2
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="274"
+        y="60"
+      >
+        D3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="334"
+        y="60"
+      >
+        G3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="394"
+        y="60"
+      >
+        B3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="454"
+        y="60"
+      >
+        E4
+      </text>
+    </g>
+  </g>
+</svg>
+`;
+
+exports[`Diagram > renders a chord diagram without a nut (barre chord) 1`] = `
+<svg
+  class="flex bg-white"
+  height="399"
+  preserveAspectRatio="xMinYMin meet"
+  viewBox="0 0 608 798"
+  width="304"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <filter
+      height="300%"
+      id="note-glow"
+      width="300%"
+      x="-100%"
+      y="-100%"
+    >
+      <fegaussianblur
+        result="blur"
+        stdDeviation="3"
+      />
+      <femerge>
+        <femergenode
+          in="blur"
+        />
+        <femergenode
+          in="SourceGraphic"
+        />
+      </femerge>
+    </filter>
+  </defs>
+  <g
+    class="fretboard"
+  >
+    <path
+      class="fill-none stroke-gray-400"
+      d=" M 142,204 h 320 M 142,304 h 320 M 142,404 h 320 M 142,504 h 320 M 142,604 h 320"
+      stroke-width="8"
+    />
+    <path
+      class="fill-none stroke-black"
+      d="M 152,150 v 490 M 212,150 v 490 M 272,150 v 490 M 332,150 v 490 M 392,150 v 490 M 452,150 v 490"
+      stroke-width="4"
+    />
+    <g>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="152"
+        cy="249"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="152"
+        y="249"
+      >
+        1
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="212"
+        cy="449"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="212"
+        y="449"
+      >
+        3
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="272"
+        cy="449"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="272"
+        y="449"
+      >
+        4
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="332"
+        cy="449"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="332"
+        y="449"
+      >
+        4
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="392"
+        cy="249"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="392"
+        y="249"
+      >
+        1
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="452"
+        cy="249"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="452"
+        y="249"
+      >
+        1
+      </text>
+    </g>
+    <g
+      class="fretboard-fret-numbers"
+    >
+      <text
+        class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+        font-size="30"
+        x="90"
+        y="258"
+      >
+        III
+      </text>
+      <text
+        class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+        font-size="30"
+        x="90"
+        y="458"
+      >
+        V
+      </text>
+    </g>
+    <g
+      class="fretboard-tunings"
+    >
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="154"
+        y="60"
+      >
+        E2
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="214"
+        y="60"
+      >
+        A2
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="274"
+        y="60"
+      >
+        D3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="334"
+        y="60"
+      >
+        G3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="394"
+        y="60"
+      >
+        B3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="454"
+        y="60"
+      >
+        E4
+      </text>
+    </g>
+  </g>
+</svg>
+`;
+
+exports[`Diagram > renders a chord diagram without a nut (barre chord) in horizontal orientation 1`] = `
+<svg
+  class="flex bg-white"
+  height="304"
+  preserveAspectRatio="xMinYMin meet"
+  viewBox="0 0 798 608"
+  width="399"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <filter
+      height="300%"
+      id="note-glow"
+      width="300%"
+      x="-100%"
+      y="-100%"
+    >
+      <fegaussianblur
+        result="blur"
+        stdDeviation="3"
+      />
+      <femerge>
+        <femergenode
+          in="blur"
+        />
+        <femergenode
+          in="SourceGraphic"
+        />
+      </femerge>
+    </filter>
+  </defs>
+  <g
+    class="fretboard"
+  >
+    <path
+      class="fill-none stroke-gray-400"
+      d=" M 204,142 v 320 M 304,142 v 320 M 404,142 v 320 M 504,142 v 320 M 604,142 v 320"
+      stroke-width="8"
+    />
+    <path
+      class="fill-none stroke-black"
+      d="M 150,152 h 490 M 150,212 h 490 M 150,272 h 490 M 150,332 h 490 M 150,392 h 490 M 150,452 h 490"
+      stroke-width="4"
+    />
+    <g>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="249"
+        cy="152"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="249"
+        y="152"
+      >
+        1
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="249"
+        cy="212"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="249"
+        y="212"
+      >
+        1
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="449"
+        cy="272"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="449"
+        y="272"
+      >
+        4
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="449"
+        cy="332"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="449"
+        y="332"
+      >
+        4
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="449"
+        cy="392"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="449"
+        y="392"
+      >
+        3
+      </text>
+      <circle
+        class="flex stroke-black fill-black"
+        cx="249"
+        cy="452"
+        r="20"
+      />
+      <text
+        alignment-baseline="central"
+        class="flex text-2xl font-sans stroke-2 stroke-white"
+        x="249"
+        y="452"
+      >
+        1
+      </text>
+    </g>
+    <g
+      class="fretboard-fret-numbers"
+    >
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="258"
+        y="90"
+      >
+        III
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="458"
+        y="90"
+      >
+        V
+      </text>
+    </g>
+    <g
+      class="fretboard-tunings"
+    >
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="60"
+        y="161.5"
+      >
+        E4
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="60"
+        y="221.5"
+      >
+        B3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="60"
+        y="281.5"
+      >
+        G3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="60"
+        y="341.5"
+      >
+        D3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="60"
+        y="401.5"
+      >
+        A2
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="60"
+        y="461.5"
+      >
+        E2
+      </text>
+    </g>
+  </g>
+</svg>
+`;
+
+exports[`Diagram > renders a scale diagram 1`] = `
+<svg
+  class="flex bg-white"
+  height="1036"
+  preserveAspectRatio="xMinYMin meet"
+  viewBox="0 0 608 1554"
+  width="405.3333333333333"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <filter
+      height="300%"
+      id="note-glow"
+      width="300%"
+      x="-100%"
+      y="-100%"
+    >
+      <fegaussianblur
+        result="blur"
+        stdDeviation="3"
+      />
+      <femerge>
+        <femergenode
+          in="blur"
+        />
+        <femergenode
+          in="SourceGraphic"
+        />
+      </femerge>
+    </filter>
+  </defs>
+  <g
+    class="fretboard"
+  >
+    <path
+      class="fill-none stroke-black"
+      d="M 142,150 h 320 M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320 M 142,654 h 320 M 142,754 h 320 M 142,854 h 320 M 142,954 h 320 M 142,1054 h 320 M 142,1154 h 320 M 142,1254 h 320 M 142,1354 h 320"
+      stroke-width="8"
+    />
+    <path
+      class="fill-none stroke-gray-400"
+      d=" M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320 M 142,654 h 320 M 142,754 h 320 M 142,854 h 320 M 142,954 h 320 M 142,1054 h 320 M 142,1154 h 320 M 142,1254 h 320 M 142,1354 h 320"
+      stroke-width="8"
+    />
+    <path
+      class="fill-none stroke-black"
+      d="M 152,150 v 1246 M 212,150 v 1246 M 272,150 v 1246 M 332,150 v 1246 M 392,150 v 1246 M 452,150 v 1246"
+      stroke-width="4"
+    />
+    <g>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-teal-700"
+          cx="452"
+          cy="124"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-teal-700 stroke-teal-700"
+          cx="452"
+          cy="124"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="452"
+        y="124"
+      >
+        E
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-green-700"
+          cx="452"
+          cy="204"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-green-500"
+        x="452"
+        y="204"
+      >
+        F
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-pink-700"
+          cx="452"
+          cy="404"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-pink-700 stroke-pink-700"
+          cx="452"
+          cy="404"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="452"
+        y="404"
+      >
+        G
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-lime-700"
+          cx="452"
+          cy="604"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-lime-500"
+        x="452"
+        y="604"
+      >
+        A
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-purple-700"
+          cx="452"
+          cy="804"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-purple-500"
+        x="452"
+        y="804"
+      >
+        B
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-red-700"
+          cx="452"
+          cy="904"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-red-700 stroke-red-700"
+          cx="452"
+          cy="904"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="452"
+        y="904"
+      >
+        C
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-orange-700"
+          cx="452"
+          cy="1104"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-orange-500"
+        x="452"
+        y="1104"
+      >
+        D
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-purple-700"
+          cx="392"
+          cy="124"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-purple-500"
+        x="392"
+        y="124"
+      >
+        B
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-red-700"
+          cx="392"
+          cy="204"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-red-700 stroke-red-700"
+          cx="392"
+          cy="204"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="392"
+        y="204"
+      >
+        C
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-orange-700"
+          cx="392"
+          cy="404"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-orange-500"
+        x="392"
+        y="404"
+      >
+        D
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-teal-700"
+          cx="392"
+          cy="604"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-teal-700 stroke-teal-700"
+          cx="392"
+          cy="604"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="392"
+        y="604"
+      >
+        E
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-green-700"
+          cx="392"
+          cy="704"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-green-500"
+        x="392"
+        y="704"
+      >
+        F
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-pink-700"
+          cx="392"
+          cy="904"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-pink-700 stroke-pink-700"
+          cx="392"
+          cy="904"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="392"
+        y="904"
+      >
+        G
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-lime-700"
+          cx="392"
+          cy="1104"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-lime-500"
+        x="392"
+        y="1104"
+      >
+        A
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-pink-700"
+          cx="332"
+          cy="124"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-pink-700 stroke-pink-700"
+          cx="332"
+          cy="124"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="332"
+        y="124"
+      >
+        G
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-lime-700"
+          cx="332"
+          cy="304"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-lime-500"
+        x="332"
+        y="304"
+      >
+        A
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-purple-700"
+          cx="332"
+          cy="504"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-purple-500"
+        x="332"
+        y="504"
+      >
+        B
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-red-700"
+          cx="332"
+          cy="604"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-red-700 stroke-red-700"
+          cx="332"
+          cy="604"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="332"
+        y="604"
+      >
+        C
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-orange-700"
+          cx="332"
+          cy="804"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-orange-500"
+        x="332"
+        y="804"
+      >
+        D
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-teal-700"
+          cx="332"
+          cy="1004"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-teal-700 stroke-teal-700"
+          cx="332"
+          cy="1004"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="332"
+        y="1004"
+      >
+        E
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-green-700"
+          cx="332"
+          cy="1104"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-green-500"
+        x="332"
+        y="1104"
+      >
+        F
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-orange-700"
+          cx="272"
+          cy="124"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-orange-500"
+        x="272"
+        y="124"
+      >
+        D
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-teal-700"
+          cx="272"
+          cy="304"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-teal-700 stroke-teal-700"
+          cx="272"
+          cy="304"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="272"
+        y="304"
+      >
+        E
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-green-700"
+          cx="272"
+          cy="404"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-green-500"
+        x="272"
+        y="404"
+      >
+        F
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-pink-700"
+          cx="272"
+          cy="604"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-pink-700 stroke-pink-700"
+          cx="272"
+          cy="604"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="272"
+        y="604"
+      >
+        G
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-lime-700"
+          cx="272"
+          cy="804"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-lime-500"
+        x="272"
+        y="804"
+      >
+        A
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-purple-700"
+          cx="272"
+          cy="1004"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-purple-500"
+        x="272"
+        y="1004"
+      >
+        B
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-red-700"
+          cx="272"
+          cy="1104"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-red-700 stroke-red-700"
+          cx="272"
+          cy="1104"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="272"
+        y="1104"
+      >
+        C
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-lime-700"
+          cx="212"
+          cy="124"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-lime-500"
+        x="212"
+        y="124"
+      >
+        A
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-purple-700"
+          cx="212"
+          cy="304"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-purple-500"
+        x="212"
+        y="304"
+      >
+        B
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-red-700"
+          cx="212"
+          cy="404"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-red-700 stroke-red-700"
+          cx="212"
+          cy="404"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="212"
+        y="404"
+      >
+        C
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-orange-700"
+          cx="212"
+          cy="604"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-orange-500"
+        x="212"
+        y="604"
+      >
+        D
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-teal-700"
+          cx="212"
+          cy="804"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-teal-700 stroke-teal-700"
+          cx="212"
+          cy="804"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="212"
+        y="804"
+      >
+        E
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-green-700"
+          cx="212"
+          cy="904"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-green-500"
+        x="212"
+        y="904"
+      >
+        F
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-pink-700"
+          cx="212"
+          cy="1104"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-pink-700 stroke-pink-700"
+          cx="212"
+          cy="1104"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="212"
+        y="1104"
+      >
+        G
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-teal-700"
+          cx="152"
+          cy="124"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-teal-700 stroke-teal-700"
+          cx="152"
+          cy="124"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="152"
+        y="124"
+      >
+        E
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-green-700"
+          cx="152"
+          cy="204"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-green-500"
+        x="152"
+        y="204"
+      >
+        F
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-pink-700"
+          cx="152"
+          cy="404"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-pink-700 stroke-pink-700"
+          cx="152"
+          cy="404"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="152"
+        y="404"
+      >
+        G
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-lime-700"
+          cx="152"
+          cy="604"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-lime-500"
+        x="152"
+        y="604"
+      >
+        A
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-purple-700"
+          cx="152"
+          cy="804"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-purple-500"
+        x="152"
+        y="804"
+      >
+        B
+      </text>
+      <g
+        filter="url(#note-glow)"
+      >
+        <circle
+          class="flex fill-none stroke-red-700"
+          cx="152"
+          cy="904"
+          r="27"
+          stroke-width="2"
+        />
+        <circle
+          class="flex fill-red-700 stroke-red-700"
+          cx="152"
+          cy="904"
+          r="21"
+          stroke-width="2"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-white"
+        x="152"
+        y="904"
+      >
+        C
+      </text>
+      <g>
+        <circle
+          class="flex fill-white stroke-orange-700"
+          cx="152"
+          cy="1104"
+          r="20"
+          stroke-width="1"
+        />
+      </g>
+      <text
+        alignment-baseline="central"
+        class="flex text-lg font-sans stroke-1 fill-orange-500"
+        x="152"
+        y="1104"
+      >
+        D
+      </text>
+    </g>
+    <g
+      class="fretboard-fret-numbers"
+    >
+      <text
+        class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+        font-size="30"
+        x="90"
+        y="409"
+      >
+        III
+      </text>
+      <text
+        class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+        font-size="30"
+        x="90"
+        y="609"
+      >
+        V
+      </text>
+      <text
+        class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+        font-size="30"
+        x="90"
+        y="809"
+      >
+        VII
+      </text>
+      <text
+        class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+        font-size="30"
+        x="90"
+        y="1009"
+      >
+        IX
+      </text>
+      <text
+        class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+        font-size="30"
+        x="90"
+        y="1309"
+      >
+        XII
+      </text>
+    </g>
+    <g
+      class="fretboard-tunings"
+    >
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="154"
+        y="60"
+      >
+        E2
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="214"
+        y="60"
+      >
+        A2
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="274"
+        y="60"
+      >
+        D3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="334"
+        y="60"
+      >
+        G3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="394"
+        y="60"
+      >
+        B3
+      </text>
+      <text
+        class="font-sans stroke-0 fill-black"
+        font-size="30"
+        x="454"
+        y="60"
+      >
+        E4
+      </text>
+    </g>
+  </g>
+</svg>
+`;

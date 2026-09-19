@@ -52,7 +52,7 @@ export function diagramStyle(
   dotRadius = 20,
   dotStroke = 1,
   fontSize = 12,
-  fretNumberDistance = 45,
+  fretNumberDistance = 60,
   fretNumberFontSize = 30,
   tuningDistance = 90,
   tuningFontSize = 30
