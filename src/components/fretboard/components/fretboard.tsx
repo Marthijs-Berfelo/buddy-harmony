@@ -17,7 +17,7 @@ export const Fretboard = (props: FretboardProps): JSX.Element => {
       {includeNut && (
         <path strokeWidth={fretWidth} className="fill-none stroke-black" d={fretsPath(true)} />
       )}
-      <path strokeWidth={fretWidth} className="fill-none stroke-gray-600" d={fretsPath(false)} />
+      <path strokeWidth={fretWidth} className="fill-none stroke-gray-400" d={fretsPath(false)} />
       <path strokeWidth={stringWidth} className="fill-none stroke-black" d={stringsPath()} />
     </Fragment>
   );
@@ -35,6 +35,7 @@ const useFretboard = ({ frets, chord, startAt }: FretboardProps): FretboardHook 
   const { stringCount, orientation, diagramStyle } = useSettings();
   const includeNut = startAt === 1;
   const isFirstFret = (frets: boolean, index: number): boolean => frets && index === 0;
+  const fretOverhang = diagramStyle.stringWidth * 2;
 
   const verticalLines = (
     length: number,
@@ -42,7 +43,8 @@ const useFretboard = ({ frets, chord, startAt }: FretboardProps): FretboardHook 
     interval: number,
     width: number,
     frets: boolean,
-    nut: boolean
+    nut: boolean,
+    overhang = 0
   ): string => {
     const paths = new Array(nut ? 1 : lines);
     for (let index = nut || !frets ? 0 : 1; index < lines; index++) {
@@ -52,8 +54,8 @@ const useFretboard = ({ frets, chord, startAt }: FretboardProps): FretboardHook 
           (includeNut ? 0 : interval / 2) +
           (includeNut || nut ? index : index - 1) * interval -
           (isFirstFret(frets, index) ? width : 0),
-        diagramStyle.padding,
-        length,
+        diagramStyle.padding - overhang,
+        length + overhang * 2,
         isFirstFret(frets, index) ? width * 2 : width
       );
     }
@@ -66,18 +68,19 @@ const useFretboard = ({ frets, chord, startAt }: FretboardProps): FretboardHook 
     interval: number,
     width: number,
     frets: boolean,
-    nut: boolean
+    nut: boolean,
+    overhang = 0
   ): string => {
     const paths = new Array(nut ? 1 : lines);
     for (let index = nut || !frets ? 0 : 1; index < lines; index++) {
       paths[index] = svg.horizontalLine(
-        diagramStyle.padding,
+        diagramStyle.padding - overhang,
         diagramStyle.padding +
           (!frets && !includeNut ? interval / 2 : 0) +
           (includeNut ? 0 : interval / 2) +
           (includeNut || nut ? index : index - 1) * interval -
           (isFirstFret(frets, index) ? width : 0),
-        length,
+        length + overhang * 2,
         isFirstFret(frets, index) ? width * 2 : width
       );
     }
@@ -119,7 +122,8 @@ const useFretboard = ({ frets, chord, startAt }: FretboardProps): FretboardHook 
           diagramStyle.fretInterval,
           diagramStyle.fretWidth,
           true,
-          nut
+          nut,
+          fretOverhang
         );
       case Orientation.HORIZONTAL:
       default:
@@ -129,7 +133,8 @@ const useFretboard = ({ frets, chord, startAt }: FretboardProps): FretboardHook 
           diagramStyle.fretInterval,
           diagramStyle.fretWidth,
           true,
-          nut
+          nut,
+          fretOverhang
         );
     }
   };

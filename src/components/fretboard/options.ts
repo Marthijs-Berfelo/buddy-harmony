@@ -1,6 +1,8 @@
 export * from './utils/scale';
 export * from './utils/diagram-style';
 
+export const NOTE_GLOW_FILTER_ID = 'note-glow';
+
 export enum DotText {
   NOTE = 'note',
   NOTE_OCTAVE = 'note-octave',

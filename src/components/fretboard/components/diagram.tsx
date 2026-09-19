@@ -4,6 +4,7 @@ import {
   DotText,
   FretNumberPosition,
   FretNumberType,
+  NOTE_GLOW_FILTER_ID,
   Orientation,
   ScaleFret,
   ScaleModel,
@@ -55,6 +56,15 @@ export const Diagram = (props: DiagramProps): JSX.Element => {
       onClick={onMouseClick}
       onMouseMove={onMouseMove}
     >
+      <defs>
+        <filter id={NOTE_GLOW_FILTER_ID} x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
       <g className={'fretboard'}>
         <Fretboard frets={frets} chord={!!chord} startAt={startAt} />
         {scale && <ScaleShape className={className} scale={getShapes(scale)} text={text} />}
