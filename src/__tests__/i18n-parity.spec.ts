@@ -6,6 +6,8 @@ import scaleEn from '../../public/locales/en/scale.json';
 import scaleNl from '../../public/locales/nl/scale.json';
 import settingsEn from '../../public/locales/en/settings.json';
 import settingsNl from '../../public/locales/nl/settings.json';
+import cagedEn from '../../public/locales/en/caged.json';
+import cagedNl from '../../public/locales/nl/caged.json';
 
 type JsonRecord = { [key: string]: string | JsonRecord };
 
@@ -20,6 +22,7 @@ const namespaces: [string, JsonRecord, JsonRecord][] = [
   ['chord', chordEn, chordNl],
   ['scale', scaleEn, scaleNl],
   ['settings', settingsEn, settingsNl],
+  ['caged', cagedEn, cagedNl],
 ];
 
 describe('translation key parity', () => {

@@ -19,12 +19,13 @@ import {
   useKeys,
   useSettings,
 } from 'hooks';
-import { CagedChords, cagedConfigs } from './caged-constants';
+import { CagedChords, CagedLetter, cagedConfigs } from './caged-constants';
 import { Orientation } from 'components/fretboard/options';
 import { buildCagedChords, cagedChordsForKey } from './caged-utils';
 
 export interface CagedHook extends KeysHook, ChordsHook, Printable {
   cagedChords?: CagedChords;
+  cagedOrder?: CagedLetter[];
 }
 
 const CagedContext = createContext<CagedHook | undefined>(undefined);
@@ -57,6 +58,15 @@ export const CagedProvider = ({ children }: PropsWithChildren): JSX.Element => {
     }
   }, [chord, cagedConfig, guitarType, tuningType]);
 
+  const cagedOrder = useMemo(() => {
+    if (cagedChords) {
+      return (Object.keys(cagedChords) as CagedLetter[]).sort(
+        (a, b) =>
+          cagedChords[a].positioned.chord.baseFret - cagedChords[b].positioned.chord.baseFret
+      );
+    }
+  }, [cagedChords]);
+
   useEffect(() => {
     handleSelectionForChords(
       guitarType,
@@ -82,6 +92,7 @@ export const CagedProvider = ({ children }: PropsWithChildren): JSX.Element => {
     chord,
     setChord,
     cagedChords,
+    cagedOrder,
     printRef,
     printStyle,
   };

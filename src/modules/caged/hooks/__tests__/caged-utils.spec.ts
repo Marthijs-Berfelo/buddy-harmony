@@ -35,21 +35,34 @@ describe('Caged Utils', () => {
   });
 
   describe('baseFret', () => {
-    test('wraps the base fret up an octave when the raw distance is not positive', () => {
+    test('returns 0 when the raw distance is exactly 0, signaling the open position', () => {
       const baseChord = cagedChord(majorCagedConfig.C.base, guitarType, 'major');
 
-      expect(baseFret('C', baseChord, majorCagedConfig.C)).toBe(12);
+      expect(baseFret('C', baseChord, majorCagedConfig.C)).toBe(0);
+    });
+
+    test('still wraps up an octave when the raw distance is negative', () => {
+      const baseChord = cagedChord(majorCagedConfig.C.base, guitarType, 'major');
+
+      expect(baseFret('A', baseChord, majorCagedConfig.C)).toBe(9);
     });
   });
 
   describe('buildCagedKey', () => {
     test('builds the open, base, and positioned chords for a CAGED shape', () => {
-      const result = buildCagedKey('C', 'major', majorCagedConfig.C, tuning, guitarType);
+      const result = buildCagedKey('A', 'major', majorCagedConfig.C, tuning, guitarType);
 
       expect(result.open.chord).toMatchObject({ baseFret: 1, frets: [-1, 3, 2, 0, 1, 0] });
       expect(result.base.chord).toMatchObject({ baseFret: 2, frets: [1, 4, 3, 1, 2, 1] });
-      expect(result.positioned.chord.baseFret).toBe(12);
-      expect(result.positioned.chord.notes).toEqual(['E3', 'C4', 'E4', 'G4', 'C5', 'E5']);
+      expect(result.positioned.chord.baseFret).toBe(9);
+    });
+
+    test('substitutes the open chord for positioned when the raw distance is exactly 0', () => {
+      const result = buildCagedKey('C', 'major', majorCagedConfig.C, tuning, guitarType);
+
+      expect(result.positioned.chord).toMatchObject({ baseFret: 1, frets: [-1, 3, 2, 0, 1, 0] });
+      expect(result.positioned.chord.notes).toEqual(['D#2', 'C3', 'E3', 'G3', 'C4', 'E4']);
+      expect(result.positioned.key).toBe('C');
     });
   });
 
