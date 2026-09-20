@@ -17,6 +17,7 @@ import { Tuning } from './tuning';
 import { ChordPosition, useSettings } from 'hooks';
 import { ChordShape } from './chord-shape';
 import { useDirectional } from '../utils/directional';
+import { CagedShapeInput, dedupeCagedDots } from '../utils';
 
 export interface DiagramProps {
   className: string;
@@ -25,8 +26,8 @@ export interface DiagramProps {
   startAt?: number;
   fretNumbersPosition: FretNumberPosition;
   scale?: ScaleModel;
-  chords?: ChordPosition[];
   chord?: ChordPosition;
+  cagedShapes?: CagedShapeInput[];
   cagedColor?: string;
   debug?: boolean;
   clickHandler?: (
@@ -43,7 +44,7 @@ export const Diagram = (props: DiagramProps): JSX.Element => {
   const { onMouseClick, onMouseMove, frets, startAt, viewBox, getHeight, getWidth, getShapes } =
     useDiagram(props);
   const { fretNumbers } = useSettings();
-  const { className, scale, chord, chords, cagedColor, text } = props;
+  const { className, scale, chord, cagedShapes, cagedColor, text } = props;
 
   return (
     <svg
@@ -66,10 +67,12 @@ export const Diagram = (props: DiagramProps): JSX.Element => {
         </filter>
       </defs>
       <g className={'fretboard'}>
-        <Fretboard frets={frets} chord={!!chord} startAt={startAt} />
+        <Fretboard frets={frets} chord={!!chord || !!cagedShapes?.length} startAt={startAt} />
         {scale && <ScaleShape className={className} scale={getShapes(scale)} text={text} />}
+        {/* scale, chord and cagedShapes are mutually exclusive — callers pass exactly
+            one. scale and cagedShapes both render via ScaleShape, chord via ChordShape. */}
         {chord && <ChordShape className={className} chord={chord} cagedColor={cagedColor} />}
-        {chords && <ChordShape className={className} chords={chords} cagedColor={cagedColor} />}
+        {!!cagedShapes?.length && <ScaleShape className={className} cagedShapes={cagedShapes} />}
         {fretNumbers !== FretNumberType.NONE && <FretNumbers frets={frets} startAt={startAt} />}
         <Tuning />
       </g>
@@ -91,13 +94,15 @@ type DiagramHook = {
 const useDiagram = ({
   scale,
   chord,
-  chords,
+  cagedShapes,
   clickHandler,
   moveHandler,
 }: DiagramProps): DiagramHook => {
   const { orientation, leftHanded, diagramStyle, stringCount, fretCount } = useSettings();
   const { onStrings } = useDirectional<ScaleFret[], unknown>({ orientation, leftHanded });
-  const frets = fretCount(scale, chord);
+  const frets = cagedShapes?.length
+    ? Math.max(...dedupeCagedDots(cagedShapes).map((dot) => dot.fret), 1) + 1
+    : fretCount(scale, chord);
 
   const onMouseClick = (event: MouseEvent<SVGSVGElement>): void => {
     if (!clickHandler) {
@@ -161,7 +166,7 @@ const useDiagram = ({
   };
 
   const getHeight = (): number => {
-    const factor = !!chord || !!chords ? 2 : 1.5;
+    const factor = chord || cagedShapes?.length ? 2 : 1.5;
     return height() / factor;
   };
 
@@ -172,7 +177,7 @@ const useDiagram = ({
   const getShapes = (scale: ScaleModel): ScaleFret[][] =>
     onStrings(Array.from(scale.info.values())).filter((string) => !!string);
 
-  const getStartAt = (): number => chord?.baseFret || 1;
+  const getStartAt = (): number => (cagedShapes?.length ? 1 : chord?.baseFret || 1);
 
   return {
     onMouseClick,

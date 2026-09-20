@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import { render } from '@testing-library/react';
 import { Diagram } from '../diagram';
 import { DotText, FretNumberPosition, Orientation } from '../../options';
-import { SettingsProvider, useSettings } from 'hooks';
+import { ChordPosition, SettingsProvider, useSettings } from 'hooks';
 import * as gs from 'guitar-scales';
 import type { ScaleModel } from '../../options';
+import type { CagedShapeInput } from '../../utils';
 
 const renderDiagram = (props: Parameters<typeof Diagram>[0]) =>
   render(
@@ -101,5 +102,41 @@ describe('Diagram', () => {
     const svg = container.querySelector('svg');
     expect(svg).toBeInTheDocument();
     expect(svg).toMatchSnapshot();
+  });
+
+  test('renders a multi-shape CAGED overlay spanning fret 0 to the last shape max fret', () => {
+    const cShapeOverlay: CagedShapeInput = {
+      chord: { baseFret: 1, frets: [-1, 3, 2, 0, 1, 0] } as ChordPosition,
+      color: 'stroke-blue-700 fill-blue-700',
+    };
+    const aShapeOverlay: CagedShapeInput = {
+      chord: { baseFret: 5, frets: [1, 3, 3, 2, 1, 1] } as ChordPosition,
+      color: 'stroke-red-700 fill-red-700',
+    };
+    const { container } = renderDiagram({
+      className: 'some-class',
+      text: DotText.NOTE,
+      fretNumbersPosition: FretNumberPosition.LEFT,
+      cagedShapes: [cShapeOverlay, aShapeOverlay],
+    });
+
+    expect(container.querySelectorAll('circle')).toHaveLength(9);
+    expect(container).toMatchSnapshot();
+  });
+
+  test('falls back to a single fret when no shape has a fretted note', () => {
+    const mutedShapeOverlay: CagedShapeInput = {
+      chord: { baseFret: 1, frets: [-1, 0, 0, 0, -1, 0] } as ChordPosition,
+      color: 'stroke-blue-700 fill-blue-700',
+    };
+    const { container } = renderDiagram({
+      className: 'some-class',
+      text: DotText.NOTE,
+      fretNumbersPosition: FretNumberPosition.LEFT,
+      cagedShapes: [mutedShapeOverlay],
+    });
+
+    expect(container.querySelector('svg')).toBeInTheDocument();
+    expect(container.querySelectorAll('circle')).toHaveLength(0);
   });
 });

@@ -5,9 +5,10 @@ import {
   buildCagedKey,
   cagedChord,
   keyRoot,
+  sortedCagedShapes,
 } from '../caged-utils';
-import { cagedConfigs, CagedLetter, majorCagedConfig } from '../caged-constants';
-import { computeGuitarTypes, GuitarType, keys, StringTuningType } from 'hooks';
+import { CAGED_COLORS, CagedChords, cagedConfigs, CagedLetter, majorCagedConfig } from '../caged-constants';
+import { ChordPosition, computeGuitarTypes, GuitarType, keys, StringTuningType } from 'hooks';
 import { Note } from '@tonaljs/tonal';
 
 describe('Caged Utils', () => {
@@ -121,6 +122,70 @@ describe('Caged Utils', () => {
 
   test.each(keyRootCases)('should root key %s on string %i as %s', (key, string, expected) => {
     expect(keyRoot(key.toString(), string as number)).toEqual(expected);
+  });
+
+  describe('sortedCagedShapes', () => {
+    const chordFor = (baseFret: number): ChordPosition => ({
+      frets: [-1, 3, 2, 0, 1, 0],
+      fingers: [0, 3, 2, 0, 1, 0],
+      baseFret,
+      midi: [],
+    });
+
+    const cagedChords: CagedChords = {
+      C: { open: {} as never, base: {} as never, positioned: { chord: chordFor(1) } as never },
+      A: { open: {} as never, base: {} as never, positioned: { chord: chordFor(5) } as never },
+      G: { open: {} as never, base: {} as never, positioned: { chord: chordFor(2) } as never },
+      E: { open: {} as never, base: {} as never, positioned: { chord: chordFor(0) } as never },
+      D: { open: {} as never, base: {} as never, positioned: { chord: chordFor(3) } as never },
+    };
+    const cagedOrder: CagedLetter[] = ['E', 'C', 'G', 'D', 'A'];
+
+    test('maps cagedOrder to {chord, color} pairs using CAGED_COLORS', () => {
+      const shapes = sortedCagedShapes(cagedChords, cagedOrder, {
+        C: true,
+        A: true,
+        G: true,
+        E: true,
+        D: true,
+      });
+
+      expect(shapes).toEqual([
+        { chord: cagedChords.E.positioned.chord, color: CAGED_COLORS.E.caged },
+        { chord: cagedChords.C.positioned.chord, color: CAGED_COLORS.C.caged },
+        { chord: cagedChords.G.positioned.chord, color: CAGED_COLORS.G.caged },
+        { chord: cagedChords.D.positioned.chord, color: CAGED_COLORS.D.caged },
+        { chord: cagedChords.A.positioned.chord, color: CAGED_COLORS.A.caged },
+      ]);
+    });
+
+    test('filters out letters whose visibleShapes entry is false, preserving cagedOrder', () => {
+      const shapes = sortedCagedShapes(cagedChords, cagedOrder, {
+        C: true,
+        A: false,
+        G: true,
+        E: false,
+        D: true,
+      });
+
+      expect(shapes.map((shape) => shape.chord.baseFret)).toEqual([
+        cagedChords.C.positioned.chord.baseFret,
+        cagedChords.G.positioned.chord.baseFret,
+        cagedChords.D.positioned.chord.baseFret,
+      ]);
+    });
+
+    test('returns an empty array when every shape is hidden', () => {
+      const shapes = sortedCagedShapes(cagedChords, cagedOrder, {
+        C: false,
+        A: false,
+        G: false,
+        E: false,
+        D: false,
+      });
+
+      expect(shapes).toEqual([]);
+    });
   });
 
   describe('buildCagedChords C-shape at key B', () => {
