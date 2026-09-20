@@ -93,7 +93,7 @@ describe('SettingsTools', () => {
     const user = userEvent.setup();
     renderSettingsTools();
 
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
     vi.useRealTimers();
 
     await openMenu(user);

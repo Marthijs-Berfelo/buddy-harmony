@@ -36,6 +36,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['json-summary', 'lcov', 'text'],
       include: ['src/**'],
+      exclude: ['**/__tests__/**'],
     },
   },
 });

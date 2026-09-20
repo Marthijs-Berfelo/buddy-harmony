@@ -29,7 +29,7 @@ import { withMinDelay } from 'lib/delay';
 
 const CHORD_FRETS = 5;
 const DEFAULT_FRETS = 12;
-const NOTE_WAVE_LOADER_MIN_DISPLAY_MS = 3000;
+const NOTE_WAVE_LOADER_MIN_DISPLAY_MS = 4000;
 
 interface Props {
   diagramStyle?: DiagramStyle;
@@ -45,6 +45,7 @@ interface Settings {
   chordGuitarTypes: GuitarType[];
   chordDataLoading: boolean;
   guitarType: GuitarType;
+  isSupportedType: (guitarType: GuitarType) => boolean;
   onlySupportedGuitars: (
     supportedGuitarTypes?: GuitarType[]
   ) => (guitarType: GuitarType) => boolean;
@@ -111,6 +112,12 @@ const SettingsProvider = ({
     return tuningType.tuning.length;
   }, [tuningType]);
 
+  const isSupportedType = useCallback(
+    (guitar: GuitarType): boolean =>
+      chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1,
+    [chordGuitarTypes]
+  );
+
   const onlySupportedGuitars = useCallback(
     (supportedGuitarTypes?: GuitarType[]): ((type: GuitarType) => boolean) =>
       (type) => {
@@ -160,6 +167,7 @@ const SettingsProvider = ({
       chordGuitarTypes,
       chordDataLoading,
       guitarType,
+      isSupportedType,
       onlySupportedGuitars,
       setGuitarType,
       tuningTypes,
@@ -181,6 +189,7 @@ const SettingsProvider = ({
       chordGuitarTypes,
       chordDataLoading,
       guitarType,
+      isSupportedType,
       onlySupportedGuitars,
       setGuitarType,
       tuningTypes,

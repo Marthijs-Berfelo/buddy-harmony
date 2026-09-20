@@ -1,6 +1,14 @@
-import { addNotes, baseFret, buildCagedKey, cagedChord, keyRoot } from '../caged-utils';
-import { majorCagedConfig } from '../caged-constants';
-import { computeGuitarTypes, StringTuningType } from 'hooks';
+import {
+  addNotes,
+  baseFret,
+  buildCagedChords,
+  buildCagedKey,
+  cagedChord,
+  keyRoot,
+} from '../caged-utils';
+import { cagedConfigs, CagedLetter, majorCagedConfig } from '../caged-constants';
+import { computeGuitarTypes, GuitarType, keys, StringTuningType } from 'hooks';
+import { Note } from '@tonaljs/tonal';
 
 describe('Caged Utils', () => {
   let tuning: StringTuningType;
@@ -45,6 +53,12 @@ describe('Caged Utils', () => {
       const baseChord = cagedChord(majorCagedConfig.C.base, guitarType, 'major');
 
       expect(baseFret('A', baseChord, majorCagedConfig.C)).toBe(9);
+    });
+
+    test('unwraps an octave when the raw distance is 12 or higher', () => {
+      const baseChord = cagedChord(majorCagedConfig.D.base, guitarType, 'major');
+
+      expect(baseFret('D', baseChord, majorCagedConfig.D)).toBe(0);
     });
   });
 
@@ -108,5 +122,70 @@ describe('Caged Utils', () => {
   test.each(keyRootCases)('should root key %s on string %i as %s', (key, string, expected) => {
     expect(keyRoot(key.toString(), string as number)).toEqual(expected);
   });
-});
 
+  describe('buildCagedChords C-shape at key B', () => {
+    let guitarType: GuitarType;
+
+    beforeAll(async () => {
+      ({ defaultGuitar: guitarType } = await computeGuitarTypes());
+    });
+
+    const soundedChromas = (chord: ReturnType<typeof cagedChord> & { notes?: string[] }) =>
+      chord.frets
+        .map((fret, index) => (fret === -1 ? undefined : Note.chroma(chord.notes![index])))
+        .filter((chroma): chroma is number => chroma !== undefined);
+
+    test('produces a B minor triad, not a C minor triad', () => {
+      const cagedChords = buildCagedChords(
+        'B',
+        'minor',
+        cagedConfigs.get('minor')!,
+        tuning,
+        guitarType
+      );
+
+      // B minor: B=11, D=2, F#=6
+      expect(new Set(soundedChromas(cagedChords.C.positioned.chord))).toEqual(new Set([11, 2, 6]));
+    });
+
+    test('produces a B7 chord, not a C7 chord', () => {
+      const cagedChords = buildCagedChords('B', '7', cagedConfigs.get('7')!, tuning, guitarType);
+
+      // B7: B=11, D#=3, F#=6, A=9 (barre shape omits the 5th, F#)
+      const chromas = soundedChromas(cagedChords.C.positioned.chord);
+      expect(chromas.every((chroma) => [11, 3, 6, 9].includes(chroma))).toBe(true);
+      expect(new Set(chromas)).toEqual(new Set([11, 3, 9]));
+    });
+  });
+
+  describe('buildCagedChords', () => {
+    let guitarType: GuitarType;
+
+    beforeAll(async () => {
+      ({ defaultGuitar: guitarType } = await computeGuitarTypes());
+    });
+
+    const buildCagedChordsCases = Array.from(cagedConfigs.entries()).flatMap(([type, config]) =>
+      keys.map((key) => [key, type, config] as const)
+    );
+
+    test.each(buildCagedChordsCases)(
+      'builds valid CAGED chords for key %s, type %s',
+      (key, type, config) => {
+        const cagedChords = buildCagedChords(key, type, config, tuning, guitarType);
+
+        (['C', 'A', 'G', 'E', 'D'] as CagedLetter[]).forEach((letter) => {
+          const { open, base, positioned } = cagedChords[letter];
+
+          [open.chord, base.chord, positioned.chord].forEach((chord) => {
+            expect(chord.frets.length).toBe(tuning.tuning.length);
+          });
+          expect(positioned.chord.notes?.length).toBe(tuning.tuning.length);
+
+          expect(positioned.chord.baseFret).toBeGreaterThanOrEqual(0);
+          expect(positioned.chord.baseFret).toBeLessThan(12);
+        });
+      }
+    );
+  });
+});

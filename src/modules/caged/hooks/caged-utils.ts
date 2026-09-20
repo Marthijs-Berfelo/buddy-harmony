@@ -93,6 +93,9 @@ export const baseFret = (key: string, baseChord: ChordPosition, config: CagedKey
   if (baseFret < 0) {
     return baseFret + 12;
   }
+  if (baseFret > 11) {
+    return baseFret - 12;
+  }
   return baseFret;
 };
 

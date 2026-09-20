@@ -2,7 +2,6 @@ import {
   createContext,
   JSX,
   PropsWithChildren,
-  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -16,7 +15,6 @@ import {
   ChordsHook,
   handleSelectionForChords,
   useSettings,
-  GuitarType,
   Printable,
 } from 'hooks';
 import { Orientation } from 'components/fretboard/options';
@@ -28,12 +26,7 @@ const GuitarChordContext = createContext<GuitarChordHook | undefined>(undefined)
 export const GuitarChordProvider = ({ children }: PropsWithChildren): JSX.Element => {
   const printRef = useRef<HTMLDivElement>(null);
   const { keys, selectedKey, setSelectedKey } = useKeys();
-  const { guitarType, chordGuitarTypes } = useSettings();
-  const isSupportedType = useCallback(
-    (guitar: GuitarType): boolean =>
-      chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1,
-    [chordGuitarTypes]
-  );
+  const { guitarType, isSupportedType } = useSettings();
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
   const chordRef = useRef(chord);

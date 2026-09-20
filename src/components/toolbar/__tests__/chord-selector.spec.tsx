@@ -35,7 +35,7 @@ describe('ChordSelector', () => {
     renderChordSelector([]);
 
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     expect(screen.queryByTestId('note-wave-glyph')).not.toBeInTheDocument();
     const trigger = screen.getByRole('button');
@@ -50,7 +50,7 @@ describe('ChordSelector', () => {
     ]);
 
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     const trigger = screen.getByRole('button', { name: 'title' });
     expect(trigger).toHaveAttribute('aria-haspopup', 'menu');

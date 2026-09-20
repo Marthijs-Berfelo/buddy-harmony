@@ -2,7 +2,6 @@ import {
   createContext,
   JSX,
   PropsWithChildren,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -10,7 +9,6 @@ import {
   useState,
 } from 'react';
 import {
-  GuitarType,
   Printable,
   ChordDetail,
   ChordsHook,
@@ -33,12 +31,7 @@ const CagedContext = createContext<CagedHook | undefined>(undefined);
 export const CagedProvider = ({ children }: PropsWithChildren): JSX.Element => {
   const printRef = useRef<HTMLDivElement>(null);
   const { keys, selectedKey, setSelectedKey } = useKeys();
-  const { guitarType, tuningType, chordGuitarTypes } = useSettings();
-  const isSupportedType = useCallback(
-    (guitar: GuitarType): boolean =>
-      chordGuitarTypes.findIndex((type) => type.name === guitar.name) > -1,
-    [chordGuitarTypes]
-  );
+  const { guitarType, tuningType, isSupportedType } = useSettings();
   const [chords, setChords] = useState<ChordDetail[]>([]);
   const [chord, setChord] = useState<ChordDetail>();
   const chordRef = useRef(chord);

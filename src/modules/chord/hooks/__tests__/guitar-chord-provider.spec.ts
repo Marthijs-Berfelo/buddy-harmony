@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { createElement, PropsWithChildren } from 'react';
-import { GuitarChordProvider, useGuitarChord } from '../guitar-chord-provider';
+import { GuitarChordProvider, useGuitarChord } from '../';
 import { computeGuitarTypes, SettingsProvider, useSettings } from 'hooks';
 
 const wrapper = ({ children }: PropsWithChildren) =>
@@ -37,7 +37,7 @@ describe('useGuitarChord', () => {
     act(() => result.current.chord.setSelectedKey('C'));
 
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     expect(result.current.settings.chordDataLoading).toBe(false);
     expect(result.current.chord.chords.length).toBeGreaterThan(0);
