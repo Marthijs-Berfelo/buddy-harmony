@@ -34,7 +34,7 @@ describe('KeySelector', () => {
     renderKeySelector();
 
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     const trigger = screen.getByRole('button', { name: 'key' });
     expect(trigger).toHaveAttribute('aria-haspopup', 'menu');

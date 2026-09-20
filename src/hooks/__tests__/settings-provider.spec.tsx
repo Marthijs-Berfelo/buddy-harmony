@@ -1,6 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
-import { SettingsProvider, useSettings } from '../settings-provider';
-import { computeGuitarTypes } from 'hooks';
+import { SettingsProvider, useSettings, computeGuitarTypes } from 'hooks';
 
 const ProbeChild = () => {
   const { guitarType, tuningType, chordGuitarTypes, chordDataLoading } = useSettings();
@@ -38,7 +37,7 @@ describe('SettingsProvider', () => {
     );
 
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     expect(screen.getByTestId('probe')).toHaveTextContent(/guitar:standard:\d+:false/);
     expect(screen.getByTestId('probe').textContent).not.toContain(':0:false');

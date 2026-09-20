@@ -4,7 +4,7 @@ import { Layout } from 'layout';
 import { lazy } from 'react';
 import { withMinDelay } from 'lib/delay';
 
-const FRETBOARD_LOADER_MIN_DISPLAY_MS = 3000;
+const FRETBOARD_LOADER_MIN_DISPLAY_MS = 2000;
 
 const ScalePage = lazy(() =>
   withMinDelay(import('modules/scale'), FRETBOARD_LOADER_MIN_DISPLAY_MS).then((module) => ({

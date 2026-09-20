@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { createElement, PropsWithChildren } from 'react';
-import { CagedProvider, useCaged } from '../caged-provider';
+import { CagedProvider, useCaged } from '../';
 import { computeGuitarTypes, SettingsProvider, useSettings } from 'hooks';
 
 const wrapper = ({ children }: PropsWithChildren) =>
@@ -31,7 +31,7 @@ describe('useCaged', () => {
     act(() => result.current.caged.setSelectedKey('C'));
 
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     expect(result.current.settings.chordDataLoading).toBe(false);
     expect(result.current.caged.chords.length).toBeGreaterThan(0);
@@ -41,7 +41,7 @@ describe('useCaged', () => {
     const { result } = renderCaged();
     act(() => result.current.caged.setSelectedKey('C'));
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     act(() => result.current.caged.setChord(result.current.caged.chords[0]));
 
@@ -58,7 +58,7 @@ describe('useCaged', () => {
     const { result } = renderCaged();
     act(() => result.current.caged.setSelectedKey('C'));
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     act(() => result.current.caged.setChord(result.current.caged.chords[0]));
 

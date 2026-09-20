@@ -64,7 +64,7 @@ describe('CagedContent', () => {
 
     await act(async () => screen.getByText('select-key').click());
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     await act(async () => screen.getByText('select-chord').click());
 
@@ -89,7 +89,7 @@ describe('CagedContent', () => {
 
     await act(async () => screen.getByText('select-key').click());
     await computeGuitarTypes();
-    await act(() => vi.advanceTimersByTimeAsync(3000));
+    await act(() => vi.advanceTimersByTimeAsync(4000));
 
     await act(async () => screen.getByText('select-chord').click());
 
