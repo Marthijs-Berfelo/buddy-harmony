@@ -15,6 +15,8 @@ import {
   StringTuningType,
 } from 'hooks';
 import { Interval, transpose } from '@tonaljs/tonal';
+import { CagedShapeInput } from 'components/fretboard/utils';
+import { CAGED_COLORS, CagedLetter } from './caged-constants';
 
 export const cagedChordsForKey =
   (cagedChordTypes: string[]): ((instrument: string, key: string) => ChordDetail[]) =>
@@ -124,3 +126,15 @@ const fretDistance = (keyRoot: string, chordRoot: string): number => {
   const intervalLiteral = Interval.distance(chordRoot, keyRoot);
   return Interval.semitones(intervalLiteral) || 0;
 };
+
+export const sortedCagedShapes = (
+  cagedChords: CagedChords,
+  cagedOrder: CagedLetter[],
+  visibleShapes: Record<CagedLetter, boolean>
+): CagedShapeInput[] =>
+  cagedOrder
+    .filter((letter) => visibleShapes[letter])
+    .map((letter) => ({
+      chord: cagedChords[letter].positioned.chord,
+      color: CAGED_COLORS[letter].caged,
+    }));

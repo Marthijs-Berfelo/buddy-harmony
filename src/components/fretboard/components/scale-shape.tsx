@@ -1,14 +1,16 @@
 import type { JSX } from 'react';
 import { DotText, NOTE_GLOW_FILTER_ID, ScaleFret } from '../options';
 import { Fragment } from 'react';
-import { ShapeProps, useShape } from '../utils';
+import { CagedDot, CagedShapeInput, dedupeCagedDots, ShapeProps, useShape } from '../utils';
 import { useSettings } from 'hooks';
 import { NoteDot } from './note-dot';
+import { useDirectional } from '../utils/directional';
 
-interface ScaleShapeProps extends ShapeProps {
-  scale: ScaleFret[][];
-  text: DotText;
-}
+type ScaleShapeProps = ShapeProps &
+  (
+    | { scale: ScaleFret[][]; text: DotText; cagedShapes?: never }
+    | { cagedShapes: CagedShapeInput[]; scale?: never; text?: never }
+  );
 
 export const ScaleShape = (props: ScaleShapeProps): JSX.Element => {
   const { scaleShape } = useScaleShape(props);
@@ -97,9 +99,19 @@ const DEFAULT_SCALE_COLOR: ScaleColor = {
   emphasisTextClassName: 'fill-white',
 };
 
-const useScaleShape = ({ className, scale, text }: ScaleShapeProps): ScaleShapeHook => {
-  const { diagramStyle, stringCount } = useSettings();
+const useScaleShape = ({
+  className,
+  scale,
+  text,
+  cagedShapes,
+}: ScaleShapeProps): ScaleShapeHook => {
+  const { orientation, leftHanded, diagramStyle, stringCount } = useSettings();
   const { x, y } = useShape();
+  const { onStrings } = useDirectional<number, unknown>({ orientation, leftHanded });
+  const { onStrings: onStringNotes } = useDirectional<string, unknown>({
+    orientation,
+    leftHanded,
+  });
 
   const getNote = (fret: ScaleFret): string => {
     if (fret.note === fret.noteEnharmonic) {
@@ -166,13 +178,56 @@ const useScaleShape = ({ className, scale, text }: ScaleShapeProps): ScaleShapeH
     );
   };
 
-  const scaleShape = scale.flatMap((string, stringIndex) =>
-    string
-      .filter((fret) => fret.isPartOfScale)
-      .map((fret) => {
-        return dot(stringCount - 1 - stringIndex, fret.freet, dotText(fret), fret.scalePosition);
-      })
+  const cagedDot = ({ string, fret, color, note }: CagedDot): JSX.Element => (
+    <Fragment key={`caged.${string}.${fret}`}>
+      <circle
+        key={`caged.${string}.${fret}.dot`}
+        cx={x(diagramStyle.padding, string, fret, 0)}
+        cy={y(diagramStyle.padding, string, fret, 0)}
+        r={diagramStyle.dotRadius}
+        className={`${className} ${color}`}
+      />
+      <text
+        key={`caged.${string}.${fret}.note`}
+        x={x(diagramStyle.padding, string, fret, 0)}
+        y={y(diagramStyle.padding, string, fret, 0)}
+        alignmentBaseline={'central'}
+        className={`${className} text-2xl font-sans stroke-2 stroke-white`}
+      >
+        {note}
+      </text>
+    </Fragment>
   );
+
+  const cagedDots = (shapes: CagedShapeInput[]): JSX.Element[] => {
+    const reordered = shapes.map(({ chord: shapeChord, color }) => ({
+      chord: {
+        ...shapeChord,
+        frets: onStrings(shapeChord.frets),
+        notes: shapeChord.notes && onStringNotes(shapeChord.notes),
+      },
+      color,
+    }));
+    return dedupeCagedDots(reordered).map(cagedDot);
+  };
+
+  const scaleShape = scale
+    ? scale.flatMap((string, stringIndex) =>
+        string
+          .filter((fret) => fret.isPartOfScale)
+          .map((fret) => {
+            return dot(
+              stringCount - 1 - stringIndex,
+              fret.freet,
+              dotText(fret),
+              fret.scalePosition
+            );
+          })
+      )
+    : cagedShapes?.length
+      ? cagedDots(cagedShapes)
+      : [];
+
   return {
     scaleShape,
   };

@@ -6,7 +6,6 @@ import { Orientation } from '../options';
 import { useDirectional } from '../utils/directional';
 
 interface ChordShapeProps extends ShapeProps {
-  chords?: ChordPosition[];
   chord?: ChordPosition;
 }
 
@@ -20,12 +19,7 @@ type ChordShapeHook = {
   chordShapes: JSX.Element[];
 };
 
-const useChordShape = ({
-  className,
-  cagedColor,
-  chords,
-  chord,
-}: ChordShapeProps): ChordShapeHook => {
+const useChordShape = ({ className, cagedColor, chord }: ChordShapeProps): ChordShapeHook => {
   const { orientation, leftHanded, diagramStyle } = useSettings();
   const { onStrings } = useDirectional<number, unknown>({ orientation, leftHanded });
 
@@ -214,13 +208,9 @@ const useChordShape = ({
     }
   };
 
-  const renderChord = (
-    chord: ChordPosition,
-    chordPosition: number,
-    hideFingers?: boolean
-  ): JSX.Element[] => {
+  const renderChord = (chord: ChordPosition, chordPosition: number): JSX.Element[] => {
     const baseFret = chord.baseFret - 1;
-    const fingerNumbers = !hideFingers ? onStrings(chord.fingers) : [];
+    const fingerNumbers = onStrings(chord.fingers);
     const frets = onStrings(chord.frets);
     const dots = frets.map((fret, string) => {
       if (fret < 0) {
@@ -248,13 +238,7 @@ const useChordShape = ({
     return [...dots, ...barres];
   };
 
-  const chordShapes = (chords || [chord]).flatMap((chordModel, chordPosition) => {
-    if (chordModel) {
-      return renderChord(chordModel, chordPosition);
-    } else {
-      return <></>;
-    }
-  });
+  const chordShapes = chord ? renderChord(chord, 0) : [];
 
   return {
     chordShapes,

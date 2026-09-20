@@ -605,6 +605,251 @@ exports[`Diagram > renders a chord diagram without a nut (barre chord) in horizo
 </svg>
 `;
 
+exports[`Diagram > renders a multi-shape CAGED overlay spanning fret 0 to the last shape max fret 1`] = `
+<div>
+  <svg
+    class="some-class bg-white"
+    height="561"
+    preserveAspectRatio="xMinYMin meet"
+    viewBox="0 0 608 1122"
+    width="304"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <filter
+        height="300%"
+        id="note-glow"
+        width="300%"
+        x="-100%"
+        y="-100%"
+      >
+        <fegaussianblur
+          result="blur"
+          stdDeviation="3"
+        />
+        <femerge>
+          <femergenode
+            in="blur"
+          />
+          <femergenode
+            in="SourceGraphic"
+          />
+        </femerge>
+      </filter>
+    </defs>
+    <g
+      class="fretboard"
+    >
+      <path
+        class="fill-none stroke-black"
+        d="M 142,150 h 320 M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320 M 142,654 h 320 M 142,754 h 320 M 142,854 h 320"
+        stroke-width="8"
+      />
+      <path
+        class="fill-none stroke-gray-400"
+        d=" M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320 M 142,654 h 320 M 142,754 h 320 M 142,854 h 320"
+        stroke-width="8"
+      />
+      <path
+        class="fill-none stroke-black"
+        d="M 152,150 v 814 M 212,150 v 814 M 272,150 v 814 M 332,150 v 814 M 392,150 v 814 M 452,150 v 814"
+        stroke-width="4"
+      />
+      <g>
+        <circle
+          class="some-class stroke-blue-700 fill-blue-700"
+          cx="212"
+          cy="404"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="212"
+          y="404"
+        />
+        <circle
+          class="some-class stroke-blue-700 fill-blue-700"
+          cx="272"
+          cy="304"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="272"
+          y="304"
+        />
+        <circle
+          class="some-class stroke-blue-700 fill-blue-700"
+          cx="392"
+          cy="204"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="392"
+          y="204"
+        />
+        <circle
+          class="some-class stroke-red-700 fill-red-700"
+          cx="152"
+          cy="604"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="152"
+          y="604"
+        />
+        <circle
+          class="some-class stroke-red-700 fill-red-700"
+          cx="212"
+          cy="804"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="212"
+          y="804"
+        />
+        <circle
+          class="some-class stroke-red-700 fill-red-700"
+          cx="272"
+          cy="804"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="272"
+          y="804"
+        />
+        <circle
+          class="some-class stroke-red-700 fill-red-700"
+          cx="332"
+          cy="704"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="332"
+          y="704"
+        />
+        <circle
+          class="some-class stroke-red-700 fill-red-700"
+          cx="392"
+          cy="604"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="392"
+          y="604"
+        />
+        <circle
+          class="some-class stroke-red-700 fill-red-700"
+          cx="452"
+          cy="604"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="452"
+          y="604"
+        />
+      </g>
+      <g
+        class="fretboard-fret-numbers"
+      >
+        <text
+          class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+          font-size="30"
+          x="90"
+          y="409"
+        >
+          III
+        </text>
+        <text
+          class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+          font-size="30"
+          x="90"
+          y="609"
+        >
+          V
+        </text>
+        <text
+          class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+          font-size="30"
+          x="90"
+          y="809"
+        >
+          VII
+        </text>
+      </g>
+      <g
+        class="fretboard-tunings"
+      >
+        <text
+          class="font-sans stroke-0 fill-black"
+          font-size="30"
+          x="154"
+          y="60"
+        >
+          E2
+        </text>
+        <text
+          class="font-sans stroke-0 fill-black"
+          font-size="30"
+          x="214"
+          y="60"
+        >
+          A2
+        </text>
+        <text
+          class="font-sans stroke-0 fill-black"
+          font-size="30"
+          x="274"
+          y="60"
+        >
+          D3
+        </text>
+        <text
+          class="font-sans stroke-0 fill-black"
+          font-size="30"
+          x="334"
+          y="60"
+        >
+          G3
+        </text>
+        <text
+          class="font-sans stroke-0 fill-black"
+          font-size="30"
+          x="394"
+          y="60"
+        >
+          B3
+        </text>
+        <text
+          class="font-sans stroke-0 fill-black"
+          font-size="30"
+          x="454"
+          y="60"
+        >
+          E4
+        </text>
+      </g>
+    </g>
+  </svg>
+</div>
+`;
+
 exports[`Diagram > renders a scale diagram 1`] = `
 <svg
   class="flex bg-white"
