@@ -2,5 +2,9 @@
   "positioned_selected": "Positioned {{key}}",
   "view-chord": "Chord",
   "view-scale": "Scale",
-  "legend-shape-label": "{{letter}} chord"
+  "legend-shape-label": "{{letter}} shape",
+  "legend-triad-label": "Show triad emphasis",
+  "legend-symbol-triad": "Triad tone",
+  "legend-symbol-scale": "Scale tone",
+  "scale-view-disabled-tooltip": "Scale view needs standard 6-string guitar tuning"
 }

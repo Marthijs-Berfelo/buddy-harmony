@@ -20,8 +20,16 @@ import {
   useSettings,
 } from 'hooks';
 import { CagedChords, CagedLetter, cagedConfigs } from './caged-constants';
-import { Orientation } from 'components/fretboard/options';
-import { buildCagedChords, cagedChordsForKey } from './caged-utils';
+import { Orientation, ScaleModel } from 'components/fretboard/options';
+import {
+  applyDefaultScaleName,
+  buildCagedChords,
+  cagedChordsForKey,
+  enforceStandardTuningForScaleView,
+} from './caged-utils';
+import * as gs from 'guitar-scales';
+
+const guitarScale = gs.GuitarScale;
 
 export type CagedViewMode = 'chord' | 'scale';
 
@@ -32,6 +40,12 @@ export interface CagedHook extends KeysHook, ChordsHook, Printable {
   setViewMode: Dispatch<SetStateAction<CagedViewMode>>;
   visibleShapes: Record<CagedLetter, boolean>;
   toggleShapeVisibility: (letter: CagedLetter) => void;
+  scaleName?: string;
+  setScaleName: Dispatch<SetStateAction<string | undefined>>;
+  showTriads: boolean;
+  setShowTriads: Dispatch<SetStateAction<boolean>>;
+  scaleModel: ScaleModel | undefined;
+  isStandardTuning: boolean;
 }
 
 const CagedContext = createContext<CagedHook | undefined>(undefined);
@@ -80,6 +94,29 @@ export const CagedProvider = ({ children }: PropsWithChildren): JSX.Element => {
   const toggleShapeVisibility = (letter: CagedLetter): void =>
     setVisibleShapes((current) => ({ ...current, [letter]: !current[letter] }));
 
+  const [scaleName, setScaleName] = useState<string>();
+  const [showTriads, setShowTriads] = useState<boolean>(true);
+  const suffixRef = useRef(chord?.suffix);
+
+  useEffect(() => {
+    if (chord && chord.suffix !== suffixRef.current) {
+      suffixRef.current = chord.suffix;
+      applyDefaultScaleName(chord, setScaleName);
+    }
+  }, [chord]);
+
+  const scaleModel = useMemo(() => {
+    if (!!selectedKey && !!scaleName) {
+      return guitarScale.get(selectedKey, scaleName) as ScaleModel;
+    }
+  }, [selectedKey, scaleName]);
+
+  const isStandardTuning = guitarType.name === 'guitar' && tuningType.name === 'standard';
+
+  useEffect(() => {
+    enforceStandardTuningForScaleView(isStandardTuning, viewMode, setViewMode);
+  }, [isStandardTuning, viewMode]);
+
   useEffect(() => {
     handleSelectionForChords(
       guitarType,
@@ -110,6 +147,12 @@ export const CagedProvider = ({ children }: PropsWithChildren): JSX.Element => {
     setViewMode,
     visibleShapes,
     toggleShapeVisibility,
+    scaleName,
+    setScaleName,
+    showTriads,
+    setShowTriads,
+    scaleModel,
+    isStandardTuning,
     printRef,
     printStyle,
   };

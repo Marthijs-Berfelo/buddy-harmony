@@ -1,9 +1,11 @@
+import { Dispatch, SetStateAction } from 'react';
 import {
   CagedChords,
   CagedConfig,
   CagedKey,
   CagedKeyConfig,
   CagedPositionConfig,
+  CAGED_SCALE_SHORTLIST,
 } from './caged-constants';
 import {
   ChordDetail,
@@ -125,6 +127,26 @@ const inFourthOctaveOnThirdString = (stringRoot: number, key: string): boolean =
 const fretDistance = (keyRoot: string, chordRoot: string): number => {
   const intervalLiteral = Interval.distance(chordRoot, keyRoot);
   return Interval.semitones(intervalLiteral) || 0;
+};
+
+export const applyDefaultScaleName = (
+  chord: ChordDetail,
+  setScaleName: Dispatch<SetStateAction<string | undefined>>
+): void => {
+  const shortlist = CAGED_SCALE_SHORTLIST[chord.suffix as keyof typeof CAGED_SCALE_SHORTLIST];
+  if (shortlist) {
+    setScaleName(shortlist[0]);
+  }
+};
+
+export const enforceStandardTuningForScaleView = (
+  isStandardTuning: boolean,
+  viewMode: 'chord' | 'scale',
+  setViewMode: Dispatch<SetStateAction<'chord' | 'scale'>>
+): void => {
+  if (!isStandardTuning && viewMode === 'scale') {
+    setViewMode('chord');
+  }
 };
 
 export const sortedCagedShapes = (
