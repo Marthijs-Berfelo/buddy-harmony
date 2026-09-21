@@ -1,4 +1,6 @@
 {
-  "open": "Open",
-  "positioned_selected": "Gepositioneerd {{key}}"
+  "positioned_selected": "Gepositioneerd {{key}}",
+  "view-chord": "Akkoord",
+  "view-scale": "Toonladder",
+  "legend-shape-label": "{{letter}}-akkoord"
 }

@@ -36,55 +36,43 @@ export interface CagedConfig {
 
 export type CagedLetter = keyof CagedChords;
 
+export const CAGED_SCALE_SHORTLIST: Record<'major' | 'minor' | '7', string[]> = {
+  'major': ['major', 'major pentatonic', 'lydian'],
+  'minor': ['aeolian', 'minor pentatonic', 'harmonic minor', 'melodic minor'],
+  '7': ['mixolydian', 'mixolydian pentatonic', 'lydian dominant'],
+};
+
 export interface CagedColor {
-  text: string;
   caged: string;
   bg: string;
   border: string;
-  stroke: string;
-  fill: string;
 }
 
 export const CAGED_COLORS: Record<CagedLetter, CagedColor> = {
   C: {
-    text: 'text-blue-700',
     caged: 'stroke-blue-700 fill-blue-700',
     bg: 'bg-blue-700',
     border: 'border-blue-700',
-    stroke: 'stroke-blue-700',
-    fill: 'fill-blue-700',
   },
   A: {
-    text: 'text-red-700',
     caged: 'stroke-red-700 fill-red-700',
     bg: 'bg-red-700',
     border: 'border-red-700',
-    stroke: 'stroke-red-700',
-    fill: 'fill-red-700',
   },
   G: {
-    text: 'text-green-700',
     caged: 'stroke-green-700 fill-green-700',
     bg: 'bg-green-700',
     border: 'border-green-700',
-    stroke: 'stroke-green-700',
-    fill: 'fill-green-700',
   },
   E: {
-    text: 'text-orange-800',
     caged: 'stroke-orange-800 fill-orange-800',
     bg: 'bg-orange-800',
     border: 'border-orange-800',
-    stroke: 'stroke-orange-800',
-    fill: 'fill-orange-800',
   },
   D: {
-    text: 'text-violet-800',
     caged: 'stroke-violet-800 fill-violet-800',
     bg: 'bg-violet-800',
     border: 'border-violet-800',
-    stroke: 'stroke-violet-800',
-    fill: 'fill-violet-800',
   },
 };
 
