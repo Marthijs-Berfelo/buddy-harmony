@@ -1,7 +1,9 @@
 import {
   createContext,
+  Dispatch,
   JSX,
   PropsWithChildren,
+  SetStateAction,
   useContext,
   useEffect,
   useMemo,
@@ -21,9 +23,15 @@ import { CagedChords, CagedLetter, cagedConfigs } from './caged-constants';
 import { Orientation } from 'components/fretboard/options';
 import { buildCagedChords, cagedChordsForKey } from './caged-utils';
 
+export type CagedViewMode = 'chord' | 'scale';
+
 export interface CagedHook extends KeysHook, ChordsHook, Printable {
   cagedChords?: CagedChords;
   cagedOrder?: CagedLetter[];
+  viewMode: CagedViewMode;
+  setViewMode: Dispatch<SetStateAction<CagedViewMode>>;
+  visibleShapes: Record<CagedLetter, boolean>;
+  toggleShapeVisibility: (letter: CagedLetter) => void;
 }
 
 const CagedContext = createContext<CagedHook | undefined>(undefined);
@@ -60,6 +68,18 @@ export const CagedProvider = ({ children }: PropsWithChildren): JSX.Element => {
     }
   }, [cagedChords]);
 
+  const [viewMode, setViewMode] = useState<CagedViewMode>('scale');
+  const [visibleShapes, setVisibleShapes] = useState<Record<CagedLetter, boolean>>({
+    C: true,
+    A: true,
+    G: true,
+    E: true,
+    D: true,
+  });
+
+  const toggleShapeVisibility = (letter: CagedLetter): void =>
+    setVisibleShapes((current) => ({ ...current, [letter]: !current[letter] }));
+
   useEffect(() => {
     handleSelectionForChords(
       guitarType,
@@ -86,6 +106,10 @@ export const CagedProvider = ({ children }: PropsWithChildren): JSX.Element => {
     setChord,
     cagedChords,
     cagedOrder,
+    viewMode,
+    setViewMode,
+    visibleShapes,
+    toggleShapeVisibility,
     printRef,
     printStyle,
   };

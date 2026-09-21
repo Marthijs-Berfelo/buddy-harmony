@@ -1,4 +1,6 @@
 {
-  "open": "Open",
-  "positioned_selected": "Positioned {{key}}"
+  "positioned_selected": "Positioned {{key}}",
+  "view-chord": "Chord",
+  "view-scale": "Scale",
+  "legend-shape-label": "{{letter}} chord"
 }

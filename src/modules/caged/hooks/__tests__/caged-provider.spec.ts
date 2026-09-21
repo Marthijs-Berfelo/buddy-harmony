@@ -68,4 +68,45 @@ describe('useCaged', () => {
     expect(baseFrets).toEqual([...baseFrets].sort((a, b) => a - b));
     expect(cagedOrder![0]).toBe('C');
   });
+
+  test('defaults to scale view mode with every shape visible', () => {
+    const { result } = renderCaged();
+
+    expect(result.current.caged.viewMode).toBe('scale');
+    expect(result.current.caged.visibleShapes).toEqual({
+      C: true,
+      A: true,
+      G: true,
+      E: true,
+      D: true,
+    });
+  });
+
+  test('setViewMode switches between chord and scale', () => {
+    const { result } = renderCaged();
+
+    act(() => result.current.caged.setViewMode('chord'));
+    expect(result.current.caged.viewMode).toBe('chord');
+
+    act(() => result.current.caged.setViewMode('scale'));
+    expect(result.current.caged.viewMode).toBe('scale');
+  });
+
+  test('toggleShapeVisibility flips only the targeted letter', () => {
+    const { result } = renderCaged();
+
+    act(() => result.current.caged.toggleShapeVisibility('G'));
+
+    expect(result.current.caged.visibleShapes).toEqual({
+      C: true,
+      A: true,
+      G: false,
+      E: true,
+      D: true,
+    });
+
+    act(() => result.current.caged.toggleShapeVisibility('G'));
+
+    expect(result.current.caged.visibleShapes.G).toBe(true);
+  });
 });
