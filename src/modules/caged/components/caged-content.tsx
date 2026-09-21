@@ -8,6 +8,9 @@ import { DotText, FretNumberPosition } from 'components/fretboard/options';
 import { CAGED_COLORS } from '../hooks/caged-constants';
 import { sortedCagedShapes } from '../hooks/caged-utils';
 import { CagedLegend } from './caged-legend';
+import { ScaleSelector } from 'components/toolbar';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 export const CagedContent = (): JSX.Element => {
   const { t } = useTranslation(['caged']);
@@ -21,8 +24,25 @@ export const CagedContent = (): JSX.Element => {
     setViewMode,
     visibleShapes,
     toggleShapeVisibility,
+    scaleName,
+    setScaleName,
+    showTriads,
+    setShowTriads,
+    isStandardTuning,
   } = useCaged();
   const { orientation } = useSettings();
+
+  const scaleViewButton = (
+    <Button
+      type="button"
+      variant={viewMode === 'scale' ? 'default' : 'secondary'}
+      aria-pressed={viewMode === 'scale'}
+      disabled={!isStandardTuning}
+      onClick={() => setViewMode('scale')}
+    >
+      {t('caged:view-scale')}
+    </Button>
+  );
 
   return (
     <div className="flex flex-initial flex-col items-center" id="caged-content" ref={printRef}>
@@ -32,35 +52,40 @@ export const CagedContent = (): JSX.Element => {
             {printStyle(orientation)}
           </style>
           <div className="flex flex-row justify-center gap-2">
-            <button
+            <Button
               type="button"
-              onClick={() => setViewMode('chord')}
+              variant={viewMode === 'chord' ? 'default' : 'secondary'}
               aria-pressed={viewMode === 'chord'}
-              className={
-                viewMode === 'chord'
-                  ? 'rounded-md bg-slate-700 px-4 py-1 text-white'
-                  : 'rounded-md bg-gray-200 px-4 py-1 text-slate-700'
-              }
+              onClick={() => setViewMode('chord')}
             >
               {t('caged:view-chord')}
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode('scale')}
-              aria-pressed={viewMode === 'scale'}
-              className={
-                viewMode === 'scale'
-                  ? 'rounded-md bg-slate-700 px-4 py-1 text-white'
-                  : 'rounded-md bg-gray-200 px-4 py-1 text-slate-700'
-              }
-            >
-              {t('caged:view-scale')}
-            </button>
+            </Button>
+            {isStandardTuning ? (
+              scaleViewButton
+            ) : (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span tabIndex={0}>{scaleViewButton}</span>
+                </TooltipTrigger>
+                <TooltipContent>{t('caged:scale-view-disabled-tooltip')}</TooltipContent>
+              </Tooltip>
+            )}
           </div>
-          <CagedLegend visibleShapes={visibleShapes} onToggleShape={toggleShapeVisibility} />
+          <CagedLegend
+            visibleShapes={visibleShapes}
+            onToggleShape={toggleShapeVisibility}
+            showTriads={showTriads}
+            onShowTriadsChange={setShowTriads}
+          />
           {viewMode === 'scale' ? (
-            <div className="flex flex-col items-center" id="caged-scale-view">
+            <div className="flex flex-col items-center gap-2" id="caged-scale-view">
               <p className="text-2xl">{t('caged:positioned_selected', { key: selectedKey })}</p>
+              <ScaleSelector
+                selectedKey={selectedKey}
+                scales={[]}
+                scale={scaleName}
+                setScale={setScaleName}
+              />
               <Diagram
                 className=""
                 diagramCount={1}

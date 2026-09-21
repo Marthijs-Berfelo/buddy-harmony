@@ -4,8 +4,9 @@ import i18n from 'i18next';
 import { createElement, PropsWithChildren } from 'react';
 import { CagedContent } from '../caged-content';
 import { CagedProvider, useCaged } from '../../hooks';
-import { computeGuitarTypes, SettingsProvider } from 'hooks';
+import { computeGuitarTypes, SettingsProvider, useSettings } from 'hooks';
 import { CAGED_COLORS } from '../../hooks/caged-constants';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 i18n.init({
   resources: {
@@ -14,7 +15,15 @@ i18n.init({
         positioned_selected: 'Positioned {{key}}',
         'view-chord': 'Chord',
         'view-scale': 'Scale',
-        'legend-shape-label': '{{letter}} chord',
+        'legend-shape-label': '{{letter}} shape',
+        'legend-triad-label': 'Show triad emphasis',
+        'legend-symbol-triad': 'Triad tone',
+        'legend-symbol-scale': 'Scale tone',
+        'scale-view-disabled-tooltip': 'Scale view needs standard 6-string guitar tuning',
+      },
+      scale: {
+        title: 'Scale',
+        title_selected: 'Scale: {{scale}}',
       },
     },
   },
@@ -24,6 +33,7 @@ i18n.init({
 
 const Selector = ({ selectKey }: { selectKey: string }) => {
   const { setSelectedKey, chords, chord, setChord, cagedOrder } = useCaged();
+  const { setGuitarType, guitarTypes } = useSettings();
 
   return (
     <div>
@@ -31,6 +41,11 @@ const Selector = ({ selectKey }: { selectKey: string }) => {
       {chords.length > 0 && !chord && (
         <button onClick={() => setChord(chords[0])}>select-chord</button>
       )}
+      <button
+        onClick={() => setGuitarType(guitarTypes.find((type) => type.name === 'ukulele')!)}
+      >
+        switch-to-ukulele
+      </button>
       <div data-testid="caged-order">{cagedOrder?.join(',')}</div>
     </div>
   );
@@ -42,9 +57,13 @@ const wrapperFor = (selectKey: string) =>
       I18nextProvider,
       { i18n },
       createElement(
-        SettingsProvider,
+        TooltipProvider,
         null,
-        createElement(CagedProvider, null, createElement(Selector, { selectKey }), children)
+        createElement(
+          SettingsProvider,
+          null,
+          createElement(CagedProvider, null, createElement(Selector, { selectKey }), children)
+        )
       )
     );
   };
@@ -68,35 +87,35 @@ describe('CagedContent', () => {
     vi.useRealTimers();
   });
 
-  test('defaults to Scale/overlay view with the legend visible', async () => {
+  test('defaults to Scale/overlay view with the legend and scale selector visible', async () => {
     renderCagedContent();
     await selectKeyAndChord();
 
     expect(document.getElementById('caged-legend')).toBeInTheDocument();
     expect(document.getElementById('caged-scale-view')).toBeInTheDocument();
     expect(document.getElementById('caged-chord-view')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /major/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Scale' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: 'Chord' })).toHaveAttribute(
+      'aria-pressed',
+      'false'
+    );
   });
 
   test('switches to Chord/rows view and renders one simplified row per letter', async () => {
     renderCagedContent();
     await selectKeyAndChord();
 
-    expect(screen.getByRole('button', { name: 'Chord' })).toHaveAttribute(
-      'aria-pressed',
-      'false'
-    );
-    expect(screen.getByRole('button', { name: 'Scale' })).toHaveAttribute('aria-pressed', 'true');
-
     await act(async () => screen.getByRole('button', { name: 'Chord' }).click());
 
+    expect(document.getElementById('caged-chord-view')).toBeInTheDocument();
+    expect(document.getElementById('caged-scale-view')).not.toBeInTheDocument();
+    expect(document.getElementById('caged-legend')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Chord' })).toHaveAttribute('aria-pressed', 'true');
     expect(screen.getByRole('button', { name: 'Scale' })).toHaveAttribute(
       'aria-pressed',
       'false'
     );
-    expect(document.getElementById('caged-chord-view')).toBeInTheDocument();
-    expect(document.getElementById('caged-scale-view')).not.toBeInTheDocument();
-    expect(document.getElementById('caged-legend')).toBeInTheDocument();
 
     (['C', 'A', 'G', 'E', 'D'] as const).forEach((letter) => {
       const row = document.getElementById(`caged-${letter}`);
@@ -112,17 +131,7 @@ describe('CagedContent', () => {
     renderCagedContent();
     await selectKeyAndChord();
 
-    const [strokeClass, fillClass] = CAGED_COLORS.G.caged.split(' ');
-    expect(
-      document.querySelector(`#caged-scale-view circle.${strokeClass}.${fillClass}`)
-    ).toBeInTheDocument();
-
-    await act(async () => screen.getByRole('button', { name: 'G chord' }).click());
-
-    expect(
-      document.querySelector(`#caged-scale-view circle.${strokeClass}.${fillClass}`)
-    ).not.toBeInTheDocument();
-
+    await act(async () => screen.getByRole('button', { name: 'G shape' }).click());
     await act(async () => screen.getByRole('button', { name: 'Chord' }).click());
 
     expect(document.getElementById('caged-G')).toBeInTheDocument();
@@ -141,5 +150,17 @@ describe('CagedContent', () => {
 
     expect(renderedOrder).toEqual(expectedOrder);
     expect(renderedOrder).not.toEqual(['C', 'A', 'G', 'E', 'D']);
+  });
+
+  test('disables the Scale view button and falls back to Chord view when tuning becomes non-standard', async () => {
+    renderCagedContent();
+    await selectKeyAndChord();
+    expect(document.getElementById('caged-scale-view')).toBeInTheDocument();
+
+    await act(async () => screen.getByText('switch-to-ukulele').click());
+
+    expect(screen.getByRole('button', { name: 'Scale' })).toBeDisabled();
+    expect(document.getElementById('caged-chord-view')).toBeInTheDocument();
+    expect(document.getElementById('caged-scale-view')).not.toBeInTheDocument();
   });
 });

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import { createElement } from 'react';
@@ -9,7 +10,10 @@ i18n.init({
   resources: {
     en: {
       caged: {
-        'legend-shape-label': '{{letter}} chord',
+        'legend-shape-label': '{{letter}} shape',
+        'legend-triad-label': 'Show triad emphasis',
+        'legend-symbol-triad': 'Triad tone',
+        'legend-symbol-scale': 'Scale tone',
       },
     },
   },
@@ -19,13 +23,20 @@ i18n.init({
 
 const renderLegend = (
   visibleShapes: Record<'C' | 'A' | 'G' | 'E' | 'D', boolean>,
-  onToggle = vi.fn()
+  showTriads = true,
+  onToggleShape = vi.fn(),
+  onShowTriadsChange = vi.fn()
 ) =>
   render(
     createElement(
       I18nextProvider,
       { i18n },
-      createElement(CagedLegend, { visibleShapes, onToggleShape: onToggle })
+      createElement(CagedLegend, {
+        visibleShapes,
+        onToggleShape,
+        showTriads,
+        onShowTriadsChange,
+      })
     )
   );
 
@@ -34,30 +45,30 @@ describe('CagedLegend', () => {
     renderLegend({ C: true, A: true, G: false, E: true, D: true });
 
     (['C', 'A', 'G', 'E', 'D'] as const).forEach((letter) => {
-      expect(screen.getByRole('button', { name: `${letter} chord` })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: `${letter} shape` })).toBeInTheDocument();
     });
 
-    expect(screen.getByRole('button', { name: 'C chord' })).toHaveClass(
+    expect(screen.getByRole('button', { name: 'C shape' })).toHaveClass(
       ...CAGED_COLORS.C.bg.split(' ')
     );
-    expect(screen.getByRole('button', { name: 'G chord' })).not.toHaveClass(
+    expect(screen.getByRole('button', { name: 'G shape' })).not.toHaveClass(
       ...CAGED_COLORS.G.bg.split(' ')
     );
-    expect(screen.getByRole('button', { name: 'C chord' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'C shape' })).toHaveAttribute(
       'aria-pressed',
       'true'
     );
-    expect(screen.getByRole('button', { name: 'G chord' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'G shape' })).toHaveAttribute(
       'aria-pressed',
       'false'
     );
   });
 
-  test('calls onToggleShape with the clicked letter', async () => {
+  test('calls onToggleShape with the clicked letter', () => {
     const onToggle = vi.fn();
-    renderLegend({ C: true, A: true, G: true, E: true, D: true }, onToggle);
+    renderLegend({ C: true, A: true, G: true, E: true, D: true }, true, onToggle);
 
-    screen.getByRole('button', { name: 'G chord' }).click();
+    screen.getByRole('button', { name: 'G shape' }).click();
 
     expect(onToggle).toHaveBeenCalledWith('G');
   });
@@ -65,7 +76,7 @@ describe('CagedLegend', () => {
   test('toggles aria-pressed on click', () => {
     const { rerender } = renderLegend({ C: true, A: true, G: true, E: true, D: true });
 
-    expect(screen.getByRole('button', { name: 'G chord' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'G shape' })).toHaveAttribute(
       'aria-pressed',
       'true'
     );
@@ -77,13 +88,43 @@ describe('CagedLegend', () => {
         createElement(CagedLegend, {
           visibleShapes: { C: true, A: true, G: false, E: true, D: true },
           onToggleShape: vi.fn(),
+          showTriads: true,
+          onShowTriadsChange: vi.fn(),
         })
       )
     );
 
-    expect(screen.getByRole('button', { name: 'G chord' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'G shape' })).toHaveAttribute(
       'aria-pressed',
       'false'
     );
+  });
+
+  test('renders the triad switch reflecting showTriads', () => {
+    renderLegend({ C: true, A: true, G: true, E: true, D: true }, true);
+
+    expect(screen.getByRole('switch', { name: 'Show triad emphasis' })).toBeChecked();
+  });
+
+  test('calls onShowTriadsChange with the flipped value when the triad switch is toggled', async () => {
+    const user = userEvent.setup();
+    const onShowTriadsChange = vi.fn();
+    renderLegend(
+      { C: true, A: true, G: true, E: true, D: true },
+      false,
+      vi.fn(),
+      onShowTriadsChange
+    );
+
+    await user.click(screen.getByRole('switch', { name: 'Show triad emphasis' }));
+
+    expect(onShowTriadsChange).toHaveBeenCalledWith(true);
+  });
+
+  test('renders the 2-entry scale-note symbol key', () => {
+    renderLegend({ C: true, A: true, G: true, E: true, D: true });
+
+    expect(screen.getByText('Triad tone')).toBeInTheDocument();
+    expect(screen.getByText('Scale tone')).toBeInTheDocument();
   });
 });

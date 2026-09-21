@@ -109,4 +109,106 @@ describe('useCaged', () => {
 
     expect(result.current.caged.visibleShapes.G).toBe(true);
   });
+
+  test('defaults showTriads to true', () => {
+    const { result } = renderCaged();
+
+    expect(result.current.caged.showTriads).toBe(true);
+  });
+
+  test('setShowTriads toggles the triad switch', () => {
+    const { result } = renderCaged();
+
+    act(() => result.current.caged.setShowTriads(false));
+    expect(result.current.caged.showTriads).toBe(false);
+
+    act(() => result.current.caged.setShowTriads(true));
+    expect(result.current.caged.showTriads).toBe(true);
+  });
+
+  test('auto-selects the first shortlist scale for the chord suffix once a chord is chosen', async () => {
+    const { result } = renderCaged();
+    act(() => result.current.caged.setSelectedKey('C'));
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(4000));
+
+    const majorChord = result.current.caged.chords.find((chord) => chord.suffix === 'major');
+    act(() => result.current.caged.setChord(majorChord));
+
+    expect(result.current.caged.scaleName).toBe('major');
+  });
+
+  test('resets scaleName to the new suffix default when the chord suffix changes', async () => {
+    const { result } = renderCaged();
+    act(() => result.current.caged.setSelectedKey('C'));
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(4000));
+
+    const majorChord = result.current.caged.chords.find((chord) => chord.suffix === 'major');
+    act(() => result.current.caged.setChord(majorChord));
+    expect(result.current.caged.scaleName).toBe('major');
+
+    act(() => result.current.caged.setScaleName('lydian'));
+    expect(result.current.caged.scaleName).toBe('lydian');
+
+    const minorChord = result.current.caged.chords.find((chord) => chord.suffix === 'minor');
+    act(() => result.current.caged.setChord(minorChord));
+
+    expect(result.current.caged.scaleName).toBe('aeolian');
+  });
+
+  test('preserves a user-picked scaleName when the key changes but the chord suffix stays the same', async () => {
+    const { result } = renderCaged();
+    act(() => result.current.caged.setSelectedKey('C'));
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(4000));
+
+    const cMajorChord = result.current.caged.chords.find((chord) => chord.suffix === 'major');
+    act(() => result.current.caged.setChord(cMajorChord));
+    act(() => result.current.caged.setScaleName('lydian'));
+
+    act(() => result.current.caged.setSelectedKey('G'));
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(4000));
+
+    const gMajorChord = result.current.caged.chords.find((chord) => chord.suffix === 'major');
+    expect(gMajorChord).not.toBe(cMajorChord);
+    act(() => result.current.caged.setChord(gMajorChord));
+
+    expect(result.current.caged.scaleName).toBe('lydian');
+  });
+
+  test('computes scaleModel from selectedKey and scaleName once both are set', async () => {
+    const { result } = renderCaged();
+    act(() => result.current.caged.setSelectedKey('C'));
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(4000));
+
+    const majorChord = result.current.caged.chords.find((chord) => chord.suffix === 'major');
+    act(() => result.current.caged.setChord(majorChord));
+
+    expect(result.current.caged.scaleModel).toBeDefined();
+    expect(result.current.caged.scaleModel?.info).toHaveLength(7);
+  });
+
+  test('isStandardTuning is true for the default guitar/tuning', async () => {
+    const { result } = renderCaged();
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(4000));
+
+    expect(result.current.caged.isStandardTuning).toBe(true);
+  });
+
+  test('falls back viewMode to chord when isStandardTuning becomes false while viewMode is scale', async () => {
+    const { result } = renderCaged();
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(4000));
+    expect(result.current.caged.viewMode).toBe('scale');
+
+    const ukulele = result.current.settings.guitarTypes.find((type) => type.name === 'ukulele');
+    act(() => result.current.settings.setGuitarType(ukulele!));
+
+    expect(result.current.caged.isStandardTuning).toBe(false);
+    expect(result.current.caged.viewMode).toBe('chord');
+  });
 });

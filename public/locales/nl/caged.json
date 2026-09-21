@@ -2,5 +2,9 @@
   "positioned_selected": "Gepositioneerd {{key}}",
   "view-chord": "Akkoord",
   "view-scale": "Toonladder",
-  "legend-shape-label": "{{letter}}-akkoord"
+  "legend-shape-label": "{{letter}}-vorm",
+  "legend-triad-label": "Toon triadaccent",
+  "legend-symbol-triad": "Triadtoon",
+  "legend-symbol-scale": "Toonladdertoon",
+  "scale-view-disabled-tooltip": "Toonladderweergave vereist standaard 6-snarige gitaarstemming"
 }
