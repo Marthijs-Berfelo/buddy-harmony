@@ -682,6 +682,18 @@ exports[`Diagram > renders a multi-shape CAGED overlay spanning fret 0 to the la
         />
         <circle
           class="some-class stroke-blue-700 fill-blue-700"
+          cx="332"
+          cy="124"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="332"
+          y="124"
+        />
+        <circle
+          class="some-class stroke-blue-700 fill-blue-700"
           cx="392"
           cy="204"
           r="20"
@@ -691,6 +703,18 @@ exports[`Diagram > renders a multi-shape CAGED overlay spanning fret 0 to the la
           class="some-class text-2xl font-sans stroke-2 stroke-white"
           x="392"
           y="204"
+        />
+        <circle
+          class="some-class stroke-blue-700 fill-blue-700"
+          cx="452"
+          cy="124"
+          r="20"
+        />
+        <text
+          alignment-baseline="central"
+          class="some-class text-2xl font-sans stroke-2 stroke-white"
+          x="452"
+          y="124"
         />
         <circle
           class="some-class stroke-red-700 fill-red-700"

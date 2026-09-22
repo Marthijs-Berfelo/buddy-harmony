@@ -120,11 +120,11 @@ describe('Diagram', () => {
       cagedShapes: [cShapeOverlay, aShapeOverlay],
     });
 
-    expect(container.querySelectorAll('circle')).toHaveLength(9);
+    expect(container.querySelectorAll('circle')).toHaveLength(11);
     expect(container).toMatchSnapshot();
   });
 
-  test('falls back to a single fret when no shape has a fretted note', () => {
+  test('renders open-string dots and falls back to a single fret when a shape has no fretted note', () => {
     const mutedShapeOverlay: CagedShapeInput = {
       chord: { baseFret: 1, frets: [-1, 0, 0, 0, -1, 0] } as ChordPosition,
       color: 'stroke-blue-700 fill-blue-700',
@@ -137,6 +137,6 @@ describe('Diagram', () => {
     });
 
     expect(container.querySelector('svg')).toBeInTheDocument();
-    expect(container.querySelectorAll('circle')).toHaveLength(0);
+    expect(container.querySelectorAll('circle')).toHaveLength(4);
   });
 });
