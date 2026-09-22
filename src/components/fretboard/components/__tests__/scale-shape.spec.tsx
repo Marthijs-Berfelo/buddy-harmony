@@ -85,14 +85,14 @@ const aShape: CagedShapeInput = {
 
 describe('ScaleShape', () => {
   describe('cagedShapes', () => {
-    test('renders one dot per fretted note across all shapes', () => {
+    test('renders one dot per fretted or open note across all shapes', () => {
       const { container } = renderScaleShape({
         className: 'some-class',
         cagedShapes: [cShape, aShape],
       });
 
       const circles = container.querySelectorAll('circle');
-      expect(circles).toHaveLength(9);
+      expect(circles).toHaveLength(11);
     });
 
     test('gives each dot its own shape color', () => {
@@ -122,36 +122,37 @@ describe('ScaleShape', () => {
       });
 
       const circles = Array.from(container.querySelectorAll('circle'));
-      expect(circles).toHaveLength(3);
+      expect(circles).toHaveLength(5);
       expect(circles.every((circle) => circle.classList.contains('stroke-blue-700'))).toBe(true);
       expect(circles.some((circle) => circle.classList.contains('stroke-red-700'))).toBe(false);
     });
 
-    test('renders the actual note text for each fretted position, in dedupe order', () => {
+    test('renders the actual note text for each fretted or open position, in dedupe order', () => {
       const { container } = renderScaleShape({
         className: 'some-class',
         cagedShapes: [cShape, aShape],
       });
 
       const texts = Array.from(container.querySelectorAll('text')).map((el) => el.textContent);
-      // cShape contributes its 3 fretted strings first (string 1 fret 3, string 2 fret
-      // 2, string 4 fret 1), then aShape's 6 fretted strings, in fret-array order.
-      expect(texts).toEqual(['C3', 'E3', 'C4', 'A2', 'E3', 'A3', 'Db4', 'E4', 'A4']);
+      // cShape contributes its 5 non-muted strings first, in string-index order (1
+      // fretted, 2 fretted, 3 open, 4 fretted, 5 open), then aShape's 6 fretted
+      // strings, in fret-array order.
+      expect(texts).toEqual(['C3', 'E3', 'G3', 'C4', 'E4', 'A2', 'E3', 'A3', 'Db4', 'E4', 'A4']);
     });
 
-    test('skips muted and open strings entirely', () => {
+    test('skips muted strings but renders open strings', () => {
       const { container } = renderScaleShape({
         className: 'some-class',
         cagedShapes: [cShape],
       });
 
-      // cShape mutes string 0 and leaves strings 3 and 5 open, so only the 3 fretted
-      // strings (1, 2, 4) should produce a dot — not 6.
+      // cShape mutes string 0 only; strings 1, 2, 3, 4, 5 (2 fretted, 2 open, 1 fretted)
+      // all produce a dot.
       const circles = container.querySelectorAll('circle');
-      expect(circles).toHaveLength(3);
+      expect(circles).toHaveLength(5);
 
       const texts = Array.from(container.querySelectorAll('text')).map((el) => el.textContent);
-      expect(texts).toEqual(['C3', 'E3', 'C4']);
+      expect(texts).toEqual(['C3', 'E3', 'G3', 'C4', 'E4']);
     });
 
     test('flips which string a dot renders on under left-handed orientation', () => {
@@ -168,25 +169,22 @@ describe('ScaleShape', () => {
         className: 'some-class',
         cagedShapes: [cShape],
       });
-      // Default (right-handed): C3 (string 1), E3 (string 2), C4 (string 4) — dedupe
-      // order — with cx driven by string index and cy driven by fret (vertical axis).
       expect(dotsOf(defaultContainer)).toEqual([
         { note: 'C3', cx: '212', cy: '404' },
         { note: 'E3', cx: '272', cy: '304' },
+        { note: 'G3', cx: '332', cy: '124' },
         { note: 'C4', cx: '392', cy: '204' },
+        { note: 'E4', cx: '452', cy: '124' },
       ]);
 
       const { container: leftHandedContainer } = renderLeftHandedScaleShape({
         className: 'some-class',
         cagedShapes: [cShape],
       });
-      // Under leftHanded, onStrings/onStringNotes reverse the 6-string array, so each
-      // dot's cx moves to its mirrored string index while cy (fret-driven) stays tied
-      // to the correct note — asserting both catches a reverted `onStrings(...)` call
-      // (which would corrupt cy and misclassify the open string as fretted) as well as
-      // a hypothetical x/y swap.
       expect(dotsOf(leftHandedContainer)).toEqual([
+        { note: 'E4', cx: '152', cy: '124' },
         { note: 'C4', cx: '212', cy: '204' },
+        { note: 'G3', cx: '272', cy: '124' },
         { note: 'E3', cx: '332', cy: '304' },
         { note: 'C3', cx: '392', cy: '404' },
       ]);
@@ -207,13 +205,10 @@ describe('ScaleShape', () => {
         cagedShapes: [cShape],
       });
 
-      // `useDirectional.onStrings` reverses on `orientation === HORIZONTAL || leftHanded`
-      // (directional.ts:19), so horizontal-without-left-handed hits the same string
-      // reversal as the left-handed case above (note order C4/E3/C3, not C3/E3/C4) —
-      // but the swapped x/y axis formulas for HORIZONTAL orientation still produce
-      // distinct cx/cy values from the left-handed-but-vertical case.
       expect(dotsOf(horizontalContainer)).toEqual([
+        { note: 'E4', cx: '124', cy: '152' },
         { note: 'C4', cx: '204', cy: '212' },
+        { note: 'G3', cx: '124', cy: '272' },
         { note: 'E3', cx: '304', cy: '332' },
         { note: 'C3', cx: '404', cy: '392' },
       ]);

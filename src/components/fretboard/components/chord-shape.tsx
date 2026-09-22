@@ -38,18 +38,26 @@ const useChordShape = ({ className, cagedColor, chord }: ChordShapeProps): Chord
     </Fragment>
   );
 
-  const open = (string: number, position: number): JSX.Element => (
-    <Fragment key={`${position}.${string}.O`}>
-      <text
-        x={x(diagramStyle.padding, string, 0, 0)}
-        y={y(diagramStyle.padding, string, 0, 0)}
-        alignmentBaseline={'central'}
-        className={'font-sans stroke-1 text-4xl fill-black chord-dot-text'}
-      >
-        O
-      </text>
-    </Fragment>
-  );
+  const open = (
+    string: number,
+    startAt: number,
+    chordPosition: number,
+    chordNotes: string[]
+  ): JSX.Element =>
+    cagedColor ? (
+      dot(string, 0, startAt, chordPosition, dotNoteText(string, chordNotes))
+    ) : (
+      <Fragment key={`${chordPosition}.${string}.O`}>
+        <text
+          x={x(diagramStyle.padding, string, 0, 0)}
+          y={y(diagramStyle.padding, string, 0, 0)}
+          alignmentBaseline={'central'}
+          className={'font-sans stroke-1 text-4xl fill-black chord-dot-text'}
+        >
+          O
+        </text>
+      </Fragment>
+    );
 
   const blank = (string: number, position: number): JSX.Element => (
     <Fragment key={`${position}.${string}.none`} />
@@ -216,7 +224,7 @@ const useChordShape = ({ className, cagedColor, chord }: ChordShapeProps): Chord
       if (fret < 0) {
         return cross(string, chordPosition);
       } else if (fret === 0) {
-        return open(string, chordPosition);
+        return open(string, baseFret, chordPosition, chord.notes || []);
       } else if (chord.barres?.includes(fret) && !cagedColor) {
         return blank(string, chordPosition);
       } else {

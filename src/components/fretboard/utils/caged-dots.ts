@@ -24,10 +24,10 @@ export const dedupeCagedDots = (shapes: CagedShapeInput[]): CagedDot[] => {
 
   shapes.forEach(({ chord, color }) => {
     chord.frets.forEach((fret, string) => {
-      if (fret <= 0) {
+      if (fret < 0) {
         return;
       }
-      const absoluteFret = fret + chord.baseFret - 1;
+      const absoluteFret = fret === 0 ? 0 : fret + chord.baseFret - 1;
       const key = `${string}:${absoluteFret}`;
       if (seen.has(key)) {
         return;
