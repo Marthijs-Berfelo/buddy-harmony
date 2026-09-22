@@ -8,7 +8,7 @@
     "page_HARMONY": "Harmonie",
     "page_HELP": "Help"
   },
-  "key": "Toonsoort",
+  "key": "Toonsoort selecteren",
   "key_selected": "Toonsoort: {{key}}",
   "app-version": "Versie: {{version}}",
   "app-source": "Bron code",

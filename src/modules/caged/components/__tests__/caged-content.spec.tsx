@@ -5,7 +5,6 @@ import { createElement, PropsWithChildren } from 'react';
 import { CagedContent } from '../caged-content';
 import { CagedProvider, useCaged } from '../../hooks';
 import { computeGuitarTypes, SettingsProvider, useSettings } from 'hooks';
-import { CAGED_COLORS } from '../../hooks/caged-constants';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 i18n.init({
@@ -13,13 +12,12 @@ i18n.init({
     en: {
       caged: {
         positioned_selected: 'Positioned {{key}}',
-        'view-chord': 'Chord',
-        'view-scale': 'Scale',
+        chord_selected: 'Chord {{key}}',
+        'legend-title': 'Legend',
         'legend-shape-label': '{{letter}} shape',
-        'legend-triad-label': 'Show triad emphasis',
-        'legend-symbol-triad': 'Triad tone',
+        'legend-triad-label': 'Show triads',
+        'legend-symbol-triad': 'Triad',
         'legend-symbol-scale': 'Scale tone',
-        'scale-view-disabled-tooltip': 'Scale view needs standard 6-string guitar tuning',
       },
       scale: {
         title: 'Scale',
@@ -32,7 +30,8 @@ i18n.init({
 });
 
 const Selector = ({ selectKey }: { selectKey: string }) => {
-  const { setSelectedKey, chords, chord, setChord, cagedOrder } = useCaged();
+  const { setSelectedKey, chords, chord, setChord, cagedOrder, viewMode, setViewMode } =
+    useCaged();
   const { setGuitarType, guitarTypes } = useSettings();
 
   return (
@@ -45,6 +44,9 @@ const Selector = ({ selectKey }: { selectKey: string }) => {
         onClick={() => setGuitarType(guitarTypes.find((type) => type.name === 'ukulele')!)}
       >
         switch-to-ukulele
+      </button>
+      <button onClick={() => setViewMode(viewMode === 'chord' ? 'scale' : 'chord')}>
+        toggle-view
       </button>
       <div data-testid="caged-order">{cagedOrder?.join(',')}</div>
     </div>
@@ -87,44 +89,44 @@ describe('CagedContent', () => {
     vi.useRealTimers();
   });
 
-  test('defaults to Scale/overlay view with the legend and scale selector visible', async () => {
+  test('defaults to Scale/overlay view with the legend visible and no header', async () => {
     renderCagedContent();
     await selectKeyAndChord();
 
     expect(document.getElementById('caged-legend')).toBeInTheDocument();
     expect(document.getElementById('caged-scale-view')).toBeInTheDocument();
     expect(document.getElementById('caged-chord-view')).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /major/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Scale' })).toHaveAttribute('aria-pressed', 'true');
-    expect(screen.getByRole('button', { name: 'Chord' })).toHaveAttribute(
-      'aria-pressed',
-      'false'
-    );
+    expect(screen.queryByText('Positioned C')).not.toBeInTheDocument();
   });
 
-  test('switches to Chord/rows view and renders one simplified row per letter', async () => {
+  test('switches to Chord/rows view, shows a header, and renders one row per letter with no colored border', async () => {
     renderCagedContent();
     await selectKeyAndChord();
 
-    await act(async () => screen.getByRole('button', { name: 'Chord' }).click());
+    await act(async () => screen.getByText('toggle-view').click());
 
     expect(document.getElementById('caged-chord-view')).toBeInTheDocument();
     expect(document.getElementById('caged-scale-view')).not.toBeInTheDocument();
     expect(document.getElementById('caged-legend')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Chord' })).toHaveAttribute('aria-pressed', 'true');
-    expect(screen.getByRole('button', { name: 'Scale' })).toHaveAttribute(
-      'aria-pressed',
-      'false'
-    );
+    expect(screen.getByText('Chord C')).toBeInTheDocument();
 
     (['C', 'A', 'G', 'E', 'D'] as const).forEach((letter) => {
       const row = document.getElementById(`caged-${letter}`);
       expect(row).toBeInTheDocument();
-      expect(row).toHaveClass(...CAGED_COLORS[letter].border.split(' '));
-      expect(document.getElementById(`caged-step-${letter}`)).not.toBeInTheDocument();
-      expect(document.getElementById(`caged-open-${letter}`)).not.toBeInTheDocument();
+      expect(row?.className).not.toMatch(/border-l-4/);
       expect(document.getElementById(`caged-chord-${letter}`)).toBeInTheDocument();
     });
+  });
+
+  test('disables the legend shape chips in Chord view but not in Scale view', async () => {
+    renderCagedContent();
+    await selectKeyAndChord();
+
+    expect(screen.getByRole('button', { name: 'G shape' })).not.toBeDisabled();
+
+    await act(async () => screen.getByText('toggle-view').click());
+
+    expect(screen.getByRole('button', { name: 'G shape' })).toBeDisabled();
   });
 
   test('toggling a legend chip hides that shape from the overlay but not from Chord/rows view', async () => {
@@ -132,7 +134,7 @@ describe('CagedContent', () => {
     await selectKeyAndChord();
 
     await act(async () => screen.getByRole('button', { name: 'G shape' }).click());
-    await act(async () => screen.getByRole('button', { name: 'Chord' }).click());
+    await act(async () => screen.getByText('toggle-view').click());
 
     expect(document.getElementById('caged-G')).toBeInTheDocument();
   });
@@ -141,7 +143,7 @@ describe('CagedContent', () => {
     renderCagedContent('F');
     await selectKeyAndChord();
 
-    await act(async () => screen.getByRole('button', { name: 'Chord' }).click());
+    await act(async () => screen.getByText('toggle-view').click());
 
     const expectedOrder = screen.getByTestId('caged-order').textContent?.split(',');
     const renderedOrder = Array.from(
@@ -150,17 +152,5 @@ describe('CagedContent', () => {
 
     expect(renderedOrder).toEqual(expectedOrder);
     expect(renderedOrder).not.toEqual(['C', 'A', 'G', 'E', 'D']);
-  });
-
-  test('disables the Scale view button and falls back to Chord view when tuning becomes non-standard', async () => {
-    renderCagedContent();
-    await selectKeyAndChord();
-    expect(document.getElementById('caged-scale-view')).toBeInTheDocument();
-
-    await act(async () => screen.getByText('switch-to-ukulele').click());
-
-    expect(screen.getByRole('button', { name: 'Scale' })).toBeDisabled();
-    expect(document.getElementById('caged-chord-view')).toBeInTheDocument();
-    expect(document.getElementById('caged-scale-view')).not.toBeInTheDocument();
   });
 });
