@@ -10,9 +10,10 @@ i18n.init({
   resources: {
     en: {
       caged: {
+        'legend-title': 'Legend',
         'legend-shape-label': '{{letter}} shape',
-        'legend-triad-label': 'Show triad emphasis',
-        'legend-symbol-triad': 'Triad tone',
+        'legend-triad-label': 'Show triads',
+        'legend-symbol-triad': 'Triad',
         'legend-symbol-scale': 'Scale tone',
       },
     },
@@ -25,7 +26,8 @@ const renderLegend = (
   visibleShapes: Record<'C' | 'A' | 'G' | 'E' | 'D', boolean>,
   showTriads = true,
   onToggleShape = vi.fn(),
-  onShowTriadsChange = vi.fn()
+  onShowTriadsChange = vi.fn(),
+  chordViewActive = false
 ) =>
   render(
     createElement(
@@ -36,6 +38,7 @@ const renderLegend = (
         onToggleShape,
         showTriads,
         onShowTriadsChange,
+        chordViewActive,
       })
     )
   );
@@ -103,7 +106,7 @@ describe('CagedLegend', () => {
   test('renders the triad switch reflecting showTriads', () => {
     renderLegend({ C: true, A: true, G: true, E: true, D: true }, true);
 
-    expect(screen.getByRole('switch', { name: 'Show triad emphasis' })).toBeChecked();
+    expect(screen.getByRole('switch', { name: 'Show triads' })).toBeChecked();
   });
 
   test('calls onShowTriadsChange with the flipped value when the triad switch is toggled', async () => {
@@ -116,7 +119,7 @@ describe('CagedLegend', () => {
       onShowTriadsChange
     );
 
-    await user.click(screen.getByRole('switch', { name: 'Show triad emphasis' }));
+    await user.click(screen.getByRole('switch', { name: 'Show triads' }));
 
     expect(onShowTriadsChange).toHaveBeenCalledWith(true);
   });
@@ -124,7 +127,44 @@ describe('CagedLegend', () => {
   test('renders the 2-entry scale-note symbol key', () => {
     renderLegend({ C: true, A: true, G: true, E: true, D: true });
 
-    expect(screen.getByText('Triad tone')).toBeInTheDocument();
+    expect(screen.getByText('Triad')).toBeInTheDocument();
     expect(screen.getByText('Scale tone')).toBeInTheDocument();
+  });
+
+  test('renders inside a card with a "Legend" header, expanded by default', () => {
+    renderLegend({ C: true, A: true, G: true, E: true, D: true });
+
+    const header = screen.getByRole('button', { name: 'Legend' });
+    expect(header).toBeInTheDocument();
+    expect(header).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('switch', { name: 'Show triads' })).toBeVisible();
+  });
+
+  test('clicking the "Legend" header collapses and re-expands the card', async () => {
+    const user = userEvent.setup();
+    renderLegend({ C: true, A: true, G: true, E: true, D: true });
+
+    const header = screen.getByRole('button', { name: 'Legend' });
+    await user.click(header);
+
+    expect(screen.queryByRole('switch', { name: 'Show triads' })).not.toBeInTheDocument();
+
+    await user.click(header);
+
+    expect(screen.getByRole('switch', { name: 'Show triads' })).toBeVisible();
+  });
+
+  test('disables only the shape chips when chordViewActive is true', () => {
+    renderLegend({ C: true, A: true, G: true, E: true, D: true }, true, vi.fn(), vi.fn(), true);
+
+    expect(screen.getByRole('button', { name: 'C shape' })).toBeDisabled();
+    expect(screen.getByRole('switch', { name: 'Show triads' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Legend' })).not.toBeDisabled();
+  });
+
+  test('keeps shape chips enabled when chordViewActive is false', () => {
+    renderLegend({ C: true, A: true, G: true, E: true, D: true }, true, vi.fn(), vi.fn(), false);
+
+    expect(screen.getByRole('button', { name: 'C shape' })).not.toBeDisabled();
   });
 });
