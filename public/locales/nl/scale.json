@@ -1,4 +1,5 @@
 {
   "title": "Toonladder selecteren",
-  "title_selected": "Toonladder: {{scale}}"
+  "title_selected": "Toonladder: {{scale}}",
+  "none": "Geen"
 }

@@ -1,4 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import { createElement, PropsWithChildren } from 'react';
@@ -14,10 +15,13 @@ i18n.init({
         'view-toggle-label_chord': 'Scale',
         'view-toggle-label_scale': 'Chord',
         'scale-view-disabled-tooltip': 'Scale view needs standard 6-string guitar tuning',
+        'type-title': 'Select Type',
+        'type-title_selected': 'Type: {{chord.suffix}}',
       },
       scale: {
         title: 'Scale',
         title_selected: 'Scale: {{scale}}',
+        none: 'None',
       },
       settings: {},
       common: {},
@@ -102,11 +106,49 @@ describe('CagedToolBar', () => {
     expect(scaleButtons.some((button) => !button.hasAttribute('disabled'))).toBe(true);
   });
 
-  test('renders a ScaleSelector once a chord is selected', async () => {
+  test('renders a ScaleSelector once a chord is selected, with no scale auto-selected', async () => {
     renderCagedToolBar();
     await selectKeyAndChord();
 
-    expect(screen.getByRole('button', { name: /major/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Scale' })).toBeInTheDocument();
+  });
+
+  test('lists the real scale shortlist for the selected chord and updates the trigger on selection', async () => {
+    renderCagedToolBar();
+    await selectKeyAndChord();
+    vi.useRealTimers();
+    const user = userEvent.setup();
+
+    const trigger = screen.getByRole('button', { name: 'Scale' });
+    expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
+
+    await user.click(trigger);
+
+    expect(screen.getByRole('menuitem', { name: 'major' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'major pentatonic' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'lydian' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('menuitem', { name: 'lydian' }));
+
+    expect(screen.getByRole('button', { name: 'Scale: lydian' })).toBeInTheDocument();
+  });
+
+  test('lists a "None" menu item and clicking it clears scaleName back to the placeholder', async () => {
+    renderCagedToolBar();
+    await selectKeyAndChord();
+    vi.useRealTimers();
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole('button', { name: 'Scale' }));
+    await user.click(screen.getByRole('menuitem', { name: 'lydian' }));
+
+    const trigger = screen.getByRole('button', { name: 'Scale: lydian' });
+    await user.click(trigger);
+
+    expect(screen.getByRole('menuitem', { name: 'None' })).toBeInTheDocument();
+    await user.click(screen.getByRole('menuitem', { name: 'None' }));
+
+    expect(screen.getByRole('button', { name: 'Scale' })).toBeInTheDocument();
   });
 
   test('disables the toggle button when it would switch to the disallowed Scale view under non-standard tuning', async () => {
@@ -115,8 +157,14 @@ describe('CagedToolBar', () => {
 
     await act(async () => screen.getByText('switch-to-ukulele').click());
 
-    screen.getAllByRole('button', { name: 'Scale' }).forEach((button) => {
-      expect(button).toBeDisabled();
-    });
+    // "Scale" is now ambiguous between the view toggle and the (undefined-scale)
+    // ScaleSelector placeholder, so single out the toggle by the absence of the
+    // dropdown-trigger's aria-haspopup attribute.
+    screen
+      .getAllByRole('button', { name: 'Scale' })
+      .filter((button) => !button.hasAttribute('aria-haspopup'))
+      .forEach((button) => {
+        expect(button).toBeDisabled();
+      });
   });
 });

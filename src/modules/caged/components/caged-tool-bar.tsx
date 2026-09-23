@@ -8,6 +8,7 @@ import { useSettings } from 'hooks';
 import { useCaged } from '../hooks';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { CAGED_SCALE_SHORTLIST } from '../hooks/caged-constants';
 
 const context = Pages.CAGED;
 
@@ -31,6 +32,9 @@ export const CagedToolBar = (): JSX.Element => {
 
   const targetView = viewMode === 'chord' ? 'scale' : 'chord';
   const toggleDisabled = targetView === 'scale' && !isStandardTuning;
+  const scales = chord
+    ? (CAGED_SCALE_SHORTLIST[chord.suffix as keyof typeof CAGED_SCALE_SHORTLIST] ?? [])
+    : [];
 
   const toggleButton = (
     <Button
@@ -64,11 +68,15 @@ export const CagedToolBar = (): JSX.Element => {
       tools={[
         toggle,
         <KeySelector key={'caged-key'} {...{ keys, selectedKey, setSelectedKey }} />,
-        <ChordSelector key={'caged-chord'} {...{ chords, chord, setChord }} />,
+        <ChordSelector
+          key={'caged-chord'}
+          {...{ chords, chord, setChord }}
+          labelKey="caged:type-title"
+        />,
         <ScaleSelector
           key={'caged-scale'}
           selectedKey={selectedKey}
-          scales={[]}
+          scales={scales}
           scale={scaleName}
           setScale={setScaleName}
         />,

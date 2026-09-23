@@ -22,7 +22,6 @@ import {
 import { CagedChords, CagedLetter, cagedConfigs } from './caged-constants';
 import { Orientation, ScaleModel } from 'components/fretboard/options';
 import {
-  applyDefaultScaleName,
   buildCagedChords,
   cagedChordsForKey,
   enforceStandardTuningForScaleView,
@@ -101,7 +100,10 @@ export const CagedProvider = ({ children }: PropsWithChildren): JSX.Element => {
   useEffect(() => {
     if (chord && chord.suffix !== suffixRef.current) {
       suffixRef.current = chord.suffix;
-      applyDefaultScaleName(chord, setScaleName);
+      // A manually picked scale comes from the previous suffix's shortlist and may not
+      // apply to the new suffix (e.g. "aeolian" isn't a major-chord scale), so clear it
+      // rather than carrying it across — the user re-picks from the new shortlist if needed.
+      setScaleName(undefined);
     }
   }, [chord]);
 

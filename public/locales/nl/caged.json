@@ -8,5 +8,7 @@
   "legend-triad-label": "Toon triades",
   "legend-symbol-triad": "Triade",
   "legend-symbol-scale": "Toonladdertoon",
-  "scale-view-disabled-tooltip": "Toonladderweergave vereist standaard 6-snarige gitaarstemming"
+  "scale-view-disabled-tooltip": "Toonladderweergave vereist standaard 6-snarige gitaarstemming",
+  "type-title": "Type selecteren",
+  "type-title_selected": "Type: {{chord.suffix}}"
 }

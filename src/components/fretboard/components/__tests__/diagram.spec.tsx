@@ -139,4 +139,40 @@ describe('Diagram', () => {
     expect(container.querySelector('svg')).toBeInTheDocument();
     expect(container.querySelectorAll('circle')).toHaveLength(4);
   });
+
+  test('renders merged CAGED+scale dots when both cagedShapes and scaleModel are provided', () => {
+    const cShapeOverlay: CagedShapeInput = {
+      chord: { baseFret: 1, frets: [-1, 3, 2, 0, 1, 0] } as ChordPosition,
+      color: 'stroke-blue-700 fill-blue-700',
+    };
+    const scaleModel = gs.GuitarScale.get('C', 'major') as ScaleModel;
+
+    const { container } = renderDiagram({
+      className: 'some-class',
+      text: DotText.NOTE,
+      fretNumbersPosition: FretNumberPosition.LEFT,
+      cagedShapes: [cShapeOverlay],
+      scaleModel,
+      showTriads: true,
+    });
+
+    // The CAGED chord-tone dots from cShapeOverlay, plus at least one merged scale-only dot.
+    expect(container.querySelectorAll('circle').length).toBeGreaterThan(5);
+  });
+
+  test('renders CAGED-only overlay unchanged when scaleModel is omitted', () => {
+    const cShapeOverlay: CagedShapeInput = {
+      chord: { baseFret: 1, frets: [-1, 3, 2, 0, 1, 0] } as ChordPosition,
+      color: 'stroke-blue-700 fill-blue-700',
+    };
+
+    const { container } = renderDiagram({
+      className: 'some-class',
+      text: DotText.NOTE,
+      fretNumbersPosition: FretNumberPosition.LEFT,
+      cagedShapes: [cShapeOverlay],
+    });
+
+    expect(container.querySelectorAll('circle')).toHaveLength(5);
+  });
 });
