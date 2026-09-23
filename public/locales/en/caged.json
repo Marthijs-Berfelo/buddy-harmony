@@ -8,5 +8,7 @@
   "legend-triad-label": "Show triads",
   "legend-symbol-triad": "Triad",
   "legend-symbol-scale": "Scale tone",
-  "scale-view-disabled-tooltip": "Scale view needs standard 6-string guitar tuning"
+  "scale-view-disabled-tooltip": "Scale view needs standard 6-string guitar tuning",
+  "type-title": "Select Type",
+  "type-title_selected": "Type: {{chord.suffix}}"
 }

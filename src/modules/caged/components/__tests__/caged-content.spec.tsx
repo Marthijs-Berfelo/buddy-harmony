@@ -1,8 +1,10 @@
 import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
-import { createElement, PropsWithChildren } from 'react';
+import { createElement, Fragment, PropsWithChildren } from 'react';
 import { CagedContent } from '../caged-content';
+import { CagedToolBar } from '../caged-tool-bar';
 import { CagedProvider, useCaged } from '../../hooks';
 import { computeGuitarTypes, SettingsProvider, useSettings } from 'hooks';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -18,11 +20,17 @@ i18n.init({
         'legend-triad-label': 'Show triads',
         'legend-symbol-triad': 'Triad',
         'legend-symbol-scale': 'Scale tone',
+        'view-toggle-label_chord': 'Scale',
+        'view-toggle-label_scale': 'Chord',
+        'scale-view-disabled-tooltip': 'Scale view needs standard 6-string guitar tuning',
       },
       scale: {
         title: 'Scale',
         title_selected: 'Scale: {{scale}}',
+        none: 'None',
       },
+      settings: {},
+      common: {},
     },
   },
   lng: 'en',
@@ -72,6 +80,11 @@ const wrapperFor = (selectKey: string) =>
 
 const renderCagedContent = (selectKey = 'C') =>
   render(createElement(CagedContent), { wrapper: wrapperFor(selectKey) });
+
+const renderCagedToolBarAndContent = (selectKey = 'C') =>
+  render(createElement(Fragment, null, createElement(CagedToolBar), createElement(CagedContent)), {
+    wrapper: wrapperFor(selectKey),
+  });
 
 const selectKeyAndChord = async () => {
   await act(async () => screen.getByText('select-key').click());
@@ -152,5 +165,51 @@ describe('CagedContent', () => {
 
     expect(renderedOrder).toEqual(expectedOrder);
     expect(renderedOrder).not.toEqual(['C', 'A', 'G', 'E', 'D']);
+  });
+
+  test('changing the scale via the toolbar changes the rendered scale-tone dots in the diagram', async () => {
+    renderCagedToolBarAndContent();
+    await selectKeyAndChord();
+    vi.useRealTimers();
+    const user = userEvent.setup();
+
+    const scaleView = () => document.getElementById('caged-scale-view');
+    const markupWithoutScale = scaleView()!.innerHTML;
+
+    await user.click(screen.getByRole('button', { name: 'Scale' }));
+    await user.click(screen.getByRole('menuitem', { name: 'major' }));
+
+    expect(screen.getByRole('button', { name: 'Scale: major' })).toBeInTheDocument();
+    const markupWithMajor = scaleView()!.innerHTML;
+    expect(markupWithMajor).not.toEqual(markupWithoutScale);
+
+    await user.click(screen.getByRole('button', { name: 'Scale: major' }));
+    await user.click(screen.getByRole('menuitem', { name: 'lydian' }));
+
+    expect(screen.getByRole('button', { name: 'Scale: lydian' })).toBeInTheDocument();
+    const markupWithLydian = scaleView()!.innerHTML;
+
+    expect(markupWithLydian).not.toEqual(markupWithMajor);
+  });
+
+  test('renders CAGED-only content in Scale/overlay view when no scale has been selected', async () => {
+    renderCagedToolBarAndContent();
+    await selectKeyAndChord();
+    vi.useRealTimers();
+    const user = userEvent.setup();
+
+    const scaleView = () => document.getElementById('caged-scale-view');
+    const markupWithoutScale = scaleView()!.innerHTML;
+    const dotCountWithoutScale = scaleView()!.querySelectorAll('circle').length;
+
+    await user.click(screen.getByRole('button', { name: 'Scale' }));
+    await user.click(screen.getByRole('menuitem', { name: 'major' }));
+
+    expect(screen.getByRole('button', { name: 'Scale: major' })).toBeInTheDocument();
+    const dotCountWithScale = scaleView()!.querySelectorAll('circle').length;
+
+    expect(dotCountWithoutScale).toBeGreaterThan(0);
+    expect(dotCountWithScale).toBeGreaterThan(dotCountWithoutScale);
+    expect(scaleView()!.innerHTML).not.toEqual(markupWithoutScale);
   });
 });

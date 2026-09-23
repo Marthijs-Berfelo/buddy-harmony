@@ -22,22 +22,30 @@ export const ScaleSelector = ({
   setScale,
 }: ScaleSelectorProps): JSX.Element => {
   const { t } = useTranslation(['scale']);
+  const label = t('scale:title', scale ? { context: 'selected', scale } : undefined);
   return !selectedKey || scales.length < 2 ? (
     <Button
       variant="ghost"
       disabled
       className="capitalize text-slate-700 bg-gray-200 hover:bg-gray-200 w-48"
     >
-      {t('scale:title', scale ? { context: 'selected', scale } : undefined)}
+      {label}
     </Button>
   ) : (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="capitalize bg-white w-48">
-          {scale || t('scale:title')}
+          {label}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        <DropdownMenuItem
+          key="none"
+          disabled={scale === undefined}
+          onClick={() => setScale(undefined)}
+        >
+          {t('scale:none')}
+        </DropdownMenuItem>
         {scales.map((option) => (
           <DropdownMenuItem
             key={option}

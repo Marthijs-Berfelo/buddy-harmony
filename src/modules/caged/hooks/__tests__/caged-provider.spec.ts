@@ -126,7 +126,7 @@ describe('useCaged', () => {
     expect(result.current.caged.showTriads).toBe(true);
   });
 
-  test('auto-selects the first shortlist scale for the chord suffix once a chord is chosen', async () => {
+  test('leaves scaleName undefined once a chord is chosen (no auto-default)', async () => {
     const { result } = renderCaged();
     act(() => result.current.caged.setSelectedKey('C'));
     await computeGuitarTypes();
@@ -135,10 +135,10 @@ describe('useCaged', () => {
     const majorChord = result.current.caged.chords.find((chord) => chord.suffix === 'major');
     act(() => result.current.caged.setChord(majorChord));
 
-    expect(result.current.caged.scaleName).toBe('major');
+    expect(result.current.caged.scaleName).toBeUndefined();
   });
 
-  test('resets scaleName to the new suffix default when the chord suffix changes', async () => {
+  test('leaves scaleName undefined when the chord suffix changes and no scale was picked', async () => {
     const { result } = renderCaged();
     act(() => result.current.caged.setSelectedKey('C'));
     await computeGuitarTypes();
@@ -146,7 +146,22 @@ describe('useCaged', () => {
 
     const majorChord = result.current.caged.chords.find((chord) => chord.suffix === 'major');
     act(() => result.current.caged.setChord(majorChord));
-    expect(result.current.caged.scaleName).toBe('major');
+    expect(result.current.caged.scaleName).toBeUndefined();
+
+    const minorChord = result.current.caged.chords.find((chord) => chord.suffix === 'minor');
+    act(() => result.current.caged.setChord(minorChord));
+
+    expect(result.current.caged.scaleName).toBeUndefined();
+  });
+
+  test('clears a manually picked scaleName when the chord suffix changes to a different suffix', async () => {
+    const { result } = renderCaged();
+    act(() => result.current.caged.setSelectedKey('C'));
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(4000));
+
+    const majorChord = result.current.caged.chords.find((chord) => chord.suffix === 'major');
+    act(() => result.current.caged.setChord(majorChord));
 
     act(() => result.current.caged.setScaleName('lydian'));
     expect(result.current.caged.scaleName).toBe('lydian');
@@ -154,7 +169,7 @@ describe('useCaged', () => {
     const minorChord = result.current.caged.chords.find((chord) => chord.suffix === 'minor');
     act(() => result.current.caged.setChord(minorChord));
 
-    expect(result.current.caged.scaleName).toBe('aeolian');
+    expect(result.current.caged.scaleName).toBeUndefined();
   });
 
   test('preserves a user-picked scaleName when the key changes but the chord suffix stays the same', async () => {
@@ -186,6 +201,7 @@ describe('useCaged', () => {
 
     const majorChord = result.current.caged.chords.find((chord) => chord.suffix === 'major');
     act(() => result.current.caged.setChord(majorChord));
+    act(() => result.current.caged.setScaleName('major'));
 
     expect(result.current.caged.scaleModel).toBeDefined();
     expect(result.current.caged.scaleModel?.info).toHaveLength(7);

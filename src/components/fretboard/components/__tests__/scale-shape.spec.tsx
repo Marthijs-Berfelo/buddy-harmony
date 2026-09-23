@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { render } from '@testing-library/react';
 import { ScaleShape } from '../scale-shape';
-import { Orientation } from '../../options';
+import { DotText, Orientation, ScaleFret } from '../../options';
 import { SettingsProvider, useSettings } from 'hooks';
 import type { CagedShapeInput } from '../../utils';
 
@@ -212,6 +212,125 @@ describe('ScaleShape', () => {
         { note: 'E3', cx: '304', cy: '332' },
         { note: 'C3', cx: '404', cy: '392' },
       ]);
+    });
+  });
+
+  describe('merged cagedShapes + scale', () => {
+    const scaleFret = (overrides: Partial<ScaleFret>): ScaleFret => ({
+      note: 'C',
+      noteEnharmonic: 'C',
+      freet: 0,
+      isPartOfScale: true,
+      scalePosition: 1,
+      ...overrides,
+    });
+
+    test('renders both CAGED chord-tone dots and merged scale-only dots', () => {
+      // cShape (frets [-1, 3, 2, 0, 1, 0], baseFret 1) produces 5 CAGED dots
+      // (strings 1-5; its own isolated fret range spans 0-3). A scale-only
+      // triad tone at array index 5 (visual string 0, fret 3) is not covered
+      // by cShape and falls inside its [0, 3] range, so it merges in as an
+      // emphasized dot owned by cShape's color.
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 5, note: 'G' })],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: true,
+      });
+
+      // 5 CAGED dots (cShape's fretted/open strings, 1 circle each) + the
+      // merged emphasized dot's 2 circles (halo + fill via NoteDot).
+      expect(container.querySelectorAll('circle')).toHaveLength(5 + 2);
+      expect(container.querySelector('text')?.textContent).toBeDefined();
+    });
+
+    test('gives an emphasized merged dot the owning shape color and a halo', () => {
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 5, note: 'G' })],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: true,
+      });
+
+      const emphasizedCircles = Array.from(container.querySelectorAll('circle')).filter((circle) =>
+        circle.classList.contains('stroke-blue-700')
+      );
+      // The emphasized dot renders 2 circles (halo + fill) via NoteDot, both carrying the
+      // shape color (cShape's own plain CAGED dots also happen to share this color class,
+      // so this is a lower bound rather than an exact count).
+      expect(emphasizedCircles.length).toBeGreaterThanOrEqual(2);
+    });
+
+    test('gives a neutral merged dot the shared neutral color and no halo', () => {
+      // scalePosition 2 is not a triad tone, so it falls back to the neutral color
+      // regardless of whether it lies inside a CAGED shape's range.
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 2, scalePosition: 2, note: 'D' })],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: true,
+      });
+
+      const neutralCircles = Array.from(container.querySelectorAll('circle')).filter((circle) =>
+        circle.classList.contains('stroke-gray-800')
+      );
+      expect(neutralCircles).toHaveLength(1);
+    });
+
+    test('does not duplicate a dot already covered by a CAGED shape', () => {
+      // cShape frets its (internal) string 1 at absolute fret 3. A scale-only entry
+      // at array index 4 maps to that same visual string/fret via the
+      // stringCount-1-index transform mergeCagedAndScaleDots uses, so it must be
+      // skipped as already covered.
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 3, note: 'E' })],
+        [],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: true,
+      });
+
+      // Only the 5 original CAGED dots — no extra dot added for the covered position.
+      expect(container.querySelectorAll('circle')).toHaveLength(5);
     });
   });
 });

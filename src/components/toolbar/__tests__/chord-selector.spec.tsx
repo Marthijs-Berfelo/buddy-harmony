@@ -56,4 +56,27 @@ describe('ChordSelector', () => {
     expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
     expect(screen.queryByTestId('note-wave-glyph')).not.toBeInTheDocument();
   });
+
+  test('uses the provided labelKey instead of the default chord:title key', async () => {
+    render(
+      <I18nextProvider i18n={i18n}>
+        <SettingsProvider>
+          <ChordSelector
+            chords={[
+              { key: 'C', suffix: 'major', positions: [] },
+              { key: 'C', suffix: 'minor', positions: [] },
+            ]}
+            setChord={() => {}}
+            labelKey="caged:type-title"
+          />
+        </SettingsProvider>
+      </I18nextProvider>
+    );
+
+    await computeGuitarTypes();
+    await act(() => vi.advanceTimersByTimeAsync(4000));
+
+    const trigger = screen.getByRole('button', { name: 'type-title' });
+    expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
+  });
 });

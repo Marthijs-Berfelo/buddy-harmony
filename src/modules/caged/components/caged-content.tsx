@@ -22,6 +22,7 @@ export const CagedContent = (): JSX.Element => {
     toggleShapeVisibility,
     showTriads,
     setShowTriads,
+    scaleModel,
   } = useCaged();
   const { orientation } = useSettings();
 
@@ -47,6 +48,8 @@ export const CagedContent = (): JSX.Element => {
                 text={DotText.NOTE}
                 cagedShapes={sortedCagedShapes(cagedChords, cagedOrder, visibleShapes)}
                 fretNumbersPosition={FretNumberPosition.LEFT}
+                scaleModel={scaleModel}
+                showTriads={showTriads}
               />
             </div>
           ) : (

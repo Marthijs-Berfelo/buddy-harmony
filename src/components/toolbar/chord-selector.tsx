@@ -15,9 +15,15 @@ interface ChordSelectorProps {
   chords: ChordDetail[];
   chord?: ChordDetail;
   setChord: Dispatch<SetStateAction<ChordDetail | undefined>>;
+  labelKey?: 'chord:title' | 'caged:type-title';
 }
-export const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): JSX.Element => {
-  const { t } = useTranslation(['chord']);
+export const ChordSelector = ({
+  chords,
+  chord,
+  setChord,
+  labelKey = 'chord:title',
+}: ChordSelectorProps): JSX.Element => {
+  const { t } = useTranslation(['chord', 'caged']);
   const { chordDataLoading } = useSettings();
 
   if (chordDataLoading) {
@@ -38,13 +44,13 @@ export const ChordSelector = ({ chords, chord, setChord }: ChordSelectorProps): 
       disabled
       className="capitalize text-slate-700 bg-gray-200 hover:bg-gray-200 w-48"
     >
-      {t('chord:title', chord ? { context: 'selected', chord } : undefined)}
+      {t(labelKey, chord ? { context: 'selected', chord } : undefined)}
     </Button>
   ) : (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="capitalize bg-white w-48">
-          {t('chord:title', chord ? { context: 'selected', chord } : undefined)}
+          {t(labelKey, chord ? { context: 'selected', chord } : undefined)}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

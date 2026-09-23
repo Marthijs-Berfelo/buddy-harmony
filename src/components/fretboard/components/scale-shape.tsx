@@ -1,15 +1,23 @@
 import type { JSX } from 'react';
 import { DotText, NOTE_GLOW_FILTER_ID, ScaleFret } from '../options';
 import { Fragment } from 'react';
-import { CagedDot, CagedShapeInput, dedupeCagedDots, ShapeProps, useShape } from '../utils';
+import {
+  CagedDot,
+  CagedShapeInput,
+  dedupeCagedDots,
+  mergeCagedAndScaleDots,
+  ShapeProps,
+  useShape,
+} from '../utils';
 import { useSettings } from 'hooks';
 import { NoteDot } from './note-dot';
 import { useDirectional } from '../utils/directional';
 
 type ScaleShapeProps = ShapeProps &
   (
-    | { scale: ScaleFret[][]; text: DotText; cagedShapes?: never }
-    | { cagedShapes: CagedShapeInput[]; scale?: never; text?: never }
+    | { scale: ScaleFret[][]; text: DotText; cagedShapes?: never; showTriads?: never }
+    | { cagedShapes: CagedShapeInput[]; scale?: never; text?: never; showTriads?: never }
+    | { cagedShapes: CagedShapeInput[]; scale: ScaleFret[][]; text: DotText; showTriads?: boolean }
   );
 
 export const ScaleShape = (props: ScaleShapeProps): JSX.Element => {
@@ -104,6 +112,7 @@ const useScaleShape = ({
   scale,
   text,
   cagedShapes,
+  showTriads,
 }: ScaleShapeProps): ScaleShapeHook => {
   const { orientation, leftHanded, diagramStyle, stringCount } = useSettings();
   const { x, y } = useShape();
@@ -199,8 +208,8 @@ const useScaleShape = ({
     </Fragment>
   );
 
-  const cagedDots = (shapes: CagedShapeInput[]): JSX.Element[] => {
-    const reordered = shapes.map(({ chord: shapeChord, color }) => ({
+  const reorderShapes = (shapes: CagedShapeInput[]): CagedShapeInput[] =>
+    shapes.map(({ chord: shapeChord, color }) => ({
       chord: {
         ...shapeChord,
         frets: onStrings(shapeChord.frets),
@@ -208,25 +217,71 @@ const useScaleShape = ({
       },
       color,
     }));
-    return dedupeCagedDots(reordered).map(cagedDot);
+
+  const cagedDots = (shapes: CagedShapeInput[]): JSX.Element[] =>
+    dedupeCagedDots(reorderShapes(shapes)).map(cagedDot);
+
+  const mergedDot = (cagedDot_: CagedDot): JSX.Element => {
+    if (!cagedDot_.emphasized) {
+      return cagedDot(cagedDot_);
+    }
+
+    const { string, fret, color, note } = cagedDot_;
+    const cx = x(diagramStyle.padding, string, fret, 0);
+    const cy = y(diagramStyle.padding, string, fret, 0);
+
+    return (
+      <Fragment key={`merged.${string}.${fret}`}>
+        <NoteDot
+          cx={cx}
+          cy={cy}
+          radius={diagramStyle.dotRadius}
+          strokeWidth={diagramStyle.dotStroke}
+          className={className}
+          strokeClassName={color}
+          fillClassName={color}
+          emphasisStrokeClassName={color}
+          emphasisFillClassName={color}
+          emphasized={true}
+          glowFilterId={NOTE_GLOW_FILTER_ID}
+        />
+        <text
+          key={`merged.${string}.${fret}.note`}
+          x={cx}
+          y={cy}
+          alignmentBaseline={'central'}
+          className={`${className} text-2xl font-sans stroke-2 stroke-white`}
+        >
+          {note}
+        </text>
+      </Fragment>
+    );
   };
 
-  const scaleShape = scale
-    ? scale.flatMap((string, stringIndex) =>
-        string
-          .filter((fret) => fret.isPartOfScale)
-          .map((fret) => {
-            return dot(
-              stringCount - 1 - stringIndex,
-              fret.freet,
-              dotText(fret),
-              fret.scalePosition
-            );
-          })
-      )
-    : cagedShapes?.length
-      ? cagedDots(cagedShapes)
-      : [];
+  const mergedShape = (shapes: CagedShapeInput[], scaleFrets: ScaleFret[][]): JSX.Element[] =>
+    mergeCagedAndScaleDots(reorderShapes(shapes), scaleFrets, stringCount, showTriads ?? true).map(
+      mergedDot
+    );
+
+  const scaleShape =
+    cagedShapes?.length && scale
+      ? mergedShape(cagedShapes, scale)
+      : scale
+        ? scale.flatMap((string, stringIndex) =>
+            string
+              .filter((fret) => fret.isPartOfScale)
+              .map((fret) => {
+                return dot(
+                  stringCount - 1 - stringIndex,
+                  fret.freet,
+                  dotText(fret),
+                  fret.scalePosition
+                );
+              })
+          )
+        : cagedShapes?.length
+          ? cagedDots(cagedShapes)
+          : [];
 
   return {
     scaleShape,

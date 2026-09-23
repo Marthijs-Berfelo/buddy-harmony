@@ -1,5 +1,6 @@
-import { dedupeCagedDots } from '../caged-dots';
+import { dedupeCagedDots, mergeCagedAndScaleDots, NEUTRAL_SCALE_DOT_COLOR } from '../caged-dots';
 import { ChordPosition } from 'hooks';
+import type { ScaleFret } from '../scale';
 
 const chord = (overrides: Partial<ChordPosition>): ChordPosition => ({
   frets: [-1, 0, 0, 0, 0, 0],
@@ -115,5 +116,188 @@ describe('dedupeCagedDots', () => {
 
     expect(dots).toHaveLength(2);
     expect(dots.map((dot) => dot.fret).sort((a, b) => a - b)).toEqual([3, 6]);
+  });
+});
+
+describe('mergeCagedAndScaleDots', () => {
+  const scaleFret = (overrides: Partial<ScaleFret>): ScaleFret => ({
+    note: 'C',
+    noteEnharmonic: 'C',
+    freet: 0,
+    isPartOfScale: true,
+    scalePosition: 1,
+    ...overrides,
+  });
+
+  const cShape = {
+    chord: chord({ frets: [-1, 3, 2, 0, 1, 0], baseFret: 1 }),
+    color: 'stroke-blue-700 fill-blue-700',
+  };
+  const aShape = {
+    chord: chord({ frets: [1, 3, 3, 2, 1, 1], baseFret: 5 }),
+    color: 'stroke-red-700 fill-red-700',
+  };
+
+  // mergeCagedAndScaleDots flips scaleFrets' outer index into CagedDot's `string` space via
+  // visualString = stringCount - 1 - stringIndex. With stringCount 6, to target visual
+  // string N, the ScaleFret content must live at scaleFrets[5 - N].
+
+  test('skips a scale tone that coincides with an existing CAGED dot', () => {
+    // cShape frets string 1 at absolute fret 3. Targeting visual string 1 means putting
+    // the ScaleFret at index 5 - 1 = 4.
+    const scaleFrets: ScaleFret[][] = [
+      [],
+      [],
+      [],
+      [],
+      [scaleFret({ freet: 3, scalePosition: 3 })],
+      [],
+    ];
+
+    const dots = mergeCagedAndScaleDots([cShape, aShape], scaleFrets, 6, true);
+
+    // string 1 fret 3 is already a CAGED dot (from dedupeCagedDots) — merge must not add a second dot there.
+    expect(dots.filter((dot) => dot.string === 1 && dot.fret === 3)).toHaveLength(1);
+    expect(dots.find((dot) => dot.string === 1 && dot.fret === 3)?.emphasized).toBeUndefined();
+  });
+
+  test('colors an uncovered triad tone using the owning shape range, with showTriads on', () => {
+    // string 5 fret 3 (scalePosition 5) is not fretted by either shape, and falls inside
+    // cShape's isolated range [0,3] (from its own dedupeCagedDots output, which includes
+    // its open strings). Targeting visual string 5 means index 5 - 5 = 0.
+    const scaleFrets: ScaleFret[][] = [
+      [scaleFret({ freet: 3, scalePosition: 5, note: 'G' })],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ];
+
+    const dots = mergeCagedAndScaleDots([cShape, aShape], scaleFrets, 6, true);
+
+    const merged = dots.find((dot) => dot.string === 5 && dot.fret === 3);
+    expect(merged).toMatchObject({
+      color: 'stroke-blue-700 fill-blue-700',
+      emphasized: true,
+      note: 'G',
+    });
+  });
+
+  test('renders a triad tone as neutral when showTriads is false', () => {
+    const scaleFrets: ScaleFret[][] = [
+      [scaleFret({ freet: 3, scalePosition: 5, note: 'G' })],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ];
+
+    const dots = mergeCagedAndScaleDots([cShape, aShape], scaleFrets, 6, false);
+
+    expect(dots.find((dot) => dot.string === 5 && dot.fret === 3)).toMatchObject({
+      color: NEUTRAL_SCALE_DOT_COLOR,
+      emphasized: false,
+      note: 'G',
+    });
+  });
+
+  test('renders a non-triad scale tone as neutral even when showTriads is true', () => {
+    const scaleFrets: ScaleFret[][] = [
+      [scaleFret({ freet: 2, scalePosition: 2, note: 'D' })],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ];
+
+    const dots = mergeCagedAndScaleDots([cShape, aShape], scaleFrets, 6, true);
+
+    expect(dots.find((dot) => dot.string === 5 && dot.fret === 2)).toMatchObject({
+      color: NEUTRAL_SCALE_DOT_COLOR,
+      emphasized: false,
+      note: 'D',
+    });
+  });
+
+  test('renders a triad tone as neutral when its fret falls outside every shape range', () => {
+    // cShape's own range is [0,3] (its open strings put fret 0 in range) and aShape's own
+    // range is [5,7] — fret 4 sits in the gap between them, outside both.
+    const scaleFrets: ScaleFret[][] = [
+      [scaleFret({ freet: 4, scalePosition: 5, note: 'G' })],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ];
+
+    const dots = mergeCagedAndScaleDots([cShape, aShape], scaleFrets, 6, true);
+
+    expect(dots.find((dot) => dot.string === 5 && dot.fret === 4)).toMatchObject({
+      color: NEUTRAL_SCALE_DOT_COLOR,
+      emphasized: false,
+    });
+  });
+
+  test('gives an earlier shape (by array order) precedence when both shapes cover a fret', () => {
+    // shapeA's own range is [0,3] (open string0 + fretted string1 at fret3) and shapeB's own
+    // range is [1,4] (fretted string0 at fret1 + fretted string1 at fret4) — both genuinely
+    // cover fret 2, and neither shape frets a dot at visual string 5.
+    const shapeA = {
+      chord: chord({ frets: [0, 3, -1, -1, -1, -1], baseFret: 1 }),
+      color: 'stroke-blue-700 fill-blue-700',
+    };
+    const shapeB = {
+      chord: chord({ frets: [1, 4, -1, -1, -1, -1], baseFret: 1 }),
+      color: 'stroke-red-700 fill-red-700',
+    };
+    const scaleFrets: ScaleFret[][] = [
+      [scaleFret({ freet: 2, scalePosition: 5, note: 'G' })],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ];
+
+    const dots = mergeCagedAndScaleDots([shapeA, shapeB], scaleFrets, 6, true);
+
+    expect(dots.find((dot) => dot.string === 5 && dot.fret === 2)).toMatchObject({
+      color: 'stroke-blue-700 fill-blue-700',
+    });
+  });
+
+  test('ignores frets that are not part of the scale', () => {
+    const scaleFrets: ScaleFret[][] = [
+      [scaleFret({ freet: 2, isPartOfScale: false, scalePosition: null as unknown as number })],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ];
+
+    const dots = mergeCagedAndScaleDots([cShape, aShape], scaleFrets, 6, true);
+
+    expect(dots.find((dot) => dot.string === 5 && dot.fret === 2)).toBeUndefined();
+  });
+
+  test('ignores scale frets beyond the max CAGED fret', () => {
+    // aShape's highest dot is fret 7 — a scale tone at fret 8 must be excluded.
+    const scaleFrets: ScaleFret[][] = [
+      [scaleFret({ freet: 8, scalePosition: 1, note: 'C' })],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ];
+
+    const dots = mergeCagedAndScaleDots([cShape, aShape], scaleFrets, 6, true);
+
+    expect(dots.find((dot) => dot.string === 5 && dot.fret === 8)).toBeUndefined();
   });
 });
