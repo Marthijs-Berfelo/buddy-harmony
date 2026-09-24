@@ -11,7 +11,8 @@ export interface NoteDotProps {
   fillClassName: string;
   emphasisStrokeClassName?: string;
   emphasisFillClassName?: string;
-  emphasized?: boolean;
+  isRoot?: boolean;
+  isTriad?: boolean;
   glowFilterId?: string;
 }
 
@@ -29,18 +30,23 @@ export const NoteDot = ({
   fillClassName,
   emphasisStrokeClassName,
   emphasisFillClassName,
-  emphasized,
+  isRoot,
+  isTriad,
   glowFilterId,
 }: NoteDotProps): JSX.Element => {
-  const isEmphasized = !!emphasized && !!emphasisStrokeClassName && !!emphasisFillClassName;
-  const dotRadius = isEmphasized ? radius * EMPHASIS_RADIUS_FACTOR : radius;
-  const dotStrokeWidth = isEmphasized ? strokeWidth * EMPHASIS_STROKE_WIDTH_FACTOR : strokeWidth;
-  const dotStrokeClassName = isEmphasized ? (emphasisStrokeClassName as string) : strokeClassName;
-  const dotFillClassName = isEmphasized ? (emphasisFillClassName as string) : fillClassName;
+  const hasEmphasisColors = !!emphasisStrokeClassName && !!emphasisFillClassName;
+  const showHalo = !!isTriad && hasEmphasisColors;
+  const showEnlarged = !!isRoot && hasEmphasisColors;
+  const useEmphasisColors = showHalo || showEnlarged;
+
+  const dotRadius = showEnlarged ? radius * EMPHASIS_RADIUS_FACTOR : radius;
+  const dotStrokeWidth = useEmphasisColors ? strokeWidth * EMPHASIS_STROKE_WIDTH_FACTOR : strokeWidth;
+  const dotStrokeClassName = useEmphasisColors ? (emphasisStrokeClassName as string) : strokeClassName;
+  const dotFillClassName = useEmphasisColors ? (emphasisFillClassName as string) : fillClassName;
 
   return (
-    <g filter={isEmphasized && glowFilterId ? `url(#${glowFilterId})` : undefined}>
-      {isEmphasized && (
+    <g filter={showHalo && glowFilterId ? `url(#${glowFilterId})` : undefined}>
+      {showHalo && (
         <Fragment>
           <circle
             cx={cx}

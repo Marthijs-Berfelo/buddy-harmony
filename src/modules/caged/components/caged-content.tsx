@@ -13,6 +13,7 @@ export const CagedContent = (): JSX.Element => {
   const { t } = useTranslation(['caged']);
   const {
     selectedKey,
+    chord,
     cagedChords,
     cagedOrder,
     printRef,
@@ -50,6 +51,7 @@ export const CagedContent = (): JSX.Element => {
                 fretNumbersPosition={FretNumberPosition.LEFT}
                 scaleModel={scaleModel}
                 showTriads={showTriads}
+                rootNote={chord?.key}
               />
             </div>
           ) : (

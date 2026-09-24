@@ -140,6 +140,57 @@ describe('ScaleShape', () => {
       expect(texts).toEqual(['C3', 'E3', 'G3', 'C4', 'E4', 'A2', 'E3', 'A3', 'Db4', 'E4', 'A4']);
     });
 
+    test('emphasizes root/3rd/5th dots with a halo when a rootNote and showTriads are given, with no scale selected', () => {
+      // cShape's notes (C3, E3, G3, C4, E4) are all root/3rd/5th of root C, so every dot
+      // renders via the emphasized (NoteDot halo) path — 2 circles per dot instead of 1.
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        rootNote: 'C',
+        showTriads: true,
+      });
+
+      expect(container.querySelectorAll('circle')).toHaveLength(10);
+    });
+
+    test('does not emphasize dots when showTriads is false, even with a rootNote', () => {
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        rootNote: 'C',
+        showTriads: false,
+      });
+
+      expect(container.querySelectorAll('circle')).toHaveLength(5);
+    });
+
+    test('does not emphasize dots when rootNote is omitted, even with showTriads true', () => {
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        showTriads: true,
+      });
+
+      expect(container.querySelectorAll('circle')).toHaveLength(5);
+    });
+
+    test('enlarges root dots even when showTriads is false, with no scale selected', () => {
+      // cShape's C3/C4 notes share chroma with root C — both must render via NoteDot's
+      // enlarged (isRoot) path even though showTriads is false, giving 2 root dots at
+      // r=21 among the 5 total circles (no halo circles, since isTriad never fires here).
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        rootNote: 'C',
+        showTriads: false,
+      });
+
+      const circles = Array.from(container.querySelectorAll('circle'));
+      expect(circles).toHaveLength(5);
+      const enlargedCircles = circles.filter((circle) => circle.getAttribute('r') === '21');
+      expect(enlargedCircles).toHaveLength(2);
+    });
+
     test('skips muted strings but renders open strings', () => {
       const { container } = renderScaleShape({
         className: 'some-class',
@@ -302,22 +353,77 @@ describe('ScaleShape', () => {
       });
 
       const neutralCircles = Array.from(container.querySelectorAll('circle')).filter((circle) =>
-        circle.classList.contains('stroke-gray-800')
+        circle.classList.contains('stroke-black')
       );
       expect(neutralCircles).toHaveLength(1);
+    });
+
+    test('renders a covered chord-tone dot at a triad position with the glow filter / halo present', () => {
+      // cShape frets its (internal) string 1 at absolute fret 3 (note 'C3', a root/triad
+      // tone). A scale-only entry at array index 4 maps to that same visual string/fret
+      // and marks it scalePosition 1 (root) — the already-covered dot must gain emphasis
+      // rather than a second dot being added.
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 1, note: 'C' })],
+        [],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: true,
+      });
+
+      // Still 5 CAGED dots total (no dot added for the covered position), but the emphasized
+      // one now renders via NoteDot's halo + fill (2 circles) instead of a single plain circle.
+      expect(container.querySelectorAll('circle')).toHaveLength(5 + 1);
+    });
+
+    test('enlarges a covered root chord-tone dot even when showTriads is false', () => {
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 1, note: 'C' })],
+        [],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: false,
+      });
+
+      // Still 5 CAGED dots total, no halo (showTriads false), but the root dot is enlarged.
+      expect(container.querySelectorAll('circle')).toHaveLength(5);
+      const enlargedCircles = Array.from(container.querySelectorAll('circle')).filter(
+        (circle) => circle.getAttribute('r') === '21'
+      );
+      expect(enlargedCircles).toHaveLength(1);
     });
 
     test('does not duplicate a dot already covered by a CAGED shape', () => {
       // cShape frets its (internal) string 1 at absolute fret 3. A scale-only entry
       // at array index 4 maps to that same visual string/fret via the
       // stringCount-1-index transform mergeCagedAndScaleDots uses, so it must be
-      // skipped as already covered.
+      // skipped as already covered. scalePosition 2 (not a triad tone) keeps this test
+      // focused on deduplication rather than the now-covered-triad-tone emphasis path
+      // (see the dedicated `caged-dots.spec.ts` cases for that behavior).
       const scale: ScaleFret[][] = [
         [],
         [],
         [],
         [],
-        [scaleFret({ freet: 3, scalePosition: 3, note: 'E' })],
+        [scaleFret({ freet: 3, scalePosition: 2, note: 'E' })],
         [],
       ];
 
@@ -331,6 +437,195 @@ describe('ScaleShape', () => {
 
       // Only the 5 original CAGED dots — no extra dot added for the covered position.
       expect(container.querySelectorAll('circle')).toHaveLength(5);
+    });
+
+    test('renders a neutral scale-only dot as outline (fill-white + gray stroke), not solid gray fill', () => {
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 2, scalePosition: 2, note: 'D' })],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: true,
+      });
+
+      const scaleOnlyCircle = Array.from(container.querySelectorAll('circle')).find((circle) =>
+        circle.classList.contains('stroke-black')
+      );
+      expect(scaleOnlyCircle).toBeDefined();
+      expect(scaleOnlyCircle?.classList.contains('fill-white')).toBe(true);
+      expect(scaleOnlyCircle?.classList.contains('fill-black')).toBe(false);
+    });
+
+    test('renders an emphasized scale-only triad dot as outline (fill-white + owning stroke) with the glow halo, not a solid fill', () => {
+      // string 0 fret 3 (scalePosition 5, a triad tone) is not fretted by cShape and falls
+      // inside its own [0, 3] range, so it merges in as an emphasized scale-only dot owned
+      // by cShape's blue color.
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 5, note: 'G' })],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: true,
+      });
+
+      // The scale-only emphasized dot renders via NoteDot's halo branch: a halo circle
+      // (fill-none) plus a fill circle — both stroked blue (cShape's owning color), neither
+      // ever carrying the shape's solid fill-blue-700.
+      const blueStrokedCircles = Array.from(container.querySelectorAll('circle')).filter(
+        (circle) => circle.classList.contains('stroke-blue-700')
+      );
+      const scaleOnlyCircles = blueStrokedCircles.filter(
+        (circle) => !circle.classList.contains('fill-blue-700')
+      );
+      expect(scaleOnlyCircles).toHaveLength(2);
+      const haloCircle = scaleOnlyCircles.find((circle) => circle.classList.contains('fill-none'));
+      const fillCircle = scaleOnlyCircles.find((circle) => circle.classList.contains('fill-white'));
+      expect(haloCircle).toBeDefined();
+      expect(fillCircle).toBeDefined();
+
+      // The glow filter is still applied (halo/emphasis signature preserved).
+      const glowGroup = container.querySelector('g[filter]');
+      expect(glowGroup).not.toBeNull();
+    });
+
+    test('keeps a plain (non-triad) real CAGED chord-tone dot solid, unaffected by the scale-only outline change', () => {
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 2, note: 'E' })],
+        [],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: true,
+      });
+
+      const realDot = Array.from(container.querySelectorAll('circle')).find((circle) =>
+        circle.classList.contains('stroke-blue-700')
+      );
+      expect(realDot).toBeDefined();
+      expect(realDot?.classList.contains('fill-blue-700')).toBe(true);
+      expect(realDot?.classList.contains('fill-white')).toBe(false);
+    });
+
+    test('keeps a covered+emphasized real CAGED chord-tone dot solid (fill+stroke), unaffected by the scale-only outline change', () => {
+      // cShape frets its (internal) string 1 at absolute fret 3 — a real chord-tone dot. A
+      // scale-only entry at array index 4 maps to that same visual string/fret and marks it
+      // scalePosition 1 (root), so the already-covered dot gains emphasis but must keep its
+      // solid fill+stroke since it's a real chord tone, not a scale-only overlay dot.
+      const scale: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 1, note: 'C' })],
+        [],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        scale,
+        text: DotText.NOTE,
+        showTriads: true,
+      });
+
+      const strokedCircles = Array.from(container.querySelectorAll('circle')).filter((circle) =>
+        circle.classList.contains('stroke-blue-700')
+      );
+      // NoteDot's emphasized branch renders 2 circles (halo + fill) for this covered dot.
+      expect(strokedCircles.length).toBeGreaterThanOrEqual(1);
+      const fillCircle = strokedCircles.find((circle) => circle.classList.contains('fill-blue-700'));
+      expect(fillCircle).toBeDefined();
+      expect(fillCircle?.classList.contains('fill-white')).toBe(false);
+    });
+  });
+
+  describe('no-scale cagedDots() path is unaffected by the scale-only outline change', () => {
+    test('renders every dot solid (fill+stroke), even when a rootNote/showTriads emphasizes some of them', () => {
+      // Every note in cShape is a root/3rd/5th of root C, so all 5 dots render via the
+      // emphasized (NoteDot halo) path — but since none of them are fromScale, they must
+      // all keep their solid shape-color fill, never fill-white.
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        cagedShapes: [cShape],
+        rootNote: 'C',
+        showTriads: true,
+      });
+
+      const strokedCircles = Array.from(container.querySelectorAll('circle')).filter((circle) =>
+        circle.classList.contains('stroke-blue-700')
+      );
+      expect(strokedCircles.length).toBeGreaterThan(0);
+      strokedCircles.forEach((circle) => {
+        expect(circle.classList.contains('fill-white')).toBe(false);
+      });
+      const solidFillCircles = strokedCircles.filter((circle) =>
+        circle.classList.contains('fill-blue-700')
+      );
+      expect(solidFillCircles.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('standalone scale rendering (no cagedShapes)', () => {
+    const scaleFret = (overrides: Partial<ScaleFret>): ScaleFret => ({
+      note: 'C',
+      noteEnharmonic: 'C',
+      freet: 0,
+      isPartOfScale: true,
+      scalePosition: 1,
+      ...overrides,
+    });
+
+    test('enlarges the root dot without a halo, and haloes non-root triad dots without enlarging them', () => {
+      const scale: ScaleFret[][] = [
+        [scaleFret({ freet: 5, scalePosition: 5, note: 'G' })],
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 0, scalePosition: 1, note: 'C' })],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        scale,
+        text: DotText.NOTE,
+      });
+
+      const circles = Array.from(container.querySelectorAll('circle'));
+      // Root dot (scalePosition 1): enlarged (r=21), no halo circle for it.
+      const rootCircle = circles.find((circle) => circle.getAttribute('r') === '21');
+      expect(rootCircle).toBeDefined();
+      // Non-root triad dot (scalePosition 5): halo (r=27) + normal-size fill (r=20).
+      const haloCircle = circles.find((circle) => circle.getAttribute('r') === '27');
+      expect(haloCircle).toBeDefined();
+      const normalSizedTriadFill = circles.filter((circle) => circle.getAttribute('r') === '20');
+      expect(normalSizedTriadFill).toHaveLength(1);
     });
   });
 });

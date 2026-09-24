@@ -15,9 +15,27 @@ import { useDirectional } from '../utils/directional';
 
 type ScaleShapeProps = ShapeProps &
   (
-    | { scale: ScaleFret[][]; text: DotText; cagedShapes?: never; showTriads?: never }
-    | { cagedShapes: CagedShapeInput[]; scale?: never; text?: never; showTriads?: never }
-    | { cagedShapes: CagedShapeInput[]; scale: ScaleFret[][]; text: DotText; showTriads?: boolean }
+    | {
+        scale: ScaleFret[][];
+        text: DotText;
+        cagedShapes?: never;
+        showTriads?: never;
+        rootNote?: never;
+      }
+    | {
+        cagedShapes: CagedShapeInput[];
+        scale?: never;
+        text?: never;
+        showTriads?: boolean;
+        rootNote?: string;
+      }
+    | {
+        cagedShapes: CagedShapeInput[];
+        scale: ScaleFret[][];
+        text: DotText;
+        showTriads?: boolean;
+        rootNote?: never;
+      }
   );
 
 export const ScaleShape = (props: ScaleShapeProps): JSX.Element => {
@@ -99,6 +117,15 @@ const SCALE_COLORS: Record<number, ScaleColor> = {
   },
 };
 
+/**
+ * Extracts just the `stroke-*` token from a combined `stroke-* fill-*` color class string
+ * (the convention every CAGED shape/neutral color constant follows, e.g.
+ * `NEUTRAL_SCALE_DOT_COLOR` or `CAGED_COLORS.C.caged`) — used, paired with `fill-white`, to
+ * render scale-only dots as outline (colored stroke, white fill) rather than solid.
+ */
+const strokeToken = (color: string): string =>
+  color.split(/\s+/).find((token) => token.startsWith('stroke-')) ?? color;
+
 const DEFAULT_SCALE_COLOR: ScaleColor = {
   strokeClassName: 'stroke-black',
   textClassName: 'fill-black',
@@ -113,6 +140,7 @@ const useScaleShape = ({
   text,
   cagedShapes,
   showTriads,
+  rootNote,
 }: ScaleShapeProps): ScaleShapeHook => {
   const { orientation, leftHanded, diagramStyle, stringCount } = useSettings();
   const { x, y } = useShape();
@@ -147,6 +175,8 @@ const useScaleShape = ({
   const isTriadTone = (scalePosition?: number): boolean =>
     scalePosition !== undefined && TRIAD_POSITIONS.has(scalePosition);
 
+  const isRootTone = (scalePosition?: number): boolean => scalePosition === 1;
+
   const dot = (
     string: number,
     fret: number,
@@ -154,7 +184,8 @@ const useScaleShape = ({
     scalePosition?: number
   ): JSX.Element => {
     const color = scaleColor(scalePosition);
-    const emphasized = isTriadTone(scalePosition);
+    const isTriad = isTriadTone(scalePosition);
+    const isRoot = isRootTone(scalePosition);
     const cx = x(diagramStyle.padding, string, fret, 0);
     const cy = y(diagramStyle.padding, string, fret, 0);
 
@@ -170,7 +201,8 @@ const useScaleShape = ({
           fillClassName="fill-white"
           emphasisStrokeClassName={color.emphasisStrokeClassName}
           emphasisFillClassName={color.emphasisFillClassName}
-          emphasized={emphasized}
+          isRoot={isRoot}
+          isTriad={isTriad}
           glowFilterId={NOTE_GLOW_FILTER_ID}
         />
         <text
@@ -178,7 +210,7 @@ const useScaleShape = ({
           y={cy}
           alignmentBaseline={'central'}
           className={`${className} text-lg font-sans stroke-1 ${
-            emphasized ? color.emphasisTextClassName : color.textClassName
+            isTriad || isRoot ? color.emphasisTextClassName : color.textClassName
           }`}
         >
           {text}
@@ -187,21 +219,23 @@ const useScaleShape = ({
     );
   };
 
-  const cagedDot = ({ string, fret, color, note }: CagedDot): JSX.Element => (
+  const cagedDot = ({ string, fret, color, note, fromScale }: CagedDot): JSX.Element => (
     <Fragment key={`caged.${string}.${fret}`}>
       <circle
         key={`caged.${string}.${fret}.dot`}
         cx={x(diagramStyle.padding, string, fret, 0)}
         cy={y(diagramStyle.padding, string, fret, 0)}
         r={diagramStyle.dotRadius}
-        className={`${className} ${color}`}
+        className={`${className} ${fromScale ? `${strokeToken(color)} fill-white` : color}`}
       />
       <text
         key={`caged.${string}.${fret}.note`}
         x={x(diagramStyle.padding, string, fret, 0)}
         y={y(diagramStyle.padding, string, fret, 0)}
         alignmentBaseline={'central'}
-        className={`${className} text-2xl font-sans stroke-2 stroke-white`}
+        className={`${className} text-2xl font-sans stroke-2 ${
+          fromScale ? 'stroke-black' : 'stroke-white'
+        }`}
       >
         {note}
       </text>
@@ -219,16 +253,20 @@ const useScaleShape = ({
     }));
 
   const cagedDots = (shapes: CagedShapeInput[]): JSX.Element[] =>
-    dedupeCagedDots(reorderShapes(shapes)).map(cagedDot);
+    dedupeCagedDots(reorderShapes(shapes), rootNote, showTriads).map(mergedDot);
 
-  const mergedDot = (cagedDot_: CagedDot): JSX.Element => {
-    if (!cagedDot_.emphasized) {
-      return cagedDot(cagedDot_);
+  const mergedDot = (dot: CagedDot): JSX.Element => {
+    if (!dot.emphasized && !dot.isRoot) {
+      return cagedDot(dot);
     }
 
-    const { string, fret, color, note } = cagedDot_;
+    const { string, fret, color, note, fromScale, emphasized, isRoot } = dot;
     const cx = x(diagramStyle.padding, string, fret, 0);
     const cy = y(diagramStyle.padding, string, fret, 0);
+    // Scale-only dots stand out via the halo/thicker-stroke glow alone, never a solid fill —
+    // real CAGED chord-tone dots keep their existing solid look even when emphasized.
+    const strokeClass = fromScale ? strokeToken(color) : color;
+    const fillClass = fromScale ? 'fill-white' : color;
 
     return (
       <Fragment key={`merged.${string}.${fret}`}>
@@ -238,11 +276,12 @@ const useScaleShape = ({
           radius={diagramStyle.dotRadius}
           strokeWidth={diagramStyle.dotStroke}
           className={className}
-          strokeClassName={color}
-          fillClassName={color}
-          emphasisStrokeClassName={color}
-          emphasisFillClassName={color}
-          emphasized={true}
+          strokeClassName={strokeClass}
+          fillClassName={fillClass}
+          emphasisStrokeClassName={strokeClass}
+          emphasisFillClassName={fillClass}
+          isRoot={isRoot}
+          isTriad={emphasized}
           glowFilterId={NOTE_GLOW_FILTER_ID}
         />
         <text
@@ -250,7 +289,9 @@ const useScaleShape = ({
           x={cx}
           y={cy}
           alignmentBaseline={'central'}
-          className={`${className} text-2xl font-sans stroke-2 stroke-white`}
+          className={`${className} text-2xl font-sans stroke-2 ${
+            fromScale ? 'stroke-black' : 'stroke-white'
+          }`}
         >
           {note}
         </text>
