@@ -31,6 +31,7 @@ export interface DiagramProps {
   cagedColor?: string;
   scaleModel?: ScaleModel;
   showTriads?: boolean;
+  rootNote?: string;
   debug?: boolean;
   clickHandler?: (
     event: MouseEvent<SVGSVGElement>,
@@ -46,7 +47,17 @@ export const Diagram = (props: DiagramProps): JSX.Element => {
   const { onMouseClick, onMouseMove, frets, startAt, viewBox, getHeight, getWidth, getShapes } =
     useDiagram(props);
   const { fretNumbers } = useSettings();
-  const { className, scale, chord, cagedShapes, cagedColor, scaleModel, showTriads, text } = props;
+  const {
+    className,
+    scale,
+    chord,
+    cagedShapes,
+    cagedColor,
+    scaleModel,
+    showTriads,
+    rootNote,
+    text,
+  } = props;
 
   return (
     <svg
@@ -75,7 +86,12 @@ export const Diagram = (props: DiagramProps): JSX.Element => {
             one. scale and cagedShapes both render via ScaleShape, chord via ChordShape. */}
         {chord && <ChordShape className={className} chord={chord} cagedColor={cagedColor} />}
         {!!cagedShapes?.length && !scaleModel && (
-          <ScaleShape className={className} cagedShapes={cagedShapes} />
+          <ScaleShape
+            className={className}
+            cagedShapes={cagedShapes}
+            showTriads={showTriads}
+            rootNote={rootNote}
+          />
         )}
         {!!cagedShapes?.length && scaleModel && (
           <ScaleShape

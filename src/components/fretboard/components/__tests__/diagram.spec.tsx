@@ -175,4 +175,37 @@ describe('Diagram', () => {
 
     expect(container.querySelectorAll('circle')).toHaveLength(5);
   });
+
+  test('forwards showTriads and rootNote through the no-scaleModel CAGED overlay branch', () => {
+    // All of cShapeOverlay's notes are root/3rd/5th of root C, so with showTriads+rootNote
+    // forwarded, every dot renders via the emphasized (halo) path — 2 circles per dot.
+    const cShapeOverlay: CagedShapeInput = {
+      chord: {
+        baseFret: 1,
+        frets: [-1, 3, 2, 0, 1, 0],
+        notes: ['', 'C3', 'E3', 'G3', 'C4', 'E4'],
+      } as ChordPosition,
+      color: 'stroke-blue-700 fill-blue-700',
+    };
+
+    const { container: withTriads } = renderDiagram({
+      className: 'some-class',
+      text: DotText.NOTE,
+      fretNumbersPosition: FretNumberPosition.LEFT,
+      cagedShapes: [cShapeOverlay],
+      showTriads: true,
+      rootNote: 'C',
+    });
+    expect(withTriads.querySelectorAll('circle')).toHaveLength(10);
+
+    const { container: withoutTriads } = renderDiagram({
+      className: 'some-class',
+      text: DotText.NOTE,
+      fretNumbersPosition: FretNumberPosition.LEFT,
+      cagedShapes: [cShapeOverlay],
+      showTriads: false,
+      rootNote: 'C',
+    });
+    expect(withoutTriads.querySelectorAll('circle')).toHaveLength(5);
+  });
 });
