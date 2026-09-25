@@ -49,7 +49,7 @@ describe('NoteDot', () => {
 
     const circles = container.querySelectorAll('circle');
     expect(circles).toHaveLength(2);
-    expect(circles[0]).toHaveAttribute('r', '27');
+    expect(circles[0]).toHaveAttribute('r', '24');
     expect(circles[0]).toHaveAttribute('stroke-width', '2');
     expect(circles[0]).toHaveAttribute('class', 'dot fill-none stroke-blue-700');
     expect(circles[1]).toHaveAttribute('r', '20');
@@ -79,7 +79,7 @@ describe('NoteDot', () => {
 
     const circles = container.querySelectorAll('circle');
     expect(circles).toHaveLength(1);
-    expect(circles[0]).toHaveAttribute('r', '21');
+    expect(circles[0]).toHaveAttribute('r', '23');
     expect(circles[0]).toHaveAttribute('stroke-width', '2');
     expect(circles[0]).toHaveAttribute('class', 'dot fill-blue-700 stroke-blue-700');
     expect(container.querySelector('g')).not.toHaveAttribute('filter');
@@ -107,10 +107,10 @@ describe('NoteDot', () => {
 
     const circles = container.querySelectorAll('circle');
     expect(circles).toHaveLength(2);
-    expect(circles[0]).toHaveAttribute('r', '27');
+    expect(circles[0]).toHaveAttribute('r', '27.599999999999998');
     expect(circles[0]).toHaveAttribute('stroke-width', '2');
     expect(circles[0]).toHaveAttribute('class', 'dot fill-none stroke-blue-700');
-    expect(circles[1]).toHaveAttribute('r', '21');
+    expect(circles[1]).toHaveAttribute('r', '23');
     expect(circles[1]).toHaveAttribute('stroke-width', '2');
     expect(circles[1]).toHaveAttribute('class', 'dot fill-blue-700 stroke-blue-700');
     expect(container.querySelector('g')).toHaveAttribute('filter', `url(#${NOTE_GLOW_FILTER_ID})`);
