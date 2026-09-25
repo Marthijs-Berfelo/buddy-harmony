@@ -8,6 +8,10 @@ type FretboardProps = {
   frets: number;
   chord: boolean;
   startAt: number;
+  // CAGED overlays use the nut/chord-box visuals but, unlike a fixed-size chord box,
+  // must size the string length like a full fretboard (scale diagram): `frets` is the
+  // number of intervals from the nut, not a literal marker count.
+  cagedOverlay?: boolean;
 };
 
 export const Fretboard = (props: FretboardProps): JSX.Element => {
@@ -31,7 +35,7 @@ type FretboardHook = {
   includeNut: boolean;
 };
 
-const useFretboard = ({ frets, chord, startAt }: FretboardProps): FretboardHook => {
+const useFretboard = ({ frets, chord, startAt, cagedOverlay }: FretboardProps): FretboardHook => {
   const { stringCount, orientation, diagramStyle } = useSettings();
   const includeNut = startAt === 1;
   const isFirstFret = (frets: boolean, index: number): boolean => frets && index === 0;
@@ -88,7 +92,10 @@ const useFretboard = ({ frets, chord, startAt }: FretboardProps): FretboardHook 
   };
 
   const stringsPath = (): string => {
-    const length = diagramStyle.stringLength(frets);
+    // For CAGED overlays, `frets` is the marker count (nut + explicit chord-box markers),
+    // whereas `stringLength` expects an interval count — matching how the scale diagram
+    // sizes its string length. Subtracting 1 aligns the two so the overhang matches scale.
+    const length = diagramStyle.stringLength(cagedOverlay ? frets - 1 : frets);
     switch (orientation) {
       case Orientation.VERTICAL:
         return verticalLines(
