@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.18.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.4...0.18.0) (2026-09-25)
+
+### Features
+
+* **53:** add CagedLegend and Chord/Scale view toggle ([42d88e5](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/42d88e53bdfb5a1e600eff2adc365fd121c30f3b))
+* **53:** add scale selection and triad toggle to CAGED, gated by tuning ([8d499e4](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/8d499e4571db39b15eeccd4e004a1c48c25ebd46))
+* **53:** decouple root-dot emphasis from the triad toggle ([1f37947](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/1f3794754bc2f1d4c4333807cd403f31b02cb775))
+* **53:** emphasize triad tones on the scale fretboard with glow styling ([1fd4d61](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/1fd4d61a21d07dfa563f979248c621f98dd3226f))
+* **53:** order CAGED rows by proximity to the nut ([ba55dca](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ba55dca4a9e7af4f1f48c4060a7cda4cfa652d06))
+* **53:** overlay scale tones on the CAGED chord view ([f7cbe3b](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f7cbe3ba00423a94682ebe27da1a05fe838455ce))
+* **53:** render deduplicated multi-shape CAGED dot overlay ([af9f2a9](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/af9f2a9d12d06d35c046ee11216bd3aca4767c24))
+* **53:** render open strings as colored note dots in CAGED chord rows ([c4702e8](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/c4702e8eee8e3bf021402acc704b263abeefd5bd))
+* **53:** wrap CagedLegend in a collapsible Card and merge toolbar toggle ([be62227](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/be62227cf70564193abe304528d46a5047723011))
+
+### Bug Fixes
+
+* **53:** bump jsdom to 30.1.1 to fix Radix menu pointerdown regression ([2a778fe](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/2a778fe0ccf7edae93d815e6390f4038d024e143)), references [jsdom/jsdom#4342](https://github.com/jsdom/jsdom/issues/4342)
+* **53:** correct CAGED base-fret computation for edge-case keys ([c265b51](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/c265b51a5bea380f3991adc4cd3df1a0c497979a))
+* **53:** split CAGED dot color into separate stroke/fill classes ([68500d0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/68500d0441cc741845bde5fe3fffe697c0558f99))
+* **53:** spread CAGED legend over two rows and rebalance root-dot sizing ([68738f4](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/68738f46798a026f7662678a9dd1bfa1b0ca168c))
+
+### Dependency Updates
+
+* bump lucide-react from 1.45.0 to 1.46.0 ([ed707dd](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ed707dd8a96724156a4f418db1528d5659da1d50))
+* bump lucide-react from 1.46.0 to 1.47.0 ([ed3d1e6](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ed3d1e6366b52b5ad75454908171e986d14c0c19))
+* bump react-i18next in the i18next group across 1 directory ([3a17c3a](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/3a17c3a0a36e4f04db72a7af6a4eef2eebb5fda3))
+* bump react-router-dom from 7.18.3 to 7.18.4 ([5e9ef70](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/5e9ef70b246d627efef6e894bbc1a87c170545bc))
+* bump web-vitals from 6.2.1 to 6.2.2 ([f222f63](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f222f63ee30c67eddad359bc9ab68ab7aca483cb))
+
 ## [0.17.4](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.3...0.17.4) (2026-09-18)
 
 ### Bug Fixes
