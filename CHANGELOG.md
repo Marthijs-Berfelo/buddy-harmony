@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.19.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.18.0...0.19.0) (2026-09-25)
+
+### Features
+
+* **53:** add triad toggle to scale toolbar ([f71e68b](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f71e68bc531d027ba895eef6e95e0ce425bc53c7))
+
+### Bug Fixes
+
+* **53:** align CAGED fretboard string overhang with scale diagrams ([3101a6b](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/3101a6bcd72d9f78bba37388b959424296688bd1))
+
 ## [0.18.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.17.4...0.18.0) (2026-09-25)
 
 ### Features
