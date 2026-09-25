@@ -28,8 +28,8 @@ export const CagedLegend = ({
     <Card id="caged-legend">
       <CardHeader>{t('caged:legend-title')}</CardHeader>
       <CardContent>
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-2">
             {LETTERS.map((letter) => {
               const on = visibleShapes[letter];
               const color = CAGED_COLORS[letter];
@@ -52,23 +52,25 @@ export const CagedLegend = ({
               );
             })}
           </div>
-          <div className="flex items-center gap-2">
-            <Switch
-              checked={showTriads}
-              onCheckedChange={onShowTriadsChange}
-              aria-label={t('caged:legend-triad-label')}
-            />
-            <span className="text-sm text-slate-700">{t('caged:legend-triad-label')}</span>
-          </div>
-          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-700">
-            <span className="flex items-center gap-1">
-              <span className="inline-block h-3 w-3 rounded-full border-2 border-slate-700 shadow-[0_0_0_2px_rgba(0,0,0,0.15)]" />
-              {t('caged:legend-symbol-triad')}
-            </span>
-            <span className="flex items-center gap-1">
-              <span className="inline-block h-3 w-3 rounded-full border-2 border-slate-700" />
-              {t('caged:legend-symbol-scale')}
-            </span>
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Switch
+                checked={showTriads}
+                onCheckedChange={onShowTriadsChange}
+                aria-label={t('caged:legend-triad-label')}
+              />
+              <span className="text-sm text-slate-700">{t('caged:legend-triad-label')}</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 text-sm text-slate-700">
+              <span className="flex items-center gap-1">
+                <span className="inline-block h-3 w-3 rounded-full border-2 border-slate-700 shadow-[0_0_0_2px_rgba(0,0,0,0.15)]" />
+                {t('caged:legend-symbol-triad')}
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="inline-block h-3 w-3 rounded-full border-2 border-slate-700" />
+                {t('caged:legend-symbol-scale')}
+              </span>
+            </div>
           </div>
         </div>
       </CardContent>

@@ -16,8 +16,8 @@ export interface NoteDotProps {
   glowFilterId?: string;
 }
 
-const EMPHASIS_RADIUS_FACTOR = 1.05;
-const HALO_RADIUS_FACTOR = 1.35;
+const EMPHASIS_RADIUS_FACTOR = 1.15;
+const HALO_RADIUS_FACTOR = 1.2;
 const EMPHASIS_STROKE_WIDTH_FACTOR = 2;
 
 export const NoteDot = ({
@@ -40,8 +40,12 @@ export const NoteDot = ({
   const useEmphasisColors = showHalo || showEnlarged;
 
   const dotRadius = showEnlarged ? radius * EMPHASIS_RADIUS_FACTOR : radius;
-  const dotStrokeWidth = useEmphasisColors ? strokeWidth * EMPHASIS_STROKE_WIDTH_FACTOR : strokeWidth;
-  const dotStrokeClassName = useEmphasisColors ? (emphasisStrokeClassName as string) : strokeClassName;
+  const dotStrokeWidth = useEmphasisColors
+    ? strokeWidth * EMPHASIS_STROKE_WIDTH_FACTOR
+    : strokeWidth;
+  const dotStrokeClassName = useEmphasisColors
+    ? (emphasisStrokeClassName as string)
+    : strokeClassName;
   const dotFillClassName = useEmphasisColors ? (emphasisFillClassName as string) : fillClassName;
 
   return (
@@ -51,7 +55,7 @@ export const NoteDot = ({
           <circle
             cx={cx}
             cy={cy}
-            r={radius * HALO_RADIUS_FACTOR}
+            r={dotRadius * HALO_RADIUS_FACTOR}
             strokeWidth={strokeWidth * EMPHASIS_STROKE_WIDTH_FACTOR}
             className={`${className} fill-none ${emphasisStrokeClassName}`}
           />
