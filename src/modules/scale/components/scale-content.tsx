@@ -6,7 +6,7 @@ import { useGuitarScale } from '../hooks';
 import { DotText, FretNumberPosition } from 'components/fretboard/options';
 
 export const ScaleContent = (): JSX.Element => {
-  const { scaleModel, printRef, printStyle, selectedKey, scale } = useGuitarScale();
+  const { scaleModel, printRef, printStyle, selectedKey, scale, showTriads } = useGuitarScale();
   const { orientation } = useSettings();
 
   return (
@@ -25,6 +25,7 @@ export const ScaleContent = (): JSX.Element => {
           text={DotText.NOTE}
           scale={scaleModel}
           fretNumbersPosition={FretNumberPosition.LEFT}
+          showTriads={showTriads}
         />
       </div>
     </div>

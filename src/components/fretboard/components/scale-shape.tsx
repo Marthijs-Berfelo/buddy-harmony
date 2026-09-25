@@ -19,7 +19,7 @@ type ScaleShapeProps = ShapeProps &
         scale: ScaleFret[][];
         text: DotText;
         cagedShapes?: never;
-        showTriads?: never;
+        showTriads?: boolean;
         rootNote?: never;
       }
     | {
@@ -175,7 +175,9 @@ const useScaleShape = ({
     scalePosition?: number
   ): JSX.Element => {
     const color = scaleColor(scalePosition);
-    const isTriad = isTriadTone(scalePosition);
+    // Root sizing is not gated by the triad toggle — only the triad halo is, matching the
+    // CAGED overlay's showTriads behavior (see caged-dots.ts).
+    const isTriad = (showTriads ?? true) && isTriadTone(scalePosition);
     const isRoot = isRootTone(scalePosition);
     const cx = x(diagramStyle.padding, string, fret, 0);
     const cy = y(diagramStyle.padding, string, fret, 0);

@@ -5,12 +5,23 @@ import React from 'react';
 import { scaleGuitarTypes } from 'hooks';
 import { Pages } from 'routing/pages';
 import { useGuitarScale } from '../hooks';
+import { ScaleTriadToggle } from './scale-triad-toggle';
 
 const context = Pages.SCALE;
 
 export const ScaleToolBar = (): JSX.Element => {
-  const { keys, selectedKey, setSelectedKey, scales, scale, setScale, printRef, printDisabled } =
-    useGuitarScale();
+  const {
+    keys,
+    selectedKey,
+    setSelectedKey,
+    scales,
+    scale,
+    setScale,
+    showTriads,
+    setShowTriads,
+    printRef,
+    printDisabled,
+  } = useGuitarScale();
   return (
     <Toolbar
       page={context}
@@ -20,6 +31,11 @@ export const ScaleToolBar = (): JSX.Element => {
       tools={[
         <KeySelector key={'scale-key'} {...{ keys, selectedKey, setSelectedKey }} />,
         <ScaleSelector key={'scale-scale'} {...{ selectedKey, scales, scale, setScale }} />,
+        <ScaleTriadToggle
+          key={'scale-triad-toggle'}
+          showTriads={showTriads}
+          onShowTriadsChange={setShowTriads}
+        />,
       ]}
     />
   );
