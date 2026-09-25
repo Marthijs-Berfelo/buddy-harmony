@@ -1,9 +1,20 @@
 import { Orientation } from '../options';
 import { useSettings } from 'hooks';
 
+/**
+ * Separate stroke/fill Tailwind classes for a single dot color. Keeping these apart (rather
+ * than one combined `"stroke-X fill-X"` string) lets a halo ring reuse just the stroke class
+ * with `fill-none` — a combined string's `fill-*` token could otherwise win the Tailwind
+ * cascade over `fill-none` depending on alphabetical utility ordering, filling in the ring.
+ */
+export interface ShapeColor {
+  strokeClassName: string;
+  fillClassName: string;
+}
+
 export interface ShapeProps {
   className: string;
-  cagedColor?: string;
+  cagedColor?: ShapeColor;
 }
 
 type ShapeHook = {

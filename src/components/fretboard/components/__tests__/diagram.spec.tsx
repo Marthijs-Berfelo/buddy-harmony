@@ -107,11 +107,11 @@ describe('Diagram', () => {
   test('renders a multi-shape CAGED overlay spanning fret 0 to the last shape max fret', () => {
     const cShapeOverlay: CagedShapeInput = {
       chord: { baseFret: 1, frets: [-1, 3, 2, 0, 1, 0] } as ChordPosition,
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
     const aShapeOverlay: CagedShapeInput = {
       chord: { baseFret: 5, frets: [1, 3, 3, 2, 1, 1] } as ChordPosition,
-      color: 'stroke-red-700 fill-red-700',
+      color: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
     };
     const { container } = renderDiagram({
       className: 'some-class',
@@ -127,7 +127,7 @@ describe('Diagram', () => {
   test('renders open-string dots and falls back to a single fret when a shape has no fretted note', () => {
     const mutedShapeOverlay: CagedShapeInput = {
       chord: { baseFret: 1, frets: [-1, 0, 0, 0, -1, 0] } as ChordPosition,
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
     const { container } = renderDiagram({
       className: 'some-class',
@@ -143,7 +143,7 @@ describe('Diagram', () => {
   test('renders merged CAGED+scale dots when both cagedShapes and scaleModel are provided', () => {
     const cShapeOverlay: CagedShapeInput = {
       chord: { baseFret: 1, frets: [-1, 3, 2, 0, 1, 0] } as ChordPosition,
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
     const scaleModel = gs.GuitarScale.get('C', 'major') as ScaleModel;
 
@@ -163,7 +163,7 @@ describe('Diagram', () => {
   test('renders CAGED-only overlay unchanged when scaleModel is omitted', () => {
     const cShapeOverlay: CagedShapeInput = {
       chord: { baseFret: 1, frets: [-1, 3, 2, 0, 1, 0] } as ChordPosition,
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
 
     const { container } = renderDiagram({
@@ -185,7 +185,7 @@ describe('Diagram', () => {
         frets: [-1, 3, 2, 0, 1, 0],
         notes: ['', 'C3', 'E3', 'G3', 'C4', 'E4'],
       } as ChordPosition,
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
 
     const { container: withTriads } = renderDiagram({

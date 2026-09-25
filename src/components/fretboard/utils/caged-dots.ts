@@ -1,17 +1,18 @@
 import { ChordPosition } from 'hooks';
 import { Note } from '@tonaljs/tonal';
 import type { ScaleFret } from './scale';
+import type { ShapeColor } from './shape';
 
 export interface CagedShapeInput {
   chord: ChordPosition;
-  color: string;
+  color: ShapeColor;
 }
 
 export interface CagedDot {
   string: number;
   /** Absolute, nut-relative fret — not relative to any chord's baseFret. */
   fret: number;
-  color: string;
+  color: ShapeColor;
   note?: string;
   /**
    * True for a triad tone (root/3rd/5th) that should render with the glow/halo treatment —
@@ -131,7 +132,10 @@ export const dedupeCagedDots = (
   return dots;
 };
 
-export const NEUTRAL_SCALE_DOT_COLOR = 'stroke-black fill-black';
+export const NEUTRAL_SCALE_DOT_COLOR: ShapeColor = {
+  strokeClassName: 'stroke-black',
+  fillClassName: 'fill-black',
+};
 
 const TRIAD_POSITIONS = new Set([1, 3, 5]);
 
@@ -153,7 +157,7 @@ const shapeRange = (shape: CagedShapeInput): { min: number; max: number } | unde
  * Finds the color of the first shape (by array order) whose own isolated fret range
  * contains the given fret. Earlier entries in `shapes` win ties.
  */
-const owningShapeColor = (shapes: CagedShapeInput[], fret: number): string | undefined =>
+const owningShapeColor = (shapes: CagedShapeInput[], fret: number): ShapeColor | undefined =>
   shapes.find((shape) => {
     const range = shapeRange(shape);
     return range !== undefined && fret >= range.min && fret <= range.max;

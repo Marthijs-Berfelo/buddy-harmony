@@ -931,14 +931,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-teal-700"
           cx="452"
           cy="124"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-teal-700 stroke-teal-700"
           cx="452"
           cy="124"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -974,14 +974,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-pink-700"
           cx="452"
           cy="404"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-pink-700 stroke-pink-700"
           cx="452"
           cy="404"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1034,14 +1034,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-red-700"
           cx="452"
           cy="904"
-          r="27"
+          r="27.599999999999998"
           stroke-width="2"
         />
         <circle
           class="flex fill-red-700 stroke-red-700"
           cx="452"
           cy="904"
-          r="21"
+          r="23"
           stroke-width="2"
         />
       </g>
@@ -1094,14 +1094,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-red-700"
           cx="392"
           cy="204"
-          r="27"
+          r="27.599999999999998"
           stroke-width="2"
         />
         <circle
           class="flex fill-red-700 stroke-red-700"
           cx="392"
           cy="204"
-          r="21"
+          r="23"
           stroke-width="2"
         />
       </g>
@@ -1137,14 +1137,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-teal-700"
           cx="392"
           cy="604"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-teal-700 stroke-teal-700"
           cx="392"
           cy="604"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1180,14 +1180,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-pink-700"
           cx="392"
           cy="904"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-pink-700 stroke-pink-700"
           cx="392"
           cy="904"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1223,14 +1223,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-pink-700"
           cx="332"
           cy="124"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-pink-700 stroke-pink-700"
           cx="332"
           cy="124"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1283,14 +1283,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-red-700"
           cx="332"
           cy="604"
-          r="27"
+          r="27.599999999999998"
           stroke-width="2"
         />
         <circle
           class="flex fill-red-700 stroke-red-700"
           cx="332"
           cy="604"
-          r="21"
+          r="23"
           stroke-width="2"
         />
       </g>
@@ -1326,14 +1326,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-teal-700"
           cx="332"
           cy="1004"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-teal-700 stroke-teal-700"
           cx="332"
           cy="1004"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1386,14 +1386,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-teal-700"
           cx="272"
           cy="304"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-teal-700 stroke-teal-700"
           cx="272"
           cy="304"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1429,14 +1429,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-pink-700"
           cx="272"
           cy="604"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-pink-700 stroke-pink-700"
           cx="272"
           cy="604"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1489,14 +1489,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-red-700"
           cx="272"
           cy="1104"
-          r="27"
+          r="27.599999999999998"
           stroke-width="2"
         />
         <circle
           class="flex fill-red-700 stroke-red-700"
           cx="272"
           cy="1104"
-          r="21"
+          r="23"
           stroke-width="2"
         />
       </g>
@@ -1549,14 +1549,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-red-700"
           cx="212"
           cy="404"
-          r="27"
+          r="27.599999999999998"
           stroke-width="2"
         />
         <circle
           class="flex fill-red-700 stroke-red-700"
           cx="212"
           cy="404"
-          r="21"
+          r="23"
           stroke-width="2"
         />
       </g>
@@ -1592,14 +1592,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-teal-700"
           cx="212"
           cy="804"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-teal-700 stroke-teal-700"
           cx="212"
           cy="804"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1635,14 +1635,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-pink-700"
           cx="212"
           cy="1104"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-pink-700 stroke-pink-700"
           cx="212"
           cy="1104"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1661,14 +1661,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-teal-700"
           cx="152"
           cy="124"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-teal-700 stroke-teal-700"
           cx="152"
           cy="124"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1704,14 +1704,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-pink-700"
           cx="152"
           cy="404"
-          r="27"
+          r="24"
           stroke-width="2"
         />
         <circle
           class="flex fill-pink-700 stroke-pink-700"
           cx="152"
           cy="404"
-          r="21"
+          r="20"
           stroke-width="2"
         />
       </g>
@@ -1764,14 +1764,14 @@ exports[`Diagram > renders a scale diagram 1`] = `
           class="flex fill-none stroke-red-700"
           cx="152"
           cy="904"
-          r="27"
+          r="27.599999999999998"
           stroke-width="2"
         />
         <circle
           class="flex fill-red-700 stroke-red-700"
           cx="152"
           cy="904"
-          r="21"
+          r="23"
           stroke-width="2"
         />
       </g>

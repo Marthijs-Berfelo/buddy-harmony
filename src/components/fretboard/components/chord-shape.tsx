@@ -183,7 +183,7 @@ const useChordShape = ({ className, cagedColor, chord }: ChordShapeProps): Chord
         cx={x(diagramStyle.padding, string, fret, xOffset(startAt === 0))}
         cy={y(diagramStyle.padding, string, fret, yOffset(startAt === 0))}
         r={diagramStyle.dotRadius}
-        className={`${className} ${cagedColor || 'stroke-black fill-black'}`}
+        className={`${className} ${cagedColor ? `${cagedColor.strokeClassName} ${cagedColor.fillClassName}` : 'stroke-black fill-black'}`}
       />
       <text
         key={`${chordPosition}.${string}.${fret}.finger`}

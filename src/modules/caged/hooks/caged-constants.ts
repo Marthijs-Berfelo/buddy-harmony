@@ -1,4 +1,5 @@
 import { ChordPosition } from 'hooks';
+import type { ShapeColor } from 'components/fretboard/utils/shape';
 
 export interface CagedPositionConfig {
   key: string;
@@ -43,34 +44,34 @@ export const CAGED_SCALE_SHORTLIST: Record<'major' | 'minor' | '7', string[]> = 
 };
 
 export interface CagedColor {
-  caged: string;
+  caged: ShapeColor;
   bg: string;
   border: string;
 }
 
 export const CAGED_COLORS: Record<CagedLetter, CagedColor> = {
   C: {
-    caged: 'stroke-blue-700 fill-blue-700',
+    caged: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     bg: 'bg-blue-700',
     border: 'border-blue-700',
   },
   A: {
-    caged: 'stroke-red-700 fill-red-700',
+    caged: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
     bg: 'bg-red-700',
     border: 'border-red-700',
   },
   G: {
-    caged: 'stroke-green-700 fill-green-700',
+    caged: { strokeClassName: 'stroke-green-700', fillClassName: 'fill-green-700' },
     bg: 'bg-green-700',
     border: 'border-green-700',
   },
   E: {
-    caged: 'stroke-orange-800 fill-orange-800',
+    caged: { strokeClassName: 'stroke-orange-800', fillClassName: 'fill-orange-800' },
     bg: 'bg-orange-800',
     border: 'border-orange-800',
   },
   D: {
-    caged: 'stroke-violet-800 fill-violet-800',
+    caged: { strokeClassName: 'stroke-violet-800', fillClassName: 'fill-violet-800' },
     bg: 'bg-violet-800',
     border: 'border-violet-800',
   },
