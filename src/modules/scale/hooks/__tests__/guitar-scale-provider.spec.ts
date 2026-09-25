@@ -48,4 +48,14 @@ describe('useGuitarScale', () => {
 
     expect(result.current.printStyle(Orientation.VERTICAL)).toContain('@page');
   });
+
+  test('defaults showTriads to true and toggles via setShowTriads', () => {
+    const { result } = renderGuitarScale();
+
+    expect(result.current.showTriads).toBe(true);
+
+    act(() => result.current.setShowTriads(false));
+
+    expect(result.current.showTriads).toBe(false);
+  });
 });

@@ -89,7 +89,14 @@ export const Diagram = (props: DiagramProps): JSX.Element => {
           startAt={startAt}
           cagedOverlay={!!cagedShapes?.length}
         />
-        {scale && <ScaleShape className={className} scale={getShapes(scale)} text={text} />}
+        {scale && (
+          <ScaleShape
+            className={className}
+            scale={getShapes(scale)}
+            text={text}
+            showTriads={showTriads}
+          />
+        )}
         {/* scale, chord and cagedShapes are mutually exclusive — callers pass exactly
             one. scale and cagedShapes both render via ScaleShape, chord via ChordShape. */}
         {chord && <ChordShape className={className} chord={chord} cagedColor={cagedColor} />}

@@ -1,5 +1,6 @@
 {
   "title": "Toonladder selecteren",
   "title_selected": "Toonladder: {{scale}}",
-  "none": "Geen"
+  "none": "Geen",
+  "triad-toggle-label": "Toon triades"
 }

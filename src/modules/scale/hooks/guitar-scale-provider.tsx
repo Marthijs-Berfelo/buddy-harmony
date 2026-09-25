@@ -18,6 +18,8 @@ export interface GuitarScaleHook extends KeysHook, Printable {
   scale?: string;
   setScale: Dispatch<SetStateAction<string | undefined>>;
   scaleModel: ScaleModel | undefined;
+  showTriads: boolean;
+  setShowTriads: Dispatch<SetStateAction<boolean>>;
 }
 
 const guitarScale = gs.GuitarScale;
@@ -28,6 +30,7 @@ export const GuitarScaleProvider = ({ children }: PropsWithChildren): JSX.Elemen
   const printRef = useRef<HTMLDivElement>(null);
   const { keys, selectedKey, setSelectedKey } = useKeys();
   const [scale, setScale] = useState<string>();
+  const [showTriads, setShowTriads] = useState<boolean>(true);
 
   const scaleModel = useMemo(() => {
     if (!!selectedKey && !!scale) {
@@ -47,6 +50,8 @@ export const GuitarScaleProvider = ({ children }: PropsWithChildren): JSX.Elemen
     scale,
     setScale,
     scaleModel,
+    showTriads,
+    setShowTriads,
     printRef,
     printStyle,
   };

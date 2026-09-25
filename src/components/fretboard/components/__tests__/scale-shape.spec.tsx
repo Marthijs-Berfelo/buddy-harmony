@@ -627,5 +627,32 @@ describe('ScaleShape', () => {
       const normalSizedTriadFill = circles.filter((circle) => circle.getAttribute('r') === '20');
       expect(normalSizedTriadFill).toHaveLength(1);
     });
+
+    test('suppresses the triad halo when showTriads is false, while still enlarging the root dot', () => {
+      const scale: ScaleFret[][] = [
+        [scaleFret({ freet: 5, scalePosition: 5, note: 'G' })],
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 0, scalePosition: 1, note: 'C' })],
+      ];
+
+      const { container } = renderScaleShape({
+        className: 'some-class',
+        scale,
+        text: DotText.NOTE,
+        showTriads: false,
+      });
+
+      const circles = Array.from(container.querySelectorAll('circle'));
+      // Root dot (scalePosition 1) is still enlarged regardless of showTriads.
+      const rootCircle = circles.find((circle) => circle.getAttribute('r') === '23');
+      expect(rootCircle).toBeDefined();
+      // Non-root triad dot (scalePosition 5) no longer haloes.
+      const haloCircle = circles.find((circle) => circle.getAttribute('r') === '24');
+      expect(haloCircle).toBeUndefined();
+      expect(circles).toHaveLength(2);
+    });
   });
 });
