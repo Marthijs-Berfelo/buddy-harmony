@@ -1,5 +1,6 @@
 {
   "title": "Select Scale",
   "title_selected": "Scale: {{scale}}",
-  "none": "None"
+  "none": "None",
+  "triad-toggle-label": "Show triads"
 }
