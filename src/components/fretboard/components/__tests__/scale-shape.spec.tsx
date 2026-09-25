@@ -70,7 +70,7 @@ const cShape: CagedShapeInput = {
     midi: [],
     notes: ['D#2', 'C3', 'E3', 'G3', 'C4', 'E4'],
   },
-  color: 'stroke-blue-700 fill-blue-700',
+  color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
 };
 const aShape: CagedShapeInput = {
   chord: {
@@ -80,7 +80,7 @@ const aShape: CagedShapeInput = {
     midi: [],
     notes: ['A2', 'E3', 'A3', 'Db4', 'E4', 'A4'],
   },
-  color: 'stroke-red-700 fill-red-700',
+  color: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
 };
 
 describe('ScaleShape', () => {
@@ -109,11 +109,11 @@ describe('ScaleShape', () => {
     test('an earlier shape wins when two shapes share a (string, fret) position', () => {
       const shapeA: CagedShapeInput = {
         chord: { baseFret: 1, frets: [-1, 3, 2, 0, 1, 0], fingers: [0, 3, 2, 0, 1, 0], midi: [] },
-        color: 'stroke-blue-700 fill-blue-700',
+        color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
       };
       const shapeB: CagedShapeInput = {
         chord: { baseFret: 1, frets: [-1, 3, 2, 0, 1, 0], fingers: [0, 3, 2, 0, 1, 0], midi: [] },
-        color: 'stroke-red-700 fill-red-700',
+        color: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
       };
 
       const { container } = renderScaleShape({
@@ -177,7 +177,7 @@ describe('ScaleShape', () => {
     test('enlarges root dots even when showTriads is false, with no scale selected', () => {
       // cShape's C3/C4 notes share chroma with root C — both must render via NoteDot's
       // enlarged (isRoot) path even though showTriads is false, giving 2 root dots at
-      // r=21 among the 5 total circles (no halo circles, since isTriad never fires here).
+      // r=23 among the 5 total circles (no halo circles, since isTriad never fires here).
       const { container } = renderScaleShape({
         className: 'some-class',
         cagedShapes: [cShape],
@@ -187,7 +187,7 @@ describe('ScaleShape', () => {
 
       const circles = Array.from(container.querySelectorAll('circle'));
       expect(circles).toHaveLength(5);
-      const enlargedCircles = circles.filter((circle) => circle.getAttribute('r') === '21');
+      const enlargedCircles = circles.filter((circle) => circle.getAttribute('r') === '23');
       expect(enlargedCircles).toHaveLength(2);
     });
 
@@ -406,7 +406,7 @@ describe('ScaleShape', () => {
       // Still 5 CAGED dots total, no halo (showTriads false), but the root dot is enlarged.
       expect(container.querySelectorAll('circle')).toHaveLength(5);
       const enlargedCircles = Array.from(container.querySelectorAll('circle')).filter(
-        (circle) => circle.getAttribute('r') === '21'
+        (circle) => circle.getAttribute('r') === '23'
       );
       expect(enlargedCircles).toHaveLength(1);
     });
@@ -618,11 +618,11 @@ describe('ScaleShape', () => {
       });
 
       const circles = Array.from(container.querySelectorAll('circle'));
-      // Root dot (scalePosition 1): enlarged (r=21), no halo circle for it.
-      const rootCircle = circles.find((circle) => circle.getAttribute('r') === '21');
+      // Root dot (scalePosition 1): enlarged (r=23), no halo circle for it.
+      const rootCircle = circles.find((circle) => circle.getAttribute('r') === '23');
       expect(rootCircle).toBeDefined();
-      // Non-root triad dot (scalePosition 5): halo (r=27) + normal-size fill (r=20).
-      const haloCircle = circles.find((circle) => circle.getAttribute('r') === '27');
+      // Non-root triad dot (scalePosition 5): halo (r=24) + normal-size fill (r=20).
+      const haloCircle = circles.find((circle) => circle.getAttribute('r') === '24');
       expect(haloCircle).toBeDefined();
       const normalSizedTriadFill = circles.filter((circle) => circle.getAttribute('r') === '20');
       expect(normalSizedTriadFill).toHaveLength(1);

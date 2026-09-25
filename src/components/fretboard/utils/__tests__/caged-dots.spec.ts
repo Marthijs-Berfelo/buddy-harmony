@@ -18,40 +18,42 @@ describe('dedupeCagedDots', () => {
         baseFret: 1,
         notes: ['', 'C3', 'E3', 'G3', 'C4', 'E4'],
       }),
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
 
     const dots = dedupeCagedDots([shape]);
 
     expect(dots).toEqual([
-      { string: 1, fret: 3, color: 'stroke-blue-700 fill-blue-700', note: 'C3' },
-      { string: 2, fret: 2, color: 'stroke-blue-700 fill-blue-700', note: 'E3' },
-      { string: 3, fret: 0, color: 'stroke-blue-700 fill-blue-700', note: 'G3' },
-      { string: 4, fret: 1, color: 'stroke-blue-700 fill-blue-700', note: 'C4' },
-      { string: 5, fret: 0, color: 'stroke-blue-700 fill-blue-700', note: 'E4' },
+      { string: 1, fret: 3, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' }, note: 'C3' },
+      { string: 2, fret: 2, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' }, note: 'E3' },
+      { string: 3, fret: 0, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' }, note: 'G3' },
+      { string: 4, fret: 1, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' }, note: 'C4' },
+      { string: 5, fret: 0, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' }, note: 'E4' },
     ]);
   });
 
   test('an earlier shape wins when two shapes share a (string, absoluteFret) position', () => {
     const earlier = {
       chord: chord({ frets: [-1, 3, 2, -1, 1, -1], baseFret: 1 }),
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
     const later = {
       chord: chord({ frets: [-1, 3, 2, -1, 1, -1], baseFret: 1 }),
-      color: 'stroke-red-700 fill-red-700',
+      color: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
     };
 
     const dots = dedupeCagedDots([earlier, later]);
 
     expect(dots).toHaveLength(3);
-    expect(dots.every((dot) => dot.color === 'stroke-blue-700 fill-blue-700')).toBe(true);
+    dots.forEach((dot) => {
+      expect(dot.color).toEqual({ strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' });
+    });
   });
 
   test('skips muted (-1) strings but includes open (0) strings', () => {
     const shape = {
       chord: chord({ frets: [-1, 0, 2, 0, 1, 0], baseFret: 1 }),
-      color: 'stroke-green-700 fill-green-700',
+      color: { strokeClassName: 'stroke-green-700', fillClassName: 'fill-green-700' },
     };
 
     const dots = dedupeCagedDots([shape]);
@@ -62,7 +64,7 @@ describe('dedupeCagedDots', () => {
   test('converts a fretted note to its true absolute fret using baseFret', () => {
     const shape = {
       chord: chord({ frets: [-1, -1, 1, 1, 1, 4], baseFret: 5 }),
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
 
     const dots = dedupeCagedDots([shape]);
@@ -73,43 +75,43 @@ describe('dedupeCagedDots', () => {
   test('gives an open string absolute fret 0 regardless of baseFret', () => {
     const shape = {
       chord: chord({ frets: [-1, -1, 0, 1, 1, 4], baseFret: 5 }),
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
 
     const dots = dedupeCagedDots([shape]);
 
     expect(dots).toEqual([
-      { string: 2, fret: 0, color: 'stroke-blue-700 fill-blue-700', note: undefined },
-      { string: 3, fret: 5, color: 'stroke-blue-700 fill-blue-700', note: undefined },
-      { string: 4, fret: 5, color: 'stroke-blue-700 fill-blue-700', note: undefined },
-      { string: 5, fret: 8, color: 'stroke-blue-700 fill-blue-700', note: undefined },
+      { string: 2, fret: 0, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' }, note: undefined },
+      { string: 3, fret: 5, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' }, note: undefined },
+      { string: 4, fret: 5, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' }, note: undefined },
+      { string: 5, fret: 8, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' }, note: undefined },
     ]);
   });
 
   test('detects a collision even when the colliding shapes have different baseFret values', () => {
     const earlier = {
       chord: chord({ frets: [-1, 3, -1, -1, -1, -1], baseFret: 1 }),
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
     const later = {
       chord: chord({ frets: [-1, 1, -1, -1, -1, -1], baseFret: 3 }),
-      color: 'stroke-red-700 fill-red-700',
+      color: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
     };
 
     const dots = dedupeCagedDots([earlier, later]);
 
     expect(dots).toHaveLength(1);
-    expect(dots[0]).toMatchObject({ string: 1, fret: 3, color: 'stroke-blue-700 fill-blue-700' });
+    expect(dots[0]).toMatchObject({ string: 1, fret: 3, color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' } });
   });
 
   test('keeps both dots when two shapes fret the same string at different absolute frets', () => {
     const earlier = {
       chord: chord({ frets: [-1, 3, -1, -1, -1, -1], baseFret: 1 }),
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
     const later = {
       chord: chord({ frets: [-1, 2, -1, -1, -1, -1], baseFret: 5 }),
-      color: 'stroke-red-700 fill-red-700',
+      color: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
     };
 
     const dots = dedupeCagedDots([earlier, later]);
@@ -125,7 +127,7 @@ describe('dedupeCagedDots', () => {
         baseFret: 1,
         notes: ['', 'C3', 'E3', 'G3', 'C4', 'E4'],
       }),
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
 
     test('flags root/3rd/5th dots as emphasized when a root note and showTriads are given', () => {
@@ -139,7 +141,7 @@ describe('dedupeCagedDots', () => {
       // E is a 2nd above root D (semitone offset 2) — not in the triad-tone set.
       const nonTriadShape = {
         chord: chord({ frets: [-1, -1, 1, -1, -1, -1], baseFret: 1, notes: ['', '', 'E3', '', '', ''] }),
-        color: 'stroke-violet-800 fill-violet-800',
+        color: { strokeClassName: 'stroke-violet-800', fillClassName: 'fill-violet-800' },
       };
 
       const dots = dedupeCagedDots([nonTriadShape], 'D', true);
@@ -162,7 +164,7 @@ describe('dedupeCagedDots', () => {
       expect(dots[0]).toEqual({
         string: 1,
         fret: 3,
-        color: 'stroke-blue-700 fill-blue-700',
+        color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
         note: 'C3',
       });
     });
@@ -181,7 +183,7 @@ describe('dedupeCagedDots', () => {
         baseFret: 1,
         notes: ['', 'C3', 'E3', 'G3', 'C4', 'E4'],
       }),
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
 
     test('flags only the root-chroma dots as isRoot when a rootNote is given, regardless of showTriads', () => {
@@ -222,11 +224,11 @@ describe('mergeCagedAndScaleDots', () => {
 
   const cShape = {
     chord: chord({ frets: [-1, 3, 2, 0, 1, 0], baseFret: 1 }),
-    color: 'stroke-blue-700 fill-blue-700',
+    color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
   };
   const aShape = {
     chord: chord({ frets: [1, 3, 3, 2, 1, 1], baseFret: 5 }),
-    color: 'stroke-red-700 fill-red-700',
+    color: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
   };
 
   // mergeCagedAndScaleDots flips scaleFrets' outer index into CagedDot's `string` space via
@@ -251,7 +253,7 @@ describe('mergeCagedAndScaleDots', () => {
     // string 1 fret 3 is already a CAGED dot (from dedupeCagedDots) — merge must not add a second dot there.
     expect(dots.filter((dot) => dot.string === 1 && dot.fret === 3)).toHaveLength(1);
     expect(dots.find((dot) => dot.string === 1 && dot.fret === 3)).toMatchObject({
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
       emphasized: true,
     });
   });
@@ -272,7 +274,7 @@ describe('mergeCagedAndScaleDots', () => {
 
     expect(dots.filter((dot) => dot.string === 2 && dot.fret === 2)).toHaveLength(1);
     expect(dots.find((dot) => dot.string === 2 && dot.fret === 2)).toMatchObject({
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
       emphasized: true,
     });
   });
@@ -294,7 +296,7 @@ describe('mergeCagedAndScaleDots', () => {
     expect(dots.filter((dot) => dot.string === 4 && dot.fret === 1)).toHaveLength(1);
     const dot = dots.find((dot) => dot.string === 4 && dot.fret === 1);
     expect(dot?.emphasized).toBeFalsy();
-    expect(dot?.color).toBe('stroke-blue-700 fill-blue-700');
+    expect(dot?.color).toEqual({ strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' });
   });
 
   test('does not emphasize a covered CAGED dot at a triad position when showTriads is false', () => {
@@ -311,7 +313,7 @@ describe('mergeCagedAndScaleDots', () => {
 
     const dot = dots.find((dot) => dot.string === 1 && dot.fret === 3);
     expect(dot?.emphasized).toBeFalsy();
-    expect(dot?.color).toBe('stroke-blue-700 fill-blue-700');
+    expect(dot?.color).toEqual({ strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' });
   });
 
   test('colors an uncovered triad tone using the owning shape range, with showTriads on', () => {
@@ -331,7 +333,7 @@ describe('mergeCagedAndScaleDots', () => {
 
     const merged = dots.find((dot) => dot.string === 5 && dot.fret === 3);
     expect(merged).toMatchObject({
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
       emphasized: true,
       note: 'G',
     });
@@ -401,11 +403,11 @@ describe('mergeCagedAndScaleDots', () => {
     // cover fret 2, and neither shape frets a dot at visual string 5.
     const shapeA = {
       chord: chord({ frets: [0, 3, -1, -1, -1, -1], baseFret: 1 }),
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     };
     const shapeB = {
       chord: chord({ frets: [1, 4, -1, -1, -1, -1], baseFret: 1 }),
-      color: 'stroke-red-700 fill-red-700',
+      color: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
     };
     const scaleFrets: ScaleFret[][] = [
       [scaleFret({ freet: 2, scalePosition: 5, note: 'G' })],
@@ -419,7 +421,7 @@ describe('mergeCagedAndScaleDots', () => {
     const dots = mergeCagedAndScaleDots([shapeA, shapeB], scaleFrets, 6, true);
 
     expect(dots.find((dot) => dot.string === 5 && dot.fret === 2)).toMatchObject({
-      color: 'stroke-blue-700 fill-blue-700',
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
     });
   });
 
@@ -514,7 +516,7 @@ describe('mergeCagedAndScaleDots', () => {
           baseFret: 1,
           notes: ['', 'C3', 'E3', 'G3', 'C4', 'E4'],
         }),
-        color: 'stroke-blue-700 fill-blue-700',
+        color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
       };
       const scaleFrets: ScaleFret[][] = [
         [],

@@ -17,7 +17,7 @@ import { Tuning } from './tuning';
 import { ChordPosition, useSettings } from 'hooks';
 import { ChordShape } from './chord-shape';
 import { useDirectional } from '../utils/directional';
-import { CagedShapeInput, dedupeCagedDots } from '../utils';
+import { CagedShapeInput, dedupeCagedDots, ShapeColor } from '../utils';
 
 export interface DiagramProps {
   className: string;
@@ -28,7 +28,7 @@ export interface DiagramProps {
   scale?: ScaleModel;
   chord?: ChordPosition;
   cagedShapes?: CagedShapeInput[];
-  cagedColor?: string;
+  cagedColor?: ShapeColor;
   scaleModel?: ScaleModel;
   showTriads?: boolean;
   rootNote?: string;

@@ -37,7 +37,7 @@ describe('ChordShape', () => {
       const { container } = renderChordShape({
         className: 'some-class',
         chord: openChord,
-        cagedColor: 'stroke-blue-700 fill-blue-700',
+        cagedColor: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
       });
 
       const texts = Array.from(container.querySelectorAll('text')).map((el) => el.textContent);
@@ -50,7 +50,7 @@ describe('ChordShape', () => {
       const { container } = renderChordShape({
         className: 'some-class',
         chord: openChord,
-        cagedColor: 'stroke-blue-700 fill-blue-700',
+        cagedColor: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
       });
 
       const circles = Array.from(container.querySelectorAll('circle'));
@@ -61,7 +61,7 @@ describe('ChordShape', () => {
       const { container } = renderChordShape({
         className: 'some-class',
         chord: openChord,
-        cagedColor: 'stroke-blue-700 fill-blue-700',
+        cagedColor: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
       });
 
       const texts = Array.from(container.querySelectorAll('text')).map((el) => el.textContent);

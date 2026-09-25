@@ -117,15 +117,6 @@ const SCALE_COLORS: Record<number, ScaleColor> = {
   },
 };
 
-/**
- * Extracts just the `stroke-*` token from a combined `stroke-* fill-*` color class string
- * (the convention every CAGED shape/neutral color constant follows, e.g.
- * `NEUTRAL_SCALE_DOT_COLOR` or `CAGED_COLORS.C.caged`) — used, paired with `fill-white`, to
- * render scale-only dots as outline (colored stroke, white fill) rather than solid.
- */
-const strokeToken = (color: string): string =>
-  color.split(/\s+/).find((token) => token.startsWith('stroke-')) ?? color;
-
 const DEFAULT_SCALE_COLOR: ScaleColor = {
   strokeClassName: 'stroke-black',
   textClassName: 'fill-black',
@@ -226,7 +217,7 @@ const useScaleShape = ({
         cx={x(diagramStyle.padding, string, fret, 0)}
         cy={y(diagramStyle.padding, string, fret, 0)}
         r={diagramStyle.dotRadius}
-        className={`${className} ${fromScale ? `${strokeToken(color)} fill-white` : color}`}
+        className={`${className} ${color.strokeClassName} ${fromScale ? 'fill-white' : color.fillClassName}`}
       />
       <text
         key={`caged.${string}.${fret}.note`}
@@ -265,8 +256,8 @@ const useScaleShape = ({
     const cy = y(diagramStyle.padding, string, fret, 0);
     // Scale-only dots stand out via the halo/thicker-stroke glow alone, never a solid fill —
     // real CAGED chord-tone dots keep their existing solid look even when emphasized.
-    const strokeClass = fromScale ? strokeToken(color) : color;
-    const fillClass = fromScale ? 'fill-white' : color;
+    const strokeClass = color.strokeClassName;
+    const fillClass = fromScale ? 'fill-white' : color.fillClassName;
 
     return (
       <Fragment key={`merged.${string}.${fret}`}>
