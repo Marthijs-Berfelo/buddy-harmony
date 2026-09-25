@@ -1,0 +1,14 @@
+{
+  "positioned_selected": "Positioned {{key}}",
+  "chord_selected": "Chord {{key}}",
+  "view-toggle-label_chord": "Scale",
+  "view-toggle-label_scale": "Chord",
+  "legend-title": "Legend",
+  "legend-shape-label": "{{letter}} shape",
+  "legend-triad-label": "Show triads",
+  "legend-symbol-triad": "Triad",
+  "legend-symbol-scale": "Scale tone",
+  "scale-view-disabled-tooltip": "Scale view needs standard 6-string guitar tuning",
+  "type-title": "Select Type",
+  "type-title_selected": "Type: {{chord.suffix}}"
+}

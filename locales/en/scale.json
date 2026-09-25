@@ -1,4 +1,5 @@
 {
-  "title": "Scale",
-  "title_selected": "Scale: {{scale}}"
+  "title": "Select Scale",
+  "title_selected": "Scale: {{scale}}",
+  "none": "None"
 }

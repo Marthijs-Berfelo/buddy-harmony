@@ -8,7 +8,7 @@
     "page_HARMONY": "Harmony",
     "page_HELP": "Help"
   },
-  "key": "Key",
+  "key": "Select Key",
   "key_selected": "Key: {{key}}",
   "app-version": "Version: {{version}}",
   "app-source": "Source code",

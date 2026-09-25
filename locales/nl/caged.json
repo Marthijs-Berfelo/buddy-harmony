@@ -1,0 +1,14 @@
+{
+  "positioned_selected": "Gepositioneerd {{key}}",
+  "chord_selected": "Akkoord {{key}}",
+  "view-toggle-label_chord": "Toonladder",
+  "view-toggle-label_scale": "Akkoord",
+  "legend-title": "Legenda",
+  "legend-shape-label": "{{letter}}-vorm",
+  "legend-triad-label": "Toon triades",
+  "legend-symbol-triad": "Triade",
+  "legend-symbol-scale": "Toonladdertoon",
+  "scale-view-disabled-tooltip": "Toonladderweergave vereist standaard 6-snarige gitaarstemming",
+  "type-title": "Type selecteren",
+  "type-title_selected": "Type: {{chord.suffix}}"
+}
