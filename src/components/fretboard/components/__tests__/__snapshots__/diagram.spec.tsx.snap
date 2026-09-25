@@ -609,9 +609,9 @@ exports[`Diagram > renders a multi-shape CAGED overlay spanning fret 0 to the la
 <div>
   <svg
     class="some-class bg-white"
-    height="561"
+    height="777"
     preserveAspectRatio="xMinYMin meet"
-    viewBox="0 0 608 1122"
+    viewBox="0 0 608 1554"
     width="304"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -642,17 +642,17 @@ exports[`Diagram > renders a multi-shape CAGED overlay spanning fret 0 to the la
     >
       <path
         class="fill-none stroke-black"
-        d="M 142,150 h 320 M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320 M 142,654 h 320 M 142,754 h 320 M 142,854 h 320"
+        d="M 142,150 h 320 M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320 M 142,654 h 320 M 142,754 h 320 M 142,854 h 320 M 142,954 h 320 M 142,1054 h 320 M 142,1154 h 320 M 142,1254 h 320"
         stroke-width="8"
       />
       <path
         class="fill-none stroke-gray-400"
-        d=" M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320 M 142,654 h 320 M 142,754 h 320 M 142,854 h 320"
+        d=" M 142,254 h 320 M 142,354 h 320 M 142,454 h 320 M 142,554 h 320 M 142,654 h 320 M 142,754 h 320 M 142,854 h 320 M 142,954 h 320 M 142,1054 h 320 M 142,1154 h 320 M 142,1254 h 320"
         stroke-width="8"
       />
       <path
         class="fill-none stroke-black"
-        d="M 152,150 v 814 M 212,150 v 814 M 272,150 v 814 M 332,150 v 814 M 392,150 v 814 M 452,150 v 814"
+        d="M 152,150 v 1138 M 212,150 v 1138 M 272,150 v 1138 M 332,150 v 1138 M 392,150 v 1138 M 452,150 v 1138"
         stroke-width="4"
       />
       <g>
@@ -815,6 +815,22 @@ exports[`Diagram > renders a multi-shape CAGED overlay spanning fret 0 to the la
           y="809"
         >
           VII
+        </text>
+        <text
+          class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+          font-size="30"
+          x="90"
+          y="1009"
+        >
+          IX
+        </text>
+        <text
+          class="font-sans stroke-0 fill-gray-800 stroke-gray-800"
+          font-size="30"
+          x="90"
+          y="1309"
+        >
+          XII
         </text>
       </g>
       <g

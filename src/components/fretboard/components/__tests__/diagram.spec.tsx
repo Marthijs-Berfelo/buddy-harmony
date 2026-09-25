@@ -6,6 +6,7 @@ import { ChordPosition, SettingsProvider, useSettings } from 'hooks';
 import * as gs from 'guitar-scales';
 import type { ScaleModel } from '../../options';
 import type { CagedShapeInput } from '../../utils';
+import { DEFAULT_STYLE } from '../../utils/diagram-style';
 
 const renderDiagram = (props: Parameters<typeof Diagram>[0]) =>
   render(
@@ -122,6 +123,40 @@ describe('Diagram', () => {
 
     expect(container.querySelectorAll('circle')).toHaveLength(11);
     expect(container).toMatchSnapshot();
+  });
+
+  test('clamps a CAGED overlay below the minimum up to 12 frets, with string overhang matching a scale diagram', () => {
+    const lowShapeOverlay: CagedShapeInput = {
+      chord: { baseFret: 1, frets: [0, 1, 2, 0, 0, 0] } as ChordPosition,
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
+    };
+    const { container } = renderDiagram({
+      className: 'some-class',
+      text: DotText.NOTE,
+      fretNumbersPosition: FretNumberPosition.LEFT,
+      cagedShapes: [lowShapeOverlay],
+    });
+
+    const stringsPath = container.querySelectorAll('path')[2];
+    const [, stringLength] = stringsPath.getAttribute('d')?.match(/v (\d+)/) ?? [];
+    expect(Number(stringLength)).toBe(DEFAULT_STYLE.stringLength(11));
+  });
+
+  test('clamps a CAGED overlay above the maximum down to 15 frets', () => {
+    const highShapeOverlay: CagedShapeInput = {
+      chord: { baseFret: 15, frets: [1, 3, 3, 2, 1, 1] } as ChordPosition,
+      color: { strokeClassName: 'stroke-red-700', fillClassName: 'fill-red-700' },
+    };
+    const { container } = renderDiagram({
+      className: 'some-class',
+      text: DotText.NOTE,
+      fretNumbersPosition: FretNumberPosition.LEFT,
+      cagedShapes: [highShapeOverlay],
+    });
+
+    const stringsPath = container.querySelectorAll('path')[2];
+    const [, stringLength] = stringsPath.getAttribute('d')?.match(/v (\d+)/) ?? [];
+    expect(Number(stringLength)).toBe(DEFAULT_STYLE.stringLength(14));
   });
 
   test('renders open-string dots and falls back to a single fret when a shape has no fretted note', () => {

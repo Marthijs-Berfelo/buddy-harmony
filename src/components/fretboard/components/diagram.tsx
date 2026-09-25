@@ -19,6 +19,9 @@ import { ChordShape } from './chord-shape';
 import { useDirectional } from '../utils/directional';
 import { CagedShapeInput, dedupeCagedDots, ShapeColor } from '../utils';
 
+const MIN_CAGED_FRETS = 12;
+const MAX_CAGED_FRETS = 15;
+
 export interface DiagramProps {
   className: string;
   diagramCount?: number;
@@ -80,7 +83,12 @@ export const Diagram = (props: DiagramProps): JSX.Element => {
         </filter>
       </defs>
       <g className={'fretboard'}>
-        <Fretboard frets={frets} chord={!!chord || !!cagedShapes?.length} startAt={startAt} />
+        <Fretboard
+          frets={frets}
+          chord={!!chord || !!cagedShapes?.length}
+          startAt={startAt}
+          cagedOverlay={!!cagedShapes?.length}
+        />
         {scale && <ScaleShape className={className} scale={getShapes(scale)} text={text} />}
         {/* scale, chord and cagedShapes are mutually exclusive — callers pass exactly
             one. scale and cagedShapes both render via ScaleShape, chord via ChordShape. */}
@@ -129,8 +137,11 @@ const useDiagram = ({
 }: DiagramProps): DiagramHook => {
   const { orientation, leftHanded, diagramStyle, stringCount, fretCount } = useSettings();
   const { onStrings } = useDirectional<ScaleFret[], unknown>({ orientation, leftHanded });
-  const frets = cagedShapes?.length
+  const cagedFrets = cagedShapes?.length
     ? Math.max(...dedupeCagedDots(cagedShapes).map((dot) => dot.fret), 1) + 1
+    : undefined;
+  const frets = cagedFrets
+    ? Math.min(Math.max(cagedFrets, MIN_CAGED_FRETS), MAX_CAGED_FRETS)
     : fretCount(scale, chord);
 
   const onMouseClick = (event: MouseEvent<SVGSVGElement>): void => {
