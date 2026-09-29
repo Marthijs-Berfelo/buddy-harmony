@@ -23,7 +23,7 @@ function HelpDrawer(): JSX.Element | null {
     <DialogPrimitive.Root open={isOpen} onOpenChange={(open) => !open && close()}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Content
-          className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background p-6 shadow-lg md:w-[260px]"
+          className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background p-6 shadow-lg md:w-[340px]"
           onOpenAutoFocus={(event) => event.preventDefault()}
         >
           <DialogPrimitive.Title className="sr-only">Help</DialogPrimitive.Title>
