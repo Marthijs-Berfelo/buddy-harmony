@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.20.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.19.0...0.20.0) (2026-09-29)
+
+### Features
+
+* **688:** add generic Markdown rendering primitive ([5099f4a](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/5099f4a7bd2ccc588bf32b8f48a4d611a01a662a))
+* **688:** add HelpSection enum ([95b75e0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/95b75e01e727dbfb19d72ce06a538816773724ed))
+* **688:** add placeholder localized help content files ([e2007b3](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/e2007b3afffe3ce926b992fa6b9de3f9c25f753a))
+* **688:** resolve help-* i18next namespaces as markdown ([f266f10](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f266f1051412c8a4ae719fc5256f576a87405ba9))
+
+### Dependency Updates
+
+* bump fast-uri from 3.1.6 to 3.1.8 ([9b4af9e](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/9b4af9ea4d194a5b0107f73a1756ceece2cbd1ea))
+* bump react-i18next in the i18next group across 1 directory ([b0d6fe3](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/b0d6fe3cc0f7a381a289455d021975861dcdd85b))
+
+### Miscellaneous Chores
+
+* **688:** add react-markdown and tailwindcss/typography ([ab6f5c3](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ab6f5c335d1c8150a8fd2eaade2bbb6a2831434e))
+* **688:** register tailwindcss/typography plugin ([e48f8b4](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/e48f8b4f11fd9a83cc4749a5b2c97c08b8186800))
+* ignore .claude/specs ([b6dce8e](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/b6dce8e435c6ab1a4795d5d46dceef6a58397391))
+
 ## [0.19.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.18.0...0.19.0) (2026-09-25)
 
 ### Features
