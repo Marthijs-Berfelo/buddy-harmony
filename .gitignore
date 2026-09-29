@@ -185,5 +185,5 @@ baseline/
 !.claude/settings.json
 .claude/settings.local.json
 .claude/plans/
-
+.claude/specs
 .superpowers/
