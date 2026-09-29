@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.21.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.20.0...0.21.0) (2026-09-29)
+
+### Features
+
+* **87:** add header help icon that opens the drawer for the current page ([867b651](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/867b651a66c5ec11eaa5cd2a1eb21e408067b051))
+* **87:** add HelpDrawer component ([a80ee81](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/a80ee81bf5e885ffee5d5b986bfe2e9a0991643c))
+* **87:** add HelpDrawerProvider and useHelpDrawer ([b41525e](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/b41525e5deae5743c3f2f5678313910e988ea572))
+* **87:** add useHelpMarkdown namespace-resolution hook ([f7f8b4a](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f7f8b4a27079f7f3968407047c4bb54548e3d465))
+* **87:** widen help drawer and restructure content with headings/lists ([166c9cf](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/166c9cfbc0c199680921c7c6cfe0d8c9a5b58f75))
+
+### Documentation
+
+* **87:** write English and Dutch help content for chord, scale, and caged pages ([376a706](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/376a7069e0da57c541233d658df30350e10d6981))
+
 ## [0.20.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.19.0...0.20.0) (2026-09-29)
 
 ### Features
