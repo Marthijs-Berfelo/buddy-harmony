@@ -20,6 +20,7 @@
     "send-email": "Send me a message"
   },
   "menu": "Menu",
+  "help": "Help",
   "language-selector": "Select language",
   "language-option": {
     "US": "English (US)",
