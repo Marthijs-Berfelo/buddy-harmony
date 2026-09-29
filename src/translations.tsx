@@ -5,13 +5,29 @@ import HttpBackend from 'i18next-http-backend';
 import I18nextBrowserLanguageDetector from 'i18next-browser-languagedetector';
 import { I18nextProvider, initReactI18next, useTranslation } from 'react-i18next';
 
+const HELP_NAMESPACE_PREFIX = 'help-';
+
+function isHelpNamespaceRequest(namespaces: string[]): boolean {
+  return namespaces.every((ns) => ns.startsWith(HELP_NAMESPACE_PREFIX));
+}
+
 i18n
   .use(HttpBackend)
   .use(I18nextBrowserLanguageDetector)
   .use(initReactI18next)
   .init({
     backend: {
-      loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json`,
+      loadPath: (_languages: string[], namespaces: string[]) => {
+        const extension = isHelpNamespaceRequest(namespaces) ? 'md' : 'json';
+        return `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.${extension}`;
+      },
+      parse: (data: string, _languages?: string | string[], namespaces?: string | string[]) => {
+        const nsList = Array.isArray(namespaces) ? namespaces : [namespaces ?? ''];
+        if (isHelpNamespaceRequest(nsList)) {
+          return { content: data };
+        }
+        return JSON.parse(data);
+      },
     },
     fallbackLng: ['nl', 'en'],
     lng: 'nl',
