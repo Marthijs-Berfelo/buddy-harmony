@@ -32,7 +32,7 @@ jobs:
       - name: Comment on PR
         id: coverageComment
         if: ${{ steps.download.outcome == 'success' && github.event.workflow_run.name == 'Build PR' }}
-        uses: MishaKav/jest-coverage-comment@v1.0.36
+        uses: MishaKav/jest-coverage-comment@v1.0.37
         with:
           issue-number: ${{ steps.pr.outputs.number }}
           coverage-summary-path: ./coverage/coverage-summary.json
@@ -44,7 +44,7 @@ jobs:
       - name: Read coverage for badge
         id: coverageBadge
         if: ${{ steps.download.outcome == 'success' && github.event.workflow_run.name == 'Build MAIN' }}
-        uses: MishaKav/jest-coverage-comment@v1.0.36
+        uses: MishaKav/jest-coverage-comment@v1.0.37
         with:
           coverage-summary-path: ./coverage/coverage-summary.json
           hide-comment: true
