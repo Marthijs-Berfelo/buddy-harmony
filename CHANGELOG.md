@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.22.3](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.22.2...0.22.3) (2026-10-30)
+
+### Miscellaneous Chores
+
+* document milestone-release retry caveat ([8bab89f](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/8bab89fe412641cf61c95e209e015aec1c7912ad))
+
 ## [0.22.2](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.22.1...0.22.2) (2026-10-30)
 
 ### Miscellaneous Chores
