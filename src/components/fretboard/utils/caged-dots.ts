@@ -207,12 +207,12 @@ export const mergeCagedAndScaleDots = (
   });
 
   const isTriadPosition = (string: number, fret: number): boolean => {
-    const scalePosition = positionLookup.get(`${string}:${fret}`);
+    const scalePosition = positionLookup.get(`${string}:${fret % 12}`);
     return scalePosition !== undefined && TRIAD_POSITIONS.has(scalePosition);
   };
 
   const isRootPosition = (string: number, fret: number): boolean =>
-    positionLookup.get(`${string}:${fret}`) === 1;
+    positionLookup.get(`${string}:${fret % 12}`) === 1;
 
   const emphasizedCagedDots = cagedDots.map((dot) => {
     const isRoot = isRootPosition(dot.string, dot.fret);
