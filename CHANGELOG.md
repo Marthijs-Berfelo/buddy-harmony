@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.22.2](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.22.1...0.22.2) (2026-10-30)
+
+### Miscellaneous Chores
+
+* bump milestone release to major for v1.0.0 MVP ([e6586ab](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/e6586ab2745a54a513f35cdb8ec83426e44db5b2))
+
 ## [0.22.1](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.22.0...0.22.1) (2026-10-30)
 
 ### Bug Fixes
