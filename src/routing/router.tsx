@@ -21,6 +21,9 @@ const CagedPage = lazy(() =>
     default: module.CagedPage,
   }))
 );
+const HelpPage = lazy(() =>
+  import('modules/help').then((module) => ({ default: module.HelpPage }))
+);
 
 export const router = createBrowserRouter(
   [
@@ -31,6 +34,7 @@ export const router = createBrowserRouter(
         { path: Pages.SCALE, element: <ScalePage /> },
         { path: Pages.CHORD, element: <ChordPage /> },
         { path: Pages.CAGED, element: <CagedPage /> },
+        { path: Pages.HELP, element: <HelpPage /> },
         { path: '*', element: <Navigate to={Pages.SCALE} replace /> },
       ],
     },
