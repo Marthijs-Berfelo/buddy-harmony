@@ -15,9 +15,9 @@ i18n.init({
           page_CAGED: 'C A G E D',
         },
       },
-      'help-chord': { content: '# Chord help' },
-      'help-scale': { content: '# Scale help' },
-      'help-caged': { content: '# CAGED help' },
+      'help-chord': { content: '# Chord help\n\nChord body text.' },
+      'help-scale': { content: '# Scale help\n\nScale body text.' },
+      'help-caged': { content: '# CAGED help\n\nCAGED body text.' },
     },
   },
   lng: 'en',
@@ -40,10 +40,11 @@ describe('HelpTabs', () => {
     expect(screen.getByRole('tab', { name: 'C A G E D' })).toBeInTheDocument();
   });
 
-  test("shows the first tab's help content by default", () => {
+  test("shows the first tab's help content by default, without its redundant page heading", () => {
     renderHelpTabs();
 
-    expect(screen.getByRole('heading', { name: 'Chord help' })).toBeInTheDocument();
+    expect(screen.getByText('Chord body text.')).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Chord help' })).not.toBeInTheDocument();
   });
 
   test("clicking a tab switches to that page's help content", async () => {
@@ -52,7 +53,7 @@ describe('HelpTabs', () => {
 
     await user.click(screen.getByRole('tab', { name: 'Scales' }));
 
-    expect(screen.getByRole('heading', { name: 'Scale help' })).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Chord help' })).not.toBeInTheDocument();
+    expect(screen.getByText('Scale body text.')).toBeInTheDocument();
+    expect(screen.queryByText('Chord body text.')).not.toBeInTheDocument();
   });
 });

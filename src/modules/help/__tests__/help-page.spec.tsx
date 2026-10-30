@@ -11,9 +11,9 @@ i18n.init({
       },
       'help-general': { content: '# General help' },
       'help-common': { content: '### Common tools' },
-      'help-chord': { content: '# Chord help' },
-      'help-scale': { content: '# Scale help' },
-      'help-caged': { content: '# CAGED help' },
+      'help-chord': { content: '# Chord help\n\nChord body text.' },
+      'help-scale': { content: '# Scale help\n\nScale body text.' },
+      'help-caged': { content: '# CAGED help\n\nCAGED body text.' },
     },
   },
   lng: 'en',
@@ -50,6 +50,6 @@ describe('HelpPage', () => {
     renderHelpPage();
 
     expect(screen.getByRole('tab', { name: 'Chords' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Chord help' })).toBeInTheDocument();
+    expect(screen.getByText('Chord body text.')).toBeInTheDocument();
   });
 });

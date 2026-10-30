@@ -7,11 +7,17 @@ import { HelpSection } from '@/help/content-types';
 
 const PAGE_SECTIONS = [HelpSection.CHORD, HelpSection.SCALE, HelpSection.CAGED] as const;
 
+const LEADING_H1_PATTERN = /^#\s+.*\n+/;
+
+function stripLeadingHeading(markdown: string): string {
+  return markdown.replace(LEADING_H1_PATTERN, '');
+}
+
 function HelpTabPanel({ section }: { section: HelpSection }): JSX.Element {
   const content = useHelpMarkdown(section);
   return (
     <TabsContent value={section}>
-      <Markdown content={content} />
+      <Markdown content={stripLeadingHeading(content)} />
     </TabsContent>
   );
 }
