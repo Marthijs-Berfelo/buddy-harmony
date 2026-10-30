@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.22.1](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.22.0...0.22.1) (2026-10-30)
+
+### Bug Fixes
+
+* **683:** fold scale-position lookup fret into one octave ([134b438](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/134b4385df02d94c75b1ea952171a5d9f8725121))
+
 ## [0.22.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.21.0...0.22.0) (2026-10-30)
 
 ### Features
