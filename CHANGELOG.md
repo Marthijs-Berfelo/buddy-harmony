@@ -1,5 +1,69 @@
 # Changelog
 
+## [0.22.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.21.0...0.22.0) (2026-10-30)
+
+### Features
+
+* **88:** add HelpPage module composing general, common, and per-page help ([a76dadf](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/a76dadf67789a87dd9ffb9a9780048d76d2eb4fe))
+* **88:** add HelpTabs component listing per-page help content ([621d4bc](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/621d4bce118a82c050405d68f8bdf4a24381cc47))
+* **88:** add Tabs UI wrapper around radix-ui Tabs primitive ([7983c26](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/7983c26e11a541d159e9f2179ed450c8cdbcc566))
+* **88:** extract shared "other tools" help content into help-common ([b2dfa7b](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/b2dfa7b7de8beda48597bf025aaf67609e54fc55))
+* **88:** register the /help route ([250ed0b](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/250ed0bea57ee866805799b87985f56257892411))
+
+### Bug Fixes
+
+* **88:** add bottom spacing on help page to clear fixed footer ([1c98496](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/1c98496e386cf914f0d9c6243f68485297a0f4a7))
+* **88:** align help page layout with other pages' toolbar width ([6ce0708](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/6ce0708b833bafb696dffaaa23344c177307e874))
+* **88:** align Tabs focus ring with other interactive components ([75aa8a0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/75aa8a03522e6b2451145c6f3de180b16e98fc30))
+* **88:** derive language flag from region-qualified language code ([1d8f040](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/1d8f04034806480bdb682a06e4b312fb5bbf6006))
+* **88:** give Tabs a full-width, bordered card appearance ([bbf393e](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/bbf393ee08ce9b480abb6d0940a2b9d00ef81ae4))
+* **88:** isolate HelpTabs panel suspense boundaries per tab ([27cc699](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/27cc69951152fac9d4de1274f7dafdfeecf359c1))
+* **88:** resolve region-locale codes to base language for i18next backend ([add59e1](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/add59e160033e9840b2406dd9e631b5d024f66f6))
+
+### Dependency Updates
+
+* bump @hono/node-server from 2.1.1 to 2.1.5 ([540a8ba](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/540a8badc46e0d3647b86fae1c1f7320634d477f))
+* bump @modelcontextprotocol/sdk from 1.30.0 to 1.32.1 ([c4bff8d](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/c4bff8d8421f59fe52080002ad24a26edaa9b4db))
+* bump body-parser from 2.3.0 to 2.4.0 ([a85fb84](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/a85fb8424b60e20aeab1674715cb364667f5ae68))
+* bump fast-uri from 3.1.8 to 3.1.9 ([9216d99](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/9216d993064296d202f8795d1bd725ad4a159728))
+* bump hono from 4.13.5 to 4.13.12 ([ea0bdaa](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ea0bdaaedf2620479b77edd73d187703801c9188))
+* bump i18next ([6cb4d62](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/6cb4d62e6da55d2b2de6dfa4d46bbfdb96a34436))
+* bump i18next from 26.4.2 to 26.4.3 in the i18next group ([65315cc](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/65315cca4cf78e43ce8df7ba594f0b321ff64100))
+* bump ip-address from 10.7.0 to 10.7.2 ([912befb](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/912befb511a82da2eb17099c8260ede061320b24))
+* bump ip-address from 10.7.2 to 10.7.4 ([14bfcd3](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/14bfcd356b41adcfe236ed6107bfd8b56a862671))
+* bump lucide-react from 1.47.0 to 1.48.0 ([02e46b5](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/02e46b5742913db59a8ad8f10621946507a64864))
+* bump lucide-react from 1.48.0 to 1.49.0 ([c3a9ce6](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/c3a9ce6ac1541339489593406c404cec5dc5be8d))
+* bump lucide-react from 1.49.0 to 1.51.0 ([5e8a5b4](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/5e8a5b4c85237c4c004d6b39f7b5bd9d30cd38fd))
+* bump lucide-react from 1.51.0 to 1.52.0 ([632fd25](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/632fd259be9c28c52d0002032032eb8f39fdd66b))
+* bump lucide-react from 1.52.0 to 1.54.0 ([06ed55c](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/06ed55cf4ac45ac41ae8d271c73ac87654304398))
+* bump lucide-react from 1.54.0 to 1.55.0 ([238c236](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/238c236813d4d99bea06b50721d57b050dcb52f5))
+* bump lucide-react from 1.55.0 to 1.57.0 ([2c9e246](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/2c9e2465e2086bfdae6e717cc3436ef363c8011e))
+* bump lucide-react from 1.57.0 to 1.58.0 ([9db9979](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/9db997938459870231f4fc350fa889bfd5f405d8))
+* bump lucide-react from 1.58.0 to 1.59.0 ([96366fc](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/96366fcaaf83fc8ddd52228b7287c768002bfbe1))
+* bump lucide-react from 1.59.0 to 1.60.0 ([6ff7f6a](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/6ff7f6ac8d40139894dcac9c2962638627780946))
+* bump lucide-react from 1.60.0 to 1.61.0 ([dfe31c6](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/dfe31c6a286858f67314fb5d2a452be027b34c2a))
+* bump proxy-addr from 2.0.7 to 2.0.8 ([2c6ff40](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/2c6ff40ac13efe62942f0f2c8e7b592abe928162))
+* bump radix-ui from 1.6.7 to 1.7.0 ([f2188d7](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f2188d79ce69fe98885fe10e3701836cdf6dc4f5))
+* bump radix-ui from 1.7.0 to 1.8.1 ([1590453](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/15904537c6e735708c4aae196dc6bfeda9317ab9))
+* bump react-i18next ([ad3ec43](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ad3ec435b1dab046837d850cf41b44d4dc3780a2))
+* bump shadcn from 4.21.0 to 4.21.1 ([f1797d8](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f1797d87395785b37613d0a49ac6c26d5cac844f))
+* bump shadcn from 4.21.1 to 4.21.4 ([44f42c5](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/44f42c5bd2c23905a859b2accc095b8e3f84ecda))
+* bump shadcn from 4.21.4 to 4.21.5 ([1a407be](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/1a407be670eefa979ad1ea82f516eab803c97c86))
+* bump shadcn from 4.21.5 to 4.22.0 ([20a1305](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/20a1305b53bdbaf1851d7dde9f99bab4f3001dcd))
+* bump shadcn from 4.22.0 to 4.22.1 ([2803d85](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/2803d8596737ee31dc0628c089aa5a64919c2cd7))
+* bump source-map-js from 1.2.1 to 1.2.2 ([ac51ca0](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/ac51ca0e5f36c31d531d89a335907bc324b5acdd))
+* bump systeminformation from 5.33.15 to 5.33.18 ([e7ab0dd](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/e7ab0dd6347bd88a4c2bea2cdb8f9eccd964c529))
+* bump the i18next group across 1 directory with 2 updates ([2461211](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/2461211ea6406876917d558c3daa1df088e2414a))
+* bump the i18next group across 1 directory with 2 updates ([02d48b9](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/02d48b9729f60a36afc5abefcd36f28c7750657d))
+* bump the i18next group across 1 directory with 2 updates ([3e9a724](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/3e9a7246d409d86c5b6c9914decc21ce344a3aec))
+* bump the i18next group across 1 directory with 2 updates ([cd4dd1d](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/cd4dd1dd86518303b9b0d5686763a050ea03495f))
+* bump the i18next group across 1 directory with 4 updates ([3a13cab](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/3a13cabe7610cae99f4d4c72464cbc88fc139228))
+* bump the i18next group with 2 updates ([f7209ee](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/f7209eea8dc96961e256520dbca2575ee90c4295))
+* bump the i18next group with 2 updates ([cedeb8b](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/cedeb8b18e174c414468354b3b3f08571c71cb35))
+* bump the i18next group with 2 updates ([1f207dd](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/1f207ddde34df8ee8fc7fa8711c1452114a76024))
+* bump the react group with 2 updates ([11be03b](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/11be03b25297b87593d735883d979f40aeb63677))
+* bump web-vitals from 6.2.2 to 6.2.3 ([64439db](https://github.com/Marthijs-Berfelo/buddy-harmony/commit/64439db55e59f3b762855f5bb498c8239c994f1a))
+
 ## [0.21.0](https://github.com/Marthijs-Berfelo/buddy-harmony/compare/0.20.0...0.21.0) (2026-09-29)
 
 ### Features
