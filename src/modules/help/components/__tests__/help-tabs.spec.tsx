@@ -7,7 +7,7 @@ import { HelpTabs } from '../help-tabs';
 i18n.init({
   resources: {
     en: {
-      common: {
+      'common': {
         routing: {
           page: '',
           page_CHORD: 'Chords',

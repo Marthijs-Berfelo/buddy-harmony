@@ -6,7 +6,7 @@ import { HelpPage } from '../help-page';
 i18n.init({
   resources: {
     en: {
-      common: {
+      'common': {
         routing: { page: '', page_CHORD: 'Chords', page_SCALE: 'Scales', page_CAGED: 'C A G E D' },
       },
       'help-general': { content: '# General help' },

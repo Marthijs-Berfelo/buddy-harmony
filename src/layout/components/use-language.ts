@@ -37,7 +37,7 @@ const languageCode = (lang: string): string => {
 
 export const useLanguage = (): LanguageHook => {
   const { i18n } = useTranslation('common');
-  const initialLang = i18n.resolvedLanguage || i18n.language;
+  const initialLang = i18n.language || i18n.resolvedLanguage || defaultLanguageCode;
   const browserLanguage = useRef<string>(initialLang);
   const selectorRef = useRef<HTMLDivElement>(null);
   const [selectedLanguage, setSelectedLanguage] = useState<string>(

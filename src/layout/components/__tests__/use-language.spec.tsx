@@ -59,6 +59,19 @@ describe('useLanguage', () => {
     expect(result.current.countries).toEqual(['US', 'GB', 'NL']);
   });
 
+  test('derives the selected language from the region-qualified language when resolvedLanguage is region-stripped', () => {
+    // With i18next's `load: 'languageOnly'` option, `resolvedLanguage` drops the
+    // region suffix (e.g. 'en' instead of 'en-US'), but `language` retains it —
+    // the flag must be derived from `language` to avoid falling back to default.
+    const fakeI18n = createFakeI18n('en-US', 'en');
+
+    const { result } = renderHook(() => useLanguage(), {
+      wrapper: ({ children }) => withI18n(fakeI18n)(children),
+    });
+
+    expect(result.current.selectedLanguage).toBe('US');
+  });
+
   test('picks up the resolved language via languageChanged event when resolution happens after mount', () => {
     // i18next's language detector resolves `language` synchronously (e.g. from
     // localStorage/navigator), but `resolvedLanguage` stays undefined until the
