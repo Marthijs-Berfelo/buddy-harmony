@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { Suspense, type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Markdown } from '@/components/ui/markdown';
@@ -29,7 +29,9 @@ function HelpTabs(): JSX.Element {
         ))}
       </TabsList>
       {PAGE_SECTIONS.map((section) => (
-        <HelpTabPanel key={section} section={section} />
+        <Suspense key={section} fallback={null}>
+          <HelpTabPanel section={section} />
+        </Suspense>
       ))}
     </Tabs>
   );
