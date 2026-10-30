@@ -17,8 +17,8 @@
     "release": "release-it",
     "release:ci": "release-it --ci",
     "release:ci-prepare": "echo $(release-it --ci --release-version) > next-version.txt",
-    "release:milestone": "release-it minor --ci",
-    "release:milestone-prepare": "echo $(release-it minor --ci --release-version) > next-version.txt",
+    "release:milestone": "release-it major --ci",
+    "release:milestone-prepare": "echo $(release-it major --ci --release-version) > next-version.txt",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "contributors:add": "all-contributors-cli add"
