@@ -568,4 +568,71 @@ describe('mergeCagedAndScaleDots', () => {
       expect(dot?.isRoot).toBeFalsy();
     });
   });
+
+  describe('scale-position lookup wraps around every 12 frets', () => {
+    // guitar-scales only generates one octave of scale data (frets 0-11, periodic every
+    // 12 frets) — a CAGED shape fretted at absolute fret 12+ must still resolve its
+    // triad/root status via (fret % 12). highShape frets string 1 (frets index 1) at
+    // absolute fret 15 (3 + baseFret 13 - 1), so (15 % 12) === 3.
+    const highShape = {
+      chord: chord({ frets: [-1, 3, -1, -1, -1, -1], baseFret: 13 }),
+      color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
+    };
+
+    test('emphasizes a covered CAGED dot above fret 12 when its folded position is a triad tone', () => {
+      // positionLookup gets "1:3" -> scalePosition 3 (a triad tone) from this ScaleFret,
+      // placed at scaleFrets index 4 so it lands on visualString 1 (stringCount 6: visualString = 5 - stringIndex).
+      const scaleFrets: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 3 })],
+        [],
+      ];
+
+      const dots = mergeCagedAndScaleDots([highShape], scaleFrets, 6, true);
+
+      const dot = dots.find((dot) => dot.string === 1 && dot.fret === 15);
+      expect(dot).toMatchObject({
+        color: { strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' },
+        emphasized: true,
+      });
+    });
+
+    test('flags a covered CAGED dot above fret 12 as isRoot when its folded position is root, independent of showTriads', () => {
+      const scaleFrets: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 1, note: 'G' })],
+        [],
+      ];
+
+      const dots = mergeCagedAndScaleDots([highShape], scaleFrets, 6, false);
+
+      const dot = dots.find((dot) => dot.string === 1 && dot.fret === 15);
+      expect(dot?.isRoot).toBe(true);
+      expect(dot?.emphasized).toBeFalsy();
+    });
+
+    test('leaves a covered CAGED dot above fret 12 unemphasized when its folded position is not a triad tone', () => {
+      const scaleFrets: ScaleFret[][] = [
+        [],
+        [],
+        [],
+        [],
+        [scaleFret({ freet: 3, scalePosition: 2, note: 'D' })],
+        [],
+      ];
+
+      const dots = mergeCagedAndScaleDots([highShape], scaleFrets, 6, true);
+
+      const dot = dots.find((dot) => dot.string === 1 && dot.fret === 15);
+      expect(dot?.emphasized).toBeFalsy();
+      expect(dot?.isRoot).toBeFalsy();
+      expect(dot?.color).toEqual({ strokeClassName: 'stroke-blue-700', fillClassName: 'fill-blue-700' });
+    });
+  });
 });
