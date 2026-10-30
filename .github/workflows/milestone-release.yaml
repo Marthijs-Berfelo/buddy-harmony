@@ -1,3 +1,6 @@
+# Triggered only by the milestone:closed webhook (no workflow_dispatch) - if the release step
+# skips because main's last commit is itself a release commit, reopening/reclosing the milestone
+# only retries successfully once a non-release commit has landed on main in between.
 name: Milestone Release
 on:
   milestone:
