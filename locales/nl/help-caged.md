@@ -15,8 +15,3 @@ Wissel met de schakelaar tussen twee weergaven:
 - **Toonladder** — de vormen over de volledige toonladder heen
 
 De toonladderweergave vereist een standaard 6-snarige gitaarstemming — de schakelaar is anders uitgeschakeld.
-
-### Overige functies
-
-- Tandwiel-icoon — type gitaar, stemming of weergave van de fretboard aanpassen
-- Print-icoon — de getoonde diagrammen afdrukken
