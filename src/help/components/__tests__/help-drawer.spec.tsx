@@ -11,6 +11,7 @@ i18n.init({
   resources: {
     en: {
       'help-chord': { content: '# Chord help' },
+      'help-common': { content: '### Other tools' },
     },
   },
   lng: 'en',
@@ -48,6 +49,7 @@ describe('HelpDrawer', () => {
     await user.click(screen.getByText('open'));
 
     expect(screen.getByRole('heading', { name: 'Chord help' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Other tools' })).toBeInTheDocument();
   });
 
   test('closes when the close button is clicked', async () => {

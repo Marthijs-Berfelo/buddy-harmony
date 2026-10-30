@@ -18,6 +18,7 @@ const resources = {
   'help-chord': {} as HelpContent,
   'help-scale': {} as HelpContent,
   'help-caged': {} as HelpContent,
+  'help-common': {} as HelpContent,
 } as const;
 
 declare module 'i18next' {

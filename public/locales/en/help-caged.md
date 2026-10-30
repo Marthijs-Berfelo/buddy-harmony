@@ -15,8 +15,3 @@ Switch between two views with the toggle button:
 - **Scale** — the shapes overlaid on the full scale
 
 Scale view needs a standard 6-string guitar tuning — the toggle is disabled otherwise.
-
-### Other tools
-
-- Gear icon — change guitar type, tuning, or how the fretboard is drawn
-- Print icon — print the diagrams shown
