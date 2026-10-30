@@ -3,4 +3,5 @@ export enum HelpSection {
   CHORD = 'chord',
   SCALE = 'scale',
   CAGED = 'caged',
+  COMMON = 'common',
 }

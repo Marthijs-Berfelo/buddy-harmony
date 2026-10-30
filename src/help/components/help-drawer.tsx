@@ -9,7 +9,14 @@ import { HelpSection } from '@/help/content-types';
 
 function HelpDrawerContent({ section }: { section: HelpSection }): JSX.Element {
   const content = useHelpMarkdown(section);
-  return <Markdown content={content} />;
+  const commonContent = useHelpMarkdown(HelpSection.COMMON);
+  return (
+    <>
+      <Markdown content={content} />
+      <hr className="my-4 border-muted" />
+      <Markdown content={commonContent} />
+    </>
+  );
 }
 
 function HelpDrawer(): JSX.Element | null {
