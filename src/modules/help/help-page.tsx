@@ -9,7 +9,7 @@ export const HelpPage = (): JSX.Element => {
   const commonContent = useHelpMarkdown(HelpSection.COMMON);
 
   return (
-    <div className="page flex flex-col gap-6 md:px-96" id="help-page">
+    <div className="page flex flex-col gap-6 pb-20 md:px-96" id="help-page">
       <Markdown content={generalContent} />
       <Markdown content={commonContent} />
       <HelpTabs />
