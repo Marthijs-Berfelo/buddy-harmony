@@ -30,6 +30,7 @@ i18n
       },
     },
     fallbackLng: ['nl', 'en'],
+    load: 'languageOnly',
     lng: 'nl',
     defaultNS: 'common',
     interpolation: {
